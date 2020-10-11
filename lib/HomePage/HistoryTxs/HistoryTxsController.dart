@@ -1,0 +1,57 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:omega_qick/Parse/tx.dart';
+import 'package:omega_qick/Parse/txs.dart';
+import 'package:omega_qick/REST/GetUser.dart';
+
+import '../../JsonParse.dart';
+import 'ListHistory.dart';
+
+class HistoryTxs extends StatefulWidget {
+  BuildContext context1;
+
+  User user;
+
+
+  List<dynamic> txs;
+  HistoryTxs(this.txs, this.context1, this.user);
+  @override
+  _HistoryTxsState createState() => _HistoryTxsState();
+}
+
+class _HistoryTxsState extends State<HistoryTxs> {
+
+
+
+  Timer timer;
+
+
+  void UpdateData()async{
+    User u = await GetUser(widget.user.result.address.address, context);
+    widget.user = u;
+    widget.txs = u.result.address.txs;
+    setState(() {});
+  }
+  @override
+  void initState() {
+    //timer = Timer.periodic(Duration(seconds: 1), (Timer t) => UpdateData());
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("hash "+ widget.txs[0].hash);
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Column(mainAxisAlignment: MainAxisAlignment.start,
+        children: ListHistory(widget.txs, widget.user),
+      ),
+    );
+  }
+}
