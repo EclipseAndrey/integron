@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:omega_qick/CasesWorsd/CaseSee.dart';
 import 'package:omega_qick/Parse/tx.dart';
 import 'package:omega_qick/Parse/txs.dart';
 import 'package:omega_qick/REST/GetUser.dart';
@@ -49,8 +50,14 @@ class _HistoryTxsState extends State<HistoryTxs> {
     print("hash "+ widget.txs[0].hash);
     return Container(
       width: MediaQuery.of(context).size.width,
-      child: Column(mainAxisAlignment: MainAxisAlignment.start,
-        children: ListHistory(widget.txs, widget.user),
+      child: Column(
+        children: [
+          Column(mainAxisAlignment: MainAxisAlignment.start,
+            children: ListHistory(widget.txs, widget.user),
+          ),
+          Center(child: widget.txs == null? SizedBox():Text("Показано ${widget.txs.length} ${CaseSee(widget.txs.length)}", style: TextStyle(color: Colors.white70),),),
+
+        ],
       ),
     );
   }
