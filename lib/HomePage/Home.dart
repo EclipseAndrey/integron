@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Authorization/WalletDB.dart';
+import 'package:omega_qick/Contacts/DataBase/GetContactForAddress.dart';
 import 'package:omega_qick/Head/ControllerHeader.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
 import 'package:omega_qick/Parse/txs.dart';
@@ -41,6 +42,15 @@ class _HomeState extends State<Home> {
 
     users = await GetUsers(addressesStep, context);
     addresses = addressesStep;
+    for(int j =0 ; j <  users.length; j++){
+      for(int i = 0; i < users[j].result.address.txs.length; i++){
+        bool send = users[j].result.address.address == users[j].result.address.txs[i].data.sender?true:false;
+
+        var resContact = await getContactForAddress(!send?users[j].result.address.txs[i].data.sender:users[j].result.address.txs[i].to);
+        print("check base contacts == ${resContact.errors}");
+        if(!resContact.errors)users[j].result.address.txs[i].name = resContact.name;
+      }
+    }
     setState(() {
       widget.loading = false;
     });

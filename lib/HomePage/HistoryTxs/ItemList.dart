@@ -34,7 +34,7 @@ Widget itemListHistory(Tx tx, User user){
                     children: [
                       Padding(
                         padding:  EdgeInsets.only(top: 8.0, left: 8),
-                        child: Text(InitWallet(address), style: TextStyle(color: Colors.white, fontSize: 16),),
+                        child: Text(tx.name == null?InitWallet(address):tx.name, style: TextStyle(color: Colors.white, fontSize: 16),),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),

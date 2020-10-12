@@ -199,7 +199,7 @@ class _PanelState extends State<Panel> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //jh
+
                     Icon(
                       widget.contact.priory == 1?Icons.star:Icons.star_border,
                       color: Colors.white.withOpacity(0.9),

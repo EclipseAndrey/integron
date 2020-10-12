@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:omega_qick/CasesWorsd/CaseSee.dart';
+import 'package:omega_qick/Contacts/DataBase/GetContactForAddress.dart';
 import 'package:omega_qick/Parse/tx.dart';
 import 'package:omega_qick/Parse/txs.dart';
 import 'package:omega_qick/REST/GetUser.dart';
@@ -32,11 +33,12 @@ class _HistoryTxsState extends State<HistoryTxs> {
     User u = await GetUser(widget.user.result.address.address, context);
     widget.user = u;
     widget.txs = u.result.address.txs;
+
     setState(() {});
   }
   @override
   void initState() {
-    //timer = Timer.periodic(Duration(seconds: 1), (Timer t) => UpdateData());
+    UpdateData();
   }
 
   @override

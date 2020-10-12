@@ -4,6 +4,7 @@ import 'Fee.dart';
 
 class Tx {
 
+  String name;
   int id;
   String hash;
   String timestamp;
