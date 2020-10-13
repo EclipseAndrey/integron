@@ -14,12 +14,10 @@ import 'Authorization/auto.dart';
 import 'LogFile.dart';
 
 void AutoRoutes(BuildContext context)async {
-
-
   void tokenErr()async{}
 
   void tokenOk(InfoToken info)async{
-    if(info.code == 0){
+    if(info.code == 200){
       int code = await codeDB();
       if(code == 0){
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SetCode()), (route) => false);
@@ -38,16 +36,20 @@ void AutoRoutes(BuildContext context)async {
   writeLog("AutoRoutes");
   bool auto = await autoDB();
   if(auto){
+    print("AUTOROUTES  auto $auto");
     String token = await tokenDB();
     if(token != "null"){
+      print("AUTOROUTES  token $token");
       InfoToken infoToken = await checkToken(token);
       if(infoToken != null){
+        print("AUTOROUTES  token response ${infoToken.code}");
         await tokenOk(infoToken);
       }else{
         infoToken = await checkToken(token);
         if(infoToken != null){
           await tokenOk(infoToken);
         }else{
+          print("AUTOROUTES  token error");
           await tokenErr();
         }
       }
@@ -56,6 +58,7 @@ void AutoRoutes(BuildContext context)async {
       AutoRoutes(context);
     }
   }else{
+    print("AUTOROUTES F auto $auto");
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => InpNum()), (route) => false);
   }
 }

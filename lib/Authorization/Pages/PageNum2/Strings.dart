@@ -1,6 +1,6 @@
-String welcomeText = "Последний шаг";
-String hintTextSeedText = "Сид фраза";
+String welcomeText = "Добро пожаловать";
+String hintTextSeedText = "Номер";
 String buttonLoginText = "Войти";
-String labelBetweenText = "или";
+String labelBetweenText = "";
 String buttonGenerateText1 = "Создать кошелек";
 String buttonGenerateText2 = "Добавить кошелек";

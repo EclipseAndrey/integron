@@ -7,7 +7,7 @@ List<Color> backgroundGradient =[
 
 //General Text
 TextStyle styleGeneralText = TextStyle(
-  color: Colors.white70,
+  color: Colors.white,
   fontSize: 28,
   fontFamily: "MPLUS",
 );

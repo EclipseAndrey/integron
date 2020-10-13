@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:omega_qick/Authorization/tokenDB.dart';
 import 'package:omega_qick/REST/Servers.dart';
 import 'package:http/http.dart' as http;
 
 Future<int> setRoleR (String role)async{
-  String urlQuery = serverBD+ "/api.php/setrole?role=$role";
+  String token = await tokenDB();
+  String urlQuery = serverBD+ "/api.php/setrole?role=$role&token=$token";
   print(urlQuery);
   var response;
   try{
@@ -12,7 +16,7 @@ Future<int> setRoleR (String role)async{
   }
   print("setRole "+response.body);
   if(response.statusCode == 200){
-    return response.body['code'];
+    return json.decode(response.body)['code'];
   }else{
     return null;
   }

@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omega_qick/AddWallet/AddWalletPage.dart';
 import 'package:omega_qick/Authorization/auto.dart';
+import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/LogFile.dart';
 
 import 'Authorization/Cri/AdderABC.dart';
+import 'Authorization/Pages/CheckCode/CheckCodePage.dart';
 import 'Authorization/Pages/EnterCodePage.dart';
+import 'Authorization/Pages/GetInfoForUser/GetInfoForUserPage.dart';
+import 'Authorization/Pages/PageNum/PageNum.dart';
+import 'Authorization/Pages/PageNum2/InpNum.dart';
+import 'Authorization/Pages/PageNum2/InputNum.dart';
 import 'Authorization/Pages/SetCodePage.dart';
 import 'Login1/Login.dart';
 import 'balance.dart';
@@ -56,15 +62,11 @@ class _SplashState extends State<Splash> {
 
 
 
-void loading()async {
-  writeLog("START APP");
-  await autoDB()?Navigator.of(context).pushReplacementNamed('EnterCode'):Navigator.of(context).pushReplacementNamed('/Login1/Login');
 
-}
 
   @override
   void initState() {
-    loading();
+    AutoRoutes(context);
     createDir();
   }
 

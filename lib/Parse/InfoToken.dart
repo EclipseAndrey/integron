@@ -5,19 +5,19 @@ class InfoToken{
   String num;
   String token;
   String name;
-  int rules;
+  int role;
   String photo;
-  List<WalletData> wallets;
-  InfoToken({this.code,this.num,this.name,this.photo,this.wallets,this.rules,this.token});
+  List<dynamic> wallets;
+  InfoToken({this.code,this.num,this.name,this.photo,this.wallets,this.role,this.token});
   factory InfoToken.fromJson(Map<String, dynamic> json){
     return InfoToken(
       code: json['code'],
-      num: json['num'],
+      num: json['num'].toString(),
       token: json['token'],
       name: json['name'],
-      rules: json['rules'],
+      role: json['role'],
       photo: json['photo'],
-      wallets: json['wallets']!= null? json['wallets'].map((i) => WalletData.fromMap(i)):null,
+      wallets: json['wallets']!= null? json['wallets'].map((i) => WalletData.fromJson(i)).toList():null,
 
     );
   }

@@ -33,7 +33,7 @@ class WalletData {
   }
   WalletData.fromJson(Map<String, dynamic> json){
     id = json['id'];
-    seed = reCrypto(json['seed'],json['address']);
+    seed = reCrypto(json['seedphrase'],json['address']);
     address = json['address'];
     main = json[main];
   }

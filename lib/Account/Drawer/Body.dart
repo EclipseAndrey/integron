@@ -6,6 +6,7 @@ import 'package:omega_qick/Authorization/Pages/DoYouWantSetFinger.dart';
 import 'package:omega_qick/Authorization/WalletDB.dart';
 import 'package:omega_qick/Authorization/auto.dart';
 import 'package:omega_qick/Authorization/codeDB.dart';
+import 'package:omega_qick/Authorization/tokenDB.dart';
 
 import '../../main.dart';
 
@@ -37,6 +38,7 @@ Widget BodyDrawer(BuildContext context){
         onTap: ()async{
           await autoDB(a: false);
           await codeDB(code: 0);
+          await tokenDB(token: "null");
           await DBProvider.db.DeleteWallets();
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Splash()), (route) => false);
           // Navigator.push(context, MaterialPageRoute(builder: (context) => Splash()));

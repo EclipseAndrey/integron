@@ -26,10 +26,10 @@ Future<AddressA> getAddress(String mnemonic, BuildContext context) async {
 
   print("get Address "+response.body);
   void _processResponse(http.Response response) {
-    print(response.body.toString()+"=======");
     if (response.statusCode == 200) {
+
       address =  AddressA.fromJson(json.decode(response.body));
-      print(response.body.toString());
+
       if(address.address == null|| address.mnemonic == null){
         address = null;
       }

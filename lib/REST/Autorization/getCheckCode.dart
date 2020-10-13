@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:omega_qick/Parse/CheckCode.dart';
 import 'package:omega_qick/REST/Servers.dart';
@@ -13,7 +15,7 @@ Future<CheckCode> CheckCodeR (String num, String code)async{
   }
   print("checkCode "+response.body);
   if(response.statusCode == 200){
-    return CheckCode.fromJson(response.body);
+    return CheckCode.fromJson(json.decode(response.body));
   }else{
     return null;
   }
