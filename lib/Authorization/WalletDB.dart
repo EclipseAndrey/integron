@@ -16,6 +16,7 @@ class WalletData {
 
   WalletData(this.seed,this.address);
 
+
   Map<String, dynamic> toMap() {
     final map = Map<String, dynamic>();
     map[walletsSeed] = seed;
@@ -28,6 +29,12 @@ class WalletData {
     seed = reCrypto(map[walletsSeed],map[walletsAddress]);
     address = map[walletsAddress];
   }
+  WalletData.fromJson(Map<String, dynamic> json){
+    seed = json['data'];
+    address = json['data'];
+  }
+
+
 }
 
 
