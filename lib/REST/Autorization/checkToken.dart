@@ -1,8 +1,9 @@
 import 'package:omega_qick/Parse/InfoToken.dart';
 import 'package:http/http.dart' as http;
+import 'package:omega_qick/REST/Servers.dart';
 
 Future<InfoToken> checkToken (String token)async{
-  String urlQuery = "";
+  String urlQuery = serverBD+ "/api.php/checktoken?token=$token";
   print(urlQuery);
   var response;
   try{
