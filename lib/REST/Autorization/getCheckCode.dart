@@ -1,8 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'package:omega_qick/Parse/CheckCode.dart';
+import 'package:omega_qick/REST/Servers.dart';
 
-Future<CheckCode> getCheckCode (String num)async{
-  String urlQuery = "";
+Future<CheckCode> CheckCodeR (String num, String code)async{
+  String urlQuery = serverBD+ "/api.php/checkcode?num=$num&code=$code";
   print(urlQuery);
   var response;
   try{
@@ -10,7 +11,7 @@ Future<CheckCode> getCheckCode (String num)async{
   }catch(e){
     return null;
   }
-  print("getCode "+response.body);
+  print("checkCode "+response.body);
   if(response.statusCode == 200){
     return CheckCode.fromJson(response.body);
   }else{
