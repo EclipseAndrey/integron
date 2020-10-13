@@ -13,6 +13,7 @@ class WalletData {
   int id;
   String seed;
   String address;
+  bool main;
 
   WalletData(this.seed,this.address);
 
@@ -28,10 +29,12 @@ class WalletData {
     id = map[walletsId];
     seed = reCrypto(map[walletsSeed],map[walletsAddress]);
     address = map[walletsAddress];
+
   }
   WalletData.fromJson(Map<String, dynamic> json){
-    seed = json['data'];
-    address = json['data'];
+    seed = reCrypto(json['seed'],json['address']);
+    address = json['address'];
+    main = json[main];
   }
 
 
