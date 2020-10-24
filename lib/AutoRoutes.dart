@@ -4,6 +4,7 @@ import 'package:omega_qick/Authorization/Pages/EnterCodePage.dart';
 import 'package:omega_qick/Authorization/Pages/GetInfoForUser/GetInfoForUserPage.dart';
 import 'package:omega_qick/Authorization/Pages/PageNum2/InpNum.dart';
 import 'package:omega_qick/Authorization/Pages/SetCodePage.dart';
+import 'package:omega_qick/Authorization/WalletDB.dart';
 import 'package:omega_qick/Authorization/codeDB.dart';
 import 'package:omega_qick/Authorization/tokenDB.dart';
 import 'package:omega_qick/Login1/Login.dart';
@@ -14,7 +15,12 @@ import 'Authorization/auto.dart';
 import 'LogFile.dart';
 
 void AutoRoutes(BuildContext context)async {
-  void tokenErr()async{}
+  void tokenErr()async{
+    print("AUTOROUTES TOKEN ERR");
+    await autoDB(a: false);
+    AutoRoutes(context);
+
+  }
 
   void tokenOk(InfoToken info)async{
     if(info.code == 200){
@@ -43,6 +49,10 @@ void AutoRoutes(BuildContext context)async {
       InfoToken infoToken = await checkToken(token);
       if(infoToken != null){
         print("AUTOROUTES  token response ${infoToken.code}");
+        await DBProvider.db.DeleteWallets();
+        for(int i = 0; i < infoToken.wallets.length; i++) {
+          await DBProvider.db.WalletDB(walletData: infoToken.wallets[i]);
+        }
         await tokenOk(infoToken);
       }else{
         infoToken = await checkToken(token);

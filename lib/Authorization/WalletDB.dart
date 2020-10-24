@@ -35,7 +35,7 @@ class WalletData {
     id = json['id'];
     seed = reCrypto(json['seedphrase'],json['address']);
     address = json['address'];
-    main = json[main];
+    main = json["main"] == 1?true:false;
   }
 
 

@@ -14,6 +14,9 @@ import 'Authorization/Pages/PageNum2/InpNum.dart';
 import 'Authorization/Pages/PageNum2/InputNum.dart';
 import 'Authorization/Pages/SetCodePage.dart';
 import 'Login1/Login.dart';
+import 'PostContent.dart';
+import 'REST/SecureConnection/DBSecure.dart';
+import 'REST/SecureConnection/DataSecure.dart';
 import 'balance.dart';
 
 
@@ -21,7 +24,7 @@ void main() {
 
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Color.fromRGBO(32, 38 , 45, 1), // status bar color
+    statusBarColor: Color.fromRGBO(32, 38 , 45, 1),
   ));
   runApp(MyApp());
 }
@@ -59,14 +62,12 @@ class Splash extends StatefulWidget {
 
 // ignore: must_call_super
 class _SplashState extends State<Splash> {
-
-
-
-
-
   @override
   void initState() {
+    DataSecureDB(dataSecure: DataSecure(0 ,"null"));
+
     AutoRoutes(context);
+
     createDir();
   }
 

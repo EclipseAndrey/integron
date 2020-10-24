@@ -10,7 +10,7 @@ class InfoToken{
   List<dynamic> wallets;
   InfoToken({this.code,this.num,this.name,this.photo,this.wallets,this.role,this.token});
   factory InfoToken.fromJson(Map<String, dynamic> json){
-    return InfoToken(
+    InfoToken out = InfoToken(
       code: json['code'],
       num: json['num'].toString(),
       token: json['token'],
@@ -18,8 +18,8 @@ class InfoToken{
       role: json['role'],
       photo: json['photo'],
       wallets: json['wallets']!= null? json['wallets'].map((i) => WalletData.fromJson(i)).toList():null,
-
     );
+    return out;
   }
 
 

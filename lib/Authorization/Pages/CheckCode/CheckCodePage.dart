@@ -145,7 +145,7 @@ class _CheckCodePageState extends State<CheckCodePage> {
                   SizedBox(height: 10,),
                   GestureDetector(
                     onTap: () async {
-                      CheckCode response =await  CheckCodeR(widget.num, text);
+                      CheckCode response =await  CheckCodeP(widget.num, text);
                       if(response.code == 200){
                         print("CheckCodePage response token ${response.token}");
                         await tokenDB(token: response.token);
