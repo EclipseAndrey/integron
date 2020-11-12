@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
 import 'package:omega_qick/Contacts/DataBase/AddContacts.dart';
 import 'package:omega_qick/Contacts/DataBase/Contact.dart';
 import 'package:omega_qick/Contacts/DataBase/DBDeleteContacts.dart';
 import 'package:omega_qick/Contacts/SendToContact/SendToContact.dart';
-import 'package:omega_qick/DialogLoading/DialogLoading.dart';
+
 import 'package:omega_qick/JsonParse.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
 import 'package:omega_qick/REST/GetUser.dart';
 import 'package:omega_qick/REST/getWalletR.dart';
 import 'package:omega_qick/ToolsPanel/DepositDialog.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 
 class Panel extends StatefulWidget {
   Contact contact;

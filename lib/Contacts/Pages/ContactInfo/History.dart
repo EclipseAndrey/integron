@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Contacts/DataBase/Contact.dart';
-import 'package:omega_qick/InitBalance.dart';
-import 'package:omega_qick/InitWallet.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitBalance.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitWallet.dart';
 import 'package:omega_qick/Parse/tx.dart';
 import 'package:omega_qick/REST/GetUser.dart';
-import 'package:omega_qick/TimeParse.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/TimeParse.dart';
 
 Widget History(Contact contact, BuildContext context) {
   Widget txItem(Tx tx) {

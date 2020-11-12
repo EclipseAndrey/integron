@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
-import 'package:omega_qick/DialogLoading/DialogLoading.dart';
+
 import 'package:omega_qick/JsonParse.dart';
-import 'package:omega_qick/LogFile.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/LogFile.dart';
 import 'package:omega_qick/Login1/Style.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
 import 'package:omega_qick/REST/getAddress.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/InitBalance.dart';
-import 'package:omega_qick/InitWallet.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitBalance.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitWallet.dart';
 import 'package:omega_qick/Parse/tx.dart';
 
 import '../../JsonParse.dart';
-import '../../TimeParse.dart';
+import '../../Utils/fun/TimeParse.dart';
 
 Widget itemListHistory(Tx tx, User user){
 

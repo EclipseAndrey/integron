@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/FadeAnimation.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/FadeAnimation.dart';
 import 'package:omega_qick/Login1/Style.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
 import 'package:omega_qick/REST/GenerateAddress.dart';

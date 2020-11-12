@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:omega_qick/Authorization/tokenDB.dart';
 import 'package:omega_qick/REST/Servers.dart';
 import 'package:http/http.dart' as http;
+import 'package:omega_qick/Utils/DB/tokenDB.dart';
 
 Future<int> AddWalletR (bool main, String seed, String address)async{
   String token = await tokenDB();

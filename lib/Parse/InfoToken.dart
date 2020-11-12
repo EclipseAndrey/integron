@@ -1,4 +1,5 @@
-import 'package:omega_qick/Authorization/WalletDB.dart';
+
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
 
 class InfoToken{
   int code = 0;

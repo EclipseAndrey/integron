@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
-import 'package:omega_qick/Authorization/auto.dart';
-import 'package:omega_qick/Authorization/codeDB.dart';
-import 'package:omega_qick/Authorization/finger.dart';
-import 'package:omega_qick/DialogLoading/DialogLoading.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/DB/auto.dart';
+
 import 'package:omega_qick/Login1/Login.dart';
 import 'package:omega_qick/Login1/Style.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/GeneralControllerPages.dart';
+import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/getWalletR.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
+import 'package:omega_qick/Utils/DB/codeDB.dart';
+import 'package:omega_qick/Utils/DB/finger.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/main.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 
-import '../../FadeAnimation.dart';
+import '../../Utils/fun/FadeAnimation.dart';
 import '../../JsonParse.dart';
 import '../../balance.dart';
-import '../WalletDB.dart';
 
 class EnterCode extends StatefulWidget {
   @override
@@ -23,9 +26,19 @@ class EnterCode extends StatefulWidget {
 }
 
 class _EnterCodeState extends State<EnterCode> {
+
   String text = '';
   double padding = 0;
-  bool anim =false;
+  bool fingerIcon = false;
+  bool anim = false;
+
+  void initFinger()async{
+    if(await fingerDB()) fingerIcon = true;
+    setState(() {
+
+    });
+  }
+
   void animation(){
     Future.delayed(Duration(milliseconds: 50), () {
       anim = padding== -50?false:true;
@@ -61,7 +74,7 @@ class _EnterCodeState extends State<EnterCode> {
         User user = await getUser(wallets[0].address, context);
         closeDialog(context);
 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PageBalance()));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => GeneralControllerPages()), (route) => false);
       }else{
 
       }
@@ -69,6 +82,7 @@ class _EnterCodeState extends State<EnterCode> {
   }
   @override
   void initState() {
+    initFinger();
     loginFinger();
   }
 
@@ -99,7 +113,7 @@ class _EnterCodeState extends State<EnterCode> {
 
 
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-            PageBalance()), (Route<dynamic> route) => false);
+            GeneralControllerPages()), (Route<dynamic> route) => false);
       }else{
         animation();
       }
@@ -112,7 +126,7 @@ class _EnterCodeState extends State<EnterCode> {
   Widget numberWidget(int position) {
     Color color ;
     try{
-      color = text[position] == null?Colors.transparent:Colors.white;
+      color = text[position] == null?Colors.transparent:cMainBlack;
     }catch(e){
       color = Colors.transparent;
     }
@@ -123,13 +137,13 @@ class _EnterCodeState extends State<EnterCode> {
         height: 20,
         width: 20,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.white, width: 0),
+            border: Border.all(color: cMainBlack, width: 0),
             color: color,
 
             borderRadius: const BorderRadius.all(Radius.circular(30))
         ),
         child: Center(child: Text(
-          "", style: TextStyle(color: Colors.white),)),
+          "", style: TextStyle(color: cMainBlack),)),
       );
     } catch (e) {
       return Container(
@@ -154,12 +168,7 @@ class _EnterCodeState extends State<EnterCode> {
       body: Container(
         width: size.width,
         height: size.height,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: backgroundGradient,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomCenter,
-            )),
+        color: cBackground,
 
         child: Column
           (
@@ -172,7 +181,7 @@ class _EnterCodeState extends State<EnterCode> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Код для входа", style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: "MPLUS",),),
+                      Text("Код для входа", style: TextStyle(color: cMainBlack, fontSize: 24, fontFamily: "MPLUS",),),
                       SizedBox(height: 30,),
 
                       Container(
@@ -208,13 +217,20 @@ class _EnterCodeState extends State<EnterCode> {
             SizedBox(height: 10,),
             NumericKeyboard(
               onKeyboardTap: _onKeyboardTap,
-              textColor: Colors.white,
+              textColor: cMainBlack,
+              leftIcon: Icon(Icons.fingerprint, color: fingerIcon?cDefault:Colors.transparent,),
+              leftButtonFn: (){
+                if(fingerIcon){
+                  loginFinger();
+                }
+              },
               rightIcon: Icon(
                 Icons.backspace,
-                color: Colors.white,
+                color: cDefault,
               ),
               rightButtonFn: () {
                 setState(() {
+                  if(text.length>0)
                   text = text.substring(0, text.length - 1);
                 });
               },

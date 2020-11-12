@@ -55,10 +55,10 @@ Future<CheckCode> CheckCodeP (String num, String code)async{
   if(response.statusCode == 200) {
     String code = await Connection.secure.reCrypto(json.decode(await response.body)['code']);
     print("response $code ");
-    if (code == "200"){
+    if (code == "200"||code == "201"){
       String token = await Connection.secure.reCrypto(
           json.decode(await response.body)['token']);
-    return CheckCode(code: int.parse(code), token: token);
+    return CheckCode(code: code, token: token);
   }
     else return CheckCode.err();
   }else{

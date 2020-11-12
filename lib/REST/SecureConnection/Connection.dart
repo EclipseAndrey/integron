@@ -128,12 +128,6 @@ class Connection{
 
     }
 
-    // List<int> array = [];
-    // for (int i = 0; i < text.length; i++) {
-    //   array.add(text.codeUnitAt(i));
-    // }
-    // text = utf8.decode(array);
-
     String output = "";
     int all = 65536;
     int step =0;

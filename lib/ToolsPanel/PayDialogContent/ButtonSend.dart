@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/DialogLoading/DialogError.dart';
-import 'package:omega_qick/DialogLoading/DialogLoading.dart';
-import 'package:omega_qick/DialogLoading/DialogOk.dart';
+
 import 'package:omega_qick/REST/payDelOnAddress.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogOk.dart';
 
 Widget ButtonSend(String seed,TextEditingController summ, TextEditingController address,BuildContext context) {
   return Padding(

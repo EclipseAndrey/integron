@@ -5,7 +5,7 @@ import 'package:omega_qick/Head/Colors.dart';
 import 'package:omega_qick/Head/Const.dart';
 import 'package:omega_qick/Head/Strings.dart';
 
-import '../InitBalance.dart';
+import '../Utils/fun/InitBalance.dart';
 import '../JsonParse.dart';
 
 Widget BalanseWidget(User user, BuildContext context) {

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:omega_qick/Authorization/Pages/PageNum2/Style.dart';
-import 'package:omega_qick/Authorization/auto.dart';
-import 'package:omega_qick/Authorization/tokenDB.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/DB/auto.dart';
+
 import 'package:omega_qick/AutoRoutes.dart';
-import 'package:omega_qick/FadeAnimation.dart';
+import 'package:omega_qick/Pages/Welcome/Welcome.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/FadeAnimation.dart';
 import 'package:omega_qick/Parse/CheckCode.dart';
 import 'package:omega_qick/REST/Autorization/getCheckCode.dart';
 import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/tokenDB.dart';
 
 class CheckCodePage extends StatefulWidget {
   String num;
@@ -151,7 +153,13 @@ class _CheckCodePageState extends State<CheckCodePage> {
                         await tokenDB(token: response.token);
                         await autoDB(a: true);
                         AutoRoutes(context);
-                      }else{
+                      } else if(response.code == 201){
+                        print("CheckCodePage response token ${response.token}");
+                        await tokenDB(token: response.token);
+                        await autoDB(a: true);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => WelcomePage()), (route) => false);
+                      }
+                      else{
                         Fluttertoast.showToast(
                             msg: "Неверный код",
                             toastLength: Toast.LENGTH_SHORT,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:omega_qick/InitBalance.dart';
-import 'package:omega_qick/InitWallet.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitBalance.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitWallet.dart';
 import 'package:omega_qick/JsonParse.dart';
 import 'package:omega_qick/Login1/Style.dart';
 import 'package:omega_qick/Style.dart';

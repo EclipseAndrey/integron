@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
 import 'package:omega_qick/Head/CardWallet.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
+import 'package:omega_qick/Parse/tx.dart';
 import 'package:omega_qick/REST/GetUser.dart';
 import 'package:omega_qick/REST/getWalletR.dart';
 import 'package:tabbar/tabbar.dart';
@@ -16,12 +16,16 @@ class Header extends StatefulWidget {
   PageController controller;
   List<User> users;
 
+
+
+
   Header(this.users, this.controller);
   @override
   _HeaderState createState() => _HeaderState(controller);
 }
 
 class _HeaderState extends State<Header> {
+
 
   bool loading = false;
 
@@ -37,6 +41,9 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return ControllerHeader(widget.users, context, controller);
   }
   double offset = 0;

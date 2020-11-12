@@ -1,7 +1,7 @@
 import 'package:omega_qick/Errors.dart';
 
 class CheckCode extends Errors{
-  int code = 0;
+  String code = "0";
   String token;
   CheckCode({this.code, this.token});
 

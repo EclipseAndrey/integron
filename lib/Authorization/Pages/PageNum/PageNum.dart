@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:omega_qick/FadeAnimation.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/FadeAnimation.dart';
 import 'package:omega_qick/Style.dart';
 
 class PageNum extends StatefulWidget {

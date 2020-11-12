@@ -4,15 +4,16 @@ import 'package:omega_qick/Authorization/Pages/EnterCodePage.dart';
 import 'package:omega_qick/Authorization/Pages/GetInfoForUser/GetInfoForUserPage.dart';
 import 'package:omega_qick/Authorization/Pages/PageNum2/InpNum.dart';
 import 'package:omega_qick/Authorization/Pages/SetCodePage.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
-import 'package:omega_qick/Authorization/codeDB.dart';
-import 'package:omega_qick/Authorization/tokenDB.dart';
-import 'package:omega_qick/Login1/Login.dart';
+
+import 'package:omega_qick/Pages/Login2/PageLogin.dart';
 import 'package:omega_qick/Parse/InfoToken.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
 
-import 'Authorization/auto.dart';
-import 'LogFile.dart';
+import 'Utils/DB/WalletDB.dart';
+import 'Utils/DB/auto.dart';
+import 'Utils/DB/codeDB.dart';
+import 'Utils/DB/tokenDB.dart';
+import 'Utils/fun/LogFile.dart';
 
 void AutoRoutes(BuildContext context)async {
   void tokenErr()async{
@@ -69,6 +70,6 @@ void AutoRoutes(BuildContext context)async {
     }
   }else{
     print("AUTOROUTES F auto $auto");
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => InpNum()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login()), (route) => false);
   }
 }

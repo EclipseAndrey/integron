@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/DialogLoading/DialogLoading.dart';
-import 'package:omega_qick/DialogLoading/DialogOk.dart';
-import 'package:omega_qick/InitBalance.dart';
+
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitBalance.dart';
 import 'package:omega_qick/JsonParse.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
 import 'package:omega_qick/REST/payDelOnAddress.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogOk.dart';
 
 import 'Style.dart';
 

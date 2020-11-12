@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:omega_qick/Authorization/tokenDB.dart';
+
 import 'package:omega_qick/REST/Servers.dart';
 import 'package:http/http.dart' as http;
+import 'package:omega_qick/Utils/DB/tokenDB.dart';
 
 Future<int> setNameR (String name)async{
   String token = await tokenDB();

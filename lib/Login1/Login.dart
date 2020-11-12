@@ -1,6 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
+
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
 
 import 'ButtonGenerate.dart';
 import 'InputSeed.dart';

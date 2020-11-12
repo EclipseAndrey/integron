@@ -1,6 +1,6 @@
-import 'package:omega_qick/Authorization/WalletDB.dart';
 import 'package:omega_qick/Contacts/DataBase/Contact.dart';
 import 'package:omega_qick/Contacts/DataBase/DBConfig.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
 
 Future<Contact> getContactForNum(String num)async{
   var db = await DBProvider.db.database;

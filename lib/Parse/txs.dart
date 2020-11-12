@@ -5,7 +5,7 @@ class Txs {
   Txs({this.txs});
   factory Txs.fromJson(Map<String, dynamic> json){
     return Txs(
-      txs: json['txs'].map((i) => Tx.fromJson(i)),
+      txs: json['txs'].map((i) => Tx.fromJson(i)).toList(),
     );
   }
 }

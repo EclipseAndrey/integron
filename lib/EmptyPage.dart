@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:omega_qick/Pages/Login2/Style.dart';
 
 import 'Head/Colors.dart';
 import 'Style.dart';
@@ -21,7 +22,7 @@ class _EmptyPageState extends State<EmptyPage> {
 
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromRGBO(32, 38 , 45, 1),
+        backgroundColor: cBackground,
         shadowColor: Colors.transparent,
 
 
@@ -30,15 +31,12 @@ class _EmptyPageState extends State<EmptyPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: homeBackgroundGradient,
-                begin: Alignment.centerLeft,
-                end: Alignment.bottomCenter)),
+            color: cBackground),
         child: Center(
             child: Text(
           "Место для контента",
           style: TextStyle(
-            color: Colors.white,
+            color: cMainBlack,
             fontSize: 24,
             fontFamily: "MPLUS",
           ),

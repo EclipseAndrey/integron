@@ -4,14 +4,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/AddWallet/Style.dart';
 import 'package:omega_qick/Authorization/Cri/AdderABC.dart';
 import 'package:omega_qick/Authorization/Pages/SetCodePage.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
-import 'package:omega_qick/Authorization/codeDB.dart';
+
 import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/HomePage/Home.dart';
 import 'package:omega_qick/Login1/Login.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
 import 'package:omega_qick/REST/Autorization/AddWalletR.dart';
 import 'package:omega_qick/REST/getWalletR.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
+import 'package:omega_qick/Utils/DB/codeDB.dart';
 import 'package:omega_qick/balance.dart';
 
 import '../JsonParse.dart';

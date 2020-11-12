@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
-import 'package:omega_qick/Authorization/codeDB.dart';
-import 'package:omega_qick/LogFile.dart';
+
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/LogFile.dart';
 import 'package:omega_qick/Login1/Login.dart';
 import 'package:omega_qick/Login1/Style.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/GeneralControllerPages.dart';
+import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/getWalletR.dart';
-import '../../FadeAnimation.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
+import 'package:omega_qick/Utils/DB/codeDB.dart';
+import '../../Utils/fun/FadeAnimation.dart';
 import '../../JsonParse.dart';
 import '../../balance.dart';
-import '../auto.dart';
+import '../../Utils/DB/auto.dart';
 import 'DoYouWantSetFinger.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
@@ -77,7 +80,7 @@ class _SetCodeState extends State<SetCode> {
             // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => PageBalance(user , wallets[0].seed)));
 
             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                PageBalance()), (Route<dynamic> route) => false);
+                GeneralControllerPages()), (Route<dynamic> route) => false);
 
             //OK
           }else{
@@ -105,7 +108,7 @@ class _SetCodeState extends State<SetCode> {
   Widget numberWidget(int position) {
     Color color ;
     try{
-      color = text[position] == null?Colors.transparent:Colors.white;
+      color = text[position] == null?Colors.transparent:cMainBlack;
     }catch(e){
       color = Colors.transparent;
     }
@@ -116,13 +119,13 @@ class _SetCodeState extends State<SetCode> {
         height: 20,
         width: 20,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.white, width: 0),
+            border: Border.all(color: cMainBlack, width: 0),
             color: color,
 
             borderRadius: const BorderRadius.all(Radius.circular(30))
         ),
         child: Center(child: Text(
-          "", style: TextStyle(color: Colors.white),)),
+          "", style: TextStyle(color: cMainBlack),)),
       );
     } catch (e) {
       return Container(
@@ -147,12 +150,7 @@ class _SetCodeState extends State<SetCode> {
       body: Container(
         width: size.width,
         height: size.height,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: backgroundGradient,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomCenter,
-            )),
+        color: cBackground,
 
         child: Column
           (
@@ -165,7 +163,10 @@ class _SetCodeState extends State<SetCode> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(set?"Придумайте код для входа":"Повторите код", style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: "MPLUS",),),
+                      Text(set?"Уникальный ПИН-код":"Повторите ПИН-код", style: TextStyle(color: cMainBlack, fontSize: 24, fontFamily: "MPLUS",),),
+                      SizedBox(height: 30,),
+                      Text(set?"Придумайте уникальный код,":"Запомните ПИН-код и никому его", style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
+                      Text(set?"с помощью которого вы будете входить":"не сообщайте", style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
                       SizedBox(height: 30,),
 
                       Container(
@@ -200,14 +201,16 @@ class _SetCodeState extends State<SetCode> {
             SizedBox(height: 10,),
             NumericKeyboard(
               onKeyboardTap: _onKeyboardTap,
-              textColor: Colors.white,
+              textColor: cMainBlack,
               rightIcon: Icon(
                 Icons.backspace,
-                color: Colors.white,
+                color: cDefault,
               ),
               rightButtonFn: () {
                 setState(() {
-                  text = text.substring(0, text.length - 1);
+                  if(text.length>0)
+
+                    text = text.substring(0, text.length - 1);
                 });
               },
             ),

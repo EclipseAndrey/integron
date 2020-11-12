@@ -3,9 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/Authorization/Pages/CheckCode/CheckCodePage.dart';
 import 'package:omega_qick/Authorization/Pages/EnterCodePage.dart';
 import 'package:omega_qick/Authorization/Pages/SetCodePage.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
+
 import 'package:omega_qick/JsonParse.dart';
-import 'package:omega_qick/LogFile.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/LogFile.dart';
 import 'package:omega_qick/Login1/Loading.dart';
 import 'package:omega_qick/Login1/Login.dart';
 import 'package:omega_qick/Login1/Style.dart';

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
 import 'package:omega_qick/Contacts/DataBase/GetContactForAddress.dart';
 import 'package:omega_qick/Head/ControllerHeader.dart';
 import 'package:omega_qick/Parse/parseAddress.dart';
@@ -9,6 +8,7 @@ import 'package:omega_qick/Parse/txs.dart';
 import 'package:omega_qick/REST/GetUser.dart';
 import 'package:omega_qick/REST/getAddress.dart';
 import 'package:omega_qick/ToolsPanel/Panel.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
 
 import '../JsonParse.dart';
 import '../Style.dart';

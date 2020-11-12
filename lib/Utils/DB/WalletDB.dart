@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:omega_qick/Authorization/Cri/AdderABC.dart';
-import 'package:omega_qick/Authorization/DBConfig.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/DB/DBConfig.dart';
 import 'package:omega_qick/Contacts/DataBase/DBConfig.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';

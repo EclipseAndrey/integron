@@ -30,8 +30,10 @@ class Tx {
     this.from,
     this.to,
     this.data,
-
   });
+
+
+
   factory Tx.fromJson(Map<String, dynamic> json){
     return Tx(
       id: json['id'] == null? 0: json['id'],

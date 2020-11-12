@@ -3,10 +3,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Authorization/Pages/DoYouWantSetFinger.dart';
-import 'package:omega_qick/Authorization/WalletDB.dart';
-import 'package:omega_qick/Authorization/auto.dart';
-import 'package:omega_qick/Authorization/codeDB.dart';
-import 'package:omega_qick/Authorization/tokenDB.dart';
+import 'package:omega_qick/AutoRoutes.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
+import 'package:omega_qick/Utils/DB/codeDB.dart';
+import 'package:omega_qick/Utils/DB/tokenDB.dart';
+import 'package:omega_qick/Utils/fun/ExitAccount.dart';
+
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/DB/auto.dart';
+
 
 import '../../main.dart';
 
@@ -36,11 +40,8 @@ Widget BodyDrawer(BuildContext context){
       ),
       ListTile(
         onTap: ()async{
-          await autoDB(a: false);
-          await codeDB(code: 0);
-          await tokenDB(token: "null");
-          await DBProvider.db.DeleteWallets();
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Splash()), (route) => false);
+          await ExitAccount();
+          AutoRoutes(context);
           // Navigator.push(context, MaterialPageRoute(builder: (context) => Splash()));
         },
         title: new Text("Exit", style: TextStyle(color: Colors.white),),

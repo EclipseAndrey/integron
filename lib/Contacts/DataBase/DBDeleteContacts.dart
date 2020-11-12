@@ -1,4 +1,4 @@
-import 'package:omega_qick/Authorization/WalletDB.dart';
+import 'package:omega_qick/Utils/DB/WalletDB.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'DBConfig.dart';

@@ -6,11 +6,12 @@ import 'package:omega_qick/Contacts/DataBase/AddContacts.dart';
 import 'package:omega_qick/Contacts/DataBase/Contact.dart';
 import 'package:omega_qick/Contacts/DataBase/DBDeleteContacts.dart';
 import 'package:omega_qick/Contacts/Pages/AddContactContent/TextAddress.dart';
-import 'package:omega_qick/DialogLoading/DialogError.dart';
-import 'package:omega_qick/DialogLoading/DialogLoading.dart';
-import 'package:omega_qick/DialogLoading/DialogOk.dart';
+
 import 'package:omega_qick/Login1/Style.dart';
 import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogOk.dart';
 
 import 'HeadPhoto.dart';
 
