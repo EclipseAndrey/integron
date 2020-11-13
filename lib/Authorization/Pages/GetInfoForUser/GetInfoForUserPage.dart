@@ -196,7 +196,7 @@ class _GetInfoForUserPageState extends State<GetInfoForUserPage> {
     return GestureDetector(
       onTap: ()async{
         if(controller.text != ""){
-          if(await setNameR(controller.text) == 200){
+          if(await GetSetName(controller.text) == 200){
             if(await setRoleR(business?"1":"0") == 200){
               AutoRoutes(context);
             }

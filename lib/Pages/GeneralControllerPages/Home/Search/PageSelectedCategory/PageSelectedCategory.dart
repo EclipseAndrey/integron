@@ -95,11 +95,11 @@ class _PageSelectedCategoryState extends State<PageSelectedCategory> with Automa
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      color: cBackground,
+      color: cBG,
       child: SingleChildScrollView(
         controller: controllerScroll,
         child: Container(
-          color: cBackground,
+          color: cBG,
           child: Column(
             children: [
               Padding(
@@ -137,7 +137,7 @@ class _PageSelectedCategoryState extends State<PageSelectedCategory> with Automa
         ],
       );
     }else return Center(
-      child: Text("Скоро будут товары :)", style: TextStyle(color: cMainBlack, fontFamily: fontFamily, fontSize: 24),),
+      child: Text("Скоро будут товары :)", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24),),
     );
   }
 
@@ -182,6 +182,6 @@ class _PageSelectedCategoryState extends State<PageSelectedCategory> with Automa
 
 
   @override
-  // TODO: implement wantKeepAlive
+
   bool get wantKeepAlive => SaveStateCatalog;
 }

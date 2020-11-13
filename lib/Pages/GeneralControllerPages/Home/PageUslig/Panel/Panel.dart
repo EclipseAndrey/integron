@@ -152,11 +152,11 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              getIconForId(id:49, color: cMainBlack, size: 24,),
+              getIconForId(id:49, color: cMainText, size: 24,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text("102.120", style: TextStyle(color: cMainBlack, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w700),),
+                  Text("102.120", style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w700),),
                   Text(" DEL", style: TextStyle(color: c6287A1, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w400)),
                 ],
               ),
@@ -245,7 +245,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
 
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Подписки на приложения за любой токен", style: TextStyle(color: cMainBlack, fontWeight: FontWeight.w700, fontSize: 16 - minusFontsSize, fontStyle: FontStyle.normal),),
+              child: Text("Подписки на приложения за любой токен", style: TextStyle(color: cMainText, fontWeight: FontWeight.w700, fontSize: 16 - minusFontsSize, fontStyle: FontStyle.normal),),
             ),
           ],
         ),

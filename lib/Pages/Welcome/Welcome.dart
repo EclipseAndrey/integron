@@ -71,7 +71,7 @@ class _WelcomePageState extends State<WelcomePage> {
       child: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: cBackground,
+        color: cBG,
         child: Content(),
       ),
     );
@@ -102,9 +102,9 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget TextWelcome(){
     return Column(
       children: [
-        Text("Поздравляем!", style: TextStyle(color: cMainBlack, fontWeight: FontWeight.w400, fontSize: 27 - minusFontsSize, fontStyle: FontStyle.normal),),
+        Text("Поздравляем!", style: TextStyle(color: cMainText, fontWeight: FontWeight.w400, fontSize: 27 - minusFontsSize, fontStyle: FontStyle.normal),),
         SizedBox(height: 10,),
-        Text("Вы успешно зарегистрированы", style: TextStyle(color: cMainBlack, fontWeight: FontWeight.w400, fontSize: 14 - minusFontsSize, fontStyle: FontStyle.normal),),
+        Text("Вы успешно зарегистрированы", style: TextStyle(color: cMainText, fontWeight: FontWeight.w400, fontSize: 14 - minusFontsSize, fontStyle: FontStyle.normal),),
       ],
     );
   }

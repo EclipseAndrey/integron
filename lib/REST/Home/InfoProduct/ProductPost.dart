@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 
 
-Future<Product> ProductGet (int id)async{
+Future<Product> getProductForId (int id)async{
   String url =  "http://194.226.171.139:14880/api.php/item?id=$id";
   print(url);
   var response = await http.get(url);

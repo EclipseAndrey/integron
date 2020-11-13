@@ -199,13 +199,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: getIconForId(id: 25, color: cBackground, size: 24),
+              child: getIconForId(id: 25, color: cBG, size: 24),
             )
           ],
 
           leading:  Padding(
             padding: const EdgeInsets.all(16.0),
-            child: getIconForId(id: 41, color: cBackground, size: 24),
+            child: getIconForId(id: 41, color: cBG, size: 24),
           ),
 
           elevation: 0,
@@ -216,7 +216,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
             child: Icon(
               customIcons.Integron.integron,
               size: 24 - minusIconsSize,
-              color: cBackground,
+              color: cBG,
             ),
           ),
         ),
@@ -230,7 +230,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      color: cBackground,
+      color: cBG,
       child: Stack(
         children: [
           Container(
@@ -311,7 +311,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                                           child: AnimatedContainer(
                                             duration: Duration(milliseconds: widget.durationAnimatePanel),
                                             decoration: BoxDecoration(
-                                              color: cBackground,
+                                              color: cBG,
                                               borderRadius: BorderRadius.only(
                                                 topLeft:
                                                   Radius.circular(widget.radiusPanelLeft),
@@ -387,7 +387,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
 }

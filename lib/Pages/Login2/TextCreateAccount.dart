@@ -8,9 +8,9 @@ Widget TextCreateAccount (BuildContext context, minusFontsSize){
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Text("Создать аккаунт", style:  TextStyle(color:  cMainBlack, fontSize:  27 - minusFontsSize, fontWeight: FontWeight.w400, fontStyle:  FontStyle.normal),),
+      Text("Создать аккаунт", style:  TextStyle(color:  cMainText, fontSize:  27 - minusFontsSize, fontWeight: FontWeight.w400, fontStyle:  FontStyle.normal),),
       SizedBox(height: 20,),
-      Text("с помощью мобильного", style: TextStyle(color:  cMainBlack, fontSize: 16 - minusFontsSize, fontStyle: FontStyle.normal, fontWeight: FontWeight.w600))
+      Text("с помощью мобильного", style: TextStyle(color:  cMainText, fontSize: 16 - minusFontsSize, fontStyle: FontStyle.normal, fontWeight: FontWeight.w600))
     ],
   );
 }

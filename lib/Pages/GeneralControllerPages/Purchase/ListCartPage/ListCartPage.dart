@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
@@ -85,7 +86,7 @@ class _ListCartPageState extends State<ListCartPage> {
                 Container(
                   height: MediaQuery.of(context).size.height-130,
                   width: MediaQuery.of(context).size.width - paddingAll*2,
-                  child: list.length==0?Center(child: Text("Тут пусто :)", style: TextStyle(color: cMainBlack, fontFamily: fontFamily, fontSize: 24),),):
+                  child: list.length==0?Center(child: Text("Тут пусто :)", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24),),):
                   SingleChildScrollView(
                     child: Column(
                       children: [
@@ -100,7 +101,7 @@ class _ListCartPageState extends State<ListCartPage> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(sortList[indexAll][0].ownerName, style: TextStyle(color: cMainBlack, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w600),),
+                                        Text(sortList[indexAll][0].ownerName, style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w600),),
                                         getIconForId(id: 39, color: c6287A1, size: 24)
                                       ],
                                     ),
@@ -144,23 +145,28 @@ class _ListCartPageState extends State<ListCartPage> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('Итого: ', style: TextStyle(color: cMainBlack, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 16),),
+          Text('Итого: ', style: TextStyle(color: cMainText, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 16),),
           Text(getSumm(), style: TextStyle(color: c5894bc, fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: 16),),
-          Text(' DEL', style: TextStyle(color: cMainBlack, fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: 16),),
+          Text(' DEL', style: TextStyle(color: cMainText, fontWeight: FontWeight.w600, fontFamily: fontFamily, fontSize: 16),),
         ],
       );
     }
 
     Widget buttonPay() {
-      return Container(
-        height: 42,
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 0, 0, 1),
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Center(child: Text("Оформить", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, ),)),
+      return GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => FormalizePage(list)));
+          },
+        child: Container(
+          height: 42,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(255, 0, 0, 1),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Center(child: Text("Оформить", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, ),)),
+          ),
         ),
       );
     }
@@ -171,7 +177,7 @@ class _ListCartPageState extends State<ListCartPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            color: cBackground,
+            color: cBG,
             width: MediaQuery.of(context).size.width- paddingAll*2,
             height: 60,
             child: Padding(
@@ -188,7 +194,7 @@ class _ListCartPageState extends State<ListCartPage> {
           Container(
             width: MediaQuery.of(context).size.width- paddingAll*2,
             height: 50,
-            color: cBackground,
+            color: cBG,
           )
         ],
       ),
@@ -223,7 +229,7 @@ class _ListCartPageState extends State<ListCartPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(sortList[indexAll][index].name, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: cMainBlack, fontFamily: fontFamily),),
+                  Text(sortList[indexAll][index].name, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: cMainText, fontFamily: fontFamily),),
                   Container(width: MediaQuery.of(context).size.width-paddingAll*2- 108,
                     child: Row(
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -271,7 +277,7 @@ class _ListCartPageState extends State<ListCartPage> {
     return Row(
       children: [
         Text(sortList[indexAll][index].price.toString(), style: TextStyle(color:  c6287A1, fontSize: 16, fontWeight: FontWeight.w600, fontFamily: fontFamily),),
-        Text(" DEL" , style: TextStyle(color:  cMainBlack, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: fontFamily), ),
+        Text(" DEL" , style: TextStyle(color:  cMainText, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: fontFamily), ),
       ],
     );
   }

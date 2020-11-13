@@ -56,7 +56,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
         style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: cMainBlack,
+            color: cMainText,
             fontFamily: "Open Sans"));
   }
   Widget Filter(){

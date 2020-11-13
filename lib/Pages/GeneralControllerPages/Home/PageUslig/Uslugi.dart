@@ -93,7 +93,7 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
     return SingleChildScrollView(
       controller: controllerScroll,
       child: Container(
-        color: cBackground,
+        color: cBG,
         child: Column(
           children: [
             MainPanel(context, product, category),
@@ -121,6 +121,5 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => SaveStateCatalog;
 }

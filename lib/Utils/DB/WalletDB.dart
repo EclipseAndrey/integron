@@ -93,10 +93,10 @@ class DBProvider{
   }
 
   Future<bool> DeleteWallets ()async{
-    Database db = await this.database;
-    print("delete wallets");
-    await db.delete(tableWallets);
-    return true;
+    // Database db = await this.database;
+    // print("delete wallets");
+    // await db.delete(tableWallets);
+    // return true;
   }
 
 

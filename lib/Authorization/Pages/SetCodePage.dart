@@ -72,12 +72,7 @@ class _SetCodeState extends State<SetCode> {
               writeLog("Сканер отпечатка не найден ");
               print("no  scan");
             }
-            List<WalletData> wallets = await DBProvider.db.WalletDB();
-            User user = await getUser(wallets[0].address, context);
-            if(user != null)autoDB(a: true);else{
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-            }
-            // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => PageBalance(user , wallets[0].seed)));
+            await autoDB(a: true);
 
             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                 GeneralControllerPages()), (Route<dynamic> route) => false);
@@ -108,7 +103,7 @@ class _SetCodeState extends State<SetCode> {
   Widget numberWidget(int position) {
     Color color ;
     try{
-      color = text[position] == null?Colors.transparent:cMainBlack;
+      color = text[position] == null?Colors.transparent:cMainText;
     }catch(e){
       color = Colors.transparent;
     }
@@ -119,13 +114,13 @@ class _SetCodeState extends State<SetCode> {
         height: 20,
         width: 20,
         decoration: BoxDecoration(
-            border: Border.all(color: cMainBlack, width: 0),
+            border: Border.all(color: cMainText, width: 0),
             color: color,
 
             borderRadius: const BorderRadius.all(Radius.circular(30))
         ),
         child: Center(child: Text(
-          "", style: TextStyle(color: cMainBlack),)),
+          "", style: TextStyle(color: cMainText),)),
       );
     } catch (e) {
       return Container(
@@ -150,7 +145,7 @@ class _SetCodeState extends State<SetCode> {
       body: Container(
         width: size.width,
         height: size.height,
-        color: cBackground,
+        color: cBG,
 
         child: Column
           (
@@ -163,7 +158,7 @@ class _SetCodeState extends State<SetCode> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(set?"Уникальный ПИН-код":"Повторите ПИН-код", style: TextStyle(color: cMainBlack, fontSize: 24, fontFamily: "MPLUS",),),
+                      Text(set?"Уникальный ПИН-код":"Повторите ПИН-код", style: TextStyle(color: cMainText, fontSize: 24, fontFamily: "MPLUS",),),
                       SizedBox(height: 30,),
                       Text(set?"Придумайте уникальный код,":"Запомните ПИН-код и никому его", style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
                       Text(set?"с помощью которого вы будете входить":"не сообщайте", style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
@@ -201,7 +196,7 @@ class _SetCodeState extends State<SetCode> {
             SizedBox(height: 10,),
             NumericKeyboard(
               onKeyboardTap: _onKeyboardTap,
-              textColor: cMainBlack,
+              textColor: cMainText,
               rightIcon: Icon(
                 Icons.backspace,
                 color: cDefault,

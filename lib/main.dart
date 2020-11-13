@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omega_qick/AddWallet/AddWalletPage.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
+import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
+import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'Pages/GeneralControllerPages/GeneralControllerPages.dart';
 import 'Pages/GeneralControllerPages/My/PageAddProduct.dart';
 import 'Pages/Welcome/Welcome.dart';
+import 'REST/Home/Search/getItemCategory.dart';
 import 'Tests/Test.dart';
 import 'Utils/DB/Items/Product.dart';
 import 'Utils/fun/ExitAccount.dart';
@@ -58,6 +62,8 @@ class MyApp extends StatelessWidget {
     // '/Autorizatoin/Pages/EnterCodePage': (BuildContext context) => EnterCode(),
 
   };
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -65,8 +71,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: GenerateWallet(),
-      //   home: Login(),
-      home: GeneralControllerPages(),
+
+        home: Splash(),
+     // home: GeneralControllerPages(),
        //home: AddProductPage.empty(),
 
       routes: routes,
@@ -83,18 +90,32 @@ class Splash extends StatefulWidget {
 
 // ignore: must_call_super
 class _SplashState extends State<Splash> {
+
+
+  load()async{
+    List<ProductShort> v = await getItemsCategory(1);
+    List<Product> f =[];
+    for(int i = 0; i < v.length; i++){
+      f.add(await getProductForId(v[i].route));
+    }
+
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => FormalizePage(f)));
+  }
+
+
   @override
   void initState() {
 
 
+    load();
 
     cartList = [];
     DataSecureDB(dataSecure: DataSecure(0 ,"null"));
 
    // ExitAccount();
-    AutoRoutes(context);
+    //  AutoRoutes(context);
 
-    createDir();
+    //createDir();
   }
 
   @override

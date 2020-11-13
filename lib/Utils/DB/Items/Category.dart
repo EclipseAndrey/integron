@@ -8,7 +8,7 @@ class Category extends BlocSize{
 
   factory Category.fromJson(Map<String, dynamic> json){
     print("Парсинг "+ json.toString());
-    //todo Парсинг нужно настроить
+
     return Category(
       icon: int.parse(json['icon']),
       name: json['name'],

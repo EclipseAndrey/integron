@@ -15,15 +15,15 @@ Future<User> ShowBottoomSheetSelectForIndex({@required BuildContext context, @re
 
 
   showBarModalBottomSheet(
-    backgroundColor: cBackground,
+    backgroundColor: cBG,
     context: context,
     builder: (context, scrollController) {
       return Container(
-        color: cBackground,
+        color: cBG,
 
         height: 400,
         child: Material(
-          color: cBackground,
+          color: cBG,
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(18.0),
@@ -31,7 +31,7 @@ Future<User> ShowBottoomSheetSelectForIndex({@required BuildContext context, @re
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(title,style: TextStyle(color: cMainBlack, fontSize: 18),),
+                    child: Text(title,style: TextStyle(color: cMainText, fontSize: 18),),
                   ),
                   Column(
                     children: List.generate(items.length, (index) {

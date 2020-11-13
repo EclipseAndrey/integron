@@ -11,7 +11,7 @@ void showDialogIntegron({
 }) {
 
 
-  Color backGroundColor = dialogBackGroundColor ?? cBackground;
+  Color backGroundColor = dialogBackGroundColor ?? cBG;
 
   int counter = 0;
   if(buttons != null){
@@ -39,7 +39,6 @@ void showDialogIntegron({
           counter ==2?Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // todo 2 buttons
               Container(
                 width: MediaQuery.of(context).size.width*0.88/2-1,
                 height: height,
@@ -70,22 +69,19 @@ void showDialogIntegron({
     return Padding(
       padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width*0.08,),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: counter >0?MainAxisAlignment.spaceBetween:MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-
-
             padding: EdgeInsets.only( right: 12,left: 12),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 title,
                 SizedBox(height: 12,),
                 body,
               ],
-
             ),
           ),
           _buttons(50),

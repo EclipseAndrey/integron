@@ -10,7 +10,7 @@ Widget HaveAccount(BuildContext context, double minusFontsSize) {
     children: [
       Text(
         "Уже eсть аккаунт? ",
-        style: TextStyle(color: cMainBlack,
+        style: TextStyle(color: cMainText,
           fontSize: 16 - minusFontsSize,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.normal,
@@ -20,7 +20,7 @@ Widget HaveAccount(BuildContext context, double minusFontsSize) {
       ),
       GestureDetector(
         onTap: (){
-          //TODO: press Login
+
         },
         child: Text(
           " Войти",

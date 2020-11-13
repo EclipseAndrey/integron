@@ -69,11 +69,6 @@ class _EnterCodeState extends State<EnterCode> {
 
       if(await didAuthenticate){
         print("ok");
-        showDialogLoading(context);
-        List<WalletData> wallets = await DBProvider.db.WalletDB();
-        User user = await getUser(wallets[0].address, context);
-        closeDialog(context);
-
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => GeneralControllerPages()), (route) => false);
       }else{
 
@@ -92,12 +87,7 @@ class _EnterCodeState extends State<EnterCode> {
     });
     if(text.length == 4){
 
-      if(text == '4116'){
-        autoDB(a: false);
-        await DBProvider.db.DeleteWallets();
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Splash()));
 
-      }
 
       var code = await codeDB();
       if(code == 0){
@@ -106,11 +96,6 @@ class _EnterCodeState extends State<EnterCode> {
       }else
       if(code == int.parse(text)){
         print("ok");
-        showDialogLoading(context);
-        List<WalletData> wallets = await DBProvider.db.WalletDB();
-        User user = await getUser(wallets[0].address, context);
-        closeDialog(context);
-
 
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
             GeneralControllerPages()), (Route<dynamic> route) => false);
@@ -126,7 +111,7 @@ class _EnterCodeState extends State<EnterCode> {
   Widget numberWidget(int position) {
     Color color ;
     try{
-      color = text[position] == null?Colors.transparent:cMainBlack;
+      color = text[position] == null?Colors.transparent:cMainText;
     }catch(e){
       color = Colors.transparent;
     }
@@ -137,13 +122,13 @@ class _EnterCodeState extends State<EnterCode> {
         height: 20,
         width: 20,
         decoration: BoxDecoration(
-            border: Border.all(color: cMainBlack, width: 0),
+            border: Border.all(color: cMainText, width: 0),
             color: color,
 
             borderRadius: const BorderRadius.all(Radius.circular(30))
         ),
         child: Center(child: Text(
-          "", style: TextStyle(color: cMainBlack),)),
+          "", style: TextStyle(color: cMainText),)),
       );
     } catch (e) {
       return Container(
@@ -168,7 +153,7 @@ class _EnterCodeState extends State<EnterCode> {
       body: Container(
         width: size.width,
         height: size.height,
-        color: cBackground,
+        color: cBG,
 
         child: Column
           (
@@ -181,7 +166,7 @@ class _EnterCodeState extends State<EnterCode> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Код для входа", style: TextStyle(color: cMainBlack, fontSize: 24, fontFamily: "MPLUS",),),
+                      Text("Код для входа", style: TextStyle(color: cMainText, fontSize: 24, fontFamily: "MPLUS",),),
                       SizedBox(height: 30,),
 
                       Container(
@@ -217,7 +202,7 @@ class _EnterCodeState extends State<EnterCode> {
             SizedBox(height: 10,),
             NumericKeyboard(
               onKeyboardTap: _onKeyboardTap,
-              textColor: cMainBlack,
+              textColor: cMainText,
               leftIcon: Icon(Icons.fingerprint, color: fingerIcon?cDefault:Colors.transparent,),
               leftButtonFn: (){
                 if(fingerIcon){

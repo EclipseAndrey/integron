@@ -90,7 +90,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
             alignment: Alignment.bottomCenter,
             child: Theme(
               data: Theme.of(context)
-                  .copyWith(canvasColor: cBackground.withOpacity(0.7)),
+                  .copyWith(canvasColor: cBG.withOpacity(0.7)),
               child: BottomNavigationBar(
                 elevation: 0,
 

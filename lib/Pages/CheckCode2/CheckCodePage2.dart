@@ -101,7 +101,7 @@ class _CheckCodeState extends State<CheckCodePage> {
       child: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: cBackground,
+        color: cBG,
         child: Content(),
       ),
     );
@@ -139,7 +139,7 @@ class _CheckCodeState extends State<CheckCodePage> {
                 flex: 5,
                 child: Container(
                   decoration: BoxDecoration(
-                      color: cBackground,
+                      color: cBG,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(60),
                           topRight: Radius.circular(60))
@@ -174,12 +174,12 @@ class _CheckCodeState extends State<CheckCodePage> {
                       GestureDetector(
                         onTap: () async {
                           CheckCode response =await  CheckCodeP(widget.num, text);
-                          if(response.code == "200"){
+                          if(response.code == "201"){
                             print("CheckCodePage response token ${response.token}");
                             await tokenDB(token: response.token);
                             await autoDB(a: true);
                             AutoRoutes(context);
-                          }else if(response.code == "201"){
+                          }else if(response.code == "200"){
                             print("CheckCodePage response token ${response.token}");
                             await tokenDB(token: response.token);
                             await autoDB(a: true);
@@ -214,10 +214,10 @@ class _CheckCodeState extends State<CheckCodePage> {
                       SizedBox(height: 10,),
                       NumericKeyboard(
                         onKeyboardTap: _onKeyboardTap,
-                        textColor: cMainBlack,
+                        textColor: cMainText,
                         rightIcon: Icon(
                           Icons.backspace,
-                          color: cMainBlack,
+                          color: cMainText,
                         ),
                         rightButtonFn: () {
                           setState(() {

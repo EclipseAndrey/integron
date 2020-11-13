@@ -39,7 +39,7 @@ class Connection{
       int privte = Random().nextInt(1000000)+1; //346
       int public = Random().nextInt(1000000)+1;  // 58
 
-      //todo: step 1
+
       DataAuth1 dataAuth1= await Auth_1(public, text);
 
       int part = dataAuth1.pubKey.modPow(privte, public); //58^346%43
@@ -51,7 +51,7 @@ class Connection{
       // full server = 25^279%58
       print("private = $privte public = $public publicServer = ${dataAuth1.pubKey} part = $part partServer = ${dataAuth1.partKey} fullKey = $fullKey");
 
-      //todo: step 2
+
 
       DataAuth2 dataAuth2 = await Auth_2(part, text, public);
 

@@ -11,7 +11,7 @@ Widget StartsCarts(BuildContext context) {
   double cardSize = 0.90;
   return Container(
     height: size.width*0.80*0.70*cardSize+100,
-    color: cBackground,
+    color: cBG,
     width: MediaQuery.of(context).size.width,
     child: Stack(
       children: [

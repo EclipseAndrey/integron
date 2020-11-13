@@ -150,7 +150,7 @@ class InputLogState extends State<InputLog> {
             Container(
                 width: MediaQuery.of(context).size.width*0.40- 30,
 
-                child: Text(i.text, style: TextStyle(color: cMainBlack, fontSize: 14, fontWeight: FontWeight.w600),))
+                child: Text(i.text, style: TextStyle(color: cMainText, fontSize: 14, fontWeight: FontWeight.w600),))
           ],
         ),
       );

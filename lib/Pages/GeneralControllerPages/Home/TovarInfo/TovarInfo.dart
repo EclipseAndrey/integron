@@ -33,7 +33,7 @@ class _TovarInfoState extends State<TovarInfo> {
   bool loading = true;
 
   void load() async {
-    item = await ProductGet(widget.id);
+    item = await getProductForId(widget.id);
 
     if (item.error == null) {
     imagePages = List.generate(
@@ -66,17 +66,17 @@ class _TovarInfoState extends State<TovarInfo> {
     }
 
     return Scaffold(
-      backgroundColor: cBackground,
+      backgroundColor: cBG,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.1,
-        title: Text(title, style: TextStyle(color: cMainBlack.withOpacity(0.7), fontSize: 24, fontFamily: fontFamily),),
+        title: Text(title, style: TextStyle(color: cMainText.withOpacity(0.7), fontSize: 24, fontFamily: fontFamily),),
         leading: GestureDetector(
             onTap: (){
               Navigator.pop(context);
             },
             child: Icon(Icons.arrow_back, color: c5894bc,)),
-        backgroundColor: cBackground,
+        backgroundColor: cBG,
         actions: [
           getIconForId(id: 55, color: c5894bc,),
           SizedBox(width: 12,),
@@ -181,7 +181,7 @@ class _TovarInfoState extends State<TovarInfo> {
                                   ? "1 / ${imagePages.length}"
                                   : "${controllerImageSlider.page.round() + 1} / ${imagePages.length}",
                               style:
-                                  TextStyle(color: cMainBlack, fontSize: 14 , fontFamily: fontFamily),
+                                  TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),
                             ),
                           ),
                         ),
@@ -211,7 +211,7 @@ class _TovarInfoState extends State<TovarInfo> {
         return Row(
           children: [
             textcat(step),
-            Text(" / ", style: TextStyle(color: cMainBlack, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
+            Text(" / ", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
           ],
         );
       }
@@ -220,7 +220,7 @@ class _TovarInfoState extends State<TovarInfo> {
   }
 
   Widget nameProduct() {
-    return Text(item.name, style: TextStyle(color: cMainBlack, fontSize:  24, fontFamily:  fontFamily, fontWeight:  FontWeight.w400, fontStyle:  FontStyle.normal),);
+    return Text(item.name, style: TextStyle(color: cMainText, fontSize:  24, fontFamily:  fontFamily, fontWeight:  FontWeight.w400, fontStyle:  FontStyle.normal),);
   }
 
   Widget panelInfoProduct() {
@@ -299,7 +299,7 @@ class _TovarInfoState extends State<TovarInfo> {
         Text(
           value,
           style: TextStyle(
-              color: cMainBlack, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
+              color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
         ),
       ],
     );
@@ -321,7 +321,7 @@ class _TovarInfoState extends State<TovarInfo> {
 
       children: [
         Container(
-          color: cBackground,
+          color: cBG,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

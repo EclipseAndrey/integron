@@ -50,10 +50,6 @@ void AutoRoutes(BuildContext context)async {
       InfoToken infoToken = await checkToken(token);
       if(infoToken != null){
         print("AUTOROUTES  token response ${infoToken.code}");
-        await DBProvider.db.DeleteWallets();
-        for(int i = 0; i < infoToken.wallets.length; i++) {
-          await DBProvider.db.WalletDB(walletData: infoToken.wallets[i]);
-        }
         await tokenOk(infoToken);
       }else{
         infoToken = await checkToken(token);

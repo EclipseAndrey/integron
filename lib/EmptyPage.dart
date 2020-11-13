@@ -22,7 +22,7 @@ class _EmptyPageState extends State<EmptyPage> {
 
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: cBackground,
+        backgroundColor: cBG,
         shadowColor: Colors.transparent,
 
 
@@ -31,12 +31,12 @@ class _EmptyPageState extends State<EmptyPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-            color: cBackground),
+            color: cBG),
         child: Center(
             child: Text(
           "Место для контента",
           style: TextStyle(
-            color: cMainBlack,
+            color: cMainText,
             fontSize: 24,
             fontFamily: "MPLUS",
           ),

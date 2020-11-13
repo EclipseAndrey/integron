@@ -98,7 +98,7 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
     return SingleChildScrollView(
       controller: controllerScroll,
       child: Container(
-        color: cBackground,
+        color: cBG,
         child: Column(
           children: [
             MainPanel(context, product,category),
@@ -126,6 +126,5 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive =>  SaveStateCatalog;
 }

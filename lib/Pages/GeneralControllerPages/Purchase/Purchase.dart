@@ -87,7 +87,7 @@ class _CartState extends State<Cart> {
   HeaderCart() {
     return Container(
       decoration: BoxDecoration(
-        color: cBackground,
+        color: cBG,
         boxShadow: [
           BoxShadow(
             color: Color.fromRGBO(42,59,83,0.1),
@@ -118,7 +118,7 @@ class _CartState extends State<Cart> {
                   color: 0 == getCurrentPageOfList() ? Colors.white : c8dcde0,
                   border: Border.all(color: cDefault, width: 1)),
               child: Center(
-                child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? cMainBlack : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? cMainText : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
               ),
             ),
           ),
@@ -139,7 +139,7 @@ class _CartState extends State<Cart> {
                       : c8dcde0,
                   border: Border.all(color: cDefault, width: 1)),
               child: Center(
-                child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ? cMainBlack : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ? cMainText : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
               ),
             ),
           ),

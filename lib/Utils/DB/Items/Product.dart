@@ -35,12 +35,6 @@ class ProductShort extends BlocSize with Counter{
       sale: json['sale'].toString()??"",
     );
   }
-
-
-
-
-
-
 }
 
 class Product extends ProductShort {
@@ -98,7 +92,7 @@ class Product extends ProductShort {
       price: int.parse(jsonC['price']),
       sale: jsonC['sale'].toString()??"",
       unit: jsonC['unit'],
-      property: jsonC['property'] == null?[]:jsonC['property'].map((i){return Property.fromJson(i);}).toList().cath<Property>(),
+      property: jsonC['property'] == null?[]:jsonC['property'].map((i){return Property.fromJson(i);}).toList().cast<Property>(),
       fullText: jsonC['fulldesc'],
       delivery: jsonC['delivery'],
       address: jsonC['address'],

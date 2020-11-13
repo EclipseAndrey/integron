@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
       child: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: cBackground,
+        color: cBG,
         child: Content(),
       ),
     );

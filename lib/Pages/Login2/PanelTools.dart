@@ -35,7 +35,7 @@ Widget PanelTools(BuildContext context, double minusIconSize){
               ),
             ),
             SizedBox(height: paddingtext,),
-            Text("E-mail", style: TextStyle(color: cMainBlack, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
+            Text("E-mail", style: TextStyle(color: cMainText, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
           ],
         ),
         Column(
@@ -58,7 +58,7 @@ Widget PanelTools(BuildContext context, double minusIconSize){
               ),
             ),
             SizedBox(height: paddingtext,),
-            Text("Google", style: TextStyle(color: cMainBlack, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
+            Text("Google", style: TextStyle(color: cMainText, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
           ],
         ),
         Column(
@@ -81,7 +81,7 @@ Widget PanelTools(BuildContext context, double minusIconSize){
               ),
             ),
             SizedBox(height: paddingtext,),
-            Text("Facebook", style: TextStyle(color: cMainBlack, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
+            Text("Facebook", style: TextStyle(color: cMainText, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
           ],
         ),
         Column(
@@ -107,7 +107,7 @@ Widget PanelTools(BuildContext context, double minusIconSize){
               ),
             ),
             SizedBox(height: paddingtext,),
-            Text("Vkontakte", style: TextStyle(color: cMainBlack, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
+            Text("Vkontakte", style: TextStyle(color: cMainText, fontSize: 12, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
           ],
         ),
       ],
@@ -119,7 +119,7 @@ Widget PanelTools(BuildContext context, double minusIconSize){
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      Text("Создать аккаунт с помощью", style: TextStyle(color: cMainBlack, fontSize: 16, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal),),
+      Text("Создать аккаунт с помощью", style: TextStyle(color: cMainText, fontSize: 16, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal),),
       SizedBox(height: 10,),
       tools()
     ],

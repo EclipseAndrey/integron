@@ -13,7 +13,7 @@ void AddProductInCart (BuildContext context, int route, {Product product} )async
     }
   }
   if(!find){
-    if(product == null)product = await ProductGet(route);
+    if(product == null)product = await getProductForId(route);
     cartList.add(product);
   }
   Fluttertoast.showToast(

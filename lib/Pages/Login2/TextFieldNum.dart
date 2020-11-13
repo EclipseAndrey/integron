@@ -17,7 +17,7 @@ Widget TextFieldNum(BuildContext context, TextEditingController controller, Mask
       keyboardType: TextInputType.number,
       style: TextStyle(
 
-        color: cMainBlack,
+        color: cMainText,
         fontSize: 18 - minusFontsSize,
         fontWeight: FontWeight.w400,
         fontStyle: FontStyle.normal,
