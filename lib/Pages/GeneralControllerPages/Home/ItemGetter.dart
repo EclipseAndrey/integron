@@ -80,7 +80,7 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
               children: [
                 Row(
                   children: [
-                    Text("${bloc2.price} ",  style: TextStyle(color: cMainBlack, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                    Text("${bloc2.price} ",  style: TextStyle(color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
                     Text("DEL",  style: TextStyle(color: c2f527f, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),)
                   ],
                 ),
@@ -107,7 +107,7 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
                       showDialogError(context);
                     }),
                     FocusedMenuItem(title: Text("Похожее",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,),iconCustom: getIconForId(id: 40,color: c6287A1) ,onPressed: (){
-                      showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainBlack, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainBlack, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainBlack, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainBlack, fontSize: 16),), onPressed: (){})]);
+                      showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);
                     }),
                   ],
                   onPressed: (){},
@@ -213,7 +213,7 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
               children: [
                 Row(
                   children: [
-                    Text("Summ ",  style: TextStyle(color: cMainBlack, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                    Text("Summ ",  style: TextStyle(color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
                     Text("DEL",  style: TextStyle(color: c2f527f, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),)
                   ],
                 ),
