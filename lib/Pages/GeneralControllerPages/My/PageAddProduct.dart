@@ -11,6 +11,8 @@ import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
 import 'package:omega_qick/Utils/DB/Items/Category.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/Items/Property.dart';
+import 'package:omega_qick/Utils/DB/Params/Param.dart';
+import 'package:omega_qick/Utils/DB/Params/Params.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/BotomSheetSelectForIndex.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
@@ -64,6 +66,15 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController controllerNameProperty = TextEditingController();
   TextEditingController controllerValueProperty = TextEditingController();
 
+
+  List<Params> paramsList = [];
+  Params paramsStep = Params(name: "");
+  List<int> editingParam;
+  TextEditingController controllerParams = TextEditingController();
+
+
+
+
   String priceTitle = "Цена";
   String priceHintSumm = "Сумма";
   String priceHintUnit = "ед. изм.";
@@ -82,6 +93,8 @@ class _AddProductPageState extends State<AddProductPage> {
 
 
   }
+
+
 
   updateImagePages(){
     List<Widget> out = [];
@@ -199,6 +212,93 @@ class _AddProductPageState extends State<AddProductPage> {
     }
   }
 
+  initParams(){
+    paramsList = item.params;
+  }
+
+  addParams(){
+    saveStats();
+    paramsList.add(Params(name: "", params: [Param(name: ""), Param(name: "")]));
+     editParams(indexX: paramsList.length-1,);
+    setState(() {});
+
+  }
+
+  saveParams(){
+
+    if(editingParam != null && editingParam[0] != null&& editingParam[1] != null) {
+      // try {
+        paramsList[editingParam[0]].params[editingParam[1]].name =
+            controllerParams.text;
+      // }catch(e){
+      //   paramsList = null;
+      // }
+    }else
+
+      if(editingParam != null && editingParam[0] != null){
+        paramsList[editingParam[0]].name =controllerParams.text;
+      }
+
+      editingParam = null;
+
+    setState(() {});
+  }
+
+  editParams({ @required int indexX, int indexY}){
+    saveStats();
+
+    editingParam = [indexX,indexY];
+
+    if(indexY == null){
+      if(editingParam != null && editingParam[0] != null){
+        controllerParams.text = paramsList[indexX].name;
+      }
+    }else
+    if(editingParam != null && editingParam[0] != null&& editingParam[1] != null) {
+      controllerParams.text =
+          paramsList[editingParam[0]].params[editingParam[1]].name;
+    }else{
+      editingParam = null;
+    }
+    setState(() {});
+  }
+
+  deleteParams(int index){
+    try{
+      saveStats();
+      paramsList.removeAt(index);
+      setState(() {
+
+      });
+    }catch(e){
+
+    }
+  }
+
+
+  addParam(int index){
+    try{
+      saveStats();
+      paramsList[index].params.add(Param(name: ""));
+      setState(() {
+
+      });
+    }catch(e){
+
+    }
+  }
+
+  deleteParam(int indexX, int indexY){
+    try{
+      paramsList[indexX].params.removeAt(indexY);
+      setState(() {
+
+      });
+    }catch(e){}
+  }
+
+
+
   initProperties(){
     if(widget.edit){
       properties.addAll(item.property);
@@ -283,6 +383,8 @@ class _AddProductPageState extends State<AddProductPage> {
     setState(() {});
   }
 
+  //todo InitPrice() with InitParamsPrice()
+
   editPrice(){
     saveStats();
     priceSummTextStep = priceSummText;
@@ -309,11 +411,11 @@ class _AddProductPageState extends State<AddProductPage> {
 
   addImageDetails(){}
 
-
   saveStats(){
     saveHeader();
     savePrice();
     saveProperty();
+    saveParams();
   }
 
   void load()async{
@@ -325,7 +427,7 @@ class _AddProductPageState extends State<AddProductPage> {
       _category= item.catPath[0];
       initProperties();
       nameProduct = item.name;
-
+      initParams();
     }
     loading= false;
     setState(() {});
@@ -350,6 +452,8 @@ class _AddProductPageState extends State<AddProductPage> {
         priceSummText = controllerPriceSumm.text;
     });
 
+    // todo controllerParams ??
+
 
     if(!widget.edit) {
       loading = false;
@@ -359,9 +463,6 @@ class _AddProductPageState extends State<AddProductPage> {
     }else{
       load();
     }
-
-
-
     super.initState();
   }
 
@@ -397,6 +498,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
                   ),
                   Price(),
+                  ConstructorParams(),
                   ConstructorProperty(),
                 ],
               ),
@@ -488,8 +590,6 @@ class _AddProductPageState extends State<AddProductPage> {
       ],
     );
   }
-
-
 
   Widget ImageSlider() {
     controllerImageSlider.addListener(() {
@@ -686,7 +786,7 @@ class _AddProductPageState extends State<AddProductPage> {
           ),
           child: Center(child: Padding(
             padding: const EdgeInsets.all(18.0),
-            child: Text("Добавть параметр", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
+            child: Text("Добавть описание", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
           ),),
         ),
       );
@@ -845,7 +945,6 @@ class _AddProductPageState extends State<AddProductPage> {
 
   }
 
-
   Widget Price(){
 
     Widget priceStateSave(){
@@ -961,5 +1060,190 @@ class _AddProductPageState extends State<AddProductPage> {
 
   }
 
+  //todo
+  Widget ConstructorParamsPrice(){}
+
+
+  Widget ConstructorParams(){
+
+    Widget editingParams(String hint){
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+                color:  Color.fromRGBO(141, 205, 224, 1),
+                width: 2
+            )
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.80,
+                    child: TextField(
+                      // maxLength: 50,
+                      // maxLengthEnforced: true,
+
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: cMainText.withOpacity(0.7),
+                        ),
+                        hintText: hint,
+                      ),
+                      style: TextStyle(
+                          color: Color.fromRGBO(47, 82, 127, 1),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: fontFamily
+                      ),
+                      controller: controllerParams,
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: (){
+                        saveStats();
+                      },
+                      child: Container(child: Icon(Icons.check, color: c6287A1, size: 24,))),
+
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+
+    Widget nameParams(int index){
+      return Container(
+        child: (editingParam != null &&editingParam[0] == index && editingParam[1] == null)?editingParams("Название"):Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                    onTap: (){
+                      editParams(indexX: index);
+                    },
+                    child: Text(paramsList[index].name == ""?"Название":paramsList[index].name, style: TextStyle(color: paramsList[index].name == ""?cPay.withOpacity(0.7):cTitles, fontWeight: FontWeight.w700, fontSize: 14, fontFamily: fontFamily,fontStyle: FontStyle.normal),)),
+                SizedBox(width: 8,),
+                GestureDetector(
+                    onTap: (){
+                      addParam(index);
+                    },
+                    child: Text("+", style: TextStyle(color: cIcons, fontSize: 24),))
+              ],
+            ),
+            GestureDetector(
+                onTap: (){
+                  deleteParams(index);
+                },
+                child: getIconForId(id: 8, color: cIcons)),
+          ],
+        ),
+      );
+    }
+    Widget param(indexX, int indexY){
+      return Container(
+        child: (editingParam != null &&editingParam[0] == indexX && editingParam[1] == indexY)?editingParams("Значение"):Row(
+          children: [
+            GestureDetector(
+                onTap: (){
+                  editParams(indexX: indexX, indexY: indexY);
+
+                },
+                child: Text(paramsList[indexX].params[indexY].name == ""?"Значение":paramsList[indexX].params[indexY].name, style: TextStyle(color: paramsList[indexX].params[indexY].name == ""?cPay. withOpacity(0.7):cMainText, fontSize: 16, fontWeight: FontWeight.w400,))),
+            SizedBox(width: 8,),
+            paramsList[indexX].params.length>2?GestureDetector(
+                onTap: (){
+                  deleteParam(indexX, indexY);
+                },
+                child: getIconForId(id: 8, color: cIcons,size: 18)):SizedBox()
+          ],
+        ),
+      );
+    }
+
+    Widget buttonAdd(){
+      return GestureDetector(
+        onTap: (){
+          addParams();
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width-24,
+
+          decoration: BoxDecoration(
+              color: c8dcde0,
+              borderRadius: BorderRadius.circular(6)
+          ),
+          child: Center(child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Text("Добавть параметр", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
+          ),),
+        ),
+      );
+    }
+
+
+    Widget generator(){
+      return Container(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Column(
+            children: [
+              Divider(color: cDefault,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(paramsList.length, (index){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Colors.grey.withOpacity(0.15),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            nameParams(index),
+                            Column(
+
+                              children: List.generate(paramsList[index].params.length, (index2) => param(index,index2)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        paramsList.length==0?SizedBox():generator(),
+        buttonAdd()
+      ],
+    );
+
+
+
+
+  }
 
 }
