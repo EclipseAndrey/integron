@@ -317,7 +317,7 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   void load()async{
-    item = await ProductGet(widget.id);
+    item = await getProductForId(widget.id);
 
     if (item.error == null) {
       updateImagePages();
@@ -369,7 +369,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: cBackground,
+        backgroundColor: cBG,
         elevation: 0,
       ),
       body: Content(),
@@ -473,7 +473,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       hintText: "Описание",
                     ),
                     style: TextStyle(
-                        color: cMainBlack,
+                        color: cMainText,
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                         fontFamily: fontFamily
@@ -534,7 +534,7 @@ class _AddProductPageState extends State<AddProductPage> {
                               ? "1 / ${imagePages.length}"
                               : "${controllerImageSlider.page.round() + 1} / ${imagePages.length}",
                           style:
-                          TextStyle(color: cMainBlack, fontSize: 14 , fontFamily: fontFamily),
+                          TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),
                         ),
                       ),
                     ),
@@ -613,7 +613,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                 child: Row(
                   children: [
-                    Text("Выберите тип", style: TextStyle(color: cMainBlack, fontSize: 14 , fontFamily: fontFamily),),
+                    Text("Выберите тип", style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
                     SizedBox(width: 4,),
                     getIconForId(id: 38, size: 12, color: c6287A1),
                   ],
@@ -637,7 +637,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                 child: Row(
                   children: [
-                    Text(typeWord(_type), style: TextStyle(color: cMainBlack, fontSize: 14 , fontFamily: fontFamily),),
+                    Text(typeWord(_type), style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
                     SizedBox(width: 4,),
                     getIconForId(id: 38, size: 12, color: c6287A1),
                   ],
@@ -646,7 +646,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
           ),
           SizedBox(width: 4,),
-          Text(" / " , style: TextStyle(color: cMainBlack, fontSize: 14 , fontFamily: fontFamily),),
+          Text(" / " , style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
           SizedBox(width: 4,),
           GestureDetector(
             onTap: (){
@@ -657,7 +657,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                 child: Row(
                   children: [
-                    Text(_category == null?"Выберите категорию":_category.name, style: TextStyle(color: cMainBlack, fontSize: 14 , fontFamily: fontFamily),),
+                    Text(_category == null?"Выберите категорию":_category.name, style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
                     SizedBox(width: 4,),
                     getIconForId(id: 38, size: 12, color: c6287A1),
                   ],
@@ -730,7 +730,7 @@ class _AddProductPageState extends State<AddProductPage> {
                               child: Text(
                                 properties[index].value,
                                 style: TextStyle(
-                                    color: cMainBlack, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
+                                    color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
                               ),
                             ),
                           ],
@@ -866,8 +866,8 @@ class _AddProductPageState extends State<AddProductPage> {
                 children: [
                   Text(priceSummText ==""?"СУММА":priceSummText,  style: TextStyle(color: Color.fromRGBO(88,148,188,1), fontSize:  20, fontFamily:  fontFamily, fontWeight:  FontWeight.w700, fontStyle:  FontStyle.normal),),
                   Text(" DEL ",  style: TextStyle(color: Color.fromRGBO(88,148,188,1), fontSize:  18, fontFamily:  fontFamily, fontWeight:  FontWeight.w400, fontStyle:  FontStyle.normal),),
-                  Text(" / ", style: TextStyle(color: cMainBlack.withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
-                  Text(priceUnitText == ""?priceHintUnit:priceUnitText, style: TextStyle(color: cMainBlack.withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
+                  Text(" / ", style: TextStyle(color: cMainText.withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
+                  Text(priceUnitText == ""?priceHintUnit:priceUnitText, style: TextStyle(color: cMainText.withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
                 ],
               ),
 
@@ -919,7 +919,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       hintText: priceHintSumm,
                     ),
                     style: TextStyle(
-                        color: cMainBlack,
+                        color: cMainText,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         fontFamily: fontFamily
@@ -942,7 +942,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       hintText: priceHintUnit,
                     ),
                     style: TextStyle(
-                        color: cMainBlack,
+                        color: cMainText,
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                         fontFamily: fontFamily
