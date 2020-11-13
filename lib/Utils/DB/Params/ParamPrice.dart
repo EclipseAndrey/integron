@@ -7,7 +7,7 @@ class ParamPrice{
   factory ParamPrice.fromJson(Map<String, dynamic> json){
     return ParamPrice(
       name: json['name'],
-      price: json['price']
+      price: json['price'].toDouble()
     );
   }
   Map<String,dynamic> toMap(){

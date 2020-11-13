@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Param{
-  String name;
+  String name = "";
 
   Param({@required this.name});
   factory Param.fromJson(Map<String, dynamic> json){

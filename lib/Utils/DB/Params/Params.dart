@@ -8,7 +8,7 @@ class Params{
   factory Params.fromJson(Map<String, dynamic> json){
     return Params(
       name: json['name'],
-      params: json['params'].map((i)=>Param.fromJson(i)).toList.cast<Param>(),
+      params: json['params'].map((i)=>Param.fromJson(i)).toList().cast<Param>(),
     );
   }
   Map<String,dynamic> toMap(){
