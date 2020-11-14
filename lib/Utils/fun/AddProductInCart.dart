@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Utils/fun/BottomSheetSelectParam.dart';
 
 import '../../main.dart';
 
@@ -14,15 +15,31 @@ void AddProductInCart (BuildContext context, int route, {Product product} )async
   }
   if(!find){
     if(product == null)product = await getProductForId(route);
-    cartList.add(product);
+    if(product.params.length>0){
+      ShowBottoomSheetSelectParams(context: context, formalize: false, indexSelect: (index){}, product: product);
+    }else{
+      cartList.add(product);
+      Fluttertoast.showToast(
+          msg: "Добавлено",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.SNACKBAR,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0
+      );
+    }
+
+  }else{
+    Fluttertoast.showToast(
+        msg: "Добавлено",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.SNACKBAR,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        fontSize: 16.0
+    );
   }
-  Fluttertoast.showToast(
-      msg: "Добавлено",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.SNACKBAR,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.white,
-      textColor: Colors.black,
-      fontSize: 16.0
-  );
+
 }
