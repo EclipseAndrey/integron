@@ -154,7 +154,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
     double shortestSide = MediaQuery.of(context).size.shortestSide;
 
     if(shortestSide < 400){
-      heightAppBar = 0.50;
+      heightAppBar = 0.55;
       minusIconsSize = minusIconsSizeHome400;
       minusFontsSize = minusFontsSizeHome400;
     }
@@ -195,30 +195,36 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          actions: [
-
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: getIconForId(id: 25, color: cBG, size: 24),
-            )
-          ],
-
+          centerTitle: true,
           leading:  Padding(
             padding: const EdgeInsets.all(16.0),
             child: getIconForId(id: 41, color: cBG, size: 24),
           ),
-
-          elevation: 0,
-          centerTitle: true,
+          // leading: Padding(
+          //   padding: EdgeInsets.only(
+          //     bottom: 20,
+          //     right: 13,
+          //   ),
+          //   child: Icon(Icons.attach_money, size: 24),
+          // ),
+          // actions: [
+          //   Padding(
+          //     padding: EdgeInsets.only(bottom: 20, right: 10),
+          //     child: Icon(Icons.attach_money, size: 24),
+          //   )
+          // ],
           title: Padding(
-            padding: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.40),
-            child: Icon(
-              customIcons.Integron.integron,
-              size: 24 - minusIconsSize,
-              color: cBG,
+            padding: const EdgeInsets.only(bottom: 0),
+            child: Text(
+              "I N T E G R O N",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+              ),
             ),
           ),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
         ),
         body: SingleChildScrollView(child: Content(heightAppBar, minusFontsSize)),
       ),
