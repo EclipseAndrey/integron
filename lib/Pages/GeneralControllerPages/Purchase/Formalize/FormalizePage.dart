@@ -7,6 +7,7 @@ import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/BotomSheetEditInformatin.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 
 class FormalizePage extends StatefulWidget {
   List<Product> list;
@@ -111,7 +112,9 @@ class _FormalizePageState extends State<FormalizePage> {
           ),
           leading: Padding(
             padding: const EdgeInsets.all(19.0),
-            child: getIconForId(id: 0, color: c6287A1),
+            child: GestureDetector(
+                onTap: (){closeDialog(context);},
+                child: Container(child: getIconForId(id: 0, color: c6287A1))),
           ),
           backgroundColor: cBG,
         ),
@@ -279,7 +282,6 @@ class _FormalizePageState extends State<FormalizePage> {
             children: [
               SizedBox(height: paddingAll,),
               Container(
-                height: 84,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -323,23 +325,26 @@ class _FormalizePageState extends State<FormalizePage> {
                         SizedBox(height: paddingAll,),
                         Padding(
                           padding:  EdgeInsets.only(left: paddingAll),
-                          child: item.params.length==0?SizedBox():Wrap(
-                            children:
-                              List.generate(item.params.length, (index) => Padding(
-                                padding:  EdgeInsets.only(right: paddingAll),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    //border: item.params[index].select?Border.all(color: c8dcde0):null,
-                                    color: cForms,
-                                    borderRadius: BorderRadius.circular(6),
+                          child: item.params.length==0?SizedBox():Container(
+                            width: MediaQuery.of(context).size.width - 84 - paddingAll*4,
+                            child: Wrap(
+                              children:
+                                List.generate(item.params.length, (index) => Padding(
+                                  padding:  EdgeInsets.only(right: paddingAll, bottom: paddingAll/2),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      //border: item.params[index].select?Border.all(color: c8dcde0):null,
+                                      color: cForms,
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                                      child: Text(item.params[index].params[item.params[index].select].name, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
+                                    ),
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                                    child: Text(item.params[index].params[item.params[index].select].name, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
-                                  ),
-                                ),
-                              ),)
-                            ,
+                                ),)
+                              ,
+                            ),
                           ),
                         ),
                       ],
@@ -623,7 +628,7 @@ class _FormalizePageState extends State<FormalizePage> {
           if(information && (name == null|| address == null)){
             showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Информация для доставки не заполнена", style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
           }else{
-            //todo OK
+            showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Оплата не прошла", style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
           }
         },
         child: Container(
