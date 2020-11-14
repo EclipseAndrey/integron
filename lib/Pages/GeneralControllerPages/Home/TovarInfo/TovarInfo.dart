@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
 import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
@@ -7,6 +8,8 @@ import 'package:omega_qick/Utils/DB/Items/CategoryPath.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/Items/Property.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:omega_qick/Utils/fun/AddProductInCart.dart';
+import 'package:omega_qick/Utils/fun/BottomSheetSelectParam.dart';
 import 'package:omega_qick/main.dart';
 import '../Settings.dart';
 
@@ -349,27 +352,9 @@ class _TovarInfoState extends State<TovarInfo> {
                 children: [
                   GestureDetector(
                     onTap: (){
-                      print("обавлено");
 
-                      bool find = false;
-                      for(int i = 0; i < cartList.length; i++){
-                        if(cartList[i].route == item.route){
-                          cartList[i].counter++;
-                          find = true;
-                        }
-                      }
-                      if(!find){cartList.add(item);}
 
-                      Fluttertoast.showToast(
-                          msg: "Добавлено",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.white,
-                          textColor: Colors.black,
-                          fontSize: 16.0
-                      );
-
+                      item.params.length==0?AddProductInCart(context, item.route, product:item):ShowBottoomSheetSelectParams(context: context, formalize: false, indexSelect: (index){}, product: item);
 
                     },
                     child: Container(
@@ -389,19 +374,25 @@ class _TovarInfoState extends State<TovarInfo> {
                       ),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Color.fromRGBO(255, 0, 0, 1),
-                    ),
-                    width: MediaQuery.of(context).size.width * 0.46,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Купить сейчас",style: TextStyle(color: Colors.white, fontWeight:  FontWeight.w500, fontSize: 16),),
-                        ],
+                  GestureDetector(
+                    onTap: (){
+                      // ignore: unnecessary_statements
+                      item.params.length==0?Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => FormalizePage([item]))):ShowBottoomSheetSelectParams(context: context, formalize: true, indexSelect: (index){}, product: item);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Color.fromRGBO(255, 0, 0, 1),
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.46,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Купить сейчас",style: TextStyle(color: Colors.white, fontWeight:  FontWeight.w500, fontSize: 16),),
+                          ],
+                        ),
                       ),
                     ),
                   ),
