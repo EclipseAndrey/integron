@@ -208,14 +208,16 @@ class _ListCartPageState extends State<ListCartPage> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width-paddingAll*2,
-        height: 100,
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: paddingAll,),
                 ClipRRect(
                     borderRadius: BorderRadius.circular(6),
                     child: Container(
@@ -231,36 +233,62 @@ class _ListCartPageState extends State<ListCartPage> {
                 children: [
                   Text(sortList[indexAll][index].name, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: cMainText, fontFamily: fontFamily),),
                   Container(width: MediaQuery.of(context).size.width-paddingAll*2- 108,
-                    child: Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        sortList[indexAll][index].params.length==0?SizedBox(height: paddingAll,):Padding(
+                          padding:  EdgeInsets.symmetric(vertical: paddingAll),
+                          child: Wrap(
+                            children:
+                            List.generate(sortList[indexAll][index].params.length, (indexC) => Padding(
+                              padding:  EdgeInsets.only(right: paddingAll),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  //border: item.params[index].select?Border.all(color: c8dcde0):null,
+                                  color: cForms,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                                  child: Text(sortList[indexAll][index].params[indexC].params[sortList[indexAll][index].params[indexC].select].name, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
+                                ),
+                              ),
+                            ),)
+                            ,
+                          ),
+                        ),
+                        Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            price(indexAll,index),
-                            unit(indexAll, index),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                price(indexAll,index),
+                                unit(indexAll, index),
+                              ],
+                            ),
+                            // Spacer(),
+                            Row(
+                              // mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                    onTap:(){
+                                      for(int i = 0; i < cartList.length; i++){
+                                        if(cartList[i].route == sortList[indexAll][index].route)cartList.removeAt(i);
+                                      }
+                                      load();
+
+                                    },
+                                    child: Container(child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: getIconForId(id: 8, color: c6287A1, size: 18),
+                                    ))),
+                                SizedBox(width: 8,),
+                                counterSelect(indexAll, index),
+                              ],
+                            )
                           ],
                         ),
-                        // Spacer(),
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                                onTap:(){
-                                  for(int i = 0; i < cartList.length; i++){
-                                    if(cartList[i].route == sortList[indexAll][index].route)cartList.removeAt(i);
-                                  }
-                                  load();
-
-                                },
-                                child: Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: getIconForId(id: 8, color: c6287A1, size: 18),
-                                ))),
-                            SizedBox(width: 8,),
-                            counterSelect(indexAll, index),
-                          ],
-                        )
                       ],
                     ),
                   )
