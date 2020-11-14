@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
 import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
@@ -78,16 +79,27 @@ class _TovarInfoState extends State<TovarInfo> {
             onTap: (){
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back, color: c5894bc,)),
+            child: Padding(
+              padding: const EdgeInsets.all(19.0),
+              child: getIconForId(id: 0, color: c5894bc,),
+            )),
         backgroundColor: cBG,
         actions: [
-          getIconForId(id: 55, color: c5894bc,),
+          GestureDetector(
+              onTap: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            Cart()));
+              },
+              child: getIconForId(id: 55, color: c5894bc,)),
           SizedBox(width: 12,),
-          getIconForId(id: 15, color: c5894bc,),
-          SizedBox(width: 12,),
-
-          getIconForId(id: 25, color: c5894bc,),
-          SizedBox(width: 12,),
+          // getIconForId(id: 15, color: c5894bc,),
+          // SizedBox(width: 12,),
+          //
+          // getIconForId(id: 25, color: c5894bc,),
+          // SizedBox(width: 12,),
 
         ],
       ),
@@ -248,38 +260,44 @@ class _TovarInfoState extends State<TovarInfo> {
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(240, 245, 239, 1),
-              borderRadius: BorderRadius.circular(6)),
-          width: MediaQuery.of(context).size.width * 0.30,
-          height: MediaQuery.of(context).size.width * 0.15,
+        Opacity(
+          opacity: opacity,
+          child: Container(
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(240, 245, 239, 1),
+                borderRadius: BorderRadius.circular(6)),
+            width: MediaQuery.of(context).size.width * 0.30,
+            height: MediaQuery.of(context).size.width * 0.15,
 
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
 
-                children: [getIconForId(id:15, color: c6287A1,size: 24 - minusIconsSize,),SizedBox(height: 6,), Text("В избранное", style: TextStyle(color: c5894bc),)],
+                  children: [getIconForId(id:15, color: c6287A1,size: 24 - minusIconsSize,),SizedBox(height: 6,), Text("В избранное", style: TextStyle(color: c5894bc),)],
+                ),
               ),
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(240, 245, 239, 1),
-              borderRadius: BorderRadius.circular(6)),
-          width: MediaQuery.of(context).size.width * 0.30,
-          height: MediaQuery.of(context).size.width * 0.15,
+        Opacity(
+          opacity: opacity,
+          child: Container(
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(240, 245, 239, 1),
+                borderRadius: BorderRadius.circular(6)),
+            width: MediaQuery.of(context).size.width * 0.30,
+            height: MediaQuery.of(context).size.width * 0.15,
 
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
 
-                children: [getIconForId(id:43, color: c6287A1,size: 24- minusIconsSize,), SizedBox(height: 6,), Text("Поделиться", style: TextStyle(color: c5894bc),)],
+                  children: [getIconForId(id:43, color: c6287A1,size: 24- minusIconsSize,), SizedBox(height: 6,), Text("Поделиться", style: TextStyle(color: c5894bc),)],
+                ),
               ),
             ),
           ),
