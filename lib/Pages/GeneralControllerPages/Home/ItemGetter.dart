@@ -66,7 +66,7 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
                 Text(name, style: TextStyle(color: c2f527f, fontSize: 14, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
                 Padding(
                   padding: const EdgeInsets.only(top:6.0),
-                  child: Text(bloc2.text,  style: TextStyle(color: c7A8BA3, fontSize: 10, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                  child: Text(bloc2.text??"null",  style: TextStyle(color: c7A8BA3, fontSize: 10, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
                 ),
               ],
             ),
@@ -104,10 +104,10 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
                     }),
                     FocusedMenuItem(title: Text("В магазин",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){}),
                     FocusedMenuItem(title: Text("В избранное",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.favorite_border),iconCustom: getIconForId(id: 15,color: c6287A1) ,onPressed: (){
-                      showDialogError(context);
+
                     }),
                     FocusedMenuItem(title: Text("Похожее",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,),iconCustom: getIconForId(id: 40,color: c6287A1) ,onPressed: (){
-                      showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);
+                      //showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);
                     }),
                   ],
                   onPressed: (){},
