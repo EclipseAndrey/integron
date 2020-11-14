@@ -78,7 +78,7 @@ class _FormalizePageState extends State<FormalizePage> {
     var a = await checkToken("MHRowJge1fNkDsGC3vmzAc4Yx");
     address = a.address;
     name = a.name;
-    num = "+"+a.num;
+    num = num?? "+"+a.num;
     image = a.photo;
 
     loadDelivery = false;
