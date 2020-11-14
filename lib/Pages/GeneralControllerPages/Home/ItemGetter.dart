@@ -39,94 +39,114 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
 
     if(size == 2){
       ProductShort bloc2 = bloc;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return Stack(
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width*0.45,
-            height: MediaQuery.of(context).size.width*0.30,
-            child: imageF?ClipRRect(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
-
-                child: Image.network(bloc.image, fit: BoxFit.cover,)):Container(
-              width: MediaQuery.of(context).size.width*0.45,
-              height: MediaQuery.of(context).size.width*0.30,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: colors
-                  )
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 9.0, top: 9),
+          Align(
+            alignment: Alignment.topCenter,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: TextStyle(color: c2f527f, fontSize: 14, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                Padding(
-                  padding: const EdgeInsets.only(top:6.0),
-                  child: Text(bloc2.text??"null",  style: TextStyle(color: c7A8BA3, fontSize: 10, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.45,
+                  height: MediaQuery.of(context).size.width*0.30,
+                  child: imageF?ClipRRect(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+
+                      child: Image.network(bloc.image, fit: BoxFit.cover,)):Container(
+                    width: MediaQuery.of(context).size.width*0.45,
+                    height: MediaQuery.of(context).size.width*0.30,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: colors
+                        )
+                    ),
+                  ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 9.0, top: 9, right: 9),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(name,       overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: c2f527f, fontSize: 14, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                      Padding(
+                        padding: const EdgeInsets.only(top:6.0),
+                        child: Container(
+                          child: Text(bloc2.text??"null",
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(color: c7A8BA3, fontSize: 10, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+
+
+
               ],
             ),
           ),
-          Spacer(),
-
-          Padding(
-            padding: const EdgeInsets.all(9.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              width: MediaQuery.of(context).size.width*0.45,
+              decoration: BoxDecoration(
+                color: cWhite,
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(6),bottomRight: Radius.circular(6)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(9.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("${bloc2.price} ",  style: TextStyle(color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                    Text("DEL",  style: TextStyle(color: c2f527f, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),)
+                    Row(
+                      children: [
+                        Text("${bloc2.price} ",  style: TextStyle(color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                        Text("DEL",  style: TextStyle(color: c2f527f, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),)
+                      ],
+                    ),
+                    // Drop(),
+
+                    FocusedMenuHolder(
+                      menuWidth: MediaQuery.of(context).size.width*0.50,
+                      blurSize: 0.0,
+                      menuItemExtent: 45,
+                      menuBoxDecoration: BoxDecoration(color: Colors.grey,borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                      duration: Duration(milliseconds: 1),
+                      animateMenuItems: false,
+                      blurBackgroundColor: Colors.transparent,
+                      menuOffset: 10.0, // Offset value to show menuItem from the selected item
+                      bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
+                      menuItems: <FocusedMenuItem>[
+                        // Add Each FocusedMenuItem  for Menu Options
+                        FocusedMenuItem(title: Text("В корзину",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.open_in_new) ,iconCustom: getIconForId(id: 55,color: c6287A1),onPressed: ()async{
+                          AddProductInCart(context,bloc.route);
+
+                        }),
+                        FocusedMenuItem(title: Text("В магазин",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){}),
+                     //   FocusedMenuItem(title: Text("В избранное",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.favorite_border),iconCustom: getIconForId(id: 15,color: c6287A1) ,onPressed: (){}),
+                        //FocusedMenuItem(title: Text("Похожее",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,),iconCustom: getIconForId(id: 40,color: c6287A1) ,onPressed: (){
+                          //showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);}),
+                      ],
+                      onPressed: (){},
+                      child: Container(
+                          width: 40,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+
+                              getIconForId(id: 29, color: c2f527f, size: 18,),
+                            ],
+                          )),
+                    ),
+
+
                   ],
                 ),
-                // Drop(),
-
-                FocusedMenuHolder(
-                  menuWidth: MediaQuery.of(context).size.width*0.50,
-                  blurSize: 0.0,
-                  menuItemExtent: 45,
-                  menuBoxDecoration: BoxDecoration(color: Colors.grey,borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  duration: Duration(milliseconds: 1),
-                  animateMenuItems: false,
-                  blurBackgroundColor: Colors.transparent,
-                  menuOffset: 10.0, // Offset value to show menuItem from the selected item
-                  bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
-                  menuItems: <FocusedMenuItem>[
-                    // Add Each FocusedMenuItem  for Menu Options
-                    FocusedMenuItem(title: Text("В корзину",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.open_in_new) ,iconCustom: getIconForId(id: 55,color: c6287A1),onPressed: ()async{
-                      AddProductInCart(context,bloc.route);
-
-                    }),
-                    FocusedMenuItem(title: Text("В магазин",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){}),
-                    FocusedMenuItem(title: Text("В избранное",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.favorite_border),iconCustom: getIconForId(id: 15,color: c6287A1) ,onPressed: (){
-
-                    }),
-                    FocusedMenuItem(title: Text("Похожее",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,),iconCustom: getIconForId(id: 40,color: c6287A1) ,onPressed: (){
-                      //showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);
-                    }),
-                  ],
-                  onPressed: (){},
-                  child: Container(
-                      width: 40,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-
-                          getIconForId(id: 29, color: c2f527f, size: 18,),
-                        ],
-                      )),
-                ),
-
-
-              ],
+              ),
             ),
           )
-
         ],
       );
 
