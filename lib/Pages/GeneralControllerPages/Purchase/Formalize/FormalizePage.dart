@@ -301,21 +301,49 @@ class _FormalizePageState extends State<FormalizePage> {
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: paddingAll,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: paddingAll,
+                            ),
+                            Text(
+                              item.name,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: fontFamily),
+                            )
+                          ],
                         ),
-                        Text(
-                          item.name,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: fontFamily),
-                        )
+                        SizedBox(height: paddingAll,),
+                        Padding(
+                          padding:  EdgeInsets.only(left: paddingAll),
+                          child: item.params.length==0?SizedBox():Wrap(
+                            children:
+                              List.generate(item.params.length, (index) => Padding(
+                                padding:  EdgeInsets.only(right: paddingAll),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    //border: item.params[index].select?Border.all(color: c8dcde0):null,
+                                    color: cForms,
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                                    child: Text(item.params[index].params[item.params[index].select].name, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
+                                  ),
+                                ),
+                              ),)
+                            ,
+                          ),
+                        ),
                       ],
+
                     ),
                   ],
                 ),
