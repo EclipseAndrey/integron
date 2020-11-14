@@ -1,7 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:omega_qick/Utils/DB/Params/Param.dart';
+import 'package:omega_qick/Utils/DB/Params/Select.dart';
 
-class Params{
+class Params extends SelectIndex{
   List<Param> params = [];
   String name;
   Params({@required this.name, this.params});

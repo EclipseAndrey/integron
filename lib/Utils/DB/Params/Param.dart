@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
-class Param{
+import 'Select.dart';
+
+class Param extends Select{
   String name = "";
 
   Param({@required this.name});
   factory Param.fromJson(Map<String, dynamic> json){
+    print(json);
     return Param(
       name: json['name'],
     );
