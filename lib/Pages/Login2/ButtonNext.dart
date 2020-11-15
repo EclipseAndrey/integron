@@ -8,6 +8,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:omega_qick/Pages/CheckCode2/CheckCodePage2.dart';
 
 import 'package:omega_qick/REST/Autorization/GetCode.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 
 import 'Style.dart';
 
@@ -22,9 +23,10 @@ Widget ButtonNext(BuildContext context, TextEditingController controller, MaskTe
     onPressed: () async {
       if(active){
 
+        showDialogLoading(context);
         int response = await GetCode("7"+maskFormatter.getUnmaskedText());
-
-        if (response == null || response != 200) {
+        closeDialog(context);
+        if (response == null && (response != 200 && response != 201)) {
           Fluttertoast.showToast(
               msg: "Соединение не установлено",
               toastLength: Toast.LENGTH_SHORT,

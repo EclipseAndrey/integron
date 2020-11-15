@@ -1,5 +1,7 @@
 abstract class Errors {
+
   bool error = false;
+  Errors({this.error});
 }
 
 abstract class EditPropertyFlags{

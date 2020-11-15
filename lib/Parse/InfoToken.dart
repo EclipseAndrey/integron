@@ -19,7 +19,7 @@ class InfoToken{
       token: json['token'],
       name: json['name']??null,
       role: json['role'],
-      photo: json['photo']??null,
+      photo: json['photo'] == null?null:json['photo']==""?null:json['photo']==" "?null:json['photo'],
     );
     return out;
   }

@@ -119,7 +119,8 @@ class _PageSelectedCategoryState extends State<PageSelectedCategory> with Automa
       return  Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
             children: [
               Column(

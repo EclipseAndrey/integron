@@ -57,42 +57,18 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
     print("Start ${widget.pagePanel}");
 
     if(widget.pagePanel == 0){
-      // widget.durationAnimatePanel = 100;
       setState(() {
 
       });
       controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
-      /*
-      print("Start ${widget.pagePanel}");
-      print("durationAnimatePanel ${widget.durationAnimatePanel}\nradiusPanelLeft ${widget.radiusPanelLeft},\nradiusPanelRight ${widget.radiusPanelRight}\npaddingPanel ${widget.paddingPanel}");
 
-      widget.durationAnimatePanel = 100;
-      setState(() {
-
-      });
-      controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
-      // widget.colorPanelText1 = Colors.white;
-      // widget.colorPanelText2 = c2f527f;
-      widget.radiusPanelLeft = 6;
-      widget.radiusPanelRight = 0;
-      widget.paddingPanel = MediaQuery.of(context).size.width/2;
-      print("--------------\ndurationAnimatePanel ${widget.durationAnimatePanel}\nradiusPanelLeft ${widget.radiusPanelLeft},\nradiusPanelRight ${widget.radiusPanelRight}\npaddingPanel ${widget.paddingPanel}\npage ${widget.pagePanel}");
-      setState(() {
-
-      });
-      widget.pagePanel = 1;
-      print("page ${widget.pagePanel}");*/
     }
     else if(widget.pagePanel == 1){
-      // widget.durationAnimatePanel = 100;
       setState(() {
 
       });
       controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.ease);
 
-      // widget.radiusPanelLeft = 0;
-      // widget.radiusPanelRight = 6;
-      // widget.paddingPanel = 0;
 
 
       setState(() {

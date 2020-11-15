@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focused_menu/focused_menu.dart';
@@ -17,27 +18,34 @@ import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
 import 'package:omega_qick/main.dart';
 
-Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, double minusIconSize, {VoidCallbackCategory voidCallbackCategory}){
-  Color color =bloc.blocSize == 1?Colors.blueAccent:Colors.pink;
-  double h = bloc.blocSize == 1?MediaQuery.of(context).size.width*0.26:MediaQuery.of(context).size.width*0.60;
+Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, double minusIconSize, {VoidCallbackCategory voidCallbackCategory, bool arrowUp, bool add, Function tapUpOnly, bool edit, Function tapAdd, Function(int route) tapDelete, Function(int route) tapEdit, Function(int route) tapUpFull }){
+
+  double h = MediaQuery.of(context).size.width*0.60;
+  double w =MediaQuery.of(context).size.width*0.26;
+  String name;
+  bool imageF;
+  List<Color> colors;
 
 
-
-  bool big = bloc.blocSize ==2?true:false;
+  name = bloc.name;
+  h = bloc.blocSize == 1?MediaQuery.of(context).size.width*0.26:MediaQuery.of(context).size.width*0.60;
+  w = MediaQuery.of(context).size.width*0.45;
+  if(bloc.image == ""||bloc.image == null||bloc.image == "null"){
+    imageF = false;
+    colors = [c2f527f,c5894bc,c8dcde0];
+  }else{
+    imageF = true;
+  }
 
 
   Widget _content(int size){
-    bool imageF;
-    List<Color> colors;
-    String name = bloc.name;
-    if(bloc.image == ""||bloc.image == null||bloc.image == "null"){
-      imageF = false;
-      colors = [c2f527f,c5894bc,c8dcde0];
-    }else{
-      imageF = true;
-    }
 
     if(size == 2){
+
+
+
+
+
       ProductShort bloc2 = bloc;
       return Stack(
         children: [
@@ -49,17 +57,72 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
                 Container(
                   width: MediaQuery.of(context).size.width*0.45,
                   height: MediaQuery.of(context).size.width*0.30,
-                  child: imageF?ClipRRect(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
-
-                      child: Image.network(bloc.image, fit: BoxFit.cover,)):Container(
-                    width: MediaQuery.of(context).size.width*0.45,
-                    height: MediaQuery.of(context).size.width*0.30,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: colors
-                        )
-                    ),
+                  child: imageF?Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                            child: Image.network(bloc.image, fit: BoxFit.cover,)),
+                      ),
+                      (edit??false)?Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: tapUpOnly,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: cDefault,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Transform.rotate(
+                                    angle: 180 * 3.14 / 180,
+                                    child: getIconForId(id: 38, color: cIcons)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ):SizedBox(),
+                    ],
+                  ):Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width*0.45,
+                          height: MediaQuery.of(context).size.width*0.30,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: colors
+                              )
+                          ),
+                        ),
+                      ),
+                      (edit??false)?Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: tapUpOnly,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: cDefault,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Transform.rotate(
+                                    angle: 180 * 3.14 / 180,
+                                    child: getIconForId(id: 38, color: cIcons)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ):SizedBox(),
+                    ],
                   ),
                 ),
                 Padding(
@@ -118,16 +181,20 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
                       blurBackgroundColor: Colors.transparent,
                       menuOffset: 10.0, // Offset value to show menuItem from the selected item
                       bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
-                      menuItems: <FocusedMenuItem>[
+                      menuItems: (edit??false)?<FocusedMenuItem>[
+                        FocusedMenuItem(title: Text("Редактировать",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: tapEdit(bloc.route)),
+                        FocusedMenuItem(title: Text("В самый верх",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: tapUpFull),
+                        FocusedMenuItem(title: Text("Удалить",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: tapDelete(bloc.route)),
+
+                      ]:<FocusedMenuItem>[
                         // Add Each FocusedMenuItem  for Menu Options
                         FocusedMenuItem(title: Text("В корзину",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.open_in_new) ,iconCustom: getIconForId(id: 55,color: c6287A1),onPressed: ()async{
                           AddProductInCart(context,bloc.route);
-
                         }),
                         FocusedMenuItem(title: Text("В магазин",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){}),
                      //   FocusedMenuItem(title: Text("В избранное",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.favorite_border),iconCustom: getIconForId(id: 15,color: c6287A1) ,onPressed: (){}),
                         //FocusedMenuItem(title: Text("Похожее",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,),iconCustom: getIconForId(id: 40,color: c6287A1) ,onPressed: (){
-                          //showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);}),
+                        //   showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);}),
                       ],
                       onPressed: (){},
                       child: Container(
@@ -150,7 +217,8 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
         ],
       );
 
-    }else if(size == 1){
+    }else
+      if(size == 1){
 
       Category category = bloc;
       return Stack(
@@ -202,7 +270,8 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
 
         ],
       );
-    }else if(size == 3){
+    }else
+      if(size == 3){
       SetBloc bloc2 = bloc;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,9 +314,10 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
         ],
       );
     }
+
   }
 
-  return Padding(
+  if(!(add??false))return Padding(
     padding: const EdgeInsets.all(8.0),
     child: GestureDetector(
       onTap: (){
@@ -258,7 +328,7 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
         width: MediaQuery.of(context).size.width*0.45,
         height:  h,
         decoration: BoxDecoration(
-          boxShadow: [
+          boxShadow: bloc.blocSize == 0?[]:[
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 5,
@@ -273,6 +343,41 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
       ),
     ),
   );
+
+  else{
+    double h = MediaQuery.of(context).size.width * 0.60;
+    double w = MediaQuery.of(context).size.width*0.45;
+
+    return Padding(
+      padding:  EdgeInsets.all(6.0),
+      child: Container(
+        child: DottedBorder(
+          borderType: BorderType.RRect,
+          radius: Radius.circular(6),
+          // padding: EdgeInsets.all(12),
+          dashPattern: [12],
+          color: cd1d3d7,
+          child: Container(
+            height: h,
+            width: w,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  getIconForId(id: 13, color: cIcons),
+                  Text("Добавить товар", style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400),),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
 }
 

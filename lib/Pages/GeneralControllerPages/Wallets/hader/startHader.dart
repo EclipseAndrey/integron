@@ -4,14 +4,24 @@ import 'package:flutter/material.dart';
 import 'ContainerButtons.dart';
 import 'StartCartsWidget.dart';
 
-Widget StartWindow(BuildContext context) {
-  Color cBackground = Color.fromRGBO(250, 250, 250, 1);
-  return SliverList(
-    delegate: SliverChildListDelegate(
-      [
-        StartsCarts(context),
-        containerButtons(context),
-      ],
-    ),
-  );
+
+class StartWindow extends StatefulWidget {
+  @override
+  _StartWindowState createState() => _StartWindowState();
 }
+
+class _StartWindowState extends State<StartWindow> {
+  @override
+  Widget build(BuildContext context) {
+    return  SliverList(
+      delegate: SliverChildListDelegate(
+        [
+          StartCarts(),
+          containerButtons(context),
+        ],
+      ),
+    );
+  }
+}
+
+

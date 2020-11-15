@@ -54,8 +54,13 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
     List<BlocSize> list = [];
     list = await getItems(type: 0);
     for(int i = 0; i < list.length; i+=2){
+      try{
       leftColumn.add(list[i]);
-      rightColumn.add(list[i+1]);
+      }catch(e){}
+
+      try {
+        rightColumn.add(list[i + 1]);
+      }catch(e){}
     }
     setState(() {
 

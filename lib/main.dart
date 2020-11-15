@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omega_qick/AddWallet/AddWalletPage.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'Pages/GeneralControllerPages/GeneralControllerPages.dart';
+import 'Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
 import 'Pages/GeneralControllerPages/My/PageAddProduct.dart';
 import 'Pages/Welcome/Welcome.dart';
 import 'REST/Home/Search/getItemCategory.dart';
@@ -36,19 +38,23 @@ import 'balance.dart';
 
 List<Product> cartList = [];
 
+double BALANCE = 0;
 
 void main() {
 
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //statusBarColor: cBackground,
-    systemNavigationBarColor: Color(0xFF000000),
-    systemNavigationBarDividerColor: null,
-    statusBarColor: null,
-    systemNavigationBarIconBrightness: Brightness.light,
-    statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness: Brightness.light,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light
+  //       (
+  //   //statusBarColor: cBackground,
+  //   systemNavigationBarColor: Color(0xFF000000),
+  //   systemNavigationBarDividerColor: null,
+  //   statusBarColor: null,
+  //   systemNavigationBarIconBrightness: Brightness.light,
+  //   statusBarIconBrightness: Brightness.dark,
+  //   statusBarBrightness: Brightness.light,
+  // ),
+  );
   runApp(MyApp());
 }
 
@@ -72,9 +78,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: GenerateWallet(),
 
-        home: Splash(),
-     // home: GeneralControllerPages(),
-       //home: AddProductPage.empty(),
+       //home: Business.edit(),
+      home: GeneralControllerPages(),
+       //home: TovarInfo(5),
 
       routes: routes,
     );
@@ -103,17 +109,21 @@ class _SplashState extends State<Splash> {
   }
 
 
+
+
   @override
   void initState() {
 
 
-    load();
+
+
+   // load();
 
     cartList = [];
     DataSecureDB(dataSecure: DataSecure(0 ,"null"));
 
    // ExitAccount();
-    //  AutoRoutes(context);
+      AutoRoutes(context);
 
     //createDir();
   }

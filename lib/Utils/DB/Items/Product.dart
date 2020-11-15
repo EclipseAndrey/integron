@@ -5,6 +5,9 @@ import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
 import 'package:omega_qick/Utils/DB/Items/CategoryPath.dart';
 import 'package:omega_qick/Utils/DB/Items/Counter.dart';
 import 'package:omega_qick/Utils/DB/Items/Property.dart';
+import 'package:omega_qick/Utils/DB/Params/Param.dart';
+import 'package:omega_qick/Utils/DB/Params/Params.dart';
+import 'package:omega_qick/Utils/DB/Params/ParamsPrice.dart';
 
 class ProductShort extends BlocSize with Counter{
   String text;
@@ -26,8 +29,9 @@ class ProductShort extends BlocSize with Counter{
   ProductShort.error(int error) : super.error(error);
 
   factory ProductShort.fromJson(Map<String, dynamic> json){
+    print(json);
     return ProductShort(
-      name: json['name'],
+      name: json['name']??"null",
       image: json['image'],
       route: int.parse(json['route']),
       text: json['text'],
@@ -53,6 +57,8 @@ class Product extends ProductShort {
   List<dynamic> catPath;
   List<dynamic> detail;
   String ownerName;
+  List<Params> params = [];
+  ParamsPrice paramsPrice;
 
   Product({
     @required String name,
@@ -76,10 +82,14 @@ class Product extends ProductShort {
     @required this.type,
     @required  this.unit,
     @required this.catPath,
-    @required this.detail
+    @required this.detail,
+
+    this.params,
+    this.paramsPrice
 }) : super(name: name, image: image, route:route, text: text, price:price, sale:sale??"");
 
   factory Product.fromJson(Map<String, dynamic> jsonC){
+    print(jsonC['params']);
     return Product(
       full: true,
       name: jsonC['name'],
@@ -102,7 +112,11 @@ class Product extends ProductShort {
       itemCount: int.parse(jsonC['itemcount']),
       type: int.parse(jsonC['type']),
       catPath: jsonC['cat'].map((i)=>CategoryPath.fromJson(i)).toList(),
+      params: jsonC['params']== null?[]:jsonC['params'].map((i) => Params.fromJson(i)).toList().cast<Params>(),
+      paramsPrice: jsonC['paramswithprice']== null?null:ParamsPrice.fromJson(jsonC['paramswithprice']),
+
     );
+
   }
 
   Product.error(int error) : super.error(error);

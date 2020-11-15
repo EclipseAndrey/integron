@@ -13,13 +13,13 @@ Future<Product> getProductForId (int id)async{
   if(response.statusCode == 200){
     var dec = json.decode(response.body);
     if(dec['code'] == 200){
-      try {
+      // try {
         return Product.fromJson(dec['product']);
-      }catch(e){
-        print(dec['product']);
-        print(e);
-        return Product.error(1000);
-      }
+      // }catch(e){
+      //   print(dec['product']);
+      //   print(e);
+      //   return Product.error(1000);
+      // }
     }else{
       print(dec['mess']);
       return Product.error(dec['code']);

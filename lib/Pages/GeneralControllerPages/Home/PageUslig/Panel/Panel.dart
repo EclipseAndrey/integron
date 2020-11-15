@@ -5,11 +5,13 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/SwiperSets.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Home/GetItems.dart';
+import 'package:omega_qick/REST/Wallet/GetBalance.dart';
 import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
 import 'package:omega_qick/Utils/DB/Items/Category.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/Items/Set.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:omega_qick/main.dart';
 
 class MainPanel extends StatefulWidget {
   BuildContext context1;
@@ -32,6 +34,22 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
   double minusIconsSize = 0;
   double minusFontsSize = 0;
 
+  bool loadingBalance = true;
+
+  loadBalance ()async{
+    loadingBalance = true;
+    BALANCE = await getBalance();
+    loadingBalance = false;
+    setState(() {
+
+    });
+  }
+  @override
+  void initState() {
+
+    loadBalance();
+    super.initState();
+  }
 
  @override
   Widget build(BuildContext context) {
@@ -146,7 +164,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
         ),
         width: w,
         height: h0,
-        child: Padding(
+        child: loadingBalance?Center(child: CircularProgressIndicator()):Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 12, right: 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +174,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text("102.120", style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w700),),
+                  Text(BALANCE.toString(), style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w700),),
                   Text(" DEL", style: TextStyle(color: c6287A1, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w400)),
                 ],
               ),

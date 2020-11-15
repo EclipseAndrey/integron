@@ -70,7 +70,7 @@ class _LoginState extends State<Login> {
     }
 
     controllerNum.addListener(() {
-      print(maskFormatter.getUnmaskedText().length);
+     // print(maskFormatter.getUnmaskedText().length);
       if (maskFormatter.getUnmaskedText().length != 10) {
         setState(() {
           active = false;
@@ -121,13 +121,13 @@ class _LoginState extends State<Login> {
         Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 38.0),
-          child: PanelTools(context, minusIconSize),
+        //  child: PanelTools(context, minusIconSize),
         ),
         SizedBox(height: sizedAfterTool),
 
         Padding(
           padding: const EdgeInsets.all(18.0),
-          child: Text("Пользовательского соглашения", style: TextStyle(color: c5894bc, fontSize:  14, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, ),),
+          child: Text("Пользовательскоe соглашения", style: TextStyle(color: c5894bc, fontSize:  14, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, ),),
         ),
       ],
     );

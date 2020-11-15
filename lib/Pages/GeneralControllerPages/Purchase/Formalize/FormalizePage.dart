@@ -414,6 +414,7 @@ class _FormalizePageState extends State<FormalizePage> {
                             }
                             load();
                           }
+                          if(list.length == 0)closeDialog(context);
 
 
 

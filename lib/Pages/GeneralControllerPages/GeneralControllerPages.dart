@@ -13,6 +13,7 @@ import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 
+import 'My/My.dart';
 import 'Wallets/Wallets.dart';
 
 class GeneralControllerPages extends StatefulWidget {
@@ -38,7 +39,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
     pageList.add(Wallet());
     pageList.add(Cart());
     pageList.add(EmptyPage());
-    pageList.add(EmptyPage());
+    pageList.add(MyPage());
 
     setState(() {
 
@@ -66,7 +67,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
     if (_selectedIndex == 1) return Wallet();
     if (_selectedIndex == 2) return Cart();
     if (_selectedIndex == 3) return EmptyPage();
-    if (_selectedIndex == 3) return EmptyPage();
+    if (_selectedIndex == 3) return MyPage();
   }
 
   double blurSide = 10;
@@ -105,6 +106,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
             //   children: pageList,
             // ),
             PageView(
+              physics: NeverScrollableScrollPhysics(),
               children: pageList,
               controller: controllerPage,
               onPageChanged: (index){

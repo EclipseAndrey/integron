@@ -41,6 +41,15 @@ dependencies:
   flutter_sticky_header: ^0.5.0
   share: ^0.6.5+2
   mask_text_input_formatter: ^1.0.6
+  html_unescape: ^1.0.2
+  flutter_svg: ^0.19.1
+  ext_storage: ^1.0.3
+  flutter_multiple_image_picker: ^0.0.1
+  focused_menu: ^1.0.1
+  dotted_border: ^1.0.6
+
+#  multi_image_picker: ^4.7.14
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -65,6 +74,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/Animations/
+    - lib/assets/images/
+    - lib/assets/icons/active/
+    - lib/assets/icons/normal/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -78,6 +90,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+  - family: Integron
+    fonts:
+      - asset: lib/fonts/Integron.ttf
+  - family: MPLUS
+    fonts:
+      - asset: lib/fonts/MPLUS-Black.ttf
+      - asset: lib/fonts/MPLUS-Bold.ttf
+      - asset: lib/fonts/MPLUS-ExtraBold.ttf
+      - asset: lib/fonts/MPLUS-Light.ttf
+      - asset: lib/fonts/MPLUS-Medium.ttf
+      - asset: lib/fonts/MPLUS-Regular.ttf
+      - asset: lib/fonts/MPLUS-Thin.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
