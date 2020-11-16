@@ -18,7 +18,21 @@ import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
 import 'package:omega_qick/main.dart';
 
-Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, double minusIconSize, {VoidCallbackCategory voidCallbackCategory, bool arrowUp, bool add, Function tapUpOnly, bool edit, Function tapAdd, Function(int route) tapDelete, Function(int route) tapEdit, Function(int route) tapUpFull }){
+Widget ItemGetter(
+    BlocSize bloc,
+    BuildContext context,
+    double minusFontSize,
+    double minusIconSize,
+    {VoidCallbackCategory voidCallbackCategory,
+      bool arrowUp,
+      bool add,
+      Function(int route) tapUpOnly,
+      bool edit,
+      Function tapAdd,
+      Function(int route) tapDelete,
+      Function(int route) tapEdit,
+      Function(int route) tapUpFull
+    }){
 
   double h = MediaQuery.of(context).size.width*0.60;
   double w =MediaQuery.of(context).size.width*0.26;
@@ -41,11 +55,6 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
   Widget _content(int size){
 
     if(size == 2){
-
-
-
-
-
       ProductShort bloc2 = bloc;
       return Stack(
         children: [
@@ -70,7 +79,9 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
-                            onTap: tapUpOnly,
+                            onTap: (){
+                              print('tap Only Item getter');
+                              tapUpOnly(bloc.route);},
                             child: Container(
                               decoration: BoxDecoration(
                                 color: cDefault,
@@ -106,7 +117,9 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
-                            onTap: tapUpOnly,
+                            onTap: (){
+                              print('tap Only Item getter');
+                              tapUpOnly(bloc.route);},
                             child: Container(
                               decoration: BoxDecoration(
                                 color: cDefault,
@@ -321,8 +334,8 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
     padding: const EdgeInsets.all(8.0),
     child: GestureDetector(
       onTap: (){
-        // Navigator.push(context, );
-        if(bloc.blocSize == 2)Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TovarInfo(bloc.route)));
+         bloc.blocSize==2?Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TovarInfo(bloc.route))):null;
+
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.45,
@@ -350,27 +363,30 @@ Widget ItemGetter(BlocSize bloc, BuildContext context, double minusFontSize, dou
 
     return Padding(
       padding:  EdgeInsets.all(6.0),
-      child: Container(
-        child: DottedBorder(
-          borderType: BorderType.RRect,
-          radius: Radius.circular(6),
-          // padding: EdgeInsets.all(12),
-          dashPattern: [12],
-          color: cd1d3d7,
-          child: Container(
-            height: h,
-            width: w,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  getIconForId(id: 13, color: cIcons),
-                  Text("Добавить товар", style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400),),
-                ],
+      child: GestureDetector(
+        onTap: tapAdd,
+        child: Container(
+          child: DottedBorder(
+            borderType: BorderType.RRect,
+            radius: Radius.circular(6),
+            // padding: EdgeInsets.all(12),
+            dashPattern: [12],
+            color: cd1d3d7,
+            child: Container(
+              height: h,
+              width: w,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    getIconForId(id: 13, color: cIcons),
+                    Text("Добавить товар", style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400),),
+                  ],
+                ),
               ),
             ),
           ),

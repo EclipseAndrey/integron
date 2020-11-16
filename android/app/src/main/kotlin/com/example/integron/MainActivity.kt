@@ -1,4 +1,4 @@
-package com.example.omega_qick
+package shop.integron.integron
 
 import io.flutter.embedding.android.FlutterActivity
 

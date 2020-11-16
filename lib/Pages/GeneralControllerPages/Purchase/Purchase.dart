@@ -72,8 +72,8 @@ class _CartState extends State<Cart> {
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
                     children: [
-                      ListCartPage(tovar: true,),
-                      ListCartPage(tovar: false,),
+                      ListCartPage(tovar: true,stateCallback: (){setState(() {});},),
+                      ListCartPage(tovar: false,stateCallback: (){setState(() {});}),
                     ],
                     controller: controllerPage,
 

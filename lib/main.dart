@@ -79,8 +79,8 @@ class MyApp extends StatelessWidget {
       // home: GenerateWallet(),
 
        //home: Business.edit(),
-      home: GeneralControllerPages(),
-       //home: TovarInfo(5),
+      //home: GeneralControllerPages(),
+       home: Splash(),
 
       routes: routes,
     );

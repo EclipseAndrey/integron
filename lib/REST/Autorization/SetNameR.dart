@@ -7,11 +7,11 @@ import 'package:omega_qick/Utils/DB/tokenDB.dart';
 
 Future<int> GetSetName (String name)async{
   String token = await tokenDB();
-  String urlQuery = serverBD+ "/api.php/setname?name=$name&token=$token";
+  String urlQuery = serverBD+ "/api.php/renameuser?name=$name&token=$token";
   print(urlQuery);
   var response;
   try{
-    response = await http.get(urlQuery).timeout(Duration(seconds: 5));
+    response = await http.post(urlQuery, body: "{\"name\":\"$name\",\"token\":\"$token\"}").timeout(Duration(seconds: 5));
   }catch(e){
     return null;
   }

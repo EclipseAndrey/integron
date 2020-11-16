@@ -39,26 +39,35 @@ void showDialogIntegron({
           counter ==2?Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width*0.88/2-1,
-                height: height,
-                child: Center(child: buttons[0].textButton),
+              GestureDetector(
+                onTap: buttons[0].onPressed,
+                child: Container(
+                  width: MediaQuery.of(context).size.width*0.88/2-1,
+                  height: height,
+                  child: Center(child: buttons[0].textButton),
+                ),
               ),
               Container(
                 height: height,
                 color: cDefault,width: 1,),
-              Container(
-                width: MediaQuery.of(context).size.width*0.88/2-1,
-                height: height,
-                child: Center(child: buttons[1].textButton),
+              GestureDetector(
+                onTap: buttons[1].onPressed,
+                child: Container(
+                  width: MediaQuery.of(context).size.width*0.88/2-1,
+                  height: height,
+                  child: Center(child: buttons[1].textButton),
+                ),
               ),
             ],
           ):
-          Container(
-            key: key,
-            width: MediaQuery.of(context).size.width*0.88-1,
-            height: height,
-            child: Center(child: buttons[0].textButton),
+          GestureDetector(
+            onTap: buttons[0].onPressed,
+            child: Container(
+              key: key,
+              width: MediaQuery.of(context).size.width*0.88-1,
+              height: height,
+              child: Center(child: buttons[0].textButton),
+            ),
           ),
         ],
       ),

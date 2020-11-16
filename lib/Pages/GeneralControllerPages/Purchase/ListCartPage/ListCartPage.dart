@@ -10,7 +10,8 @@ import 'package:omega_qick/main.dart';
 
 class ListCartPage extends StatefulWidget {
   bool tovar = false;
-  ListCartPage({@required this.tovar});
+  Function stateCallback;
+  ListCartPage({@required this.tovar, this.stateCallback});
 
 
   @override
@@ -154,8 +155,13 @@ class _ListCartPageState extends State<ListCartPage> {
 
     Widget buttonPay() {
       return GestureDetector(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => FormalizePage(list)));
+        onTap: ()async{
+        await  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => FormalizePage(list)));
+        setState(() {
+
+        });
+        widget.stateCallback();
+        load();
           },
         child: Container(
           height: 42,

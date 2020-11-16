@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
@@ -8,7 +9,10 @@ import 'package:omega_qick/REST/Autorization/checkToken.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/Utils/fun/ExitAccount.dart';
+
+import 'Buisness/Buisness.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -40,7 +44,18 @@ class _MyPageState extends State<MyPage> {
     loading = true;
     setState(() {});
     String token = await tokenDB();
-    user = await checkToken(token);
+    while(user == null){
+      user = await checkToken(token);
+      user??Fluttertoast.showToast(
+          msg: "Не удалось загрузить",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.SNACKBAR,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
     loading = false;
     setState(() {});
     if (buildCompleted) initHeader();
@@ -416,6 +431,7 @@ class _MyPageState extends State<MyPage> {
                 body: Text(
                   "Поздравляем, теперь у вас Аккаунт бизнеса, не забудьте указать название вашего бизнеса, иначе пользователи не смогут увидеть его",
                   style: TextStyle(color: cMainText, fontSize: 16),
+                  textAlign: TextAlign.center,
                 ),
                 buttons: <DialogIntegronButton>[
                   DialogIntegronButton(
@@ -423,8 +439,10 @@ class _MyPageState extends State<MyPage> {
                         "Хорошо",
                         style: TextStyle(color: cMainText, fontSize: 16),
                       ),
-                      onPressed: () {
-                        //todo CREATE BUSINESS
+                      onPressed: () async{
+                        closeDialog(context);
+                        await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
+
                       })
                 ]);
           },

@@ -2,6 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/My/PageAddProduct.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Home/Search/getItemCategory.dart';
 import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
@@ -30,6 +32,9 @@ class _BodyBusinessState extends State<BodyBusiness> {
   List<BlocSize> rightColumn = [];
 
 
+
+
+
   ScrollController controllerScroll = ScrollController();
 
   void getItemsfromServ()async{
@@ -44,6 +49,27 @@ class _BodyBusinessState extends State<BodyBusiness> {
 
     });
   }
+
+  //todo
+  tapDelete(int route){}
+  void tapEdit(int route)async{
+    print("Body 56 ADD");
+    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
+    getItemsfromServ();
+  }
+  //todo
+  tapUpFull(int route){}
+  //todo
+  tapUpOnly(int route){}
+  void tapAdd()async{
+    print("Body 65 ADD");
+
+    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage()));
+   getItemsfromServ();
+  }
+
+
+
 
   @override
   void initState() {
@@ -101,12 +127,56 @@ class _BodyBusinessState extends State<BodyBusiness> {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, add: (index == 0&&widget.edit)? true:false)) ,
+                children: List.generate(leftColumn.length,
+                        (index) => ItemGetter(
+                            leftColumn[index],
+                            context, minusFontsSize,
+                            minusIconsSize,
+                            edit: true,
+                            add: (index == 0&&widget.edit)? true:false,
+                            tapAdd: ()async{
+                              print("Body 138 ADD");
+
+                              await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
+                              getItemsfromServ();
+                            },
+                            tapDelete: tapDelete,
+                            tapEdit: (route){
+                              print("Body 145 ADD");
+                              //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
+                              //getItemsfromServ();
+                            },
+                            tapUpFull: tapUpFull,
+                            tapUpOnly: tapUpOnly
+                        ),) ,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
 
-                children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize,)) ,
+                children: List.generate(rightColumn.length,
+                        (index) => ItemGetter(
+                          rightColumn[index],
+                          context,
+
+                          minusFontsSize,
+                          minusIconsSize,
+                          tapAdd: ()async{
+                            print("Body 165 ADD");
+
+                            await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
+                            getItemsfromServ();
+                          },
+                          tapDelete: tapDelete,
+                            tapEdit: (route){
+                              print("Body 172 ADD");
+
+                              //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
+                              //getItemsfromServ();
+                            },
+                          tapUpFull: tapUpFull,
+                          tapUpOnly: tapUpOnly,
+                          edit: true,
+                        ),) ,
               ),
             ],
           ),

@@ -8,6 +8,7 @@ import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/BotomSheetEditInformatin.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:omega_qick/main.dart';
 
 class FormalizePage extends StatefulWidget {
   List<Product> list;
@@ -75,7 +76,7 @@ class _FormalizePageState extends State<FormalizePage> {
   // ignore: non_constant_identifier_names
   LoadDelivery()async{
     String token = await tokenDB()??"null";
-    var a = await checkToken("MHRowJge1fNkDsGC3vmzAc4Yx");
+    var a = await checkToken(token);
     address = a.address;
     name = a.name;
     num = num?? "+"+a.num;
@@ -176,13 +177,22 @@ class _FormalizePageState extends State<FormalizePage> {
             onTap: (){
               ShowBottomSheetEditInformation(context: context, whereSave:
                   (res)async{
-                if(num!=res){
+                    await LoadDelivery();
+
+                    if(num!=res){
                   await LoadDelivery();
                   num = res;
                 }
+                setState(() {
+
+                });
                 return null;
+
                 },
                   name: name,address: address,num: num);
+              setState(() {
+
+              });
             },
             child: AnimatedContainer(
               decoration: BoxDecoration(
@@ -202,7 +212,7 @@ class _FormalizePageState extends State<FormalizePage> {
                         CircleAvatar(
                           backgroundColor: cWhite,
                           radius: 25,
-                          child: image != null?Image.network(image):Center(child: Text(name[0], style: TextStyle(fontSize: 25, fontFamily: fontFamily, color: cMainText),),),),
+                          child: image != null?Image.network(image):Center(child: Text(name == null?"A":name[0], style: TextStyle(fontSize: 25, fontFamily: fontFamily, color: cMainText),),),),
                         ],
                     ),
                     SizedBox(width: paddingAll,),
@@ -412,8 +422,12 @@ class _FormalizePageState extends State<FormalizePage> {
                             for(int i = 0; i < widget.list.length; i++){
                               if(widget.list[i].route == item.route)widget.list.removeAt(i);
                             }
+                            for(int i = 0; i < cartList.length; i++){
+                              if(item.route == cartList[i].route)cartList.removeAt(i);
+                            }
                             load();
                           }
+
                           if(list.length == 0)closeDialog(context);
 
 
