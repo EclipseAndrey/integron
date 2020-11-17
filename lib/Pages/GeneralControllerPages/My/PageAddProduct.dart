@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Categories/GetCategories.dart';
 import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
+import 'package:omega_qick/REST/Product/AddProductPost.dart';
 import 'package:omega_qick/Utils/DB/Items/Category.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/Items/Property.dart';
@@ -15,8 +17,11 @@ import 'package:omega_qick/Utils/DB/Params/Param.dart';
 import 'package:omega_qick/Utils/DB/Params/Params.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/BotomSheetSelectForIndex.dart';
+import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:http/http.dart' as http;
+import 'package:omega_qick/reqests.dart';
 
 class AddProductPage extends StatefulWidget {
 
@@ -88,10 +93,154 @@ class _AddProductPageState extends State<AddProductPage> {
 
   bool loading = true;
   Product item;
+  List<String> responsePhoto = [];
+
+  Future<bool> uploadPhoto (String filename) async {
+    String url = server14880+"/apitest.php/uploadPhoto";
+
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    request.files.add(
+        http.MultipartFile(
+            'var_file',
+            File(filename).readAsBytes().asStream(),
+            File(filename).lengthSync(),
+            filename: filename.split("/").last
+        )
+    );
+    var res = await request.send();
+    //     .then((value){
+    //
+    // });
+    res.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      responsePhoto.add(json.decode(value)['url']);
+    });
+
+  }
+
+  bool checkSumm(String s) {
+    print(s);
+    var stroka = RegExp("([0-9]+)\.([0-9]+)");
+    print(stroka.hasMatch(s));
+    return stroka.hasMatch(s);
+  }
 
   void saveProduct()async{
+    if(imagelocal.length == 0){
+      dialogErr("Добавьте минимум одно фото");
+    }else if(_type == null){
+      //dialogErr("Выберите тип");
+      selectType();
+    }else if(_category == null){
+      selectCategory();
+    }else if(nameProduct == null || nameProduct == ""||nameProduct == " "||nameProduct == "Редактировать название"){
+      await dialogErr("Укажите название продукта");
+      editHeader();
+    }else if(properties[0].value == "Нажмите для редактирования"||properties[0].value == "" || properties[0].value ==" "){
+      dialogErr("Напишите краткое описание");
 
+    }else if(properties[1].value == "Нажмите для редактирования" || properties[1].value==""||properties[1].value == ""){
+      dialogErr("Напишите описание");
+    }else{
+      bool findError = false;
+      for(int i =0; i < paramsList.length;i++) {
+        try {
+          if (paramsList[i].name == null || paramsList[i].name == "" ||
+              paramsList[i].name == " ") {
+            findError = true;
+            i = paramsList.length;
+          } else if (paramsList[i].params[0] == null ||
+              paramsList[i].params[0].name == null ||
+              paramsList[i].params[0].name == "" ||
+              paramsList[i].params[0].name == " ") {
+            findError = true;
+            i = paramsList.length;
+          }
+          if (paramsList[i].params[1] == null ||
+              paramsList[i].params[1].name == null ||
+              paramsList[i].params[1].name == "" ||
+              paramsList[i].params[1].name == " ") {
+            findError = true;
+            i = paramsList.length;
+          } else {
+            try {
+              for (int j = 2; j < paramsList.length; j++) {
+                if (paramsList[i].params[j].name == null ||
+                    paramsList[i].params[j].name == "" ||
+                    paramsList[i].params[j].name == " ") {
+                  try {
+                    paramsList[i].params.removeAt(j);
+                  } catch (e) {}
+                }
+              }
+            }catch(e){}
+          }
+        }catch(e){
+          findError=true;
+          print(e);
+        }
+      }
+      if(findError){
+        dialogErr("Заполните неполные параметры или удалите ненужные. Параметры должны содержать минимум два значения");
+      }else{
+        if(priceSummText == null || priceSummText == ""|| " " == priceSummText ) {
+          dialogErr("Сумма не указана или указана некорректно. Укажите в формате 123.00");
+        }else if(priceUnitText == null || priceUnitText == ""|| " " == priceUnitText) {
+            dialogErr("Укажите единицу измерения");
+          }else if(!checkSumm(priceSummText)){
+          dialogErr("Сумма не указана или указана некорректно. Укажите в формате 123.00");
 
+        } else{
+            try{
+              double.parse(priceSummText);
+              print("OK");
+              showDialogLoading(context);
+              responsePhoto = [];
+              for(int i = 0; i < imagelocal.length; i++){
+                await uploadPhoto(imagelocal[i]);
+              }
+
+              String steptx = properties[1].value;
+              String steptxS = properties[0].value;
+              // properties.removeAt(0);
+              // properties.removeAt(0);
+              Product productFormForSend = Product(
+
+                images: responsePhoto,
+                owner: null,
+                name: nameProduct,
+                ownerName: null,
+                catPath: [],
+                text: steptx,
+                fullText: steptxS,
+                route: null,
+                price: double.parse(priceSummText),
+                type: _type,
+                unit: priceUnitText,
+                detail: [],
+                delivery: "1",
+                image: null,
+                property: properties,
+                params: paramsList
+
+              );
+
+              await addProductPost(productFormForSend);
+              closeDialog(context);
+            }catch(e){
+              print(e);
+            }
+          }
+      }
+    }
+  }
+
+  dialogErr(String text){
+    showDialogIntegron(context: context,
+        title: Text("Сообщение",  style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),),
+        body: Text(text,
+          style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
+          textAlign: TextAlign.center, ));
   }
 
 
@@ -467,6 +616,21 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        title: GestureDetector(
+          onTap: (){saveProduct();},
+          child: Container(
+            decoration: BoxDecoration(
+              color: cDefault,
+              borderRadius: BorderRadius.circular(6),
+
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              child: Text(widget.edit?"Сохранить изменения":"Добавить", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, fontStyle: FontStyle.normal, color: cWhite),),
+            ),
+          ),
+        ),
         leading: GestureDetector(
             onTap: (){
               Navigator.pop(context);
@@ -784,7 +948,7 @@ class _AddProductPageState extends State<AddProductPage> {
         },
         child: Container(
           width: MediaQuery.of(context).size.width-24,
-          
+
           decoration: BoxDecoration(
             color: c8dcde0,
             borderRadius: BorderRadius.circular(6)

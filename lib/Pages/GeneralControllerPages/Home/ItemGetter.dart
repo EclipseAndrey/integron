@@ -40,6 +40,8 @@ Widget ItemGetter(
   bool imageF;
   List<Color> colors;
 
+  print("Item getter $edit");
+
 
   name = bloc.name;
   h = bloc.blocSize == 1?MediaQuery.of(context).size.width*0.26:MediaQuery.of(context).size.width*0.60;

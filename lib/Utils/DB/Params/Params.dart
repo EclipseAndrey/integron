@@ -14,8 +14,12 @@ class Params extends SelectIndex{
   }
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map;
-    map['name'] = this.name;
-    map['params'] = params.map((e) => e.toMap()).toList()??[];
+    map["name"] = this.name;
+    map["params"] = params.map((e) => e.toMap())??[];
+    // map["params"] = params.map((e) => e.toMap()).toList()??[];
     return map;
   }
+
+
+
 }

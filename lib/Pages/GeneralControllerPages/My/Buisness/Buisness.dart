@@ -90,25 +90,28 @@ class _BusinessPageState extends State<BusinessPage> {
 
   List<Widget> pages;
 
+
   @override
   void initState() {
-    controller.addListener(() {
-      widget.paddingPanel = controller.offset / 2;
-      //print(controller.page);
-      widget.pagePanel = controller.page.round();
-      if (widget.pagePanel == 1) {
-        widget.colorPanelText1 = Colors.white;
-        widget.colorPanelText2 = c5894bc;
-        widget.radiusPanelLeft = 6;
-        widget.radiusPanelRight = 0;
-      } else {
-        widget.colorPanelText1 = c5894bc;
-        widget.colorPanelText2 = Colors.white;
-        widget.radiusPanelLeft = 0;
-        widget.radiusPanelRight = 6;
-      }
-      setState(() {});
-    });
+    try {
+      controller.addListener(() {
+        widget.paddingPanel = controller.offset / 2;
+        //print(controller.page);
+        widget.pagePanel = controller.page.round();
+        if (widget.pagePanel == 1) {
+          widget.colorPanelText1 = Colors.white;
+          widget.colorPanelText2 = c5894bc;
+          widget.radiusPanelLeft = 6;
+          widget.radiusPanelRight = 0;
+        } else {
+          widget.colorPanelText1 = c5894bc;
+          widget.colorPanelText2 = Colors.white;
+          widget.radiusPanelLeft = 0;
+          widget.radiusPanelRight = 6;
+        }
+        setState(() {});
+      });
+    }catch(e){}
     load();
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light
@@ -130,6 +133,8 @@ class _BusinessPageState extends State<BusinessPage> {
     ];
     setState(() {});
   }
+
+
 
 
 
@@ -323,7 +328,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                               child: Text(nameBiz,overflow: TextOverflow.ellipsis,style: TextStyle(color: cLinks, fontSize: 24, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontWeight: FontWeight.w400),)),
                                           GestureDetector(
                                               onTap: (){
-                                                tapEdit(1);
+                                                tapEdit(0);
                                               },
                                               child: Text(textBiz,overflow: TextOverflow.ellipsis, style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 12),)),
 

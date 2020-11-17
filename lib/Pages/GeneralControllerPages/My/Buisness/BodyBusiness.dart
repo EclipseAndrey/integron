@@ -5,9 +5,13 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/My/PageAddProduct.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
+import 'package:omega_qick/Parse/InfoToken.dart';
+import 'package:omega_qick/REST/Autorization/checkToken.dart';
+import 'package:omega_qick/REST/Bisinesses/getBisiness.dart';
 import 'package:omega_qick/REST/Home/Search/getItemCategory.dart';
 import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 
 class BodyBusiness extends StatefulWidget {
@@ -20,7 +24,7 @@ class BodyBusiness extends StatefulWidget {
   _BodyBusinessState createState() => _BodyBusinessState();
 }
 
-class _BodyBusinessState extends State<BodyBusiness> {
+class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClientMixin<BodyBusiness>{
 
   int weiR = 0;
   int weiL = 0;
@@ -32,14 +36,42 @@ class _BodyBusinessState extends State<BodyBusiness> {
   List<BlocSize> rightColumn = [];
 
 
+  bool loading = true;
 
 
 
   ScrollController controllerScroll = ScrollController();
 
   void getItemsfromServ()async{
-    List<BlocSize> list = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, detail: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
-    list = await getItemsCategory(1);
+    loading = true;
+    setState(() {});
+
+    List list;
+    List<BlocSize> listStep = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, detail: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
+
+    String token = await  tokenDB();
+    InfoToken infoToken = await checkToken(token);
+    var biz = await getBusiness(infoToken.id);
+    list = biz.products;
+    print("body loading ${list.length} элементов при инициализации в list");
+    print("body loading ${listStep.length} элементов при инициализации в listStep");
+
+
+    for(int i =0; i < list.length; i++){
+
+
+        Product pSortStep = list[i];
+        print("${pSortStep.type} ${ widget.type}");
+        if (pSortStep.type == widget.type) listStep.add(list[i]);
+
+
+    }
+    print("body loading ${list.length} элементов after load в list");
+    print("body loading ${listStep.length} элементов after load в listStep");
+    list = listStep;
+
+    leftColumn = [];
+    rightColumn = [];
     for(int i = 0; i < list.length; i+=2){
 
       try {
@@ -49,6 +81,12 @@ class _BodyBusinessState extends State<BodyBusiness> {
         rightColumn.add(list[i + 1]);
       }catch(e){}
     }
+    print("body loading ${list.length} элементов after sort в list");
+    print("body loading ${listStep.length} элементов after sort в listStep");
+    print("body loading ${leftColumn.length} left ${rightColumn.length} right ");
+
+
+    loading = false;
     setState(() {
 
     });
@@ -101,6 +139,7 @@ class _BodyBusinessState extends State<BodyBusiness> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     double shortestSide = MediaQuery.of(context).size.shortestSide;
 
@@ -113,7 +152,7 @@ class _BodyBusinessState extends State<BodyBusiness> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       color: cBG,
-      child: SingleChildScrollView(
+      child: loading?Center(child: CircularProgressIndicator()):SingleChildScrollView(
         controller: controllerScroll,
         child: Container(
           color: cBG,
@@ -128,6 +167,7 @@ class _BodyBusinessState extends State<BodyBusiness> {
   }
 
   Widget gen (){
+    print("Body geenrate ${leftColumn.length} , ${rightColumn.length}");
     if(leftColumn.length > 0 || rightColumn.length  >0){
       return  Column(
         children: [
@@ -145,9 +185,11 @@ class _BodyBusinessState extends State<BodyBusiness> {
                             edit: true,
                             add: (index == 0&&widget.edit)? true:false,
                             tapAdd: ()async{
-                              print("Body 138 ADD");
+
 
                               await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
+                              print("Body 138 ADD");
+
                               getItemsfromServ();
                             },
                             tapDelete: tapDelete,
@@ -161,7 +203,7 @@ class _BodyBusinessState extends State<BodyBusiness> {
                             tapUpOnly: tapUpOnly
                         ),) ,
               ),
-              Column(
+              rightColumn.length == 0?SizedBox():Column(
                 mainAxisAlignment: MainAxisAlignment.start,
 
                 children: List.generate(rightColumn.length,
@@ -201,9 +243,8 @@ class _BodyBusinessState extends State<BodyBusiness> {
   }
 
 
-
-
   @override
-
   bool get wantKeepAlive => SaveStateCatalog;
+
+
 }

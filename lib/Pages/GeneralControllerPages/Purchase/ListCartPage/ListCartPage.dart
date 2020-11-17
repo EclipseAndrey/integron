@@ -135,7 +135,7 @@ class _ListCartPageState extends State<ListCartPage> {
   EndPrice() {
 
     String getSumm(){
-      int s = 0;
+      double s = 0;
       for(int i = 0; i < list.length; i++){
         s+=list[i].price*list[i].counter;
       }

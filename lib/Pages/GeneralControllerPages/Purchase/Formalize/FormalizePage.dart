@@ -596,7 +596,7 @@ class _FormalizePageState extends State<FormalizePage> {
 
   Widget BottomPanel() {
     String getSumm() {
-      int s = 0;
+      double s = 0;
       for (int i = 0; i < widget.list.length; i++) {
         s += widget.list[i].price * widget.list[i].counter;
       }

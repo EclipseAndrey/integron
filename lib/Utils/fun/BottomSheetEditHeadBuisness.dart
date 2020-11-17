@@ -44,7 +44,7 @@ Future<User> ShowBottomSheetEditHeadBusiness({
         if(controllerTextShort.text != textShort){
           //todo Отправка описания
           // ignore: unnecessary_statements
-          controllerTextShort.text!=""?await setBizDesc(controllerTextShort.text):null;
+          controllerTextShort.text!=null?await setBizDesc(controllerTextShort.text):null;
         }
         closeDialog(context);
 

@@ -10,4 +10,11 @@ class Property extends EditPropertyFlags{
       value: json['value'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    final map = Map<String, dynamic>();
+    map["name"] = name;
+    map["value"] = value;
+    return map;
+  }
 }
