@@ -8,7 +8,9 @@ class Business extends Errors{
   String nameBusiness;
   String nameOwner;
   String textShort;
+  String photo;
   Business({
+    @required this.photo,
     @required this.textShort,
     @required this.nameBusiness,
     @required this.nameOwner,
@@ -19,9 +21,10 @@ class Business extends Errors{
     print(json);
     return Business(
       //todo Проверить ключи
-      textShort: json[''],
-      nameBusiness: json['bizname'],
-      nameOwner: json['nameOwner'],
+      photo: json["bizphoto"],
+      textShort: json['textShort'] == null?null:json['textShort'].toString().length == 0?null:json['textShort'],
+      nameBusiness: json['bizname']== null?null:json['bizname'].toString().length == 0?null:json['bizname'],
+      nameOwner: json['nameOwner']??"null",
       products: json['products']==null?[]:json['products'].map((i)=>Product.fromJson(i)).toList().cast<Product>()
     );
   }

@@ -195,9 +195,9 @@ Widget ItemGetter(
                       menuOffset: 10.0, // Offset value to show menuItem from the selected item
                       bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
                       menuItems: (edit??false)?<FocusedMenuItem>[
-                        FocusedMenuItem(title: Text("Редактировать",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: tapEdit(bloc.route)),
-                        FocusedMenuItem(title: Text("В самый верх",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: tapUpFull),
-                        FocusedMenuItem(title: Text("Удалить",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: tapDelete(bloc.route)),
+                        FocusedMenuItem(title: Text("Редактировать",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){tapEdit(bloc.route);}),
+                        FocusedMenuItem(title: Text("В самый верх",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){tapUpFull(bloc.route);}),
+                        FocusedMenuItem(title: Text("Удалить",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){tapDelete(bloc.route);}),
 
                       ]:<FocusedMenuItem>[
                         // Add Each FocusedMenuItem  for Menu Options

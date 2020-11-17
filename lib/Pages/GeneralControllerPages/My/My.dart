@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Parse/InfoToken.dart';
+import 'package:omega_qick/REST/Autorization/SetNameR.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
+import 'package:omega_qick/REST/Autorization/setRole.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
@@ -29,6 +32,10 @@ class _MyPageState extends State<MyPage> {
   double initHeight = 100;
 
   bool buildCompleted = false;
+
+  bool editingName = false;
+  FocusNode focusName = FocusNode();
+  TextEditingController controllerEditName = TextEditingController();
 
   initHeader() {
     RenderBox box = keyHeader.currentContext.findRenderObject();
@@ -61,12 +68,45 @@ class _MyPageState extends State<MyPage> {
     if (buildCompleted) initHeader();
   }
 
-  editProfile(){
-    //todo edit name
+  editProfile()async{
+    editingName = !editingName;
+    if(user != null && user.name!=null&& editingName){
+      controllerEditName.text = user.name;
+    }
+    if(editingName){
+
+    }
+    if(!editingName){
+      user.name = controllerEditName.text;
+      await GetSetName(controllerEditName.text);
+    }
+    Load();
+    setState(() {
+
+    });
+    initHeader();
   }
 
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark
+      //       (
+      //   //statusBarColor: cBackground,
+      //   systemNavigationBarColor: Color(0x00cccccc),
+      //   systemNavigationBarDividerColor: null,
+      //   statusBarColor: Color(0xFFffffff),
+      //   systemNavigationBarIconBrightness: Brightness.light,
+      //   statusBarIconBrightness: Brightness.dark,
+      //   statusBarBrightness: Brightness.light,
+      // ),
+    );
+    focusName.addListener(() {
+      print("FOCUS NAME"+focusName.hasFocus.toString());
+      if(!focusName.hasFocus){
+        editProfile();
+      }
+    });
     super.initState();
 
     Load();
@@ -91,6 +131,24 @@ class _MyPageState extends State<MyPage> {
         ),
       ),
     );
+  }
+
+  Widget editName(){
+    return Container(
+        width: MediaQuery.of(context).size.width/2,
+        child: TextField(
+          autofocus: true,
+          focusNode: focusName,
+          controller: controllerEditName,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintStyle: TextStyle(
+              fontSize: 14,
+              color: Color.fromRGBO(153, 155, 158, 1),
+            ),
+            hintText: "Имя",
+          ),
+        ));
   }
 
   Widget Content() {
@@ -143,10 +201,10 @@ class _MyPageState extends State<MyPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    GestureDetector(
+                    editingName?editName():GestureDetector(
                       onTap:editProfile,
                       child: Text(
-                        user.name ?? "Задайте имя",
+                        (user.name == null || user.name.length == 0)? "Задайте имя":user.name,
                         style: TextStyle(
                             color: user.name == null ? cLinks : cMainText,
                             fontWeight: FontWeight.w600,
@@ -225,7 +283,7 @@ class _MyPageState extends State<MyPage> {
                             child: Text(
                             user.name == null
                                 ? "A"
-                                : user.name[0].toUpperCase(),
+                                : user.name.length == 0?"A":user.name[0].toUpperCase(),
                             style: TextStyle(color: cMainText, fontSize: 24),
                           ))
                         : Image.network(
@@ -421,30 +479,54 @@ class _MyPageState extends State<MyPage> {
           height: paddingV,
         ),
         GestureDetector(
-          onTap: () {
-            showDialogIntegron(
-                context: context,
-                title: Text(
-                  "Сообщение",
-                  style: TextStyle(color: cMainText, fontSize: 16),
-                ),
-                body: Text(
-                  "Поздравляем, теперь у вас Аккаунт бизнеса, не забудьте указать название вашего бизнеса, иначе пользователи не смогут увидеть его",
-                  style: TextStyle(color: cMainText, fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-                buttons: <DialogIntegronButton>[
-                  DialogIntegronButton(
-                      textButton: Text(
-                        "Хорошо",
-                        style: TextStyle(color: cMainText, fontSize: 16),
-                      ),
-                      onPressed: () async{
-                        closeDialog(context);
-                        await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
+          onTap: () async{
+            InfoToken info = await checkToken(await tokenDB());
 
-                      })
-                ]);
+            if(info.role == 1){
+              InfoToken info = await checkToken(await tokenDB());
+              if(info.role == 1){
+                await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
+              }else{
+                await setRoleR("1");
+                showDialogIntegron(
+                    context: context,
+                    title: Text(
+                      "Сообщение",
+                      style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),
+                    ),
+                    body: Text(
+                      "Поздравляем, теперь у вас Аккаунт бизнеса, не забудьте указать название вашего бизнеса, иначе пользователи не смогут увидеть его",
+                      style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
+                      textAlign: TextAlign.center,
+                    ),
+                    buttons: <DialogIntegronButton>[
+                      DialogIntegronButton(
+                          textButton: Text(
+                            "Хорошо",
+                            style: TextStyle(color: cMainText, fontSize: 16),
+                          ),
+                          onPressed: () async{
+                            closeDialog(context);
+                            await setRoleR("1");
+
+                            InfoToken info = await checkToken(await tokenDB());
+                            if(info.role == 1){
+                              await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
+                            }else{
+                              showDialogIntegron(context: context,
+                                  title: Text("Сообщение",  style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),),
+                                  body: Text("Бизнес аккаунт еще не активирован :(\nПопробуйте позже",
+                                    style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
+                                    textAlign: TextAlign.center, ));
+                            }
+
+                          })
+                    ]);
+
+
+              }
+            }
+
           },
           child: Container(
             decoration: BoxDecoration(

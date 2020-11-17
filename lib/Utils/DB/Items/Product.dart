@@ -29,7 +29,6 @@ class ProductShort extends BlocSize with Counter{
   ProductShort.error(int error) : super.error(error);
 
   factory ProductShort.fromJson(Map<String, dynamic> json){
-    print(json);
     return ProductShort(
       name: json['name']??"null",
       image: json['image'],

@@ -1,40 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omega_qick/AddWallet/AddWalletPage.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'Pages/GeneralControllerPages/GeneralControllerPages.dart';
-import 'Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
-import 'Pages/GeneralControllerPages/My/PageAddProduct.dart';
-import 'Pages/Welcome/Welcome.dart';
 import 'REST/Home/Search/getItemCategory.dart';
-import 'Tests/Test.dart';
 import 'Utils/DB/Items/Product.dart';
-import 'Utils/fun/ExitAccount.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/DB/auto.dart';
 import 'package:omega_qick/AutoRoutes.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/LogFile.dart';
-
-
-import 'Authorization/Cri/AdderABC.dart';
-import 'Authorization/Pages/CheckCode/CheckCodePage.dart';
 import 'Authorization/Pages/EnterCodePage.dart';
-import 'Authorization/Pages/GetInfoForUser/GetInfoForUserPage.dart';
-import 'Authorization/Pages/PageNum/PageNum.dart';
-import 'Authorization/Pages/PageNum2/InpNum.dart';
-import 'Authorization/Pages/PageNum2/InputNum.dart';
-import 'Authorization/Pages/SetCodePage.dart';
-
-
-import 'Pages/Login2/PageLogin.dart';
-import 'PostContent.dart';
 import 'REST/SecureConnection/DBSecure.dart';
 import 'REST/SecureConnection/DataSecure.dart';
-import 'balance.dart';
-
-
 
 List<Product> cartList = [];
 

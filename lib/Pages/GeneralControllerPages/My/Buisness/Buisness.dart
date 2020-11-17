@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
+import 'package:omega_qick/Parse/InfoToken.dart';
+import 'package:omega_qick/REST/Autorization/checkToken.dart';
+import 'package:omega_qick/REST/Bisinesses/getBisiness.dart';
+import 'package:omega_qick/Utils/DB/Bisiness/GetBusinessModel.dart';
+import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:omega_qick/Utils/fun/BottomSheetEditHeadBuisness.dart';
 
 import 'BodyBusiness.dart';
 
@@ -30,6 +36,27 @@ class BusinessPage extends StatefulWidget {
 }
 
 class _BusinessPageState extends State<BusinessPage> {
+  Business business;
+
+  String nameBiz = "";
+  String textBiz = "";
+  bool loading = true;
+  //todo loading
+  load()async{
+    loading = true;
+    setState(() {});
+    String token = await tokenDB();
+    InfoToken infoUser = await checkToken(token);
+    if(infoUser != null && infoUser.role == 1){
+      business = await getBusiness(infoUser.id);
+      nameBiz = business.nameBusiness == null?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness.length ==0?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness;
+      textBiz = business.textShort == null?widget.edit?"Редактируйте описание":"":business.textShort.length ==0?widget.edit?"Редактируйте описание":"":business.textShort;
+     // nameBiz = business.nameBusiness != null?business.nameBusiness:business.nameBusiness.length ==0?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness;
+    }
+
+    loading = false;
+    setState(() {});
+  }
 
 
 
@@ -65,18 +92,35 @@ class _BusinessPageState extends State<BusinessPage> {
 
   @override
   void initState() {
-
+    controller.addListener(() {
+      widget.paddingPanel = controller.offset / 2;
+      //print(controller.page);
+      widget.pagePanel = controller.page.round();
+      if (widget.pagePanel == 1) {
+        widget.colorPanelText1 = Colors.white;
+        widget.colorPanelText2 = c5894bc;
+        widget.radiusPanelLeft = 6;
+        widget.radiusPanelRight = 0;
+      } else {
+        widget.colorPanelText1 = c5894bc;
+        widget.colorPanelText2 = Colors.white;
+        widget.radiusPanelLeft = 0;
+        widget.radiusPanelRight = 6;
+      }
+      setState(() {});
+    });
+    load();
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle
-            (
-        //statusBarColor: cBackground,
-        systemNavigationBarColor: Color(0x00cccccc),
-        systemNavigationBarDividerColor: null,
-        statusBarColor: Color(0xFFffffff),
-        systemNavigationBarIconBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-      ),
+        SystemUiOverlayStyle.light
+      //       (
+      //   //statusBarColor: cBackground,
+      //   systemNavigationBarColor: Color(0x00cccccc),
+      //   systemNavigationBarDividerColor: null,
+      //   statusBarColor: Color(0xFFffffff),
+      //   systemNavigationBarIconBrightness: Brightness.light,
+      //   statusBarIconBrightness: Brightness.dark,
+      //   statusBarBrightness: Brightness.light,
+      // ),
     );
 
 
@@ -96,14 +140,16 @@ class _BusinessPageState extends State<BusinessPage> {
 
     */
 
-  tapEdit(int indexElement){
+  tapEdit(int indexElement)async{
     switch(indexElement){
       case 0:{
-        //todo Клик по заголовку бизнеса
+
+       await  ShowBottomSheetEditHeadBusiness(context: context, name: nameBiz, textShort: textBiz,whereSave: (biz)async{load();} );
+
         break;
       }
       case 1:{
-        //todo Клик по описанию бизнеса
+        await ShowBottomSheetEditHeadBusiness(name: business.nameBusiness, context: context);
         break;
       }
       case 2:{
@@ -115,7 +161,7 @@ class _BusinessPageState extends State<BusinessPage> {
         break;
       }
       case 4:{
-        //todo Клик по иконке шапки left
+        Navigator.pop(context);
         break;
       }
     }
@@ -132,24 +178,7 @@ class _BusinessPageState extends State<BusinessPage> {
       minusFontsSize = minusFontsSizeHome400;
     }
 
-    controller.addListener(() {
-      widget.paddingPanel = controller.offset / 2;
-      //print(controller.page);
-      widget.pagePanel = controller.page.round();
-      if (widget.pagePanel == 1) {
-        widget.colorPanelText1 = Colors.white;
-        widget.colorPanelText2 = c5894bc;
-        widget.radiusPanelLeft = 6;
-        widget.radiusPanelRight = 0;
-      } else {
-        widget.colorPanelText1 = c5894bc;
-        widget.colorPanelText2 = Colors.white;
-        widget.radiusPanelLeft = 0;
-        widget.radiusPanelRight = 6;
-      }
 
-      setState(() {});
-    });
 
 
 
@@ -194,7 +223,7 @@ class _BusinessPageState extends State<BusinessPage> {
           //   elevation: 0.0,
           // ),
           body:
-              SingleChildScrollView(child: Content(heightAppBar, minusFontsSize)),
+              loading?Center(child: CircularProgressIndicator(),):Content(heightAppBar, minusFontsSize),
         ),
       ),
     );
@@ -234,22 +263,22 @@ class _BusinessPageState extends State<BusinessPage> {
                             },
                             child: getIconForId(id: 0, size: 24, color: cIcons)),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: cDefault,
-                            borderRadius: BorderRadius.circular(6)
-                          ),
-                          child: Center(child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-                            child: Text(
-                                "Сохранить изменения",
-                              style: TextStyle(color: cWhite, fontSize: 14, fontWeight: FontWeight.w400,fontStyle: FontStyle.normal, fontFamily: fontFamily),
-                            ),
-                          )),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 0),
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       color: cDefault,
+                      //       borderRadius: BorderRadius.circular(6)
+                      //     ),
+                      //     child: Center(child: Padding(
+                      //       padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                      //       child: Text(
+                      //           "Сохранить изменения",
+                      //         style: TextStyle(color: cWhite, fontSize: 14, fontWeight: FontWeight.w400,fontStyle: FontStyle.normal, fontFamily: fontFamily),
+                      //       ),
+                      //     )),
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         //todo icon right
@@ -278,23 +307,25 @@ class _BusinessPageState extends State<BusinessPage> {
                                 print("click");
                               },
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding:  EdgeInsets.symmetric(horizontal: 12),
+                                    padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                                     child: Container(
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           GestureDetector(
                                               onTap:(){
                                                 tapEdit(0);
                                               },
-                                              child: Text("Вери длинное названия магазина, не надо так делать",overflow: TextOverflow.ellipsis,style: TextStyle(color: cLinks, fontSize: 24, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontWeight: FontWeight.w400),)),
+                                              child: Text(nameBiz,overflow: TextOverflow.ellipsis,style: TextStyle(color: cLinks, fontSize: 24, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontWeight: FontWeight.w400),)),
                                           GestureDetector(
                                               onTap: (){
                                                 tapEdit(1);
                                               },
-                                              child: Text("Короткое описание магазина, обычно слово короткое не замечают и переписывают войну и мир",overflow: TextOverflow.ellipsis, style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 12),)),
+                                              child: Text(textBiz,overflow: TextOverflow.ellipsis, style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 12),)),
 
                                         ],
                                       ),
@@ -370,7 +401,9 @@ class _BusinessPageState extends State<BusinessPage> {
               ),
             ),
           ),
-          Catalog(heightAppBar, minusFontSize),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Catalog(heightAppBar, minusFontSize)),
         ],
       ),
     );
@@ -379,6 +412,7 @@ class _BusinessPageState extends State<BusinessPage> {
   Widget Catalog(double heightAppBar, double minusFontSize){
     return Container(
       width: (MediaQuery.of(context).size.width),
+      height: (MediaQuery.of(context).size.height),
       child: Column(
         children: [
           AspectRatio(

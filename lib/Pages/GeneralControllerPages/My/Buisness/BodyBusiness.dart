@@ -42,8 +42,12 @@ class _BodyBusinessState extends State<BodyBusiness> {
     list = await getItemsCategory(1);
     for(int i = 0; i < list.length; i+=2){
 
-      leftColumn.add(list[i]);
-      rightColumn.add(list[i+1]);
+      try {
+        leftColumn.add(list[i]);
+      }catch(e){}
+      try {
+        rightColumn.add(list[i + 1]);
+      }catch(e){}
     }
     setState(() {
 
@@ -51,16 +55,22 @@ class _BodyBusinessState extends State<BodyBusiness> {
   }
 
   //todo
-  tapDelete(int route){}
-  void tapEdit(int route)async{
+  tapDelete(int route){
+    print("tap delete");
+  }
+  tapEdit(int route)async{
     print("Body 56 ADD");
     await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
     getItemsfromServ();
   }
   //todo
-  tapUpFull(int route){}
+  tapUpFull(int route){
+    print("tapUpFull");
+  }
   //todo
-  tapUpOnly(int route){}
+  tapUpOnly(int route)async{
+    print("tap up Body $route");
+  }
   void tapAdd()async{
     print("Body 65 ADD");
 
@@ -78,10 +88,10 @@ class _BodyBusinessState extends State<BodyBusiness> {
 
       //print("listen scroll ${controllerScroll.position.pixels} // ${controllerScroll.position.maxScrollExtent}");
       // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());
-      if(controllerScroll.position.pixels > controllerScroll.position.maxScrollExtent){
-        print(controllerScroll.position.pixels);
-        getItemsfromServ();
-      }
+      // if(controllerScroll.position.pixels > controllerScroll.position.maxScrollExtent){
+      //   print(controllerScroll.position.pixels);
+      //   getItemsfromServ();
+      // }
     });
 
   }
@@ -143,6 +153,7 @@ class _BodyBusinessState extends State<BodyBusiness> {
                             tapDelete: tapDelete,
                             tapEdit: (route){
                               print("Body 145 ADD");
+                              tapEdit(route);
                               //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
                               //getItemsfromServ();
                             },
@@ -169,6 +180,7 @@ class _BodyBusinessState extends State<BodyBusiness> {
                           tapDelete: tapDelete,
                             tapEdit: (route){
                               print("Body 172 ADD");
+                              tapEdit(route);
 
                               //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
                               //getItemsfromServ();

@@ -275,7 +275,6 @@ class _AddProductPageState extends State<AddProductPage> {
     }
   }
 
-
   addParam(int index){
     try{
       saveStats();
@@ -296,8 +295,6 @@ class _AddProductPageState extends State<AddProductPage> {
       });
     }catch(e){}
   }
-
-
 
   initProperties(){
     if(widget.edit){
@@ -470,6 +467,14 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(19.0),
+              child: getIconForId(id: 0, color: c5894bc,),
+            )),
         backgroundColor: cBG,
         elevation: 0,
       ),

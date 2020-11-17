@@ -8,6 +8,8 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Autorization/SetAddress.dart';
 import 'package:omega_qick/REST/Autorization/SetNameR.dart';
+import 'package:omega_qick/REST/Bisinesses/setBizDesc.dart';
+import 'package:omega_qick/REST/Bisinesses/setBizName.dart';
 import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/Utils/DB/HeadBusinesses.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
@@ -26,7 +28,7 @@ Future<User> ShowBottomSheetEditHeadBusiness({
 
 
   controllerName.text = name??"";
-  controllerTextShort.text = name ?? "";
+  controllerTextShort.text = textShort ?? "";
 
 
 
@@ -34,15 +36,15 @@ Future<User> ShowBottomSheetEditHeadBusiness({
     return GestureDetector(
       onTap: ()async{
         showDialogLoading(context);
-        if(textShort == null){
+        if(controllerName.text != name){
           //todo Отправка имени
           // ignore: unnecessary_statements
-          controllerName.text!=""?await GetSetName(controllerName.text):null;
+          controllerName.text!=""?await setBizName(controllerName.text):null;
         }
-        if(controllerTextShort.text != name){
+        if(controllerTextShort.text != textShort){
           //todo Отправка описания
           // ignore: unnecessary_statements
-          controllerTextShort.text!=""?await GetSetAddress(controllerTextShort.text):null;
+          controllerTextShort.text!=""?await setBizDesc(controllerTextShort.text):null;
         }
         closeDialog(context);
 
@@ -94,10 +96,7 @@ Future<User> ShowBottomSheetEditHeadBusiness({
                       child: Column(
                         children: [
                           SizedBox(height: 12,),
-
-                          textShort != null
-                              ? SizedBox()
-                              : Column(
+                          Column(
                             children: [
                               Container(
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),

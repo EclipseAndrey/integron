@@ -77,6 +77,11 @@ class _FormalizePageState extends State<FormalizePage> {
   LoadDelivery()async{
     String token = await tokenDB()??"null";
     var a = await checkToken(token);
+    try {
+      if (a.name.length == 0) {
+        a.name = null;
+      }
+    }catch(e){}
     address = a.address;
     name = a.name;
     num = num?? "+"+a.num;
@@ -212,7 +217,7 @@ class _FormalizePageState extends State<FormalizePage> {
                         CircleAvatar(
                           backgroundColor: cWhite,
                           radius: 25,
-                          child: image != null?Image.network(image):Center(child: Text(name == null?"A":name[0], style: TextStyle(fontSize: 25, fontFamily: fontFamily, color: cMainText),),),),
+                          child: image != null?Image.network(image):Center(child: Text(name == null?"A":name.length == 0?"A":name[0], style: TextStyle(fontSize: 25, fontFamily: fontFamily, color: cMainText),),),),
                         ],
                     ),
                     SizedBox(width: paddingAll,),
@@ -641,9 +646,9 @@ class _FormalizePageState extends State<FormalizePage> {
       return GestureDetector(
         onTap: (){
           if(information && (name == null|| address == null)){
-            showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Информация для доставки не заполнена", style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
+            showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Информация для доставки не заполнена", textAlign: TextAlign.center,style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
           }else{
-            showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Оплата не прошла", style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
+            showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Оплата не прошла",textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
           }
         },
         child: Container(

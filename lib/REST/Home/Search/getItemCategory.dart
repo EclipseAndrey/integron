@@ -53,7 +53,7 @@ Future<List<ProductShort>> getItemsCategory(int id, {int offset, int limit, int 
 
   if (response.statusCode == 200) {
     var decData = json.decode(response.body);
-    print(decData);
+
 
     // list = [];
 
