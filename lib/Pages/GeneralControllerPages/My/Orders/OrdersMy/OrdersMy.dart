@@ -10,6 +10,8 @@ import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/main.dart';
 
+import 'OrdersMyContent.dart';
+
 class OrdersMy extends StatefulWidget {
   @override
   _OrdersMyState createState() => _OrdersMyState();
@@ -109,8 +111,8 @@ class _OrdersMyState extends State<OrdersMy> {
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
                     children: [
-                      OrdersBizContent(stateCallback: (){setState(() {});},orders: listOrdersTovars,),
-                      OrdersBizContent(stateCallback: (){setState(() {});}, orders: listOrderssUslugi,),
+                      OrdersMyContent(stateCallback: (){setState(() {});},orders: listOrdersTovars,),
+                      OrdersMyContent(stateCallback: (){setState(() {});}, orders: listOrderssUslugi,),
                     ],
                     controller: controllerPage,
 

@@ -16,10 +16,11 @@ import 'BodyBusiness.dart';
 class BusinessPage extends StatefulWidget {
 
   bool edit = false;
+  int id;
 
-  BusinessPage(this.edit);
-  factory BusinessPage.read() => BusinessPage(false);
-  factory BusinessPage.edit() => BusinessPage(true);
+  BusinessPage(this.edit, this.id);
+  factory BusinessPage.read(int id) => BusinessPage(false, id);
+  factory BusinessPage.edit() => BusinessPage(true, null);
 
 
   Color colorPanelText1 = c5894bc;
@@ -28,7 +29,7 @@ class BusinessPage extends StatefulWidget {
   double radiusPanelRight = 6;
   double paddingPanel = 0;
   int durationAnimatePanel = 100;
-  int pagePanel = 1;
+  int pagePanel = 0;
 
 
   @override
@@ -45,13 +46,37 @@ class _BusinessPageState extends State<BusinessPage> {
   load()async{
     loading = true;
     setState(() {});
-    String token = await tokenDB();
-    InfoToken infoUser = await checkToken(token);
-    if(infoUser != null && infoUser.role == 1){
-      business = await getBusiness(infoUser.id);
-      nameBiz = business.nameBusiness == null?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness.length ==0?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness;
-      textBiz = business.textShort == null?widget.edit?"Редактируйте описание":"":business.textShort.length ==0?widget.edit?"Редактируйте описание":"":business.textShort;
-     // nameBiz = business.nameBusiness != null?business.nameBusiness:business.nameBusiness.length ==0?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness;
+
+    print("BIZ ${widget.edit}");
+    if(widget.edit) {
+      String token = await tokenDB();
+      InfoToken infoUser = await checkToken(token);
+      if (infoUser != null && infoUser.role == 1&&widget.edit) {
+        business = await getBusiness(infoUser.id);
+        nameBiz = business.nameBusiness == null ? widget.edit
+            ? "Редактируйте название"
+            : "Магазин" : business.nameBusiness.length == 0 ? widget.edit
+            ? "Редактируйте название"
+            : "Магазин" : business.nameBusiness;
+        textBiz = business.textShort == null
+            ? widget.edit ? "Редактируйте описание" : ""
+            : business.textShort.length == 0 ? widget.edit
+            ? "Редактируйте описание"
+            : "" : business.textShort;
+        // nameBiz = business.nameBusiness != null?business.nameBusiness:business.nameBusiness.length ==0?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness;
+      }
+    }else{
+      business = await getBusiness(widget.id);
+      nameBiz = business.nameBusiness == null ? widget.edit
+          ? "Редактируйте название"
+          : "Магазин" : business.nameBusiness.length == 0 ? widget.edit
+          ? "Редактируйте название"
+          : "Магазин" : business.nameBusiness;
+      textBiz = business.textShort == null
+          ? widget.edit ? "Редактируйте описание" : ""
+          : business.textShort.length == 0 ? widget.edit
+          ? "Редактируйте описание"
+          : "" : business.textShort;
     }
 
     loading = false;
@@ -66,7 +91,7 @@ class _BusinessPageState extends State<BusinessPage> {
 
   bool searchFocus = false;
 
-  static final controller = PageController(
+  PageController controller = PageController(
     keepPage: true,
     initialPage: 0,
   );
@@ -92,13 +117,14 @@ class _BusinessPageState extends State<BusinessPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+   // controller.dispose();
     super.dispose();
+
   }
 
   @override
   void initState() {
-    try {
+    // try {
       controller.addListener(() {
         widget.paddingPanel = controller.offset / 2;
         //print(controller.page);
@@ -114,9 +140,9 @@ class _BusinessPageState extends State<BusinessPage> {
           widget.radiusPanelLeft = 0;
           widget.radiusPanelRight = 6;
         }
-        // setState(() {});
+        setState(() {});
       });
-    }catch(e){}
+    // }catch(e){}
     load();
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light
@@ -133,10 +159,11 @@ class _BusinessPageState extends State<BusinessPage> {
 
 
     pages = [
-      BodyBusiness(type:0, edit: widget.edit,),
-      BodyBusiness(type:1, edit: widget.edit,),
+      BodyBusiness(type:0, edit: widget.edit, id: widget.id,),
+      BodyBusiness(type:1, edit: widget.edit,id: widget.id,),
     ];
     setState(() {});
+
   }
 
 
@@ -154,12 +181,12 @@ class _BusinessPageState extends State<BusinessPage> {
     switch(indexElement){
       case 0:{
 
-       await  ShowBottomSheetEditHeadBusiness(context: context, name: nameBiz, textShort: textBiz,whereSave: (biz)async{load();} );
+       await  widget.edit?ShowBottomSheetEditHeadBusiness(context: context, name: nameBiz, textShort: textBiz,whereSave: (biz)async{load();} ):null;
 
         break;
       }
       case 1:{
-        await ShowBottomSheetEditHeadBusiness(name: business.nameBusiness, context: context);
+        await widget.edit?ShowBottomSheetEditHeadBusiness(name: business.nameBusiness, context: context):null;
         break;
       }
       case 2:{
@@ -183,7 +210,7 @@ class _BusinessPageState extends State<BusinessPage> {
     double shortestSide = MediaQuery.of(context).size.shortestSide;
 
     if (shortestSide < 400) {
-      heightAppBar = 0.55;
+      heightAppBar = 0.46;
       minusIconsSize = minusIconsSizeHome400;
       minusFontsSize = minusFontsSizeHome400;
     }
@@ -429,7 +456,7 @@ class _BusinessPageState extends State<BusinessPage> {
             aspectRatio: (MediaQuery.of(context).size.width) /
                 (MediaQuery.of(context).size.width * heightAppBar),),
           Container(
-            height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width * heightAppBar,
+            height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width * heightAppBar - 24,
             child: PageView(
               controller: controller,
               children: pages,

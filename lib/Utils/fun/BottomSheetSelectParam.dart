@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'Cart/UpdateCart.dart';
 import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitBalance.dart';
 import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/InitWallet.dart';
 import 'package:omega_qick/JsonParse.dart';
@@ -206,11 +207,11 @@ Future<User> ShowBottoomSheetSelectParams(
                           bool find = false;
                           for (int i = 0; i < cartList.length; i++) {
                             if (cartList[i].route == product.route) {
-                              cartList[i].counter++;
+                              cartList[i].counter++; updateCart();
                               find = true;
                             }
                           }
-                          if (!find) cartList.add(product);
+                          if (!find) {cartList.add(product);updateCart();}
                           //AddProductInCart(context, product.route, product:product);
                           closeDialog(context);
                           Fluttertoast.showToast(

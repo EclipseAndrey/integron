@@ -6,6 +6,7 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/Forma
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:omega_qick/Utils/fun/Cart/UpdateCart.dart';
 import 'package:omega_qick/main.dart';
 
 class ListCartPage extends StatefulWidget {
@@ -280,7 +281,7 @@ class _ListCartPageState extends State<ListCartPage> {
                                 GestureDetector(
                                     onTap:(){
                                       for(int i = 0; i < cartList.length; i++){
-                                        if(cartList[i].route == sortList[indexAll][index].route)cartList.removeAt(i);
+                                        if(cartList[i].route == sortList[indexAll][index].route){cartList.removeAt(i); updateCart();}
                                       }
                                       load();
 

@@ -20,7 +20,8 @@ class BodyBusiness extends StatefulWidget {
 
   bool edit;
   int type;
-  BodyBusiness({this.type, this.edit});
+  int id;
+  BodyBusiness({this.type, this.edit,this.id});
 
   @override
   _BodyBusinessState createState() => _BodyBusinessState();
@@ -50,10 +51,14 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     setState(() {});
 
     List<BlocSize> listStep = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, detail: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
-
-    String token = await  tokenDB();
-    InfoToken infoToken = await checkToken(token);
-    var biz = await getBusiness(infoToken.id);
+    var biz;
+    if(widget.edit) {
+      String token = await tokenDB();
+      InfoToken infoToken = await checkToken(token);
+      biz= await getBusiness(infoToken.id);
+    }else{
+      biz= await getBusiness(widget.id);
+    }
     list = biz.products;
     print("body loading ${list.length} элементов при инициализации в list");
     print("body loading ${listStep.length} элементов при инициализации в listStep");
@@ -202,7 +207,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
                             leftColumn[index],
                             context, minusFontsSize,
                             minusIconsSize,
-                            edit: true,
+                            edit: widget.edit,
                             add: (index == 0&&widget.edit)? true:false,
                             tapAdd: ()async{
 
@@ -249,7 +254,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
                             },
                           tapUpFull: (route){tapUpFull(route);},
                           tapUpOnly: (route){tapUpOnly(route);},
-                          edit: true,
+                          edit: widget.edit,
                         ),) ,
               ),
             ],

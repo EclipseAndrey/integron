@@ -14,6 +14,7 @@ class ProductShort extends BlocSize with Counter, TokenParam{
   String text;
   double price;
   String sale;
+  int ownerIdS;
 
 
   ProductShort({
@@ -23,6 +24,7 @@ class ProductShort extends BlocSize with Counter, TokenParam{
     this.text,
     this.price,
     this.sale,
+    this.ownerIdS
 
   }) : super(name, 2, image, route);
 
@@ -36,6 +38,7 @@ class ProductShort extends BlocSize with Counter, TokenParam{
       route: int.parse(json['route']),
       text: json['text'],
       price: double.parse(json['price']),
+      ownerIdS: int.parse(json['ownerid']),
       sale: json['sale'].toString()??"",
     );
   }

@@ -58,9 +58,20 @@ class _MyPageState extends State<MyPage> {
   }
 
   Load() async {
+    print("load");
     loading = true;
     setState(() {});
     String token = await tokenDB();
+    user = await checkToken(token);
+    user??Fluttertoast.showToast(
+        msg: "Не удалось загрузить",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.SNACKBAR,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
     while(user == null){
       user = await checkToken(token);
       user??Fluttertoast.showToast(
@@ -76,6 +87,7 @@ class _MyPageState extends State<MyPage> {
     loading = false;
     setState(() {});
     if (buildCompleted) initHeader();
+
   }
 
   editProfile()async{
@@ -91,9 +103,7 @@ class _MyPageState extends State<MyPage> {
       await GetSetName(controllerEditName.text);
     }
     Load();
-    setState(() {
-
-    });
+    setState(() {});
     initHeader();
   }
 
@@ -379,7 +389,7 @@ class _MyPageState extends State<MyPage> {
               child: GestureDetector(
                 onTap: (){
                   //OrdersBiz
-                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => OrdersBiz()));
+                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => OrdersMy()));
 
                 },
                 child: Container(
@@ -417,7 +427,7 @@ class _MyPageState extends State<MyPage> {
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: paddingH),
               child: GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => OrdersMy()));
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => OrdersBiz()));
 
                 },
                 child: Container(
@@ -566,14 +576,15 @@ class _MyPageState extends State<MyPage> {
         ),
         GestureDetector(
           onTap: () async{
+            showDialogLoading(context);
             InfoToken info = await checkToken(await tokenDB());
-
-            if(info.role == 1){
-              InfoToken info = await checkToken(await tokenDB());
+            closeDialog(context);
               if(info.role == 1){
                 await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
               }else{
+                showDialogLoading(context);
                 await setRoleR("1");
+                closeDialog(context);
                 showDialogIntegron(
                     context: context,
                     title: Text(
@@ -593,11 +604,14 @@ class _MyPageState extends State<MyPage> {
                           ),
                           onPressed: () async{
                             closeDialog(context);
+                            showDialogLoading(context);
                             await setRoleR("1");
 
                             InfoToken info = await checkToken(await tokenDB());
+                            closeDialog(context);
                             if(info.role == 1){
                               await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
+                              Load();
                             }else{
                               showDialogIntegron(context: context,
                                   title: Text("Сообщение",  style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),),
@@ -610,7 +624,7 @@ class _MyPageState extends State<MyPage> {
                     ]);
 
 
-              }
+
             }
 
           },
@@ -630,7 +644,7 @@ class _MyPageState extends State<MyPage> {
                     width: paddingH / 2,
                   ),
                   Text(
-                    "Открыть магазин",
+                    user.role == 1?"В магазин":"Открыть магазин",
                     style: TextStyle(
                         color: cTitles,
                         fontWeight: FontWeight.w600,
@@ -644,7 +658,7 @@ class _MyPageState extends State<MyPage> {
         SizedBox(
           height: paddingH / 2,
         ),
-        Padding(
+        user.role == 1?SizedBox():Padding(
           padding: const EdgeInsets.only(left: 30, right: 42),
           child: Text(
             "В INTEGRON вы можете открыть свой собственный магазин и начать зарабатывать прямо сейчас.",

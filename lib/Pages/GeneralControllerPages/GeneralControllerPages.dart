@@ -12,6 +12,7 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:omega_qick/Utils/fun/Cart/GetCart.dart';
 
 import 'My/My.dart';
 import 'Wallets/Wallets.dart';
@@ -35,6 +36,8 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
 
   @override
   void initState() {
+    getCart();
+
     pageList.add(Home());
     pageList.add(Wallet());
     pageList.add(Cart());

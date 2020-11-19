@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
@@ -139,7 +140,7 @@ class _TovarInfoState extends State<TovarInfo> {
                                 panelInfoProduct(),
                                 SizedBox(height: 8,),
                                 textProduct("Описание",item.fullText),
-                                textProduct("Доставка",item.delivery),
+                                textProduct("Доставка",int.parse(item.delivery) == 1?"Есть":"Нет"),
                                 constructorProperty(),
                                 SizedBox(height: 100,),
 
@@ -242,20 +243,25 @@ class _TovarInfoState extends State<TovarInfo> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.read(item.owner)));
+          },
+          child: Container(
 
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(240, 245, 239, 1),
-              borderRadius: BorderRadius.circular(6)),
-          width: MediaQuery.of(context).size.width * 0.30,
-          height: MediaQuery.of(context).size.width * 0.15,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(240, 245, 239, 1),
+                borderRadius: BorderRadius.circular(6)),
+            width: MediaQuery.of(context).size.width * 0.30,
+            height: MediaQuery.of(context).size.width * 0.15,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
 
-                children: [getIconForId(id:44, color: c6287A1,size: 24- minusIconsSize,), SizedBox(height: 6,),Text("В магазин", style: TextStyle(color: c5894bc),)],
+                  children: [getIconForId(id:44, color: c6287A1,size: 24- minusIconsSize,), SizedBox(height: 6,),Text("В магазин", style: TextStyle(color: c5894bc),)],
+                ),
               ),
             ),
           ),

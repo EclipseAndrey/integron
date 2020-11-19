@@ -26,39 +26,45 @@ Widget containerButtons(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               byTokensButton(context ,w,h,c,p),
-              SizedBox(width: p,),
-              ButtonsRight(context,w,h,c,p),
+              // SizedBox(width: p,),
+              // ButtonsRight(context,w,h,c,p),
             ],
           ),
           SizedBox(height: p,),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 5.0,
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 3,
-                )
-              ],
-            ),
-
-            width: w*2+p,
-            height: h,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(width: 16,),
-
-                getIconForId(id:43, color: c6287A1),
-                SizedBox(width: 16,),
-                Text("Делегировать", style: TextStyle(fontSize: 16, color: c)),
-              ],
-            ),
-          ),
+          //delegate(context ,w,h,c,p),
         ],
       ),
+    ),
+  );
+}
+
+Widget delegate(BuildContext context ,double w,
+    double h,
+    Color c, double p  ){
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(6),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          blurRadius: 5.0,
+          color: Colors.grey.withOpacity(0.3),
+          spreadRadius: 3,
+        )
+      ],
+    ),
+
+    width: w*2+p,
+    height: h,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(width: 16,),
+
+        getIconForId(id:43, color: c6287A1),
+        SizedBox(width: 16,),
+        Text("Делегировать", style: TextStyle(fontSize: 16, color: c)),
+      ],
     ),
   );
 }
@@ -67,7 +73,7 @@ Widget byTokensButton(BuildContext context ,double w,
 double h,
 Color c, double p  ) {
   // double w = MediaQuery.of(context).size.width * 0.43;
-  return Column(
+  return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Container(
@@ -106,7 +112,7 @@ Color c, double p  ) {
           ),
         ),
       ),
-      SizedBox(height: p,),
+      SizedBox(height: p,width: p,),
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
@@ -128,12 +134,12 @@ Color c, double p  ) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 5),
-              getIconForId(id:28,
+              getIconForId(id:1,
                 color: c6287A1,
                 size: 22,
               ),
               SizedBox(height: 7),
-              Text("Принять оплату",
+              Text("Перевести",
                   style: TextStyle(
                     fontSize: 16,
                     color: Color.fromRGBO(88, 148, 188, 1),

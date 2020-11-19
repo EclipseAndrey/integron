@@ -47,13 +47,21 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
             height: MediaQuery.of(context).size.height-30,
             child: Column(
               children: [
+                Padding(
+                  padding:  EdgeInsets.all(paddingAll),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [head()],
+                  ),
+                ),
                 Container(
-                  height: MediaQuery.of(context).size.height-130,
+                  height: MediaQuery.of(context).size.height-140,
                   width: MediaQuery.of(context).size.width - paddingAll*2,
                   child: widget.orders.length==0?Center(child: Text("Тут пока пусто :)", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24),),):
                   SingleChildScrollView(
                     child: Column(
                       children: [
+
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: List.generate(widget.orders.length, (indexAll) => Column(
@@ -153,8 +161,8 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
                                       child: Text(widget.orders[indexAll].paramsString[indexC], style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
                                     ),
                                   ),
-                                ),)
-                                ,
+                                ),
+                                ),
                               ),
                             ),
                             Row(
@@ -268,6 +276,10 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
         Text(" DEL" , style: TextStyle(color:  cMainText, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: fontFamily), ),
       ],
     );
+  }
+
+  Widget head(){
+    return Text("Мои заказы", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24),);
   }
 
 }

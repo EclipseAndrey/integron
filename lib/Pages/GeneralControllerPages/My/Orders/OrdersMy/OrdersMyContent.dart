@@ -47,8 +47,15 @@ class _OrdersMyContentState extends State<OrdersMyContent> {
             height: MediaQuery.of(context).size.height-30,
             child: Column(
               children: [
+                Padding(
+                  padding:  EdgeInsets.all(paddingAll),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [head()],
+                  ),
+                ),
                 Container(
-                  height: MediaQuery.of(context).size.height-130,
+                  height: MediaQuery.of(context).size.height-140,
                   width: MediaQuery.of(context).size.width - paddingAll*2,
                   child: widget.orders.length==0?Center(child: Text("Тут пока пусто :)", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24),),):
                   SingleChildScrollView(
@@ -268,6 +275,9 @@ class _OrdersMyContentState extends State<OrdersMyContent> {
         Text(" DEL" , style: TextStyle(color:  cMainText, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: fontFamily), ),
       ],
     );
+  }
+  Widget head(){
+    return Text("Мои покупки", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24),);
   }
 
 }

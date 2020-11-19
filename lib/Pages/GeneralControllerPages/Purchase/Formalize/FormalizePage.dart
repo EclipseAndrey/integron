@@ -7,6 +7,7 @@ import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/BotomSheetEditInformatin.dart';
+import 'package:omega_qick/Utils/fun/Cart/UpdateCart.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/main.dart';
@@ -215,10 +216,14 @@ class _FormalizePageState extends State<FormalizePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        CircleAvatar(
-                          backgroundColor: cWhite,
-                          radius: 25,
-                          child: image != null?Image.network(image):Center(child: Text(name == null?"A":name.length == 0?"A":name[0], style: TextStyle(fontSize: 25, fontFamily: fontFamily, color: cMainText),),),),
+                        ClipOval(
+                          child: Container(
+                            color: cWhite,
+                            width: 50,
+                            height: 50,
+                            child: image != null?Image.network(image, fit: BoxFit.cover,):Center(child: Text(name == null?"A":name.length == 0?"A":name[0], style: TextStyle(fontSize: 25, fontFamily: fontFamily, color: cMainText),),),
+                          ),
+                        ),
                         ],
                     ),
                     SizedBox(width: paddingAll,),
@@ -429,7 +434,7 @@ class _FormalizePageState extends State<FormalizePage> {
                               if(widget.list[i].route == item.route)widget.list.removeAt(i);
                             }
                             for(int i = 0; i < cartList.length; i++){
-                              if(item.route == cartList[i].route)cartList.removeAt(i);
+                              if(item.route == cartList[i].route){cartList.removeAt(i); updateCart();}
                             }
                             load();
                           }

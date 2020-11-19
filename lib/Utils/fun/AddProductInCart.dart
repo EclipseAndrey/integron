@@ -6,11 +6,12 @@ import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/fun/BottomSheetSelectParam.dart';
 
 import '../../main.dart';
+import 'Cart/UpdateCart.dart';
 
 void AddProductInCart (BuildContext context, int route, {Product product} )async{
   bool find = false;
   for(int i = 0; i < cartList.length; i++){
-    if(cartList[i].route==route){cartList[i].counter++; find = true;
+    if(cartList[i].route==route){cartList[i].counter++; find = true; updateCart();
     }
   }
   if(!find){
@@ -18,7 +19,7 @@ void AddProductInCart (BuildContext context, int route, {Product product} )async
     if(product.params.length>0){
       ShowBottoomSheetSelectParams(context: context, formalize: false, indexSelect: (index){}, product: product);
     }else{
-      cartList.add(product);
+      cartList.add(product);updateCart();
       Fluttertoast.showToast(
           msg: "Добавлено",
           toastLength: Toast.LENGTH_SHORT,
