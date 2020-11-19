@@ -8,6 +8,8 @@ import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Parse/InfoToken.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
 import 'package:omega_qick/REST/Bisinesses/getBisiness.dart';
+import 'package:omega_qick/REST/Bisinesses/upFullPost.dart';
+import 'package:omega_qick/REST/Bisinesses/upOnlyPost.dart';
 import 'package:omega_qick/REST/Home/Search/getItemCategory.dart';
 import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
@@ -41,12 +43,12 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
 
 
   ScrollController controllerScroll = ScrollController();
+  List list;
 
   void getItemsfromServ()async{
     loading = true;
     setState(() {});
 
-    List list;
     List<BlocSize> listStep = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, detail: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
 
     String token = await  tokenDB();
@@ -58,13 +60,13 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
 
 
     for(int i =0; i < list.length; i++){
+        Product pSortStep = list[i] as Product;
+        // try {
+          print("type Body ${list[i]==null}  ${ widget.type}");
 
-
-        Product pSortStep = list[i];
-        print("${pSortStep.type} ${ widget.type}");
-        if (pSortStep.type == widget.type) listStep.add(list[i]);
-
-
+          if ((list[i] == null ?0: (list[i].type == null?0:list[i].type)) == widget.type)
+            listStep.add(list[i]);
+        // }catch(e){print(e);}
     }
     print("body loading ${list.length} элементов after load в list");
     print("body loading ${listStep.length} элементов after load в listStep");
@@ -102,12 +104,25 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     getItemsfromServ();
   }
   //todo
-  tapUpFull(int route){
+  tapUpFull(int route)async{
     print("tapUpFull");
+    await upFullPost(route);
+    getItemsfromServ();
   }
   //todo
   tapUpOnly(int route)async{
-    print("tap up Body $route");
+    try {
+      int route2 = 0;
+      print("tap up Body $route");
+      for (int i = 0; i < list.length; i++) {
+        Product a = list[i];
+        if (a.route == route) {
+         route2 = list[i-1].route;
+        }
+      }
+      await upOnlyPost(route, route2);
+      getItemsfromServ();
+    }catch(e){print(e);}
   }
   void tapAdd()async{
     print("Body 65 ADD");
@@ -117,6 +132,11 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
   }
 
 
+  @override
+  void dispose() {
+    controllerScroll.dispose();
+    super.dispose();
+  }
 
 
   @override
@@ -199,8 +219,8 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
                               //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
                               //getItemsfromServ();
                             },
-                            tapUpFull: tapUpFull,
-                            tapUpOnly: tapUpOnly
+                            tapUpFull: (route){tapUpFull(route);},
+                          tapUpOnly: (route){tapUpOnly(route);},
                         ),) ,
               ),
               rightColumn.length == 0?SizedBox():Column(
@@ -227,8 +247,8 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
                               //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
                               //getItemsfromServ();
                             },
-                          tapUpFull: tapUpFull,
-                          tapUpOnly: tapUpOnly,
+                          tapUpFull: (route){tapUpFull(route);},
+                          tapUpOnly: (route){tapUpOnly(route);},
                           edit: true,
                         ),) ,
               ),

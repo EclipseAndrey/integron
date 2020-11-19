@@ -7,8 +7,12 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory
 import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/uslug.dart';
 import 'dart:math' as math;
 
-Widget historiItem(String name, String data, String uslug, String summ,
-    String usd, int index, String status, BuildContext context) {
+import 'package:omega_qick/Utils/DB/TxHistory/Tx.dart';
+import 'package:omega_qick/Utils/fun/InitBalance.dart';
+import 'package:omega_qick/Utils/fun/InitWallet.dart';
+import 'package:omega_qick/Utils/fun/TimeParse.dart';
+
+Widget historiItem(BuildContext context, {Tx tx}) {
   Color c7A8BA3 = Color.fromRGBO(122, 139, 163, 1);
   Color c6287A1 = Color.fromRGBO(98, 135, 161, 1);
   return Container(
@@ -34,7 +38,7 @@ Widget historiItem(String name, String data, String uslug, String summ,
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              dataWidget(data),
+              dataWidget(txTimeParseDate(tx.date)),
             ],
           ),
           Padding(
@@ -42,8 +46,8 @@ Widget historiItem(String name, String data, String uslug, String summ,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                nameWidget(name),
-                uslugWidget(uslug),
+                nameWidget(InitWallet(tx.face)),
+                type(tx.type),
               ],
             ),
           ),
@@ -56,13 +60,13 @@ Widget historiItem(String name, String data, String uslug, String summ,
               children: [
                 Row(
                   children: [
-                    summWidget(summ),
-                    usdWidget(usd),
+                    summWidget(InitBalace(tx.amount)),
+                    usdWidget(tx.currency),
                   ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 4.0, top:  4),
-                  child: statusWidget(status, context),
+                  child: statusWidget(tx.status, context),
                 ),
               ],
             ),

@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:omega_qick/Utils/DB/TxHistory/InfoWallet.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/reqests.dart';
 import 'package:http/http.dart' as http;
 
-Future<double> getBalance ()async{
+Future<InfoWallet> getBalance ()async{
   String token = await tokenDB();
 
 
@@ -15,7 +16,8 @@ Future<double> getBalance ()async{
   if(r.statusCode==200){
     var parse = json.decode(r.body);
     if(parse['code']==200){
-      return double.parse(parse['balance']);
+      print("get balance $parse");
+      return InfoWallet.fromJson(parse);
     }else{
       print(parse['code']);
       return null;

@@ -11,9 +11,7 @@ String txTimeParseDate(String time){
   }else if(date.year == DateTime.now().year && date.month == DateTime.now().month&& date.day == DateTime.now().day-1){
     return "Вчера";
   }
-
-
-  return date.day.toString()+" "+month(date.month.toString());
+  return date.day.toString()+"."+date.month.toString();
 }
 
 String txTimeParseTime(String time){

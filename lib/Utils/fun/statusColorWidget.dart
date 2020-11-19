@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-Color statusColor(String status) {
+Color statusColor(int status) {
   switch (status) {
-    case "Выполнено":
+    case 0:
       return Color.fromRGBO(141, 205, 224, 1);
       break;
-    case "Отменено":
+    case 1:
       return Colors.redAccent;
       break;
-    case "Ожидание":
+    case 2:
       return Color.fromRGBO(209, 211, 215, 1);
       break;
   }

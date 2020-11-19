@@ -8,7 +8,7 @@ import 'package:omega_qick/reqests.dart';
 Future<int> addProductPost (Product product)async{
   String token = await tokenDB();
   product.token = token;
-  String urlQuery = server14880+ "/api.php/createitem?"; //http://194.226.171.139:14880/apitest.php/setaddress?address=
+  String urlQuery = server14880+ "/apitest.php/createitem?"; //http://194.226.171.139:14880/apitest.php/setaddress?address=
   print(urlQuery);
   var response;
 
@@ -16,10 +16,14 @@ Future<int> addProductPost (Product product)async{
     Map<String, String> headers =  HashMap();
     headers['Content-type'] = 'application/json';
 
-    print(json.encode(product.toMap().toString()));
-    response = await http.post(urlQuery,encoding: Encoding.getByName('utf-8'), body: json.encode(product.toMap()), headers: headers).timeout(Duration(seconds: 5));
+    try {
+      print(jsonEncode(product.toJson()));
+    }catch(e){
+      print(e.toString());
+    }
+    response = await http.post(urlQuery,encoding: Encoding.getByName('utf-8'), body: jsonEncode(product.toJson()), headers: headers).timeout(Duration(seconds: 5));
 
-  print("addProduct "+response.body);
+  print("addProduct "+response.body + response.statusCode.toString());
 
   if(response.statusCode == 200){
     print(json.decode(response.body)['mess']);

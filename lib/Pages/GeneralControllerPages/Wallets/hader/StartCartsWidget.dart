@@ -5,6 +5,7 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/QrLib/QrGenerate/QrGenerateController.dart';
 import 'package:omega_qick/REST/Wallet/GetBalance.dart';
+import 'package:omega_qick/Utils/DB/TxHistory/InfoWallet.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/main.dart';
@@ -28,7 +29,8 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
   loadBalance ()async{
     loadingBalance = true;
    // animationController.repeat();
-    BALANCE = await getBalance();
+    InfoWallet infoWallet = await getBalance();
+    BALANCE = double.parse(infoWallet.balance);
     loadingBalance = false;
 
     try{
@@ -148,8 +150,9 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        showDialogIntegron(context: context, title: getQr("https://www.youtube.com/watch?v=jNQXAC9IVRw&ab_channel=jawed", size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
+                      onTap: ()async{
+                        InfoWallet info = await getBalance();
+                        showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
                             onTap: (){
 
                                 Fluttertoast.showToast(
@@ -161,10 +164,10 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                                     textColor: Colors.black,
                                     fontSize: 16.0
                                 );
-                                Clipboard.setData( ClipboardData(text: "address"));
+                                Clipboard.setData( ClipboardData(text: info.address));
 
                             },
-                            child: Text("Адресс кошелька будет отображаться тут")));
+                            child: Text(info.address)));
                       },
                       child: Container(
 
@@ -186,8 +189,10 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                     ),
                     Spacer(),
                     GestureDetector(
-                        onTap: (){
-                          showDialogIntegron(context: context, title: getQr("https://www.youtube.com/watch?v=jNQXAC9IVRw&ab_channel=jawed", size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
+                        onTap: ()async{
+                          InfoWallet info = await getBalance();
+
+                          showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
                               onTap: (){
 
                                 Fluttertoast.showToast(
@@ -199,10 +204,10 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                                     textColor: Colors.black,
                                     fontSize: 16.0
                                 );
-                                Clipboard.setData( ClipboardData(text: "address"));
+                                Clipboard.setData( ClipboardData(text: info.address));
 
                               },
-                              child: Text("Адресс кошелька будет отображаться тут")));
+                              child: Text(info.address  )));
                         },
                         child: getIconForId(id:35, size: 38, color: Colors.white,))
                   ],

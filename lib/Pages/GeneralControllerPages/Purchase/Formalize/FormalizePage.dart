@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
+import 'package:omega_qick/REST/Orders/MakeOrder.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
@@ -644,11 +645,39 @@ class _FormalizePageState extends State<FormalizePage> {
 
     Widget buttonPay() {
       return GestureDetector(
-        onTap: (){
+        onTap: ()async{
           if(information && (name == null|| address == null)){
             showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Информация для доставки не заполнена", textAlign: TextAlign.center,style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
           }else{
-            showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Оплата не прошла",textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
+            bool err = false;
+            String mess = "";
+
+            showDialogLoading(context);
+
+            for(int i = 0; i < list.length;i++) {
+              List<int> listIds = [];
+
+              listIds.add(list[i].route);
+              //item.params[index].params[item.params[index].select].name
+              List<String> paramsList = [];
+              for(int j =0;j<list[i].params.length; j++){
+                paramsList.add(list[i].params[j].params[list[i].params[j].select].name);
+              }
+              List code = await makeOrder(listIds, list[i].counter, params: paramsList, comment: controllerMess.text == ""?null:controllerMess.text);
+              if(code[0] == 200){
+                widget.list.removeAt(i);
+              }else{
+                i = list.length;
+                err = true;
+                mess = code[1];
+              }
+            }
+            closeDialog(context);
+            if(err)showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text(mess,textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));else{
+              closeDialog(context);
+              showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-yes.png", fit: BoxFit.fill,), body: Text("Заказ успешно создан",textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
+
+            }
           }
         },
         child: Container(

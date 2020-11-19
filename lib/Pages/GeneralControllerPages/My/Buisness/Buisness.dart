@@ -90,6 +90,11 @@ class _BusinessPageState extends State<BusinessPage> {
 
   List<Widget> pages;
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -109,7 +114,7 @@ class _BusinessPageState extends State<BusinessPage> {
           widget.radiusPanelLeft = 0;
           widget.radiusPanelRight = 6;
         }
-        setState(() {});
+        // setState(() {});
       });
     }catch(e){}
     load();

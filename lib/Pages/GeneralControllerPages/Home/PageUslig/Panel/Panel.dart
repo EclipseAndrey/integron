@@ -10,6 +10,7 @@ import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
 import 'package:omega_qick/Utils/DB/Items/Category.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/Items/Set.dart';
+import 'package:omega_qick/Utils/DB/TxHistory/InfoWallet.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/main.dart';
 
@@ -38,7 +39,8 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
 
   loadBalance ()async{
     loadingBalance = true;
-    BALANCE = await getBalance();
+    InfoWallet infoWallet = await getBalance();
+    BALANCE = double.parse(infoWallet.balance);
     loadingBalance = false;
     setState(() {
 

@@ -1,21 +1,31 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Parse/InfoToken.dart';
 import 'package:omega_qick/REST/Autorization/SetNameR.dart';
+import 'package:omega_qick/REST/Autorization/SetPhoto.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
 import 'package:omega_qick/REST/Autorization/setRole.dart';
+import 'package:omega_qick/REST/SendPhoto.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/Utils/fun/ExitAccount.dart';
+import 'package:omega_qick/reqests.dart';
+import 'package:http/http.dart' as http;
 
 import 'Buisness/Buisness.dart';
+import 'Orders/OrdersBiz/OrdersBiz.dart';
+import 'Orders/OrdersMy/OrdersMy.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -86,6 +96,59 @@ class _MyPageState extends State<MyPage> {
     });
     initHeader();
   }
+
+
+
+
+
+
+  setImage()async{
+    final picker = ImagePicker();
+
+    String path = "";
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {});
+      if (pickedFile != null) {
+        path = pickedFile.path;
+
+        String url = "http://194.226.171.139:14880/apitest.php/uploadPhoto";
+
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.files.add(
+            http.MultipartFile(
+                'var_file',
+                File(path).readAsBytes().asStream(),
+                File(path).lengthSync(),
+                filename: path.split("/").last
+            )
+        );
+        var res = await request.send();
+        //     .then((value){
+        //
+        // });
+        //print("req "+ res.request.toString());
+
+        res.stream.transform(utf8.decoder).listen((value) async{
+          print(value);
+          await setPhoto(json.decode(value)['url']);
+          Load();
+          initHeader();
+
+          print("load start");
+        });
+
+
+
+
+      } else {
+        print('No image selected.');
+      }
+
+  }
+
+
+
 
   @override
   void initState() {
@@ -274,22 +337,28 @@ class _MyPageState extends State<MyPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ClipOval(
-                  child: Container(
-                    height: 72,
-                    color: cDefault,
-                    width: 72,
-                    child: user.photo == null
-                        ? Center(
-                            child: Text(
-                            user.name == null
-                                ? "A"
-                                : user.name.length == 0?"A":user.name[0].toUpperCase(),
-                            style: TextStyle(color: cMainText, fontSize: 24),
-                          ))
-                        : Image.network(
-                            user.photo,
-                            fit: BoxFit.cover,
-                          ),
+                  child: GestureDetector(
+                    onTap: (){
+                      print('tap set photo');
+                      setImage();
+                    },
+                    child: Container(
+                      height: 72,
+                      color: cDefault,
+                      width: 72,
+                      child: user.photo == null
+                          ? Center(
+                              child: Text(
+                              user.name == null
+                                  ? "A"
+                                  : user.name.length == 0?"A":user.name[0].toUpperCase(),
+                              style: TextStyle(color: cMainText, fontSize: 24),
+                            ))
+                          : Image.network(
+                              user.photo,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                   ),
                 )
               ],
@@ -307,29 +376,38 @@ class _MyPageState extends State<MyPage> {
           {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: paddingH),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+              child: GestureDetector(
+                onTap: (){
+                  //OrdersBiz
+                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => OrdersBiz()));
+
+                },
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      getIconForId(id: 15, color: cIcons),
-                      SizedBox(
-                        width: paddingH / 2,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          getIconForId(id: 15, color: cIcons),
+                          SizedBox(
+                            width: paddingH / 2,
+                          ),
+                          Text(
+                            "Мои покупки",
+                            style: TextStyle(
+                                color: cMainText,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: fontFamily,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "Мои покупки",
-                        style: TextStyle(
-                            color: cMainText,
-                            fontStyle: FontStyle.normal,
-                            fontFamily: fontFamily,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 18),
-                      ),
+                      getIconForId(id: 39, color: cIcons)
                     ],
                   ),
-                  getIconForId(id: 39, color: cIcons)
-                ],
+                ),
               ),
             );
           }
@@ -337,29 +415,37 @@ class _MyPageState extends State<MyPage> {
           {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: paddingH),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => OrdersMy()));
+
+                },
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      getIconForId(id: 15, color: cIcons),
-                      SizedBox(
-                        width: paddingH / 2,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          getIconForId(id: 15, color: cIcons),
+                          SizedBox(
+                            width: paddingH / 2,
+                          ),
+                          Text(
+                            "Мои заказы",
+                            style: TextStyle(
+                                color: cMainText,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: fontFamily,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "Избранное",
-                        style: TextStyle(
-                            color: cMainText,
-                            fontStyle: FontStyle.normal,
-                            fontFamily: fontFamily,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 18),
-                      ),
+                      getIconForId(id: 39, color: cIcons)
                     ],
                   ),
-                  getIconForId(id: 39, color: cIcons)
-                ],
+                ),
               ),
             );
           }

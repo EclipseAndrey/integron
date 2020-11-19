@@ -18,15 +18,17 @@ class Business extends Errors{
 });
 
   factory Business.fromJson(Map<String, dynamic> json){
-    print(json);
-    return Business(
-      //todo Проверить ключи
-      photo: json["bizphoto"],
-      textShort: json['textShort'] == null?null:json['textShort'].toString().length == 0?null:json['textShort'],
-      nameBusiness: json['bizname']== null?null:json['bizname'].toString().length == 0?null:json['bizname'],
-      nameOwner: json['nameOwner']??"null",
-      products: json['products']==null?[]:json['products'].map((i)=>Product.fromJson(i)).toList().cast<Product>()
-    );
+
+      return Business(
+        //todo Проверить ключи
+          photo: json["bizphoto"],
+          textShort: json['textShort'] == null ? null : json['textShort'].toString().length == 0 ? null : json['textShort'],
+          nameBusiness: json['bizname'] == null ? null : json['bizname'].toString().length == 0 ? null : json['bizname'],
+          nameOwner: json['nameOwner'] ?? "null",
+          products: json['products'] == null ? [] : json['products'].map((i) => Product.fromJson(i)).toList().cast<Product>()
+      );
+
+
   }
 
   Business.error():super(error: true);

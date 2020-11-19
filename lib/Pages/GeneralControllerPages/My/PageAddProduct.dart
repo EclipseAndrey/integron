@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_multiple_image_picker/flutter_multiple_image_picker.dart';
+// import 'package:flutter_multiple_image_picker/flutter_multiple_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/REST/Categories/GetCategories.dart';
@@ -54,6 +55,8 @@ class _AddProductPageState extends State<AddProductPage> {
 
   List<Widget> imagePages = [];
   List imagelocal = [];
+  final picker = ImagePicker();
+
 
   int _type;
   Category _category;
@@ -202,8 +205,8 @@ class _AddProductPageState extends State<AddProductPage> {
 
               String steptx = properties[1].value;
               String steptxS = properties[0].value;
-              // properties.removeAt(0);
-              // properties.removeAt(0);
+              properties.removeAt(0);
+              properties.removeAt(0);
               Product productFormForSend = Product(
 
                 images: responsePhoto,
@@ -221,12 +224,19 @@ class _AddProductPageState extends State<AddProductPage> {
                 delivery: "1",
                 image: null,
                 property: properties,
-                params: paramsList
+                params: paramsList,
+                  cat: _category.route
 
               );
-
-              await addProductPost(productFormForSend);
+              int res = await addProductPost(productFormForSend);
               closeDialog(context);
+              if(res==null?0:res == 200){
+                closeDialog(context);
+                dialogErr("Товар успешно добавлен");
+              }else{
+                closeDialog(context);
+                dialogErr("Что - то пошло не так, попробуйте позже");
+              }
             }catch(e){
               print(e);
             }
@@ -235,8 +245,8 @@ class _AddProductPageState extends State<AddProductPage> {
     }
   }
 
-  dialogErr(String text){
-    showDialogIntegron(context: context,
+  dialogErr(String text)async{
+    await showDialogIntegron(context: context,
         title: Text("Сообщение",  style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),),
         body: Text(text,
           style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
@@ -290,24 +300,39 @@ class _AddProductPageState extends State<AddProductPage> {
     updateImagePages();
   }
 
-  addImage() async {
-    List resultList;
-    String error;
-    try {
-      resultList = await FlutterMultipleImagePicker.pickMultiImages(
-          maxImageNo, selectSingleImage);
-    } on PlatformException catch (e) {
-      error = e.message;
-    }
+  // getImage() async {
+  //   List resultList;
+  //   String error;
+  //   try {
+  //     resultList = await FlutterMultipleImagePicker.pickMultiImages(
+  //         maxImageNo, selectSingleImage);
+  //   } on PlatformException catch (e) {
+  //     error = e.message;
+  //   }
+  //
+  //   if (!mounted) return;
+  //
+  //   setState(() {
+  //     imagelocal.addAll(resultList);
+  //     if (error == null) _platformMessage = 'No Error Dectected';
+  //   });
+  //   updateImagePages();
+  //
+  // }
 
-    if (!mounted) return;
+
+  Future addImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      imagelocal.addAll(resultList);
-      if (error == null) _platformMessage = 'No Error Dectected';
-    });
-    updateImagePages();
+      if (pickedFile != null) {
+        imagelocal.add(pickedFile.path);
+        updateImagePages();
 
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 
   _selectType(int index){

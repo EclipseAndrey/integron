@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 
-Widget uslugWidget(String uslug) {
+Widget type(int uslug) {
+
+
+  String text = "";
+
+  if(uslug == 0){
+    text = "Пополнение";
+  }else if(uslug == 1){
+    text = "Покупка";
+  }else{
+    text = "Вывод средств";
+  }
+
+
   Color c7A8BA3 = Color.fromRGBO(122, 139, 163, 1);
   return Padding(
     padding: const EdgeInsets.only(top: 7),
     child: Text(
-      uslug,
+      text,
       style: TextStyle(
         fontSize: 12,
         color: c7A8BA3,

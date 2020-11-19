@@ -44,7 +44,7 @@ class ProductShort extends BlocSize with Counter, TokenParam{
 class Product extends ProductShort {
 
   List<dynamic> images;
-  int type;
+  int type = 0;
   String unit;
   List<Property> property;
   String delivery;
@@ -60,6 +60,7 @@ class Product extends ProductShort {
   List<Params> params = [];
   ParamsPrice paramsPrice;
   int cat;
+  int pozition = 0;
 
   Product({
     @required String name,
@@ -88,56 +89,69 @@ class Product extends ProductShort {
     this.params,
     this.paramsPrice,
     this.cat,
+    this.pozition,
 }) : super(name: name, image: image, route:route, text: text, price:price, sale:sale??"");
 
   factory Product.fromJson(Map<String, dynamic> jsonC){
-    print(jsonC['params']);
-    return Product(
-      full: true,
-      name: jsonC['name'],
-      ownerName: jsonC['ownername'],
-      image: jsonC['image'],
-      images: jsonC['images'],
-      detail: jsonC['detail'],
-      route: int.parse(jsonC['route']),
-      text: jsonC['text'],
-      price: double.parse(jsonC['price']),
-      sale: jsonC['sale'].toString()??"",
-      unit: jsonC['unit'],
-      property: jsonC['property'] == null?[]:jsonC['property'].map((i){return Property.fromJson(i);}).toList().cast<Property>(),
-      fullText: jsonC['fulldesc'],
-      delivery: jsonC['delivery'],
-      address: jsonC['address'],
-      owner: int.parse(jsonC['owner']),
-      likeCount: int.parse(jsonC['likecount']),
-      available: int.parse(jsonC['available']),
-      itemCount: int.parse(jsonC['itemcount']),
-      type: int.parse(jsonC['type']),
-      catPath: jsonC['cat'].map((i)=>CategoryPath.fromJson(i)).toList(),
-      params: jsonC['']== null?[]:jsonC['params'].map((i) => Params.fromJson(i)).toList().cast<Params>(),
-      paramsPrice: jsonC['paramswithprice']== null?null:ParamsPrice.fromJson(jsonC['paramswithprice']),
+    print("tope parse "+ int.parse(jsonC['type']).toString());
+    try {
+      return Product(
+        full: true,
+        name: jsonC['name'] == null?"":jsonC['name'],
+        ownerName: jsonC['ownername'] == null? "":jsonC['ownername'] ,
+        image: jsonC['image'] == null? "":jsonC['image'],
+        images: jsonC['images'] == null?[]:jsonC['images'],
+        detail: jsonC['detail'] == null?[]:[],
+        route: int.parse(jsonC['route'] == null?"0":jsonC['route']),
+        pozition: int.parse(jsonC['pozition'] == null?"0":jsonC['pozition']),
+        text: jsonC['text'] == null? "":jsonC['text'],
+        price: double.parse(jsonC['price'] == null?"0":jsonC['price']),
+        sale: jsonC['sale'].toString() == "null"? "":jsonC['sale'].toString(),
+        unit: jsonC['unit'] == null?"unit":jsonC['unit'],
+        property: jsonC['property'] == null ? [] : jsonC['property'].map((i) {
+          return Property.fromJson(i);
+        }).toList().cast<Property>(),
+        fullText: jsonC['fulldesc'] == null?"":jsonC['fulldesc'],
+        delivery: jsonC['delivery'] == null?"1":jsonC['delivery'],
+        address: jsonC['address'] == null?"":jsonC['address'],
+        owner: int.parse(jsonC['owner'] == null?"0":jsonC['owner'] ),
+        likeCount: int.parse(jsonC['likecount'] == null?"0":jsonC['likecount']),
+        available: int.parse(jsonC['available'] == null?"0":jsonC['available']),
+        itemCount: int.parse(jsonC['itemcount'] == null?"0":jsonC['itemcount']),
+        type: int.parse(jsonC['type']== null?"0":jsonC['type']),
+        catPath: jsonC['cat']== null?[]:jsonC['cat'].map((i) => CategoryPath.fromJson(i)).toList(),
+        params: jsonC['params'] == null ? [] : jsonC['params'].map((i) => Params.fromJson(i)).toList().cast<Params>(),
+       // paramsPrice: jsonC['paramswithprice'] == null ? [] : ParamsPrice.fromJson(jsonC['paramswithprice']),
 
-    );
+      );
+    }catch(e){
+      print(e);
+      return null;
+    }
 
   }
 
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
+
+    Map<String, dynamic> step= Map();
+    step['code']=property == null?"":property.map((e) => e.toJson()).toList();
+
     final map = Map<String, dynamic>();
     map["name"] = name;
-    map["images"] = images as List<String>;
-    map["detail"] = [];
-    map["text"] = text;
+    map["images"] = images;
+    map["detail"] = "";
+    map["shortdesc"] = text;
     map["price"] = price.toString();
     map["unit"] = unit;
     map["fulldesc"] = fullText;
     map["delivery"] = "1";
     map["address"] = address;
-    map["available"] = "true";
+    map["available"] = "1";
     map["type"] = type.toString();
     map["cat"] = cat.toString();
-    map["params"] = params??params.map((i) => i.toMap());
-    map["property"] = property??property.map((i) => i.toMap().toString());
+    map["params"] = params != null?params.map((i)=>i.toJson()).toList():"";
+    map["property"] = step;
     map['token'] = token??"";
     return map;
   }
