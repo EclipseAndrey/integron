@@ -125,6 +125,7 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
                 ],
               ),
             ),
+            SizedBox(height: 50,)
           ],
         ),
       ),

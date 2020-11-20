@@ -129,6 +129,7 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
                 ],
               ),
             ),
+            SizedBox(height: 50,)
           ],
         ),
       ),

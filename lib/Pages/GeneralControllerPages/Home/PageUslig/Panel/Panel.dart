@@ -257,10 +257,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
   Widget balance(){
     return GestureDetector(
       onTap: (){
-          Navigator.push(
-            context,
-            TutorialOverlay(),
-          );
+        widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -301,35 +298,41 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
   }
 
   Widget operationWithTokens(double minusFontSize){
-    return Container(
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-          borderRadius: BorderRadius.circular(6),
-        color: c8dcde0
-      ),
-      width: w,
-      height: h0,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 12, right: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 7,
+    return GestureDetector(
+      onTap: (){
+        widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
 
-                child: Container(child: Text("Операции с токенами",style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w700)))),
-            Expanded(
-                flex: 1,
-                child: getIconForId(id:3, size: 22, color: Colors.white,))
-          ],
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            borderRadius: BorderRadius.circular(6),
+          color: c8dcde0
+        ),
+        width: w,
+        height: h0,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 12, right: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 7,
+
+                  child: Container(child: Text("Операции с токенами",style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w700)))),
+              Expanded(
+                  flex: 1,
+                  child: getIconForId(id:3, size: 22, color: Colors.white,))
+            ],
+          ),
         ),
       ),
     );

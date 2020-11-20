@@ -91,9 +91,12 @@ class _AboutReferalState extends State<AboutReferal> {
             SizedBox(height: 12,),
            // Logo(context, divBefore, minusFontsSize, minusIconSize),
             SizedBox(height: 50,),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-                child: Image.asset("lib/assets/images/referal.png")),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                  child: Image.asset("lib/assets/images/referal.png")),
+            ),
           ],
         ),
 

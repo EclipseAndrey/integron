@@ -527,7 +527,6 @@ class _MyPageState extends State<MyPage> {
             return GestureDetector(
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AboutIntegron()));
-
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: paddingH),

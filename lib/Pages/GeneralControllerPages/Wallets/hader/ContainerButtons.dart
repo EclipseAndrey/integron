@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/buttonDown.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/hader/buttons.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
+import 'package:omega_qick/Parse/InfoToken.dart';
+import 'package:omega_qick/QrLib/QrGenerate/QrGenerateController.dart';
+import 'package:omega_qick/REST/Wallet/GetBalance.dart';
+import 'package:omega_qick/Utils/DB/TxHistory/InfoWallet.dart';
+import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 
 Widget containerButtons(BuildContext context) {
   double w = MediaQuery.of(context).size.width * 0.435;
@@ -76,39 +85,62 @@ Color c, double p  ) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 5.0,
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 3,
-            )
-          ],
-        ),
-        width: w,
-        height: w * 5 / 9,
-        child: Padding(
-          padding:  EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 5),
-              getIconForId(id:3,
-                color: c6287A1,
-                size: 22,
-              ),
-              SizedBox(height: 7),
-              Text("Купить токены",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromRGBO(88, 148, 188, 1),
-                    fontWeight: FontWeight.w400,
-                  )),
+      GestureDetector(
+        onTap: ()async{
+          showDialogLoading(context);
+          InfoWallet a = await getBalance();
+          closeDialog(context);
+          showDialogIntegron(context: context, title: getQr(a.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
+              onTap: (){
+
+                Fluttertoast.showToast(
+                    msg: "Адрес скопирован",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.SNACKBAR,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    fontSize: 16.0
+                );
+                Clipboard.setData( ClipboardData(text: a.address));
+
+              },
+              child: Text(a.address)));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 5.0,
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3,
+              )
             ],
+          ),
+          width: w,
+          height: w * 5 / 9,
+          child: Padding(
+            padding:  EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 5),
+                getIconForId(id:3,
+                  color: c6287A1,
+                  size: 22,
+                ),
+                SizedBox(height: 7),
+                Text("Получить токены",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color.fromRGBO(88, 148, 188, 1),
+                      fontWeight: FontWeight.w400,
+                    )),
+              ],
+            ),
           ),
         ),
       ),
@@ -116,7 +148,7 @@ Color c, double p  ) {
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: Colors.white,
+          color: cForms,
           boxShadow: [
             BoxShadow(
               blurRadius: 5.0,
