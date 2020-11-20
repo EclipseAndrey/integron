@@ -73,9 +73,13 @@ Widget ItemGetter(
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
-                            child: Image.network(bloc.image, fit: BoxFit.cover,)),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width*0.45,
+                          height: MediaQuery.of(context).size.width*0.30,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                              child: Image.network(bloc.image, fit: BoxFit.cover,)),
+                        ),
                       ),
                       (edit??false)?Align(
                         alignment: Alignment.topLeft,

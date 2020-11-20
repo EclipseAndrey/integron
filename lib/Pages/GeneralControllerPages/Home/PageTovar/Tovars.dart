@@ -53,7 +53,7 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
 
   void getItemsfromServ()async{
     List<BlocSize> list = [];
-    list = await getItems(type: 0);
+    list = await getItems(type: 0,limit: 100);
     for(int i = 0; i < list.length; i+=2){
       try{
       leftColumn.add(list[i]);
@@ -79,7 +79,8 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
       // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());
       if(controllerScroll.position.pixels == controllerScroll.position.maxScrollExtent){
         print(controllerScroll.position.pixels);
-        getItemsfromServ();
+        //todo AutoLoad
+        //getItemsfromServ();
       }
     });
 
@@ -108,22 +109,25 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
         child: Column(
           children: [
             MainPanel(context, product,category,widget.controllerPages),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
 
-                  children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
-                ),
-              ],
+                    children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -132,5 +136,5 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
   }
 
   @override
-  bool get wantKeepAlive =>  SaveStateCatalog;
+  bool get wantKeepAlive =>  false;
 }

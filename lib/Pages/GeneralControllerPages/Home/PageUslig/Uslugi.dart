@@ -43,7 +43,7 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
 
   void getItemsfromServ()async{
     List<BlocSize> list = [];
-    list = await getItems(type: 1);
+    list = await getItems(type: 1, limit: 100);
     for(int i = 0; i < list.length; i+=2){
 
       try{
@@ -70,7 +70,8 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
      // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());
       if(controllerScroll.position.pixels == controllerScroll.position.maxScrollExtent){
         print(controllerScroll.position.pixels);
-        getItemsfromServ();
+        //todo autoload
+        //getItemsfromServ();
       }
     });
 
@@ -104,22 +105,25 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
         child: Column(
           children: [
             MainPanel(context, product, category,widget.controllerPages ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
 
-                  children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
 
-                  children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize,  voidCallbackCategory: widget.callbackCategory)) ,
-                ),
-              ],
+                    children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize,  voidCallbackCategory: widget.callbackCategory)) ,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -128,5 +132,5 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
   }
 
   @override
-  bool get wantKeepAlive => SaveStateCatalog;
+  bool get wantKeepAlive => false;
 }

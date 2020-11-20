@@ -140,7 +140,7 @@ class _TovarInfoState extends State<TovarInfo> {
                                 panelInfoProduct(),
                                 SizedBox(height: 8,),
                                 textProduct("Описание",item.fullText),
-                                textProduct("Доставка",int.parse(item.delivery) == 1?"Есть":"Нет"),
+                                // textProduct("Доставка",int.parse(item.delivery) == 1?"Есть":"Нет"),
                                 constructorProperty(),
                                 SizedBox(height: 100,),
 

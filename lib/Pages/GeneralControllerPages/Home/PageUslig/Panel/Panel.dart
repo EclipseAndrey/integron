@@ -155,9 +155,12 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
 
                   width: MediaQuery.of(context).size.width*0.45,
                   height: MediaQuery.of(context).size.width*0.30,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
-                      child: Image.asset("lib/assets/icons/IconApp/128x128.png", fit: BoxFit.contain,)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                        child: Image.asset("lib/assets/icons/IconApp/128x128.png", fit: BoxFit.contain,)),
+                  ),
                 ),
                 Spacer(),
                 Container(

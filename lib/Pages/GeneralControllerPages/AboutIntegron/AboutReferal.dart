@@ -84,6 +84,7 @@ class _AboutReferalState extends State<AboutReferal> {
       children: [
         Column(
           children: [
+            SizedBox(height: 50,),
             Text("Зарабатывайте вместе с нами",textAlign: TextAlign.center, style: TextStyle(color: Color.fromRGBO(0, 0, 0, 1), fontSize: 27, fontWeight: FontWeight.w400,fontStyle: FontStyle.normal, fontFamily: fontFamily),),
             SizedBox(height: 6,),
             Text("Скоро мы запустим реферальную программу",textAlign: TextAlign.center, style: TextStyle(color: Color.fromRGBO(0, 0, 0, 1), fontSize: 16, fontWeight: FontWeight.w400,fontStyle: FontStyle.normal, fontFamily: fontFamily),),

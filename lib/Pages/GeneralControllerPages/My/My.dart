@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:omega_qick/AutoRoutes.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/Login2/Style.dart';
 import 'package:omega_qick/Parse/InfoToken.dart';
@@ -523,31 +524,37 @@ class _MyPageState extends State<MyPage> {
           }
         case 4:
           {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: paddingH),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      getIconForId(id: 36, color: cIcons),
-                      SizedBox(
-                        width: paddingH / 2,
-                      ),
-                      Text(
-                        "Об INTEGRON",
-                        style: TextStyle(
-                            color: cMainText,
-                            fontStyle: FontStyle.normal,
-                            fontFamily: fontFamily,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  getIconForId(id: 39, color: cIcons)
-                ],
+            return GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AboutIntegron()));
+
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: paddingH),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        getIconForId(id: 36, color: cIcons),
+                        SizedBox(
+                          width: paddingH / 2,
+                        ),
+                        Text(
+                          "Об INTEGRON",
+                          style: TextStyle(
+                              color: cMainText,
+                              fontStyle: FontStyle.normal,
+                              fontFamily: fontFamily,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    getIconForId(id: 39, color: cIcons)
+                  ],
+                ),
               ),
             );
           }

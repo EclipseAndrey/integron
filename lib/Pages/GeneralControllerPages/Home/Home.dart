@@ -176,10 +176,23 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           centerTitle: true,
-          // leading:  Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: getIconForId(id: 41, color: cBG, size: 24),
-          // ),
+          leading:  Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GestureDetector(
+                onTap: (){
+                  print("onTap");
+                  pages = [
+
+                  ];
+                  setState(() {});
+                  pages = [
+                    Tovars(callBackCategory, widget.controllerPages),
+                    Uslugi(callBackCategory,widget.controllerPages),
+                  ];
+                  setState(() {});
+                },
+                child: getIconForId(id: 37, color: cBG, size: 24)),
+          ),
           // leading: Padding(
           //   padding: EdgeInsets.only(
           //     bottom: 20,
