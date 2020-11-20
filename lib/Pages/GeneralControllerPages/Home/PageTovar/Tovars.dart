@@ -23,8 +23,9 @@ import '../ItemGetter.dart';
 class Tovars extends StatefulWidget {
 
   VoidCallbackCategory callbackCategory;
+  PageController controllerPages;
 
-  Tovars(this.callbackCategory);
+  Tovars(this.callbackCategory,this.controllerPages);
 
 
 
@@ -106,7 +107,7 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
         color: cBG,
         child: Column(
           children: [
-            MainPanel(context, product,category),
+            MainPanel(context, product,category,widget.controllerPages),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
 

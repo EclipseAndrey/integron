@@ -23,10 +23,10 @@ Widget logo() {
 
   return AppBar(
     centerTitle: true,
-    leading:  Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: getIconForId(id: 41, color: cBG, size: 24),
-    ),
+    // leading:  Padding(
+    //   padding: const EdgeInsets.all(16.0),
+    //   child: getIconForId(id: 41, color: cBG, size: 24),
+    // ),
     // leading: Padding(
     //   padding: EdgeInsets.only(
     //     bottom: 20,

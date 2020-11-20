@@ -27,6 +27,10 @@ class Home extends StatefulWidget {
   int    durationAnimatePanel = 100;
   int    pagePanel = 1;
 
+  PageController controllerPages;
+  Home(this.controllerPages);
+
+
 
   @override
   _HomeState createState() => _HomeState();
@@ -95,8 +99,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
     if(selectedCategory.length == 0){
       pages = [
-        Tovars(callBackCategory),
-        Uslugi(callBackCategory),
+        Tovars(callBackCategory,widget.controllerPages),
+        Uslugi(callBackCategory,widget.controllerPages),
       ];
     }else {
       pages = [
@@ -116,8 +120,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
   @override
   void initState() {
     pages = [
-      Tovars(callBackCategory),
-      Uslugi(callBackCategory),
+      Tovars(callBackCategory, widget.controllerPages),
+      Uslugi(callBackCategory,widget.controllerPages),
     ];
     setState(() {
 
@@ -172,10 +176,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           centerTitle: true,
-          leading:  Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: getIconForId(id: 41, color: cBG, size: 24),
-          ),
+          // leading:  Padding(
+          //   padding: const EdgeInsets.all(16.0),
+          //   child: getIconForId(id: 41, color: cBG, size: 24),
+          // ),
           // leading: Padding(
           //   padding: EdgeInsets.only(
           //     bottom: 20,

@@ -18,7 +18,7 @@ Future<bool> getCart ()async{
       p.params[j].select = ids[i].params[j];
     }
     p.counter = ids[i].count;
-    products.add(p);
+    if(p!=null && p.error == null)products.add(p);
   }
   cartList = products;
 }

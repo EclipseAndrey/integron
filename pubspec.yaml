@@ -48,12 +48,14 @@ dependencies:
   focused_menu: ^1.0.1
   dotted_border: ^1.0.6
   image_picker: ^0.6.7+14
-
+  flutter_launcher_icons: ^0.8.1
 
 
   #  multi_image_picker: ^4.7.14
-
-
+flutter_icons:
+  image_path: "lib/assets/icons/IconApp/128x128.png"
+  android: true
+  ios: true
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -78,6 +80,7 @@ flutter:
   assets:
     - lib/Animations/
     - lib/assets/images/
+    - lib/assets/icons/IconApp/
     - lib/assets/icons/active/
     - lib/assets/icons/normal/
   #   - images/a_dot_ham.jpeg

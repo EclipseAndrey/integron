@@ -11,10 +11,13 @@ import 'package:omega_qick/REST/Bisinesses/getBisiness.dart';
 import 'package:omega_qick/REST/Bisinesses/upFullPost.dart';
 import 'package:omega_qick/REST/Bisinesses/upOnlyPost.dart';
 import 'package:omega_qick/REST/Home/Search/getItemCategory.dart';
+import 'package:omega_qick/REST/Product/DeleteProduct.dart';
 import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
 import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
+import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 
 class BodyBusiness extends StatefulWidget {
 
@@ -98,10 +101,29 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
 
     });
   }
-
+  dialogErr(String text)async{
+    await showDialogIntegron(context: context,
+        title: Text("Сообщение",  style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),),
+        body: Text(text,
+          style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
+          textAlign: TextAlign.center, ));
+  }
   //todo
-  tapDelete(int route){
+  tapDelete(int route)async{
     print("tap delete");
+    showDialogLoading(context);
+    var a =await deleteItem(route);
+    closeDialog(context);
+    if(a == 200){
+      dialogErr("Успешно удалено");
+      getItemsfromServ();
+
+    }else{
+      dialogErr("Не удалось удалить\nКод $a\nСообщите разрабочикам, если ошибка повторяется");
+      getItemsfromServ();
+
+    }
+
   }
   tapEdit(int route)async{
     print("Body 56 ADD");
@@ -133,7 +155,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     print("Body 65 ADD");
 
     await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage()));
-   getItemsfromServ();
+    getItemsfromServ();
   }
 
 
@@ -217,7 +239,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
 
                               getItemsfromServ();
                             },
-                            tapDelete: tapDelete,
+                            tapDelete:(r){ tapDelete(r);},
                             tapEdit: (route){
                               print("Body 145 ADD");
                               tapEdit(route);
@@ -244,7 +266,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
                             await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
                             getItemsfromServ();
                           },
-                          tapDelete: tapDelete,
+                          tapDelete:(r){ tapDelete(r);},
                             tapEdit: (route){
                               print("Body 172 ADD");
                               tapEdit(route);

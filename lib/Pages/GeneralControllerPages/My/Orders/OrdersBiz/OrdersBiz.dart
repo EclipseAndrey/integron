@@ -32,7 +32,7 @@ class _OrdersBizState extends State<OrdersBiz> {
 
   load()async{
     loading = true;
-    listOrders = await GetOrders(true);
+    listOrders = await GetOrders(false);
     for(int i =0;i<listOrders.length;i++){
       try{
      if(listOrders[i].products[0].type == 0){

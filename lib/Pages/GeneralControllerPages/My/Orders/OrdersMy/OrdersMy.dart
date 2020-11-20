@@ -34,7 +34,7 @@ class _OrdersMyState extends State<OrdersMy> {
 
   load()async{
     loading = true;
-    listOrders = await GetOrders(false);
+    listOrders = await GetOrders(true);
     for(int i =0;i<listOrders.length;i++){
       try{
      if(listOrders[i].products[0].type == 0){

@@ -13,7 +13,9 @@ import 'Panel/Panel.dart';
 
 class Uslugi extends StatefulWidget {
   VoidCallbackCategory callbackCategory;
-  Uslugi(this.callbackCategory);
+  PageController controllerPages;
+
+  Uslugi(this.callbackCategory,this.controllerPages);
 
   @override
   _UslugiState createState() => _UslugiState();
@@ -101,7 +103,7 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
         color: cBG,
         child: Column(
           children: [
-            MainPanel(context, product, category),
+            MainPanel(context, product, category,widget.controllerPages ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
 

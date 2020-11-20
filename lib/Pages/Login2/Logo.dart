@@ -20,9 +20,9 @@ Widget Logo(BuildContext context, double divBefore, double minusFontsSize, doubl
         fontStyle: FontStyle.normal,
       ),),
       SizedBox(height: divBefore,),
-      Container(
-          width: 128,
-          child: Divider()),
+      // Container(
+      //     width: 128,
+      //     child: Divider()),
 
     ],
   );

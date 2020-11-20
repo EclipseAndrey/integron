@@ -46,7 +46,7 @@ class ProductShort extends BlocSize with Counter, TokenParam{
 
 class Product extends ProductShort {
 
-  List<dynamic> images;
+  List<String> images;
   int type = 0;
   String unit;
   List<Property> property;
@@ -103,7 +103,7 @@ class Product extends ProductShort {
         name: jsonC['name'] == null?"":jsonC['name'],
         ownerName: jsonC['ownername'] == null? "":jsonC['ownername'] ,
         image: jsonC['image'] == null? "":jsonC['image'],
-        images: jsonC['images'] == null?[]:jsonC['images'],
+        images: jsonC['images'] == null?[]:jsonC['images'].map((i)=>i).toList().cast<String>(),
         detail: jsonC['detail'] == null?[]:[],
         route: int.parse(jsonC['route'] == null?"0":jsonC['route']),
         pozition: int.parse(jsonC['pozition'] == null?"0":jsonC['pozition']),
@@ -156,6 +156,7 @@ class Product extends ProductShort {
     map["params"] = params != null?params.map((i)=>i.toJson()).toList():"";
     map["property"] = step;
     map['token'] = token??"";
+    map['id'] = route;
     return map;
   }
 

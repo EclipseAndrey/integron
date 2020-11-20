@@ -68,7 +68,7 @@ class _AddProductPageState extends State<AddProductPage> {
   bool editingHeaderState = false;
   TextEditingController controllerHeader = TextEditingController();
 
-  List<Property> properties = [Property(name: "Краткое описание", value: "Нажмите для редактирования", editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value: "Нажмите для редактирования", editingValue: false)];
+  List<Property>       properties =  [Property(name: "Краткое описание", value: "Нажмите для редактирования", editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value:"Нажмите для редактирования", editingValue: false)];
   int idEditingProperties;
   Property editingProperty  = Property();
   TextEditingController controllerNameProperty = TextEditingController();
@@ -129,7 +129,7 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   void saveProduct()async{
-    if(imagelocal.length == 0){
+    if(imagePages.length == 0){
       dialogErr("Добавьте минимум одно фото");
     }else if(_type == null){
       //dialogErr("Выберите тип");
@@ -202,6 +202,10 @@ class _AddProductPageState extends State<AddProductPage> {
               for(int i = 0; i < imagelocal.length; i++){
                 await uploadPhoto(imagelocal[i]);
               }
+              if(widget.edit){
+                List<String> ststep = []..addAll(item.images)..addAll(responsePhoto);
+                responsePhoto = ststep;
+              }
 
               String steptx = properties[1].value;
               String steptxS = properties[0].value;
@@ -216,7 +220,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 catPath: [],
                 text: steptx,
                 fullText: steptxS,
-                route: null,
+                route: widget.edit?item.route:null,
                 price: double.parse(priceSummText),
                 type: _type,
                 unit: priceUnitText,
@@ -228,15 +232,30 @@ class _AddProductPageState extends State<AddProductPage> {
                   cat: _category.route
 
               );
-              int res = await addProductPost(productFormForSend);
-              closeDialog(context);
-              if(res==null?0:res == 200){
+              //todo edit send
+              if(!widget.edit) {
+                int res = await addProductPost(productFormForSend, false);
                 closeDialog(context);
-                dialogErr("Товар успешно добавлен");
+                if(res==null?0:res == 200){
+                  closeDialog(context);
+                  dialogErr("Товар успешно добавлен");
+                }else{
+                  closeDialog(context);
+                  dialogErr("Что - то пошло не так, попробуйте позже");
+                }
               }else{
+                int res = await addProductPost(productFormForSend, true);
                 closeDialog(context);
-                dialogErr("Что - то пошло не так, попробуйте позже");
+                if(res==null?0:res == 200){
+                  closeDialog(context);
+                  dialogErr("Товар успешно изменен");
+                }else{
+                  closeDialog(context);
+                  closeDialog(context);
+                  dialogErr("Что - то пошло не так, попробуйте позже");
+                }
               }
+
             }catch(e){
               print(e);
             }
@@ -554,8 +573,6 @@ class _AddProductPageState extends State<AddProductPage> {
     setState(() {});
   }
 
-  //todo InitPrice() with InitParamsPrice()
-
   editPrice(){
     saveStats();
     priceSummTextStep = priceSummText;
@@ -595,10 +612,16 @@ class _AddProductPageState extends State<AddProductPage> {
     if (item.error == null) {
       updateImagePages();
       _type = item.type;
-      _category= item.catPath[0];
+      try {
+        _category = item.catPath[0];
+      }catch(e){print(e);}
+      properties =  [Property(name: "Краткое описание", value: item.text, editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value: item.fullText, editingValue: false)];
       initProperties();
+      priceUnitText = item.unit;
+      priceSummText = item.price.toString();
       nameProduct = item.name;
       initParams();
+
     }
     loading= false;
     setState(() {});

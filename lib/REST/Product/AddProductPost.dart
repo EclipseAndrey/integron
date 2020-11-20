@@ -5,10 +5,11 @@ import 'package:omega_qick/Utils/DB/Items/Product.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/reqests.dart';
 
-Future<int> addProductPost (Product product)async{
+Future<int> addProductPost (Product product, bool edit, {int id})async{
+  String method = edit?"updateitem":"createitem";
   String token = await tokenDB();
   product.token = token;
-  String urlQuery = server14880+ "/apitest.php/createitem?"; //http://194.226.171.139:14880/apitest.php/setaddress?address=
+  String urlQuery = server14880+ "/apitest.php/$method?"; //http://194.226.171.139:14880/apitest.php/setaddress?address=
   print(urlQuery);
   var response;
 

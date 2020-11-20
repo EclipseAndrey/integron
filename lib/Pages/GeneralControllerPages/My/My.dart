@@ -56,7 +56,7 @@ class _MyPageState extends State<MyPage> {
         MediaQuery.of(context).size.height - paddingV - 100 - box.size.height;
     setState(() {});
   }
-
+  List<int> settingsMenu = [0,1,4];
   Load() async {
     print("load");
     loading = true;
@@ -84,6 +84,7 @@ class _MyPageState extends State<MyPage> {
           fontSize: 16.0
       );
     }
+    user.role == 1?settingsMenu = [0,1,4]:settingsMenu=[0,4];
     loading = false;
     setState(() {});
     if (buildCompleted) initHeader();
@@ -420,6 +421,7 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
             );
+
           }
         case 1:
           {
@@ -442,7 +444,7 @@ class _MyPageState extends State<MyPage> {
                             width: paddingH / 2,
                           ),
                           Text(
-                            "Мои заказы",
+                            "Заказы магазина",
                             style: TextStyle(
                                 color: cMainText,
                                 fontStyle: FontStyle.normal,
@@ -552,13 +554,13 @@ class _MyPageState extends State<MyPage> {
       }
     }
 
-    List<int> settingsMenu = [0, 1, 2, 3, 4];
+
     return Column(
       children: List.generate(
           settingsMenu.length,
           (index) => Column(
                 children: [
-                  itemMenu(index),
+                  itemMenu(settingsMenu[index]),
                   Divider(
                     color: cDefault.withOpacity(0.5),
                   )

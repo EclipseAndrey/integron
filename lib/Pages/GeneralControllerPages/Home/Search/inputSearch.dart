@@ -120,22 +120,22 @@ class InputLogState extends State<InputLog> {
 
   Widget contentSearch() {
     List<ItemContentSearch> list = [
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
-      ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
+      // ItemContentSearch(Icons.star, "Компьютерные игры"),
     ];
 
 

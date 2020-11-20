@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:omega_qick/Contacts/Pages/PageContacts.dart';
 import 'package:omega_qick/EmptyPage.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutReferal.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Home.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
 
@@ -38,10 +39,10 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
   void initState() {
     getCart();
 
-    pageList.add(Home());
+    pageList.add(Home(controllerPage));
     pageList.add(Wallet());
     pageList.add(Cart());
-    pageList.add(EmptyPage());
+    pageList.add(AboutReferal());
     pageList.add(MyPage());
 
     setState(() {
@@ -66,7 +67,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
   }
 
   StatefulWidget currentWidget() {
-    if (_selectedIndex == 0) return Home();
+    if (_selectedIndex == 0) return Home(controllerPage);
     if (_selectedIndex == 1) return Wallet();
     if (_selectedIndex == 2) return Cart();
     if (_selectedIndex == 3) return EmptyPage();

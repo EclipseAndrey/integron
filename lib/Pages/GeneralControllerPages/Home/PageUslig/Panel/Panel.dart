@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Search/Search.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
@@ -18,8 +20,9 @@ class MainPanel extends StatefulWidget {
   BuildContext context1;
   ProductShort product;
   Category category;
+  PageController controller;
 
-  MainPanel(this.context1, this.product,this.category);
+  MainPanel(this.context1, this.product,this.category, this.controller);
 
   @override
   _MainPanelState createState() => _MainPanelState();
@@ -80,40 +83,145 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(width: 6,),
 
-                swiper(minusFontsSize),
+                //swiper(minusFontsSize),
                 SizedBox(width: 8,),
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    SizedBox(width: 6,),
 
                     balance(),
 
-                    SizedBox(height: p,),
+                    SizedBox(height: p, width: p,),
                     operationWithTokens(minusFontsSize),
-                    SizedBox(height: (p -8),),
+                    // SizedBox(height: (p -8),width: p,),
 
 
-                    cat(),
+                    //cat(),
 
 
                   ],
                 )
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 8),
-              child: panelIcons(),
-            )
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 8),
+            //   child: panelIcons(),
+            // )
+            SizedBox(height: p,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                info(),
+                referal(),
+              ],
+            ),
+
           ],
         ),
       ),
     );
   }
-  
+  Widget info(){
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AboutIntegron()));
+
+      },
+      child: Container(
+        height: h2,
+        width: w,
+        child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              borderRadius: BorderRadius.circular(6),
+              color:Colors.white ,
+            ),
+
+            child: Column(
+              children: [
+                Container(
+
+                  width: MediaQuery.of(context).size.width*0.45,
+                  height: MediaQuery.of(context).size.width*0.30,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                      child: Image.asset("lib/assets/icons/IconApp/128x128.png", fit: BoxFit.contain,)),
+                ),
+                Spacer(),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Что такое Integron", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, fontSize: 16),),
+                    ],
+                  ),
+                ),
+                Spacer()
+              ],
+            ),
+        ),
+      ),
+    );
+  }
+
+  Widget referal(){
+    return GestureDetector(
+      onTap: (){
+        widget.controller.animateToPage(3, duration: Duration(milliseconds: 200), curve: Curves.ease);
+      },
+      child: Container(
+        height: h2,
+        width: w,
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            borderRadius: BorderRadius.circular(6),
+            color:Colors.white ,
+          ),
+
+          child: Column(
+            children: [
+              Container(
+
+                width: MediaQuery.of(context).size.width*0.45,
+                height: MediaQuery.of(context).size.width*0.30,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                    child: Image.asset("lib/assets/images/welcome.png", fit: BoxFit.cover,)),
+              ),
+              Spacer(),
+              Container(
+                child: Center(
+                  child: Text("Зарабатывай\nВместе с нами", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, fontSize: 16),),
+                ),
+              ),
+              Spacer(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   
   Widget swiper(double minusFontSize){
     List<SetBloc> list =[
@@ -229,6 +337,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
       ItemGetter(widget.category, widget.context1, minusFontsSize,minusIconsSize)
     ;
   }
+
   Widget panelIcons(){
     double size = 50 - minusIconsSize;
 
