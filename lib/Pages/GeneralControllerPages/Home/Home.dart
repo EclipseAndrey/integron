@@ -1,21 +1,13 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/Pages/PageNum2/Style.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/PageTovar/Tovars.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/PageUslig/Uslugi.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Search/PageSelectedCategory/PageSelectedCategory.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Home/Search/Search.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/CategoryPath.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
-
-import 'package:omega_qick/presentation/integron_icons.dart' as customIcons;
-
-import 'Search/Search.dart';
 
 class Home extends StatefulWidget {
 

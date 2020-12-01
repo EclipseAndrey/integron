@@ -13,7 +13,7 @@ void showDialogLoading(BuildContext context){
         backgroundColor: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
-            color: dialogBackGroundColor,
+            color: cBG,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
@@ -26,7 +26,7 @@ void showDialogLoading(BuildContext context){
           height: 80,
           child: Center(
             child: new CircularProgressIndicator(
-              backgroundColor: Colors.purple,
+              backgroundColor: cDefault,
             ),
           ),
         ),

@@ -1,28 +1,27 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_multiple_image_picker/flutter_multiple_image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/Categories/GetCategories.dart';
-import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
-import 'package:omega_qick/REST/Product/AddProductPost.dart';
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
-import 'package:omega_qick/Utils/DB/Items/Property.dart';
-import 'package:omega_qick/Utils/DB/Params/Param.dart';
-import 'package:omega_qick/Utils/DB/Params/Params.dart';
+import 'package:omega_qick/Providers/CategoryProvider/CategoryProvider.dart';
+import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:omega_qick/Utils/DB/Products/Params/Param.dart';
+import 'package:omega_qick/Utils/DB/Products/Params/Params.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:omega_qick/Utils/DB/Products/Property.dart';
+import 'package:omega_qick/Utils/DB/Put.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/BotomSheetSelectForIndex.dart';
+import 'package:omega_qick/Utils/fun/BottomDialogs/BotomSheetSelectForIndex.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:omega_qick/REST/Server.dart';
+import 'package:omega_qick/REST/Api.dart';
 import 'package:http/http.dart' as http;
-import 'package:omega_qick/reqests.dart';
 
 class AddProductPage extends StatefulWidget {
 
@@ -68,7 +67,7 @@ class _AddProductPageState extends State<AddProductPage> {
   bool editingHeaderState = false;
   TextEditingController controllerHeader = TextEditingController();
 
-  List<Property>       properties =  [Property(name: "Краткое описание", value: "Нажмите для редактирования", editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value:"Нажмите для редактирования", editingValue: false)];
+  List<Property> properties =  [Property(name: "Краткое описание", value: "Нажмите для редактирования", editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value:"Нажмите для редактирования", editingValue: false)];
   int idEditingProperties;
   Property editingProperty  = Property();
   TextEditingController controllerNameProperty = TextEditingController();
@@ -99,7 +98,7 @@ class _AddProductPageState extends State<AddProductPage> {
   List<String> responsePhoto = [];
 
   Future<bool> uploadPhoto (String filename) async {
-    String url = server14880+"/apitest.php/uploadPhoto";
+    String url = Server.relevant+"/"+Api.api+"/uploadPhoto";
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
     request.files.add(
@@ -229,14 +228,14 @@ class _AddProductPageState extends State<AddProductPage> {
                 image: null,
                 property: properties,
                 params: paramsList,
-                  cat: _category.route
+                cat: _category
 
               );
               //todo edit send
               if(!widget.edit) {
-                int res = await addProductPost(productFormForSend, false);
+                Put res = await ProductProvider.forBiz.addProduct(productFormForSend);
                 closeDialog(context);
-                if(res==null?0:res == 200){
+                if(res==null?0:res.error == 200){
                   closeDialog(context);
                   dialogErr("Товар успешно добавлен");
                 }else{
@@ -244,9 +243,9 @@ class _AddProductPageState extends State<AddProductPage> {
                   dialogErr("Что - то пошло не так, попробуйте позже");
                 }
               }else{
-                int res = await addProductPost(productFormForSend, true);
+                Put res = await ProductProvider.forBiz.updateProduct(productFormForSend);
                 closeDialog(context);
-                if(res==null?0:res == 200){
+                if(res==null?0:res.error == 200){
                   closeDialog(context);
                   dialogErr("Товар успешно изменен");
                 }else{
@@ -381,7 +380,7 @@ class _AddProductPageState extends State<AddProductPage> {
   selectCategory()async{
     if(categories == null){
       showDialogLoading(context);
-      categories = await getCategories() as List<Category>;
+      categories = await CategoryProvider.getCategories();
       closeDialog(context);
     }
     List<String> list = [];
@@ -607,7 +606,7 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   void load()async{
-    item = await getProductForId(widget.id);
+    item = await ProductProvider.getProduct(widget.id);
 
     if (item.error == null) {
       updateImagePages();
@@ -645,9 +644,6 @@ class _AddProductPageState extends State<AddProductPage> {
     controllerPriceSumm.addListener(() {
         priceSummText = controllerPriceSumm.text;
     });
-
-    // todo controllerParams ??
-
 
     if(!widget.edit) {
       loading = false;

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/Pages/PageNum2/Style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:omega_qick/AAPages/Blocs/Feed/TovarsCubit.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/PageUslig/Panel/Panel.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/Home/GetItems.dart';
-import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
 import 'package:omega_qick/Utils/fun/Callbcks.dart';
 
-import '../ItemGetter.dart';
 
 
 
@@ -34,16 +34,12 @@ class Tovars extends StatefulWidget {
 }
 
 class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tovars>{
-  int weiR = 0;
-  int weiL = 0;
-
 
 
   double minusIconsSize = 0;
   double minusFontsSize = 0;
 
-  List<BlocSize> leftColumn = [];
-  List<BlocSize> rightColumn = [];
+
 
   ScrollController controllerScroll = ScrollController();
 
@@ -51,22 +47,6 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
   Category category =  Category(name: "Одежда",image: "https://get.wallhere.com/photo/illustration-anime-anime-girls-cartoon-headphones-Super-Sonico-screenshot-computer-wallpaper-93802.png",route: 1, colors: [c2f527f, c7A8BA3, c2f527f],icon: 1);
 
 
-  void getItemsfromServ()async{
-    List<BlocSize> list = [];
-    list = await getItems(type: 0,limit: 100);
-    for(int i = 0; i < list.length; i+=2){
-      try{
-      leftColumn.add(list[i]);
-      }catch(e){}
-
-      try {
-        rightColumn.add(list[i + 1]);
-      }catch(e){}
-    }
-    setState(() {
-
-    });
-  }
 
 
 
@@ -74,21 +54,15 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
   void initState() {
 
 
-    getItemsfromServ();
     controllerScroll.addListener(() {
       // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());
       if(controllerScroll.position.pixels == controllerScroll.position.maxScrollExtent){
         print(controllerScroll.position.pixels);
         //todo AutoLoad
-        //getItemsfromServ();
       }
     });
 
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -104,34 +78,67 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
     super.build(context);
     return SingleChildScrollView(
       controller: controllerScroll,
-      child: Container(
-        color: cBG,
-        child: Column(
-          children: [
-            MainPanel(context, product,category,widget.controllerPages),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: BlocBuilder<TovarsCubit,TovarsState>(
+        builder: (context, state){
+          if(state is TovarsLoading){
+            return Center(child: CircularProgressIndicator(),);
+          }else if(state is TovarsComplete){
+            return Loaded(state);
+          }else{
+            return Center(
+              //todo err
+            );
+          }
+        },
+      ),
+    );
+  }
 
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget Loaded(TovarsComplete tovarsComplete){
 
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+    List<BlocSize> leftColumn = [];
+    List<BlocSize> rightColumn = [];
 
-                    children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
-                  ),
-                ],
-              ),
+
+    List<BlocSize> list = tovarsComplete.tovarsList;
+    for(int i = 0; i < list.length; i+=2){
+      try{
+        leftColumn.add(list[i]);
+      }catch(e){}
+
+      try {
+        rightColumn.add(list[i + 1]);
+      }catch(e){}
+    }
+
+
+    return Container(
+      color: cBG,
+      child: Column(
+        children: [
+          MainPanel(context, product,category,widget.controllerPages),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+
+                  children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
+                ),
+              ],
             ),
-            SizedBox(height: 50,)
-          ],
-        ),
+          ),
+          SizedBox(height: 50,)
+        ],
       ),
     );
   }

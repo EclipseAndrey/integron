@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
+import 'package:omega_qick/Style.dart';
 
 void showDialogIntegron({
       @required BuildContext context,

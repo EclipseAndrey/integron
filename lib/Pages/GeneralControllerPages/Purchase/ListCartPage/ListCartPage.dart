@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/REST/Cart/updateCart.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/Cart/UpdateCart.dart';
 import 'package:omega_qick/main.dart';
 
 class ListCartPage extends StatefulWidget {

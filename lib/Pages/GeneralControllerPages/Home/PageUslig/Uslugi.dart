@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/Pages/PageNum2/Style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:omega_qick/AAPages/Blocs/Feed/UslugiCubit.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/Home/GetItems.dart';
-import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
 import 'package:omega_qick/Utils/fun/Callbcks.dart';
 
 import 'Panel/Panel.dart';
@@ -23,11 +24,6 @@ class Uslugi extends StatefulWidget {
 
 class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslugi> {
 
-  int weiR = 0;
-  int weiL = 0;
-
-  List<BlocSize> leftColumn = [];
-  List<BlocSize> rightColumn = [];
 
   double minusIconsSize = 0;
   double minusFontsSize = 0;
@@ -41,37 +37,16 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
   Category category =  Category(name: "Здоровье",image: "https://grodnonews.by/upload/iblock/aa4/aa4a03c54a1354faebc0d0be72099d0f.jpg",route: 1, colors: [c2f527f, c7A8BA3, c2f527f], icon: 1);
 
 
-  void getItemsfromServ()async{
-    List<BlocSize> list = [];
-    list = await getItems(type: 1, limit: 100);
-    for(int i = 0; i < list.length; i+=2){
-
-      try{
-      leftColumn.add(list[i]);
-      }catch(e){}
-
-      try {
-        rightColumn.add(list[i + 1]);
-      }catch(e){}
-    }
-    setState(() {
-
-    });
-  }
-
 
 
    @override
   void initState() {
-    getItemsfromServ();
     controllerScroll.addListener(() {
-
       //print("listen scroll ${controllerScroll.position.pixels} // ${controllerScroll.position.maxScrollExtent}");
      // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());
       if(controllerScroll.position.pixels == controllerScroll.position.maxScrollExtent){
         print(controllerScroll.position.pixels);
         //todo autoload
-        //getItemsfromServ();
       }
     });
 
@@ -100,34 +75,68 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
     super.build(context);
     return SingleChildScrollView(
       controller: controllerScroll,
-      child: Container(
-        color: cBG,
-        child: Column(
-          children: [
-            MainPanel(context, product, category,widget.controllerPages ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: BlocBuilder<UslugiCubit,UslugiState>(
+        builder: (context,state){
+          if(state is UslugiLoading){
+            return Center(child:  CircularProgressIndicator(),);
+          }else if(state is UslugiComplete){
+            return Loaded(state);
+          }else{
+            return Center(
+              //todo err
+            );
+          }
+        },
+      ),
+    );
+  }
 
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+  Widget Loaded(UslugiComplete uslugiComplete){
 
-                    children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+    List<BlocSize> leftColumn = [];
+    List<BlocSize> rightColumn = [];
 
-                    children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize,  voidCallbackCategory: widget.callbackCategory)) ,
-                  ),
-                ],
-              ),
+    List<BlocSize> list = uslugiComplete.uslugiList;
+    for(int i = 0; i < list.length; i+=2){
+
+      try{
+        leftColumn.add(list[i]);
+      }catch(e){}
+
+      try {
+        rightColumn.add(list[i + 1]);
+      }catch(e){}
+    }
+
+
+
+    return  Container(
+      color: cBG,
+      child: Column(
+        children: [
+          MainPanel(context, product, category,widget.controllerPages ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+
+                  children: List.generate(leftColumn.length, (index) => ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: widget.callbackCategory)) ,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+
+                  children: List.generate(rightColumn.length, (index) => ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize,  voidCallbackCategory: widget.callbackCategory)) ,
+                ),
+              ],
             ),
-            SizedBox(height: 50,)
-          ],
-        ),
+          ),
+          SizedBox(height: 50,)
+        ],
       ),
     );
   }

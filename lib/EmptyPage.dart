@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-
-import 'Head/Colors.dart';
-import 'Style.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Style.dart';
 
 class EmptyPage extends StatefulWidget {
   @override
@@ -17,9 +14,6 @@ class _EmptyPageState extends State<EmptyPage> {
     return Scaffold(
 
       key: _drawerKey,
-
-
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: cBG,

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
-import 'package:omega_qick/Utils/fun/BottomSheetSelectParam.dart';
-
+import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
+import 'package:omega_qick/REST/Product/getProduct.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:omega_qick/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
 import '../../main.dart';
-import 'Cart/UpdateCart.dart';
+import '../../REST/Cart/updateCart.dart';
 
 void AddProductInCart (BuildContext context, int route, {Product product} )async{
   bool find = false;
@@ -15,7 +15,7 @@ void AddProductInCart (BuildContext context, int route, {Product product} )async
     }
   }
   if(!find){
-    if(product == null)product = await getProductForId(route);
+    if(product == null)product = await ProductProvider.getProduct(route);
     if(product.params.length>0){
       ShowBottoomSheetSelectParams(context: context, formalize: false, indexSelect: (index){}, product: product);
     }else{

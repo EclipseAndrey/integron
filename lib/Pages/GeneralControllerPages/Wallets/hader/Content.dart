@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:omega_qick/AAPages/Blocs/History/HistoryCubit.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/HistoryTxs/GetTxs.dart';
-import 'package:omega_qick/Utils/DB/TxHistory/Tx.dart';
-
-
-import '../db.dart';
+import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
+import 'package:omega_qick/Utils/DB/Wallet/Tx.dart';
 import 'historyItem.dart';
 
 Widget Content() {
-
   return SliverList(
     delegate: SliverChildBuilderDelegate(
-
-
           (BuildContext context, int i,) {
-
         return ContentHistory();
       },
       childCount: 1
-
     ),
   );
 }
@@ -30,36 +23,30 @@ class ContentHistory extends StatefulWidget {
 }
 
 class _ContentHistoryState extends State<ContentHistory> {
-  bool loading = true;
-
-  List<Tx> txs = [];
-
-  load()async{
-    loading =true;
-    setState(() {});
-
-    txs = await getTxs();
-
-
-    loading=false;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    load();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: loading?Center(child:  CircularProgressIndicator(),):Content(),
+      child: BlocBuilder<HistoryCubit,HistoryState>(
+        builder: (context, state){
+          if(state is HistoryLoading){
+            return Center(child: CircularProgressIndicator(),);
+          }else if(state is HistoryComplete){
+            return Content(state);
+          }else{
+            return Center(
+              //todo err
+            );
+          }
+        },
+      )
     );
   }
 
 
-  Widget Content (){
+  Widget Content (HistoryComplete balanceComplete){
+    List<Tx> txs = balanceComplete.historyList;
+
     return txs.length == 0?Center(child: Text("У вас пока не было транзакций", style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),):Column(
       children: [
         Column(children: List.generate(txs.length, (index) => Padding(

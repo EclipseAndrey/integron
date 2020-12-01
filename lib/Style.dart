@@ -1,32 +1,44 @@
 import 'package:flutter/material.dart';
 
-List<Color> cardBackgroundGradient = [
-Color.fromRGBO(25, 9, 60, 1),
-  Color.fromRGBO(50, 18, 122, 1),
-];
+Color cMainText = Color.fromRGBO(40, 40, 40, 1);
+Color c282828 = cMainText;
+Color cMainBlack = cMainText;
 
-List<Color> homeBackgroundGradient = [
-  Color.fromRGBO(32, 38 , 45, 1),
-  Color.fromRGBO(22, 26, 31, 1),
-];
+Color cTitles  = Color.fromRGBO(47, 82, 127, 1);
+Color c2f527f  = cTitles;
 
-Color dialogBackGroundColor = Colors.grey;
+Color cWhite = Color.fromRGBO(255, 255, 255, 1);
+Color cffffff = cWhite;
 
-ThemeData themeApp = ThemeData(
-  // Define the default brightness and colors.
-  brightness: Brightness.light,
-  primaryColor: homeBackgroundGradient[0],
-  accentColor: homeBackgroundGradient[0],
+Color cBG = Color.fromRGBO(250, 250, 250, 1);
+Color cBackground = cBG;
+Color cfafafa = cBG;
 
-  // Define the default font family.
-  fontFamily: 'MPLUS',
-  textTheme: TextTheme(
-    headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-    headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-    bodyText2: TextStyle(
-        fontSize: 18.0, fontFamily: 'Medium', color: Colors.white),
-  ),
+Color cDefault = Color.fromRGBO(209, 211, 215, 1);
+Color cd1d3d7 = cDefault;
 
-  // Define the default TextTheme. Use this to specify the default
-  // text styling for headlines, titles, bodies of text, and more.
-);
+Color cLinks = Color.fromRGBO(88, 148, 188, 1);
+Color c5894bc =cLinks;
+
+Color cButtons = Color.fromRGBO(141, 205, 224, 1);
+Color c8dcde0 = cButtons;
+
+Color cSecondaryButtons = Color.fromRGBO(203, 254, 254, 1);
+Color ccbfefe = cSecondaryButtons;
+
+Color cPay = Color.fromRGBO(255, 0, 0, 1);
+Color cff0000 = cPay;
+
+Color cIcons = Color.fromRGBO(98, 135, 161, 1);
+Color c6287A1 = cIcons;
+
+Color cForms = Color.fromRGBO(240, 245, 239, 1);
+Color cf0f5ef = cForms;
+
+Color cSecondaryForms = Color.fromRGBO(180, 191, 179, 1);
+Color cb4bfb3 = cSecondaryForms;
+
+Color cPlaceHolder  = Color.fromRGBO(122, 139, 163, 1);
+Color c7A8BA3  = cPlaceHolder;
+
+List<Color> cBackgroundGradient = [Color(0xFFFFFFFF),cBG];

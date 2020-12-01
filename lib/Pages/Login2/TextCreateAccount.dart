@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'Style.dart';
+import '../../Style.dart';
 
 
 Widget TextCreateAccount (BuildContext context, minusFontsSize){

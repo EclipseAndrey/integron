@@ -1,15 +1,14 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Parse/InfoToken.dart';
+import 'package:omega_qick/Providers/BizProvider/BizProvider.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
-import 'package:omega_qick/REST/Bisinesses/getBisiness.dart';
-import 'package:omega_qick/Utils/DB/Bisiness/GetBusinessModel.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Autorization/InfoToken/InfoToken.dart';
+import 'package:omega_qick/Utils/DB/Biz/Business.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/BottomSheetEditHeadBuisness.dart';
+import 'package:omega_qick/Utils/fun/BottomDialogs/BottomSheetEditHeadBuisness.dart';
 
 import 'BodyBusiness.dart';
 
@@ -49,10 +48,9 @@ class _BusinessPageState extends State<BusinessPage> {
 
     print("BIZ ${widget.edit}");
     if(widget.edit) {
-      String token = await tokenDB();
-      InfoToken infoUser = await checkToken(token);
+      InfoToken infoUser = await checkToken();
       if (infoUser != null && infoUser.role == 1&&widget.edit) {
-        business = await getBusiness(infoUser.id);
+        business = await BizProvider.getBusiness(infoUser.id);
         nameBiz = business.nameBusiness == null ? widget.edit
             ? "Редактируйте название"
             : "Магазин" : business.nameBusiness.length == 0 ? widget.edit
@@ -66,7 +64,7 @@ class _BusinessPageState extends State<BusinessPage> {
         // nameBiz = business.nameBusiness != null?business.nameBusiness:business.nameBusiness.length ==0?widget.edit?"Редактируйте название":"Магазин":business.nameBusiness;
       }
     }else{
-      business = await getBusiness(widget.id);
+      business = await BizProvider.getBusiness(widget.id);
       nameBiz = business.nameBusiness == null ? widget.edit
           ? "Редактируйте название"
           : "Магазин" : business.nameBusiness.length == 0 ? widget.edit

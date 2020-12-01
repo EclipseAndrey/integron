@@ -5,9 +5,8 @@ import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory
 import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/summ.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/usd.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/uslug.dart';
+import 'package:omega_qick/Utils/DB/Wallet/Tx.dart';
 import 'dart:math' as math;
-
-import 'package:omega_qick/Utils/DB/TxHistory/Tx.dart';
 import 'package:omega_qick/Utils/fun/InitBalance.dart';
 import 'package:omega_qick/Utils/fun/InitWallet.dart';
 import 'package:omega_qick/Utils/fun/TimeParse.dart';

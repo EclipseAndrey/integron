@@ -10,7 +10,7 @@ void showDialogOk(BuildContext context){
         backgroundColor: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
-            color: dialogBackGroundColor,
+            color: cBG,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),

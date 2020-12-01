@@ -14,9 +14,7 @@ Future<String> uploadPhoto (String filename, String url) async {
       )
   );
   var res = await request.send();
-  //     .then((value){
-  //
-  // });
+
   if(res.statusCode != 200)return null;
   res.stream.transform(utf8.decoder).listen((value) {
     print(value);

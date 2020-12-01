@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/QrLib/QrGenerate/QrGenerateController.dart';
-import 'package:omega_qick/REST/Wallet/GetBalance.dart';
-import 'package:omega_qick/Utils/DB/TxHistory/InfoWallet.dart';
+import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
+import 'package:omega_qick/REST/Wallet/getBalance.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Wallet/Balance.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
+import 'package:omega_qick/Utils/fun/QrLib/QrGenerate/QrGenerateController.dart';
 import 'package:omega_qick/main.dart';
 
 import 'logo.dart';
@@ -29,7 +30,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
   loadBalance ()async{
     loadingBalance = true;
    // animationController.repeat();
-    InfoWallet infoWallet = await getBalance();
+    Balance infoWallet = await WalletProvider.getBalance();
     BALANCE = double.parse(infoWallet.balance);
     loadingBalance = false;
 
@@ -151,7 +152,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                   children: [
                     GestureDetector(
                       onTap: ()async{
-                        InfoWallet info = await getBalance();
+                        Balance info = await WalletProvider.getBalance();
                         showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
                             onTap: (){
 
@@ -190,7 +191,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                     Spacer(),
                     GestureDetector(
                         onTap: ()async{
-                          InfoWallet info = await getBalance();
+                          Balance info = await WalletProvider.getBalance();
 
                           showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
                               onTap: (){

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
+import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {

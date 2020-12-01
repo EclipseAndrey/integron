@@ -1,4 +1,4 @@
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
 
 class Order {
   int clientId;

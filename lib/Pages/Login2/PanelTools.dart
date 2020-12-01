@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:omega_qick/presentation/integron_icons.dart' as customIcons;
 
-import 'Style.dart';
+import '../../Style.dart';
 
 Widget PanelTools(BuildContext context, double minusIconSize){
 

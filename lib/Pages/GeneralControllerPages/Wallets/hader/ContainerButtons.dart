@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/buttonDown.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/hader/buttons.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Parse/InfoToken.dart';
-import 'package:omega_qick/QrLib/QrGenerate/QrGenerateController.dart';
-import 'package:omega_qick/REST/Wallet/GetBalance.dart';
-import 'package:omega_qick/Utils/DB/TxHistory/InfoWallet.dart';
-import 'package:omega_qick/Utils/DB/tokenDB.dart';
+import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
+import 'package:omega_qick/REST/Wallet/getBalance.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Wallet/Balance.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:omega_qick/Utils/fun/QrLib/QrGenerate/QrGenerateController.dart';
 
 Widget containerButtons(BuildContext context) {
   double w = MediaQuery.of(context).size.width * 0.435;
@@ -88,7 +85,7 @@ Color c, double p  ) {
       GestureDetector(
         onTap: ()async{
           showDialogLoading(context);
-          InfoWallet a = await getBalance();
+          Balance a = await WalletProvider.getBalance();
           closeDialog(context);
           showDialogIntegron(context: context, title: getQr(a.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
               onTap: (){

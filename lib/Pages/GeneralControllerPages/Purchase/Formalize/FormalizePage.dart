@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
+import 'package:omega_qick/Providers/OrderProvider/OrderProvider.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
-import 'package:omega_qick/REST/Orders/MakeOrder.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/REST/Cart/updateCart.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:omega_qick/Utils/DB/Put.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/BotomSheetEditInformatin.dart';
-import 'package:omega_qick/Utils/fun/Cart/UpdateCart.dart';
+import 'package:omega_qick/Utils/fun/BottomDialogs/BotomSheetEditInformatin.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/main.dart';
@@ -77,8 +78,7 @@ class _FormalizePageState extends State<FormalizePage> {
 
   // ignore: non_constant_identifier_names
   LoadDelivery()async{
-    String token = await tokenDB()??"null";
-    var a = await checkToken(token);
+    var a = await checkToken();
     try {
       if (a.name.length == 0) {
         a.name = null;
@@ -668,13 +668,13 @@ class _FormalizePageState extends State<FormalizePage> {
               for(int j =0;j<list[i].params.length; j++){
                 paramsList.add(list[i].params[j].params[list[i].params[j].select].name);
               }
-              List code = await makeOrder(listIds, list[i].counter, params: paramsList, comment: controllerMess.text == ""?null:controllerMess.text);
-              if(code[0] == 200){
+              Put put = await OrderProvider.makeOrder(listIds, list[i].counter, params: paramsList, comment: controllerMess.text == ""?null:controllerMess.text);
+              if(put.error == 200){
                 widget.list.removeAt(i);
               }else{
                 i = list.length;
                 err = true;
-                mess = code[1];
+                mess = put.mess;
               }
             }
             closeDialog(context);

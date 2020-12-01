@@ -1,5 +1,4 @@
 
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/CategoryPath.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
 
 typedef VoidCallbackCategory = void Function(Category id);

@@ -1,21 +1,15 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/My/PageAddProduct.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Parse/InfoToken.dart';
+import 'package:omega_qick/Providers/BizProvider/BizProvider.dart';
+import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
-import 'package:omega_qick/REST/Bisinesses/getBisiness.dart';
-import 'package:omega_qick/REST/Bisinesses/upFullPost.dart';
-import 'package:omega_qick/REST/Bisinesses/upOnlyPost.dart';
-import 'package:omega_qick/REST/Home/Search/getItemCategory.dart';
-import 'package:omega_qick/REST/Product/DeleteProduct.dart';
-import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Autorization/InfoToken/InfoToken.dart';
+import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 
@@ -56,11 +50,10 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     List<BlocSize> listStep = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, detail: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
     var biz;
     if(widget.edit) {
-      String token = await tokenDB();
-      InfoToken infoToken = await checkToken(token);
-      biz= await getBusiness(infoToken.id);
+      InfoToken infoToken = await checkToken();
+      biz= await BizProvider.getBusiness(infoToken.id);
     }else{
-      biz= await getBusiness(widget.id);
+      biz= await BizProvider.getBusiness(widget.id);
     }
     list = biz.products;
     print("body loading ${list.length} элементов при инициализации в list");
@@ -112,7 +105,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
   tapDelete(int route)async{
     print("tap delete");
     showDialogLoading(context);
-    var a =await deleteItem(route);
+    var a =await ProductProvider.forBiz.deleteItem(route);
     closeDialog(context);
     if(a == 200){
       dialogErr("Успешно удалено");
@@ -133,7 +126,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
   //todo
   tapUpFull(int route)async{
     print("tapUpFull");
-    await upFullPost(route);
+    await ProductProvider.forBiz.upFull(route);
     getItemsfromServ();
   }
   //todo
@@ -147,7 +140,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
          route2 = list[i-1].route;
         }
       }
-      await upOnlyPost(route, route2);
+      await ProductProvider.forBiz.upOnly(route, route2);
       getItemsfromServ();
     }catch(e){print(e);}
   }

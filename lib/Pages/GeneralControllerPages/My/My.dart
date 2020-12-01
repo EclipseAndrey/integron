@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,19 +8,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Parse/InfoToken.dart';
-import 'package:omega_qick/REST/Autorization/SetNameR.dart';
-import 'package:omega_qick/REST/Autorization/SetPhoto.dart';
+import 'package:omega_qick/Providers/UserProvider/UserProvider.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
-import 'package:omega_qick/REST/Autorization/setRole.dart';
-import 'package:omega_qick/REST/SendPhoto.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Autorization/InfoToken/InfoToken.dart';
 import 'package:omega_qick/Utils/DB/tokenDB.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/Utils/fun/ExitAccount.dart';
-import 'package:omega_qick/reqests.dart';
 import 'package:http/http.dart' as http;
 
 import 'Buisness/Buisness.dart';
@@ -62,8 +57,7 @@ class _MyPageState extends State<MyPage> {
     print("load");
     loading = true;
     setState(() {});
-    String token = await tokenDB();
-    user = await checkToken(token);
+    user = await checkToken();
     user??Fluttertoast.showToast(
         msg: "Не удалось загрузить",
         toastLength: Toast.LENGTH_SHORT,
@@ -74,7 +68,7 @@ class _MyPageState extends State<MyPage> {
         fontSize: 16.0
     );
     while(user == null){
-      user = await checkToken(token);
+      user = await checkToken();
       user??Fluttertoast.showToast(
           msg: "Не удалось загрузить",
           toastLength: Toast.LENGTH_SHORT,
@@ -102,7 +96,7 @@ class _MyPageState extends State<MyPage> {
     }
     if(!editingName){
       user.name = controllerEditName.text;
-      await GetSetName(controllerEditName.text);
+      await UserProvider.setName(controllerEditName.text);
     }
     Load();
     setState(() {});
@@ -143,7 +137,7 @@ class _MyPageState extends State<MyPage> {
 
         res.stream.transform(utf8.decoder).listen((value) async{
           print(value);
-          await setPhoto(json.decode(value)['url']);
+          await UserProvider.setPhoto(json.decode(value)['url']);
           Load();
           initHeader();
 
@@ -585,13 +579,13 @@ class _MyPageState extends State<MyPage> {
         GestureDetector(
           onTap: () async{
             showDialogLoading(context);
-            InfoToken info = await checkToken(await tokenDB());
+            InfoToken info = await checkToken();
             closeDialog(context);
               if(info.role == 1){
                 await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
               }else{
                 showDialogLoading(context);
-                await setRoleR("1");
+                await UserProvider.setRole("1");
                 closeDialog(context);
                 showDialogIntegron(
                     context: context,
@@ -613,9 +607,9 @@ class _MyPageState extends State<MyPage> {
                           onPressed: () async{
                             closeDialog(context);
                             showDialogLoading(context);
-                            await setRoleR("1");
+                            await UserProvider.setRole("1");
 
-                            InfoToken info = await checkToken(await tokenDB());
+                            InfoToken info = await checkToken();
                             closeDialog(context);
                             if(info.role == 1){
                               await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));

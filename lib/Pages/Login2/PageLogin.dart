@@ -7,7 +7,7 @@ import 'HaveAccount.dart';
 import 'IconHelp.dart';
 import 'Logo.dart';
 import 'PanelTools.dart';
-import 'Style.dart';
+import '../../Style.dart';
 import 'TextCreateAccount.dart';
 import 'TextFieldNum.dart';
 

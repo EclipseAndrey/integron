@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Authorization/Pages/PageNum2/Style.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/Home/GetItems.dart';
-import 'package:omega_qick/REST/Home/Search/getItemCategory.dart';
-import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/CategoryPath.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Providers/CategoryProvider/CategoryProvider.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/Callbcks.dart';
 
@@ -43,7 +39,7 @@ class _PageSelectedCategoryState extends State<PageSelectedCategory> with Automa
 
   void getItemsfromServ()async{
     List<BlocSize> list = [];
-    list = await getItemsCategory(widget.categories[0].route);
+    list = await CategoryProvider.getItemsCategory(widget.categories[0].route);
     for(int i = 0; i < list.length; i+=2){
 
       leftColumn.add(list[i]);

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:omega_qick/Style.dart';
 
-import 'package:omega_qick/Pages/Login2/Style.dart';
 
 Widget CheckText (BuildContext context, minusFontsSize){
   return Column(

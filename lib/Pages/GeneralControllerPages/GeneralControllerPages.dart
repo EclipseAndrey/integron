@@ -1,20 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
-import 'package:omega_qick/Contacts/Pages/PageContacts.dart';
 import 'package:omega_qick/EmptyPage.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutReferal.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Home.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
-
-import 'package:omega_qick/Pages/Login2/Style.dart';
+import 'package:omega_qick/REST/Cart/getCart.dart';
 import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/Cart/GetCart.dart';
-
 import 'My/My.dart';
 import 'Wallets/Wallets.dart';
 
@@ -27,6 +20,8 @@ class GeneralControllerPages extends StatefulWidget {
 
 
 class _GeneralControllerPagesState extends State<GeneralControllerPages> {
+
+
   List<Widget> pageList = List<Widget>();
 
   PageController controllerPage = PageController(initialPage: 0);
@@ -38,7 +33,6 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
   @override
   void initState() {
     getCart();
-
     pageList.add(Home(controllerPage));
     pageList.add(Wallet());
     pageList.add(Cart());

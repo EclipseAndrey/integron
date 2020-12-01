@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
+import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/main.dart';
 
 class Cart extends StatefulWidget {

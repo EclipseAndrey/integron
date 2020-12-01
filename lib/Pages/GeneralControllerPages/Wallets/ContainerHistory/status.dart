@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/Utils/fun/statusColorWidget.dart';
+import 'package:omega_qick/Style.dart';
 
 
 Widget statusWidget(int status, BuildContext context) {

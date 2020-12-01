@@ -2,17 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Search/Search.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/SwiperSets.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/Home/GetItems.dart';
-import 'package:omega_qick/REST/Wallet/GetBalance.dart';
-import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
-import 'package:omega_qick/Utils/DB/Items/Set.dart';
-import 'package:omega_qick/Utils/DB/TxHistory/InfoWallet.dart';
+import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:omega_qick/Utils/DB/Products/Set.dart';
+import 'package:omega_qick/Utils/DB/Wallet/Balance.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/main.dart';
 
@@ -42,7 +39,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
 
   loadBalance ()async{
     loadingBalance = true;
-    InfoWallet infoWallet = await getBalance();
+    Balance infoWallet = await WalletProvider.getBalance();
     BALANCE = double.parse(infoWallet.balance);
     loadingBalance = false;
     setState(() {

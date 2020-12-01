@@ -1,23 +1,19 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
-import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Items/Category.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
-import 'package:omega_qick/Utils/DB/Items/Set.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:omega_qick/Utils/DB/Products/Set.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/AddProductInCart.dart';
 import 'package:omega_qick/Utils/fun/Callbcks.dart';
-import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogError.dart';
-import 'package:omega_qick/main.dart';
+
 
 Widget ItemGetter(
     BlocSize bloc,

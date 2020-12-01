@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
-import 'package:omega_qick/Pages/Login2/Style.dart';
-import 'package:omega_qick/REST/Home/InfoProduct/ProductPost.dart';
-import 'package:omega_qick/Utils/DB/Items/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Items/CategoryPath.dart';
-import 'package:omega_qick/Utils/DB/Items/Product.dart';
-import 'package:omega_qick/Utils/DB/Items/Property.dart';
+import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
+import 'package:omega_qick/Style.dart';
+import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:omega_qick/Utils/DB/Products/Property.dart';
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'package:omega_qick/Utils/fun/AddProductInCart.dart';
-import 'package:omega_qick/Utils/fun/BottomSheetSelectParam.dart';
+import 'package:omega_qick/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
 import 'package:omega_qick/main.dart';
-import '../Settings.dart';
 
 class TovarInfo extends StatefulWidget {
   int id;
@@ -38,9 +37,10 @@ class _TovarInfoState extends State<TovarInfo> {
   bool loading = true;
 
   void load() async {
-    item = await getProductForId(widget.id);
+    item = await ProductProvider.getProduct(widget.id);
 
     if (item.error == null) {
+      print(item.toJson());
     imagePages = List.generate(
         item.images.length,
             (index) =>
@@ -212,14 +212,14 @@ class _TovarInfoState extends State<TovarInfo> {
 
   Widget category() {
 
-    Widget textcat(CategoryPath cat){
+    Widget textcat(Category cat){
       return Text(cat.name, style: TextStyle(color:c5894bc, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal ),);
     }
 
 
     return Row(mainAxisAlignment: MainAxisAlignment.start,
     children: List.generate(item.catPath.length, (index) {
-      CategoryPath step = item.catPath[index];
+      Category step = item.catPath[0];
 
       if(index == item.catPath.length-1){
         return textcat(step);
