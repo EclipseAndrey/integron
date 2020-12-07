@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'Utils/DB/Products/Product.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/REST/Product/getProduct.dart';
+
 import 'REST/Category/getItemsCategory.dart';
 import 'package:omega_qick/AutoRoutes.dart';
 import 'REST/SecureConnection/DBSecure.dart';

@@ -1,4 +1,6 @@
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/DB/Errors.dart';
+
+
+import 'package:omega_qick/Utils/DB/Errors.dart';
 
 class Property extends EditPropertyFlags{
   String value = "";

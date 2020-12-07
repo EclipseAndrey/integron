@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Style.dart';
+import 'package:omega_qick/Style.dart';
+
 import 'package:omega_qick/Utils/IconDataForCategory.dart';
 
 

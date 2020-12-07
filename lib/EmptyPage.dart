@@ -1,5 +1,7 @@
+
+
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Style.dart';
+import 'package:omega_qick/Style.dart';
 
 class EmptyPage extends StatefulWidget {
   @override

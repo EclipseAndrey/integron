@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/presentation/integron_icons.dart' as customIcons;
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Style.dart';
+
 
 
 class AboutReferal extends StatefulWidget {

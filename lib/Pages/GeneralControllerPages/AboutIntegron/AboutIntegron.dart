@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:omega_qick/AutoRoutes.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-
 import 'package:omega_qick/Pages/Login2/Logo.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Style.dart';
+import 'package:omega_qick/Style.dart';
+
+
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 
 
