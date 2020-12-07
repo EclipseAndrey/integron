@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:omega_qick/REST/PostConstructor.dart';
 import 'package:omega_qick/REST/Server.dart';
 import 'package:omega_qick/REST/Api.dart';
@@ -19,11 +22,16 @@ class ForBiz {
 
     print(urlQuery);
     print(body);
+    Clipboard.setData(ClipboardData(text: jsonEncode(body).toString()));
 
     var response;
 
     response = await Rest.post(urlQuery, body);
-    return response;
+    if(response is Put) {
+      return response;
+    }else{
+      return Put.fromJson(response);
+    }
 
   }
 
@@ -31,9 +39,10 @@ class ForBiz {
     String token = await tokenDB();
     String urlQuery = Server.relevant+"/"+Api.api+"/"+Methods.product.deleteProduct;
 
+    List<int> ids = [id];
     Map<String,dynamic> body = Map();
     body['token'] = token;
-    body['id'] = id.toString();
+    body['id'] = ids.toString();
 
 
     print(urlQuery);
@@ -42,13 +51,18 @@ class ForBiz {
 
     response = await Rest.post(urlQuery, body);
 
-    return response;
+    if(response is Put) {
+      return response;
+    }else{
+      return Put.fromJson(response);
+    }
   }
 
-   Future<Put> updateProduct (Product product, {int id})async{
+   Future<Put> updateProduct (Product product, int id)async{
 
     String url = postConstructor(Methods.product.updateProduct);
 
+    product.route = id;
     String token = await tokenDB();
     product.token = token;
     Map<String,dynamic> body = product.toJson();
@@ -56,10 +70,14 @@ class ForBiz {
     print(url);
     print(body);
 
-    var response;
-    response = Rest.post(url, body);
-    return response;
 
+    var response;
+    response = await Rest.post(url, body);
+    if(response is Put) {
+      return response;
+    }else{
+      return Put.fromJson(response);
+    }
   }
 
    Future<Put> upFull (int id,)async{
@@ -77,8 +95,12 @@ class ForBiz {
 
     response = await Rest.post(urlQuery, body);
 
-    return response;
-  }
+    response = await Rest.post(urlQuery, body);
+    if(response is Put) {
+      return response;
+    }else{
+      return Put.fromJson(response);
+    }  }
 
   Future<Put> upOnly (int id, int id2)async{
     String token = await tokenDB();
@@ -96,7 +118,11 @@ class ForBiz {
 
     response = await Rest.post(urlQuery, body);
 
-    return response;
-  }
+    response = await Rest.post(urlQuery, body);
+    if(response is Put) {
+      return response;
+    }else{
+      return Put.fromJson(response);
+    }  }
 
 }

@@ -21,14 +21,14 @@ class Rest {
       bodyUp['text'] = text;
       bodyUp['body'] = await Connection.secure.crypto(json.encode(body));
       body = bodyUp;
-      //print("post body crypto "+body.toString());
+      print("post body crypto "+body.toString());
     }
 
     Map<String, String> headers =  HashMap();
     headers['Content-type'] = 'application/json';
     var response;
     response = await http.post(url, encoding: Encoding.getByName('utf-8'), body: json.encode(body), headers: headers);
-    //print("response "+url+ "   "+response.body  );
+    print("response "+url+ "   "+response.body  );
     if(response.statusCode == 200){
       if(secure){
         var res = jsonDecode(await Connection.secure.reCrypto(json.decode(response.body)));

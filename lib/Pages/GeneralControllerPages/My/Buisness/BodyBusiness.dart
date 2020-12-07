@@ -107,12 +107,12 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     showDialogLoading(context);
     var a =await ProductProvider.forBiz.deleteItem(route);
     closeDialog(context);
-    if(a == 200){
+    if(a.error == 200){
       dialogErr("Успешно удалено");
       getItemsfromServ();
 
     }else{
-      dialogErr("Не удалось удалить\nКод $a\nСообщите разрабочикам, если ошибка повторяется");
+      dialogErr("Не удалось удалить\nКод ${a.error}\nСообщите разрабочикам, если ошибка повторяется");
       getItemsfromServ();
 
     }

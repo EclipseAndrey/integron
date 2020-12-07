@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:omega_qick/AAPages/Blocs/Balance/BalanceCubit.dart';
+import 'package:omega_qick/AAPages/Blocs/History/HistoryCubit.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
 import 'package:omega_qick/REST/Wallet/getBalance.dart';
@@ -27,19 +30,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
 
   bool loadingBalance = true;
 
-  loadBalance ()async{
-    loadingBalance = true;
-   // animationController.repeat();
-    Balance infoWallet = await WalletProvider.getBalance();
-    BALANCE = double.parse(infoWallet.balance);
-    loadingBalance = false;
 
-    try{
-      setState(() {
-
-      });
-    }catch(e){}
-  }
 
 
   @override
@@ -52,8 +43,6 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
       parent: animationController,
       curve: Curves.easeInOutBack,
     );
-
-    loadBalance();
     super.initState();
   }
 
@@ -100,121 +89,121 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
   Widget WalletIntegron(BuildContext context, double cardSize){
     var size = MediaQuery.of(context).size;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-      child: Container(
-        color: c2f527f,
-        width: size.width*cardSize,
-        height: size.width*0.75*0.70*cardSize,
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text("DEL ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: 24, fontStyle: FontStyle.normal),),
-                  getIconForId(id: 15, color: Colors.white, size: 24),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: (){
-                      animationController.forward(from: 0);
-                      loadBalance();
-                      setState(() {
-
-                      });
-                    },
-                    child: RotationTransition(
-                        turns: animation,
-                        child: getIconForId(id: 37, color: Colors.white, size: 24)),
-                  ),
-                  SizedBox(width: 8,),
-                  Text(BALANCE.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: 24, fontStyle: FontStyle.normal),)
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Кошелек", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 16, fontStyle: FontStyle.normal),),
-                  Spacer(),
-                  Text("${BALANCE*course} ", style: TextStyle(color: cb4bfb3, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 16, fontStyle: FontStyle.normal),),
-                  Text(" ₽", style: TextStyle(color: cb4bfb3, fontWeight: FontWeight.w400,  fontSize: 16, fontStyle: FontStyle.normal),),
-                ],
-              ),
-              Spacer(),
-              Row(
-                children: [
-                  Text("Последняя транзакция ", style: TextStyle(color: cDefault, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 12, fontStyle: FontStyle.normal),),
-                  Text("3 дня назад", style: TextStyle(color: cDefault, fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: 16, fontStyle: FontStyle.normal),),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Row(
+    return BlocBuilder<BalanceCubit,BalanceState>(
+      builder: (context, state) => ClipRRect(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+        child: Container(
+          color: c2f527f,
+          width: size.width*cardSize,
+          height: size.width*0.75*0.70*cardSize,
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    GestureDetector(
-                      onTap: ()async{
-                        Balance info = await WalletProvider.getBalance();
-                        showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
-                            onTap: (){
-
-                                Fluttertoast.showToast(
-                                    msg: "Адрес скопирован",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.SNACKBAR,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black,
-                                    fontSize: 16.0
-                                );
-                                Clipboard.setData( ClipboardData(text: info.address));
-
-                            },
-                            child: Text(info.address)));
-                      },
-                      child: Container(
-
-                        decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(
-                                color: Colors.white
-                            )
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
-                          child: Center(
-                            child:
-                            Text("Пополнить", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: 14, fontStyle: FontStyle.normal),),
-                          ),
-                        ),
-                      ),
-                    ),
+                    Text("DEL ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: 24, fontStyle: FontStyle.normal),),
+                    getIconSvg(id: 15, color: Colors.white, size: 24),
                     Spacer(),
                     GestureDetector(
+                      onTap: (){
+                        animationController.forward(from: 0);
+                        BlocProvider.of<BalanceCubit>(context).load();
+                        BlocProvider.of<HistoryCubit>(context).load();
+                      },
+                      child: RotationTransition(
+                          turns: animation,
+                          child: getIconSvg(id: 37, color: Colors.white, size: 24)),
+                    ),
+                    SizedBox(width: 8,),
+                    (state is BalanceComplete)?Text( state.balance.balance.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontFamily: fontFamily, fontSize: 24, fontStyle: FontStyle.normal),):CircularProgressIndicator(),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("Кошелек", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 16, fontStyle: FontStyle.normal),),
+                    Spacer(),
+                    Text((state is BalanceComplete)?"${(state.balance.balance*course).toStringAsFixed(3)} ":"", style: TextStyle(color: cb4bfb3, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 16, fontStyle: FontStyle.normal),),
+                    Text((state is BalanceComplete)?" ₽":"", style: TextStyle(color: cb4bfb3, fontWeight: FontWeight.w400,  fontSize: 16, fontStyle: FontStyle.normal),),
+                  ],
+                ),
+                Spacer(),
+                Row(
+                  children: [
+                    Text("Последняя транзакция ", style: TextStyle(color: cDefault, fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 12, fontStyle: FontStyle.normal),),
+                    Text("3 дня назад", style: TextStyle(color: cDefault, fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: 16, fontStyle: FontStyle.normal),),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Row(
+                    children: [
+                      GestureDetector(
                         onTap: ()async{
                           Balance info = await WalletProvider.getBalance();
-
                           showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
                               onTap: (){
 
-                                Fluttertoast.showToast(
-                                    msg: "Адрес скопирован",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.SNACKBAR,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.white,
-                                    textColor: Colors.black,
-                                    fontSize: 16.0
-                                );
-                                Clipboard.setData( ClipboardData(text: info.address));
+                                  Fluttertoast.showToast(
+                                      msg: "Адрес скопирован",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.SNACKBAR,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black,
+                                      fontSize: 16.0
+                                  );
+                                  Clipboard.setData( ClipboardData(text: info.address));
 
                               },
-                              child: Text(info.address  )));
+                              child: Text(info.address, style: TextStyle(color: cLinks),)));
                         },
-                        child: getIconForId(id:35, size: 38, color: Colors.white,))
-                  ],
+                        child: Container(
+
+                          decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(
+                                  color: Colors.white
+                              )
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+                            child: Center(
+                              child:
+                              Text("Пополнить", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontFamily: fontFamily, fontSize: 14, fontStyle: FontStyle.normal),),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                          onTap: ()async{
+                            Balance info = await WalletProvider.getBalance();
+
+                            showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
+                                onTap: (){
+
+                                  Fluttertoast.showToast(
+                                      msg: "Адрес скопирован",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.SNACKBAR,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black,
+                                      fontSize: 16.0
+                                  );
+                                  Clipboard.setData( ClipboardData(text: info.address));
+
+                                },
+                                child: Text(info.address , style: TextStyle(color: cLinks), )));
+                          },
+                          child: getIconSvg(id:35, size: 38, color: Colors.white,))
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

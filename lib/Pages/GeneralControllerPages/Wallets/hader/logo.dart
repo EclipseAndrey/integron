@@ -7,7 +7,7 @@ Widget logo() {
   Widget v1(){
     return Row(
       children: [
-        getIconForId(id: 41),
+        getIconSvg(id: 41),
         Text(
           "I N T E G R O N",
           style: TextStyle(
@@ -15,7 +15,7 @@ Widget logo() {
             fontSize: 25,
           ),
         ),
-        getIconForId(id: 41),
+        getIconSvg(id: 41),
       ],
     );
   }

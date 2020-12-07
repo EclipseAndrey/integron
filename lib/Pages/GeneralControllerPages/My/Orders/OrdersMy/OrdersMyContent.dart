@@ -72,12 +72,12 @@ class _OrdersMyContentState extends State<OrdersMyContent> {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
-                                            getIconForId(id: 44, color: c6287A1, size: 24),
+                                            getIconSvg(id: 44, color: c6287A1, size: 24),
                                             SizedBox(width: paddingAll,),
                                             Text(widget.orders[indexAll].bizName, style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w600),),
                                           ],
                                         ),
-                                        getIconForId(id: 39, color: c6287A1, size: 24)
+                                        getIconSvg(id: 39, color: c6287A1, size: 24)
                                       ],
                                     ),
                                     SizedBox(height: 8,),

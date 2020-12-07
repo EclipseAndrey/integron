@@ -171,12 +171,12 @@ class _CheckCodeState extends State<CheckCodePage> {
                       GestureDetector(
                         onTap: () async {
                           CheckCode response =await  checkCode(widget.num, text);
-                          if(response.code == "201"){
+                          if(response.code == 201){
                             print("CheckCodePage response token ${response.token}");
                             await tokenDB(token: response.token);
                             await autoDB(a: true);
                             AutoRoutes(context);
-                          }else if(response.code == "200"){
+                          }else if(response.code == 200){
                             print("CheckCodePage response token ${response.token}");
                             await tokenDB(token: response.token);
                             await autoDB(a: true);

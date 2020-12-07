@@ -31,18 +31,32 @@ Widget ItemGetter(
       Function(int route) tapUpFull
     }){
 
-  double h = MediaQuery.of(context).size.width*0.60;
-  double w =MediaQuery.of(context).size.width*0.26;
-  String name;
+
+
+  double c = 12;
+  double edge = 18;
+  double h2= 0;
+  double h1= 0;
+  double h0= 0;
+  double h= 0;
+  double w =0;
+  /// [c] - отсуп по центру между элементами
+  /// [edge] - отступ по краям
+  /// [h2] - высота блока 2
+  /// [h1] - высота блока 1
+  /// [h0] - высота блока 0
+  /// [w] - стандартная ширина элемента
+  w =  MediaQuery.of(context).size.width/2 - c/2 - edge;
+  h2  = w*1.50;
+  h1  = w*0.72;
+  h0  = w*0.33;
+  h = bloc.blocSize == 1?h1:h2;
+
+
   bool imageF;
   List<Color> colors;
 
-  print("Item getter $edit");
 
-
-  name = bloc.name;
-  h = bloc.blocSize == 1?MediaQuery.of(context).size.width*0.26:MediaQuery.of(context).size.width*0.60;
-  w = MediaQuery.of(context).size.width*0.45;
   if(bloc.image == ""||bloc.image == null||bloc.image == "null"){
     imageF = false;
     colors = [c2f527f,c5894bc,c8dcde0];
@@ -54,7 +68,7 @@ Widget ItemGetter(
   Widget _content(int size){
 
     if(size == 2){
-      ProductShort bloc2 = bloc;
+      // Product bloc2 = bloc;
       return Stack(
         children: [
           Align(
@@ -63,15 +77,16 @@ Widget ItemGetter(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width*0.45,
-                  height: MediaQuery.of(context).size.width*0.30,
+                  width: w,
+                  height: h*0.54,
+
                   child: imageF?Stack(
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
                         child: Container(
-                          width: MediaQuery.of(context).size.width*0.45,
-                          height: MediaQuery.of(context).size.width*0.30,
+                          width: w,
+                          height: h*0.54,
                           child: ClipRRect(
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
                               child: Image.network(bloc.image, fit: BoxFit.cover,)),
@@ -80,7 +95,7 @@ Widget ItemGetter(
                       (edit??false)?Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(6.0),
                           child: GestureDetector(
                             onTap: (){
                               print('tap Only Item getter');
@@ -91,10 +106,11 @@ Widget ItemGetter(
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(10.0),
+                                // todo padding?
                                 child: Transform.rotate(
                                     angle: 180 * 3.14 / 180,
-                                    child: getIconForId(id: 38, color: cIcons)),
+                                    child: getIconSvg(id: 38, color: cIcons)),
                               ),
                             ),
                           ),
@@ -106,8 +122,8 @@ Widget ItemGetter(
                       Align(
                         alignment: Alignment.topLeft,
                         child: Container(
-                          width: MediaQuery.of(context).size.width*0.45,
-                          height: MediaQuery.of(context).size.width*0.30,
+                          width: w,
+                          height: h*0.54,
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                   colors: colors
@@ -132,7 +148,7 @@ Widget ItemGetter(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Transform.rotate(
                                     angle: 180 * 3.14 / 180,
-                                    child: getIconForId(id: 38, color: cIcons)),
+                                    child: getIconSvg(id: 38, color: cIcons)),
                               ),
                             ),
                           ),
@@ -142,16 +158,16 @@ Widget ItemGetter(
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 9.0, top: 9, right: 9),
+                  padding: EdgeInsets.only(left: c, top: c, right: c),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(name,       overflow: TextOverflow.ellipsis,
+                      Text(bloc.name,  overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: c2f527f, fontSize: 14, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
                       Padding(
-                        padding: const EdgeInsets.only(top:6.0),
+                        padding:  EdgeInsets.only(top:6.0),
                         child: Container(
-                          child: Text(bloc2.text??"null",
+                          child: Text(bloc is ProductShort?bloc.text:bloc is Product? bloc.text??"null":'null',
                             overflow: TextOverflow.visible,
                             style: TextStyle(color: c7A8BA3, fontSize: 10, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
                         ),
@@ -159,29 +175,26 @@ Widget ItemGetter(
                     ],
                   ),
                 ),
-
-
-
-
               ],
             ),
           ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
-              width: MediaQuery.of(context).size.width*0.45,
+              width: w,
               decoration: BoxDecoration(
                 color: cWhite,
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(6),bottomRight: Radius.circular(6)),
+
               ),
               child: Padding(
-                padding: const EdgeInsets.all(9.0),
+                padding:  EdgeInsets.symmetric(horizontal: 9.0, vertical: 9),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Text("${bloc2.price} ",  style: TextStyle(color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                        Text("${bloc is ProductShort?bloc.price:bloc is Product? bloc.price??"null":'null'} ",  style: TextStyle(color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
                         Text("DEL",  style: TextStyle(color: c2f527f, fontSize: 18, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontFamily: fontFamily),)
                       ],
                     ),
@@ -198,18 +211,18 @@ Widget ItemGetter(
                       menuOffset: 10.0, // Offset value to show menuItem from the selected item
                       bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
                       menuItems: (edit??false)?<FocusedMenuItem>[
-                        FocusedMenuItem(title: Text("Редактировать",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){tapEdit(bloc.route);}),
-                        FocusedMenuItem(title: Text("В самый верх",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){tapUpFull(bloc.route);}),
-                        FocusedMenuItem(title: Text("Удалить",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){tapDelete(bloc.route);}),
+                        FocusedMenuItem(title: Text("Редактировать",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: 44,color: c6287A1),onPressed: (){tapEdit(bloc.route);}),
+                        FocusedMenuItem(title: Text("В самый верх",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: 44,color: c6287A1),onPressed: (){tapUpFull(bloc.route);}),
+                        FocusedMenuItem(title: Text("Удалить",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: 44,color: c6287A1),onPressed: (){tapDelete(bloc.route);}),
 
                       ]:<FocusedMenuItem>[
                         // Add Each FocusedMenuItem  for Menu Options
-                        FocusedMenuItem(title: Text("В корзину",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.open_in_new) ,iconCustom: getIconForId(id: 55,color: c6287A1),onPressed: ()async{
+                        FocusedMenuItem(title: Text("В корзину",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.open_in_new) ,iconCustom: getIconSvg(id: 55,color: c6287A1),onPressed: ()async{
                           AddProductInCart(context,bloc.route);
                         }),
-                        FocusedMenuItem(title: Text("В магазин",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconForId(id: 44,color: c6287A1),onPressed: (){
+                        FocusedMenuItem(title: Text("В магазин",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: 44,color: c6287A1),onPressed: (){
 
-                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.read(bloc2.ownerIdS)));
+                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.read(bloc is ProductShort?bloc.ownerIdS:bloc is Product? bloc.owner??"0":'0')));
                         }),
                      //   FocusedMenuItem(title: Text("В избранное",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.favorite_border),iconCustom: getIconForId(id: 15,color: c6287A1) ,onPressed: (){}),
                         //FocusedMenuItem(title: Text("Похожее",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,),iconCustom: getIconForId(id: 40,color: c6287A1) ,onPressed: (){
@@ -222,7 +235,7 @@ Widget ItemGetter(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
 
-                              getIconForId(id: 29, color: c2f527f, size: 18,),
+                              getIconSvg(id: 29, color: c2f527f, size: 18,),
                             ],
                           )),
                     ),
@@ -248,8 +261,8 @@ Widget ItemGetter(
               child: GestureDetector(
                 onTap: (){voidCallbackCategory(bloc);},
                 child: Container(
-                  width: MediaQuery.of(context).size.width*0.45,
-                  height: MediaQuery.of(context).size.width*0.30,
+                  width: w,
+                  height: h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                   ),
@@ -257,8 +270,8 @@ Widget ItemGetter(
                       borderRadius: BorderRadius.circular(6),
                       child: Image.network(bloc.image, fit: BoxFit.cover,
                       )):Container(
-                    width: MediaQuery.of(context).size.width*0.45,
-                    height: MediaQuery.of(context).size.width*0.30,
+                    width: w,
+                    height: h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
                         gradient: LinearGradient(
@@ -273,12 +286,12 @@ Widget ItemGetter(
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  getIconForId(id: category.icon,color: Colors.white, size: 24 - minusIconSize,),
+                  getIconSvg(id: category.icon,color: Colors.white, size: 24 - minusIconSize,),
                   // Icon(Icons.star, color: Colors.white, size: 24 - minusIconSize,),
                   Text(bloc.name, style: TextStyle(color: Colors.white, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w700, fontFamily: fontFamily),)
                 ],
@@ -336,36 +349,25 @@ Widget ItemGetter(
 
   }
 
-  if(!(add??false))return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: GestureDetector(
-      onTap: (){
-         bloc.blocSize==2?Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TovarInfo(bloc.route))):null;
-
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width*0.45,
-        height:  h,
-        decoration: BoxDecoration(
-          boxShadow: bloc.blocSize == 0?[]:[
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-          borderRadius: BorderRadius.circular(6),
-          color:Colors.white ,
-        ),
-        child: _content(bloc.blocSize),
+  if(!(add??false))return GestureDetector(
+    onTap: (){
+       bloc.blocSize==2?Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TovarInfo(bloc.route))):null;
+    },
+    child: Container(
+      width: w,
+      height:  h,
+      decoration: BoxDecoration(
+        boxShadow: bloc.blocSize == 0?[]:shadowContainer,
+        borderRadius: BorderRadius.circular(6),
+        color:Colors.white ,
       ),
+      child: _content(bloc.blocSize),
     ),
   );
 
   else{
-    double h = MediaQuery.of(context).size.width * 0.60;
-    double w = MediaQuery.of(context).size.width*0.45;
+    // double h = MediaQuery.of(context).size.width * 0.60;
+    // double w = MediaQuery.of(context).size.width*0.45;
 
     return Padding(
       padding:  EdgeInsets.all(6.0),
@@ -389,7 +391,7 @@ Widget ItemGetter(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    getIconForId(id: 13, color: cIcons),
+                    getIconSvg(id: 13, color: cIcons),
                     Text("Добавить товар", style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400),),
                   ],
                 ),

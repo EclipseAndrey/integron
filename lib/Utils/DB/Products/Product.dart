@@ -158,11 +158,11 @@ class Product extends ProductShort {
     map["address"] = address;
     map["available"] = "1";
     map["type"] = type.toString();
-    map["cat"] = cat.toString();
+    map["cat"] = cat.route.toString();
     map["params"] = params != null?params.map((i)=>i.toJson()).toList():"";
     map["property"] = step;
     map['token'] = token??"";
-    map['id'] = route;
+    map['id'] = [route];
     return map;
   }
 

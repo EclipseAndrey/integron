@@ -45,7 +45,9 @@ Widget historiItem(BuildContext context, {Tx tx}) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                nameWidget(InitWallet(tx.face)),
+                Container(
+                    width: MediaQuery.of(context).size.width/2,
+                    child: nameWidget(tx.face)),
                 type(tx.type),
               ],
             ),

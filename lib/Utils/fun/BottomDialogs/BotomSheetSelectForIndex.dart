@@ -69,7 +69,7 @@ Future<void> ShowBottoomSheetSelectForIndex({
                                     icons == null? SizedBox():Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        getIconForId(id: icons[index], color: c6287A1),
+                                        getIconSvg(id: icons[index], color: c6287A1),
                                         SizedBox( width:  8,),
                                       ],
                                     ),

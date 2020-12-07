@@ -9,7 +9,7 @@ class CartProvider{
   static Future<List<Product>> getCart ()async{
     final prefs = await SharedPreferences.getInstance();
     List<CartModel> ids = [];
-    ids = prefs.getString("cart") == null?"[]":jsonDecode(prefs.getString("cart")).map((i)=>CartModel.fromJson(i)).toList().cast<CartModel>();
+    ids = prefs.getString("cart") == null?[]:jsonDecode(prefs.getString("cart")).map((i)=>CartModel.fromJson(i)).toList().cast<CartModel>();
 
     List<Product> products = [];
     for(int i = 0; i < ids.length; i++){

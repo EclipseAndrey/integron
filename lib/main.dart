@@ -9,7 +9,7 @@ import 'REST/SecureConnection/DBSecure.dart';
 import 'REST/SecureConnection/DataSecure.dart';
 
 List<Product> cartList = [];
-double BALANCE = 0;
+// double BALANCE = 0;
 
 void main() {
 

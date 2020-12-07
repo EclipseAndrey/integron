@@ -71,7 +71,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
               color: Color.fromRGBO(88, 148, 168, 1)),
         ),
         SizedBox(width: 4,),
-        getIconForId(id:19,
+        getIconSvg(id:19,
           color: c6287A1,
           size: 22,
         ),

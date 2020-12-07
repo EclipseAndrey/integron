@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:omega_qick/AAPages/Blocs/Balance/BalanceCubit.dart';
+import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
+import 'package:omega_qick/AAPages/GeneralCubit.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
@@ -17,9 +21,8 @@ class MainPanel extends StatefulWidget {
   BuildContext context1;
   ProductShort product;
   Category category;
-  PageController controller;
 
-  MainPanel(this.context1, this.product,this.category, this.controller);
+  MainPanel(this.context1, this.product,this.category,);
 
   @override
   _MainPanelState createState() => _MainPanelState();
@@ -37,21 +40,21 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
 
   bool loadingBalance = true;
 
-  loadBalance ()async{
-    loadingBalance = true;
-    Balance infoWallet = await WalletProvider.getBalance();
-    BALANCE = double.parse(infoWallet.balance);
-    loadingBalance = false;
-    setState(() {
-
-    });
-  }
-  @override
-  void initState() {
-
-    loadBalance();
-    super.initState();
-  }
+  // // loadBalance ()async{
+  // //   loadingBalance = true;
+  // //   Balance infoWallet = await WalletProvider.getBalance();
+  // //   BALANCE = infoWallet.balance;
+  // //   loadingBalance = false;
+  // //   setState(() {
+  // //
+  // //   });
+  // // }
+  // @override
+  // void initState() {
+  //
+  //   loadBalance();
+  //   super.initState();
+  // }
 
  @override
   Widget build(BuildContext context) {
@@ -180,7 +183,9 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
   Widget referal(){
     return GestureDetector(
       onTap: (){
-        widget.controller.animateToPage(3, duration: Duration(milliseconds: 200), curve: Curves.ease);
+        // widget.controller.animateToPage(3, duration: Duration(milliseconds: 200), curve: Curves.ease);
+        BlocProvider.of<GeneralCubit>(context).selectPage(3);
+
       },
       child: Container(
         height: h2,
@@ -254,7 +259,8 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
   Widget balance(){
     return GestureDetector(
       onTap: (){
-        widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
+        BlocProvider.of<GeneralCubit>(context).selectPage(1);
+        // widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -271,25 +277,50 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
         ),
         width: w,
         height: h0,
-        child: loadingBalance?Center(child: CircularProgressIndicator()):Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 12, right: 12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              getIconForId(id:49, color: cMainText, size: 24,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(BALANCE.toString(), style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w700),),
-                  Text(" DEL", style: TextStyle(color: c6287A1, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w400)),
-                ],
-              ),
-
-
-            ],
-          ),
+        child: BlocBuilder<BalanceCubit,BalanceState>(
+          builder: (context, state){
+            if(state is BalanceComplete){
+              return Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 12, right: 12),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        getIconSvg(id:49, color: cMainText, size: 24,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(state.balance.balance.toString(), style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w700),),
+                            Text(" DEL", style: TextStyle(color: c6287A1, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w400)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+            }else{
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
+        // child: loadingBalance?Center(child: CircularProgressIndicator()):Padding(
+        //   padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 12, right: 12),
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       getIconSvg(id:49, color: cMainText, size: 24,),
+        //       Row(
+        //         mainAxisAlignment: MainAxisAlignment.end,
+        //         children: [
+        //           Text(BALANCE.toString(), style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w700),),
+        //           Text(" DEL", style: TextStyle(color: c6287A1, fontStyle: FontStyle.normal, fontSize: 16 - minusFontsSize, fontWeight: FontWeight.w400)),
+        //         ],
+        //       ),
+        //
+        //
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }
@@ -297,7 +328,8 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
   Widget operationWithTokens(double minusFontSize){
     return GestureDetector(
       onTap: (){
-        widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
+        // widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
+        BlocProvider.of<GeneralCubit>(context).selectPage(1);
 
       },
       child: Container(
@@ -327,7 +359,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
                   child: Container(child: Text("Операции с токенами",style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w700)))),
               Expanded(
                   flex: 1,
-                  child: getIconForId(id:3, size: 22, color: Colors.white,))
+                  child: getIconSvg(id:3, size: 22, color: Colors.white,))
             ],
           ),
         ),

@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
 import 'package:omega_qick/AAPages/Blocs/Category/CategoryCubit.dart';
 import 'package:omega_qick/AAPages/Blocs/Feed/TovarsCubit.dart';
 import 'package:omega_qick/AAPages/Blocs/History/HistoryCubit.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutReferal.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Home.dart';
+// import 'package:omega_qick/Pages/GeneralControllerPages/Home/Home.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/My/My.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/Wallets.dart';
@@ -16,6 +17,7 @@ import 'package:omega_qick/Utils/IconDataForCategory.dart';
 import 'Blocs/Balance/BalanceCubit.dart';
 import 'Blocs/Feed/UslugiCubit.dart';
 import 'GeneralCubit.dart';
+import 'package:omega_qick/AAPages/Home/Home.dart';
 
 
 class GeneralControllerPages extends StatefulWidget {
@@ -29,26 +31,29 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
   List<Widget> pageList = List<Widget>();
 
   PageController controllerPage = PageController(initialPage: 0);
-
+  static final controllerHome = PageController(
+    keepPage: true,
+    initialPage: 0,
+  );
 
   DateTime backbuttonpressTime;
   int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    getCart();
-
-    pageList.add(Home(controllerPage));
-    pageList.add(Wallet());
-    pageList.add(Cart());
-    pageList.add(AboutReferal());
-    pageList.add(MyPage());
-
-    setState(() {
-
-    });
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // getCart();
+  //
+  //   pageList.add(Home(controllerPage));
+  //   pageList.add(Wallet());
+  //   pageList.add(Cart(context));
+  //   pageList.add(AboutReferal());
+  //   pageList.add(MyPage());
+  //
+  //   setState(() {
+  //
+  //   });
+  //   super.initState();
+  // }
 
   void _onItemTapped(int index) {
     // controllerPage.jumpTo(index.toDouble());
@@ -60,8 +65,8 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
 
   void bottomTapped(int index) {
     // setState(() {});
-      _selectedIndex = index;
-      controllerPage.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
+      //_selectedIndex = index;
+     // controllerPage.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
 
   }
 
@@ -106,12 +111,15 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
         BlocProvider<TovarsCubit>(create: (BuildContext context) => TovarsCubit()),
         BlocProvider<UslugiCubit>(create: (BuildContext context) => UslugiCubit()),
         BlocProvider<HistoryCubit>(create: (BuildContext context) => HistoryCubit()),
+        BlocProvider<CartCubit>(create: (BuildContext context) => CartCubit()),
     ],
       child: BlocBuilder<GeneralCubit,GeneralState>(
         builder: (context, state){
           if(state is GeneralCurrentPage) {
             if (state.index != _selectedIndex) {
-              bottomTapped(state.index);
+              controllerPage.animateToPage(state.index, duration: Duration(milliseconds: 300), curve: Curves.ease);
+              _selectedIndex = state.index;
+
             }
           }
           return Content(context, state);
@@ -136,9 +144,9 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
             PageView(
               physics: NeverScrollableScrollPhysics(),
               children: [
-                Home(controllerPage),
+                Home(controllerHome),
                 Wallet(),
-                Cart(),
+                Cart(context1),
                 AboutReferal(),
                 MyPage()
               ],
@@ -159,36 +167,36 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
 
                   items:  <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                      activeIcon: getIconForId(id: 52, color: c6287A1),
-                      icon: getIconForId(id: 21, color: c6287A1),
+                      activeIcon: getIconSvg(id: 52, color: c6287A1),
+                      icon: getIconSvg(id: 21, color: c6287A1),
                       title: Text(
                         'Главная',
                       ),
                     ),
                     BottomNavigationBarItem(
-                      activeIcon: getIconForId(id: 54, color: c6287A1),
-                      icon: getIconForId(id: 49, color: c6287A1),
+                      activeIcon: getIconSvg(id: 54, color: c6287A1),
+                      icon: getIconSvg(id: 49, color: c6287A1),
                       title: Text(
                         'Кошельки',
                       ),
                     ),
                     BottomNavigationBarItem(
-                      activeIcon: getIconForId(id: 51, color: c6287A1),
-                      icon: getIconForId(id: 55, color: c6287A1),
+                      activeIcon: getIconSvg(id: 51, color: c6287A1),
+                      icon: getIconSvg(id: 55, color: c6287A1),
                       title: Text(
                         'Покупки',
                       ),
                     ),
                     BottomNavigationBarItem(
-                      activeIcon: getIconForId(id: 50, color: c6287A1),
-                      icon: getIconForId(id: 5, color: c6287A1),
+                      activeIcon: getIconSvg(id: 50, color: c6287A1),
+                      icon: getIconSvg(id: 5, color: c6287A1),
                       title: Text(
                         'Бизнесы',
                       ),
                     ),
                     BottomNavigationBarItem(
-                      activeIcon: getIconForId(id: 53, color: c6287A1),
-                      icon: getIconForId(id: 48, color: c6287A1),
+                      activeIcon: getIconSvg(id: 53, color: c6287A1),
+                      icon: getIconSvg(id: 48, color: c6287A1),
                       title: Text(
                         'Мое',
                       ),
@@ -203,8 +211,13 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
                   selectedItemColor: c6287A1,
                   onTap: (index){
                     if(index == 0){
+                      controllerHome.animateToPage(0, duration: Duration(milliseconds: 300), curve: Curves.ease);
+
                       BlocProvider.of<TovarsCubit>(context1).load();
                       BlocProvider.of<UslugiCubit>(context1).load();
+                    }else if (index == 2){
+                      BlocProvider.of<CartCubit>(context1).load();
+
                     }
                     BlocProvider.of<GeneralCubit>(context1).selectPage(index);
                   },

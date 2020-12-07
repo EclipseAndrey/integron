@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/My/Orders/OrdersBiz/OrdersBizContent.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
+import 'package:omega_qick/Providers/OrderProvider/OrderProvider.dart';
 import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Style.dart';
 import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/REST/Order/getOrders.dart';
 import 'package:omega_qick/Utils/DB/Orders/Order.dart';
@@ -33,7 +34,7 @@ class _OrdersMyState extends State<OrdersMy> {
 
   load()async{
     loading = true;
-    listOrders = await GetOrders(true);
+    listOrders = await OrderProvider.getOrders();
     for(int i =0;i<listOrders.length;i++){
       try{
      if(listOrders[i].products[0].type == 0){
@@ -198,7 +199,7 @@ class _OrdersMyState extends State<OrdersMy> {
                   onTap: (){
                     closeDialog(context);
                   },
-                  child: getIconForId(id: 0, color: cIcons)),
+                  child: getIconSvg(id: 0, color: cIcons)),
             ),
           )
         ],

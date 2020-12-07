@@ -1,21 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+part 'IconData.dart';
 
 
 
-Widget getIconForId( {@required int id, Color color, double size}){
 
-  String icon (String name, {bool active}){
+
+Widget getIconSvg( {@required int id, Color color, double size, bool nullColor}){
+
+  String icon (String name, {bool active, bool check}){
     String path = "lib/assets/icons/normal/";
     if(active != null)path="lib/assets/icons/active/";
+    if(check != null)path="lib/assets/icons/checkBox/";
     String ex = ".svg";
     return path+name+ex;
   }
 
   String iconName;
 
-  int count = 56;
+  int count = 60;
   if(id < 0||id >= count)id=0;
 
   switch(id){
@@ -75,6 +79,10 @@ Widget getIconForId( {@required int id, Color color, double size}){
     case 53: iconName =icon("User", active: true); break;
     case 54: iconName =icon("Wallet", active: true); break;
     case 55: iconName =icon("Cart"); break;
+    case 56: iconName =icon("on",check: true); break;
+    case 57: iconName =icon("off",check: true); break;
+    case 58: iconName =icon("off-default",check: true); break;
+    case 59: iconName =icon("minus", check: true); break;
 
   }
 

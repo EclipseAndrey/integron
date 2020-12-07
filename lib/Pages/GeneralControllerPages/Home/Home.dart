@@ -17,10 +17,10 @@ class Home extends StatefulWidget {
   double radiusPanelRight = 6;
   double paddingPanel = 0;
   int    durationAnimatePanel = 100;
-  int    pagePanel = 1;
 
+  PageController controller;
   PageController controllerPages;
-  Home(this.controllerPages);
+  Home(this.controllerPages, this.controller);
 
 
 
@@ -39,10 +39,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
   bool searchFocus = false;
 
-  static final controller = PageController(
-    keepPage: true,
-    initialPage: 0,
-  );
+
 
 
 
@@ -50,27 +47,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
 
   void clickEmpty(){
-    print("Start ${widget.pagePanel}");
 
-    if(widget.pagePanel == 0){
-      setState(() {
-
-      });
-      controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
-
+    if(widget.controller.page.round() == 0){
+      widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
     }
-    else if(widget.pagePanel == 1){
-      setState(() {
+    else if(widget.controller.page.round() == 1){
+      widget.controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.ease);
 
-      });
-      controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.ease);
-
-
-
-      setState(() {
-
-      });
-      widget.pagePanel = 0;
     }
   }
 
@@ -135,11 +118,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
 
     super.build(context);
-    controller.addListener(() {
-      widget.paddingPanel = controller.offset/2;
+    widget.controller.addListener(() {
+      widget.paddingPanel = widget.controller.offset/2;
       //print(controller.page);
-      widget.pagePanel = controller.page.round();
-      if(widget.pagePanel == 1){
+      // widget.pagePanel = widget.controller.page.round();
+      if(widget.controller.page.round() == 1){
         widget.colorPanelText1 = Colors.white;
         widget.colorPanelText2 = c5894bc;
         widget.radiusPanelLeft = 6;
@@ -156,11 +139,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
       });
     });
-
-
-
-
-
 
     return Theme(
       data: ThemeData(primaryColor: Colors.transparent),
@@ -183,7 +161,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   ];
                   setState(() {});
                 },
-                child: getIconForId(id: 37, color: cBG, size: 24)),
+                child: getIconSvg(id: 37, color: cBG, size: 24)),
           ),
           // leading: Padding(
           //   padding: EdgeInsets.only(
@@ -230,7 +208,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
               child: Image.asset(
                 "lib/assets/images/complex.png",
                 fit: BoxFit.fill,
-              )),
+              ),
+          ),
           Align(
             alignment: Alignment.topCenter,
             child: AspectRatio(
@@ -278,7 +257,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                                   child: Center(child:
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: getIconForId(id: 42, color: searchFocus?Colors.transparent:Colors.white, size: 24,),
+                                      child: getIconSvg(id: 42, color: searchFocus?Colors.transparent:Colors.white, size: 24,),
                                     )
                                     ,),
                                 ),
@@ -367,7 +346,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
           Container(
             height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width * heightAppBar,
             child: PageView(
-              controller: controller,
+              controller: widget.controller,
               children: pages,
             ),
           )

@@ -154,7 +154,7 @@ class _PageSelectedCategoryState extends State<PageSelectedCategory> with Automa
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  child: getIconForId(id: widget.categories[0].icon, color: c6287A1, size: 20,),
+                  child: getIconSvg(id: widget.categories[0].icon, color: c6287A1, size: 20,),
                 ),
                 SizedBox(width: 8,),
                 Text(widget.categories[0].name, style: TextStyle(
@@ -166,7 +166,7 @@ class _PageSelectedCategoryState extends State<PageSelectedCategory> with Automa
                     widget.callbackCategory(widget.categories[0]);
                   },
                   child: Container(
-                    child: getIconForId(id:8, color: c6287A1, size: 18,),
+                    child: getIconSvg(id:8, color: c6287A1, size: 18,),
                   ),
                 ),
               ],

@@ -10,12 +10,12 @@ import 'package:omega_qick/REST/Rest.dart';
 class ForBiz{
 
 
-  static Future<List<Order>> getOrders ()async{
+   Future<List<Order>> getOrders ()async{
     String token = await tokenDB();
 
     String urlQuery = Server.relevant+"/"+Api.api+"/"+Methods.order.getOrdersBiz;
 
-    Map body = Map();
+    Map<String,dynamic> body = Map();
     body['token'] = token;
 
 
@@ -28,7 +28,7 @@ class ForBiz{
     if(response is Put){
       return null;
     }else{
-      return response.map((i)=>Order.fromJson(i)).toList().cast<Order>();
+      return response['products'].map((i)=>Order.fromJson(i)).toList().cast<Order>();
     }
   }
 }

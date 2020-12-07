@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Search/SarchWidget.dart';
-
 import 'inputSearch.dart';
 
 class TutorialOverlay extends ModalRoute<void> {

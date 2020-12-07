@@ -6,16 +6,19 @@ import 'package:omega_qick/REST/Api.dart';
 import 'package:omega_qick/REST/Methods.dart';
 import 'package:omega_qick/REST/Rest.dart';
 
+import 'ForBiz/ForBiz.dart';
+
 
 class OrderProvider{
 
-  static Future<List<Order>> GetOrders (bool forBiz)async{
+  static ForBiz get forBiz => ForBiz();
+  static Future<List<Order>> getOrders ()async{
     String token = await tokenDB();
 
 
     String urlQuery = Server.relevant+"/"+Api.api+"/"+Methods.order.getOrders;
 
-    Map body = Map();
+    Map <String, dynamic>body = Map();
     body['token'] = token;
 
 
@@ -28,7 +31,7 @@ class OrderProvider{
     if(response is Put){
       return null;
     }else{
-      return response.map((i)=>Order.fromJson(i)).toList().cast<Order>();
+      return response['products'].map((i)=>Order.fromJson(i)).toList().cast<Order>();
     }
   }
 
@@ -37,7 +40,7 @@ class OrderProvider{
     String urlQuery = Server.relevant+"/"+Api.api+"/"+Methods.order.makeOrder;
 
 
-    Map body = Map();
+    Map <String, dynamic>body = Map();
     body['token'] = token;
     body['ids'] = ids;
     body['count'] = count;
@@ -53,7 +56,11 @@ class OrderProvider{
     var response;
 
     response = await Rest.post(urlQuery, body);
-    return response;
+    if(response is Put) {
+      return response;
+    }else{
+      return Put.fromJson(response);
+    }
   }
 
 

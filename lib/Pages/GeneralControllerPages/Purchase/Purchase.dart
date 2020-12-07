@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
 import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/main.dart';
 
 class Cart extends StatefulWidget {
+  BuildContext contextBloc;
+  Cart(this.contextBloc);
+
   @override
   _CartState createState() => _CartState();
 }
@@ -14,13 +19,9 @@ class _CartState extends State<Cart> {
 
   @override
   void initState() {
-
     controllerPage = PageController(initialPage: 0);
     controllerPage.addListener(() {setState(() {});});
-    setState(() {
-
-    });
-
+    setState(() {});
     super.initState();
   }
 
@@ -39,11 +40,8 @@ class _CartState extends State<Cart> {
 
   int getCurrentPageOfList(){
    try {
-     // print(controllerPage.page.round());
      return controllerPage.page.round();
    }catch(e){
-     // print(0);
-
      return 0;
    }
   }
@@ -71,12 +69,32 @@ class _CartState extends State<Cart> {
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
                     children: [
-                      ListCartPage(tovar: true,stateCallback: (){setState(() {});},),
-                      ListCartPage(tovar: false,stateCallback: (){setState(() {});}),
+                      // BlocBuilder<CartCubit,CartState>(
+                      //     builder: (context, state){
+                      //       if(state is CartLoading){
+                      //         return Center(child: CircularProgressIndicator(),);
+                      //       }else if(state is CartComplete){
+                      //         return ListCartPageW(state, widget.contextBloc, true);
+                      //       }else{
+                      //         return Center();//todo err
+                      //       }
+                      //     }),
+                      // BlocBuilder<CartCubit,CartState>(
+                      //     builder: (context, state){
+                      //       if(state is CartLoading){
+                      //         return Center(child: CircularProgressIndicator(),);
+                      //       }else if(state is CartComplete){
+                      //         return ListCartPageW(state, widget.contextBloc, false);
+                      //       }else{
+                      //         return Center();//todo err
+                      //       }
+                      //     }),
+                      ListCartPage(tovar: true),
+                      ListCartPage(tovar: false),
                     ],
                     controller: controllerPage,
-
-                  )),
+                  ),
+              ),
             ],
           ),
         ),
@@ -116,17 +134,16 @@ class _CartState extends State<Cart> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(6),
                       bottomLeft: Radius.circular(6)),
-                  color: 0 == getCurrentPageOfList() ? Colors.white : c8dcde0,
+                  color: 0 == getCurrentPageOfList() ? c8dcde0: Colors.white  ,
                   border: Border.all(color: cDefault, width: 1)),
               child: Center(
-                child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? cMainText : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? Colors.white:cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
               ),
             ),
           ),
           GestureDetector(
             onTap: (){
               controllerPage.animateToPage(1, duration: Duration(milliseconds: 100), curve: Curves.ease);
-
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.20,
@@ -136,11 +153,10 @@ class _CartState extends State<Cart> {
                       topRight: Radius.circular(6),
                       bottomRight: Radius.circular(6)),
                   color: getCurrentPageOfList() != 0
-                      ? Colors.white
-                      : c8dcde0,
+                      ? c8dcde0: Colors.white,
                   border: Border.all(color: cDefault, width: 1)),
               child: Center(
-                child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ? cMainText : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ?  Colors.white: cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
               ),
             ),
           ),
@@ -148,18 +164,5 @@ class _CartState extends State<Cart> {
       ),
     );
   }
-
-
 }
 
-class CartListProducts extends StatefulWidget {
-  @override
-  _CartListProductsState createState() => _CartListProductsState();
-}
-
-class _CartListProductsState extends State<CartListProducts> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}

@@ -395,7 +395,7 @@ class _MyPageState extends State<MyPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          getIconForId(id: 15, color: cIcons),
+                          getIconSvg(id: 15, color: cIcons),
                           SizedBox(
                             width: paddingH / 2,
                           ),
@@ -410,7 +410,7 @@ class _MyPageState extends State<MyPage> {
                           ),
                         ],
                       ),
-                      getIconForId(id: 39, color: cIcons)
+                      getIconSvg(id: 39, color: cIcons)
                     ],
                   ),
                 ),
@@ -434,7 +434,7 @@ class _MyPageState extends State<MyPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          getIconForId(id: 15, color: cIcons),
+                          getIconSvg(id: 15, color: cIcons),
                           SizedBox(
                             width: paddingH / 2,
                           ),
@@ -449,7 +449,7 @@ class _MyPageState extends State<MyPage> {
                           ),
                         ],
                       ),
-                      getIconForId(id: 39, color: cIcons)
+                      getIconSvg(id: 39, color: cIcons)
                     ],
                   ),
                 ),
@@ -466,7 +466,7 @@ class _MyPageState extends State<MyPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      getIconForId(id: 34, color: cIcons),
+                      getIconSvg(id: 34, color: cIcons),
                       SizedBox(
                         width: paddingH / 2,
                       ),
@@ -481,7 +481,7 @@ class _MyPageState extends State<MyPage> {
                       ),
                     ],
                   ),
-                  getIconForId(id: 39, color: cIcons)
+                  getIconSvg(id: 39, color: cIcons)
                 ],
               ),
             );
@@ -496,7 +496,7 @@ class _MyPageState extends State<MyPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      getIconForId(id: 15, color: cIcons),
+                      getIconSvg(id: 15, color: cIcons),
                       SizedBox(
                         width: paddingH / 2,
                       ),
@@ -511,7 +511,7 @@ class _MyPageState extends State<MyPage> {
                       ),
                     ],
                   ),
-                  getIconForId(id: 39, color: cIcons)
+                  getIconSvg(id: 39, color: cIcons)
                 ],
               ),
             );
@@ -530,7 +530,7 @@ class _MyPageState extends State<MyPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        getIconForId(id: 36, color: cIcons),
+                        getIconSvg(id: 36, color: cIcons),
                         SizedBox(
                           width: paddingH / 2,
                         ),
@@ -545,7 +545,7 @@ class _MyPageState extends State<MyPage> {
                         ),
                       ],
                     ),
-                    getIconForId(id: 39, color: cIcons)
+                    getIconSvg(id: 39, color: cIcons)
                   ],
                 ),
               ),
@@ -641,7 +641,7 @@ class _MyPageState extends State<MyPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  getIconForId(id: 44, color: cIcons),
+                  getIconSvg(id: 44, color: cIcons),
                   SizedBox(
                     width: paddingH / 2,
                   ),

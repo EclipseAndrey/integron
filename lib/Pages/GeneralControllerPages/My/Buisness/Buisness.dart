@@ -296,7 +296,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             onTap: (){
                               tapEdit(4);
                             },
-                            child: getIconForId(id: 0, size: 24, color: cIcons)),
+                            child: getIconSvg(id: 0, size: 24, color: cIcons)),
                       ),
                       // Padding(
                       //   padding: const EdgeInsets.only(bottom: 0),
@@ -321,7 +321,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             onTap: (){
                               tapEdit(2);
                             },
-                            child: getIconForId(id: 0, size: 24, color: Colors.transparent)),
+                            child: getIconSvg(id: 0, size: 24, color: Colors.transparent)),
                       ),
 
 

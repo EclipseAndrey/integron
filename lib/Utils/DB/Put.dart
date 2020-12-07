@@ -34,4 +34,7 @@ class Put {
     @required this.mess,
     @required this.localError
   });
+  factory Put.fromJson(Map<String,dynamic> json){
+    return Put(error: json['code'], localError: false, mess: json['mess']);
+  }
 }

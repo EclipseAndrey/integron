@@ -17,6 +17,7 @@ class BizProvider{
 
     var response;
     response = await Rest.get(url);
+    // print("biz" + response.error.toString());
 
 
     if(response is Put){
@@ -44,7 +45,11 @@ class BizProvider{
     var response;
     response = await Rest.post(urlQuery, map);
 
-    return response;
+    if(response is Put){
+      return response;
+    }else{
+      return Put(error: response['code'], mess: response['mess'], localError: false);
+    }
   }
 
   static Future<Put> setBizName (String name)async{
@@ -64,7 +69,11 @@ class BizProvider{
     var response;
     response = await Rest.post(urlQuery, map);
 
-    return response;
+    if(response is Put){
+      return response;
+    }else{
+      return Put(error: response['code'], mess: response['mess'], localError: false);
+    }
   }
 
   static Future<Put> setBizPhoto (String photo)async{
@@ -84,7 +93,11 @@ class BizProvider{
     var response;
     response = await Rest.post(urlQuery, map);
 
-    return response;
+    if(response is Put){
+      return response;
+    }else{
+      return Put(error: response['code'], mess: response['mess'], localError: false);
+    }
   }
 
 }

@@ -67,7 +67,7 @@ Widget delegate(BuildContext context ,double w,
       children: [
         SizedBox(width: 16,),
 
-        getIconForId(id:43, color: c6287A1),
+        getIconSvg(id:43, color: c6287A1),
         SizedBox(width: 16,),
         Text("Делегировать", style: TextStyle(fontSize: 16, color: c)),
       ],
@@ -102,7 +102,7 @@ Color c, double p  ) {
                 Clipboard.setData( ClipboardData(text: a.address));
 
               },
-              child: Text(a.address)));
+              child: Text(a.address, style: TextStyle(color: cLinks),)));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -125,7 +125,7 @@ Color c, double p  ) {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 5),
-                getIconForId(id:3,
+                getIconSvg(id:3,
                   color: c6287A1,
                   size: 22,
                 ),
@@ -163,7 +163,7 @@ Color c, double p  ) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 5),
-              getIconForId(id:1,
+              getIconSvg(id:1,
                 color: c6287A1,
                 size: 22,
               ),
@@ -210,7 +210,7 @@ Color c ,double p) {
           children: [
             SizedBox(width: 16,),
 
-            getIconForId(id:28, color: c6287A1),
+            getIconSvg(id:28, color: c6287A1),
             SizedBox(width: 16,),
             Text("Продать", style: TextStyle(fontSize: 16, color: textColor)),
           ],
@@ -237,7 +237,7 @@ Color c ,double p) {
           children: [
             SizedBox(width: 16,),
 
-            getIconForId(id:1, color: c6287A1),
+            getIconSvg(id:1, color: c6287A1),
             SizedBox(width: 16,),
 
             Text("Перевести", style: TextStyle(fontSize: 16, color: textColor)),
@@ -264,7 +264,7 @@ Color c ,double p) {
           children: [
             SizedBox(width: 16,),
 
-            getIconForId(id:2, color: c6287A1),
+            getIconSvg(id:2, color: c6287A1),
             SizedBox(width: 16,),
 
             Text("Поменяться", style: TextStyle(fontSize: 16, color: textColor)),

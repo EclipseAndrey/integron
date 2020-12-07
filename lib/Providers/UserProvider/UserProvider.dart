@@ -11,63 +11,76 @@ class UserProvider {
     String token = await tokenDB();
     String urlQuery = postConstructor(Methods.user.setAddress);
 
-    Map body = Map();
+    Map <String,dynamic> body = Map();
 
     body['address'] = address;
     body['token'] = token;
 
     print(urlQuery);
     var response;
-    response = Rest.post(urlQuery, body);
-    return response;
-
+    response =await  Rest.post(urlQuery, body);
+    if(response is Put) {
+     return response;
+    }else{
+     return Put.fromJson(response);
+    }
   }
 
    static Future<Put> setName (String name)async{
     String token = await tokenDB();
     String urlQuery = postConstructor(Methods.user.setName);
 
-    Map body = Map();
+    Map<String,dynamic> body = Map();
 
     body['name'] = name;
     body['token'] = token;
 
     print(urlQuery);
     var response;
-    response = Rest.post(urlQuery, body);
-    return response;
-
+    response = await Rest.post(urlQuery, body);
+    if(response is Put) {
+     return response;
+    }else{
+     return Put.fromJson(response);
+    }
   }
 
    static Future<Put> setPhoto (String photo)async{
     String token = await tokenDB();
     String urlQuery = postConstructor(Methods.user.setPhoto);
 
-    Map body = Map();
+    Map <String,dynamic> body = Map();
 
     body['photo'] = photo;
     body['token'] = token;
 
     print(urlQuery);
     var response;
-    response = Rest.post(urlQuery, body);
-    return response;
-
+    response = await  Rest.post(urlQuery, body);
+    if(response is Put) {
+     return response;
+    }else{
+     return Put.fromJson(response);
+    }
   }
 
    static Future<Put> setRole (String role)async{
     String token = await tokenDB();
     String urlQuery = postConstructor(Methods.user.setRole);
 
-    Map body = Map();
+    Map<String,dynamic> body = Map();
 
     body['role'] = role;
     body['token'] = token;
 
     print(urlQuery);
     var response;
-    response = Rest.post(urlQuery, body);
-    return response;
+    response = await Rest.post(urlQuery, body);
+    if(response is Put) {
+     return response;
+    }else{
+     return Put.fromJson(response);
+    }
 
   }
 

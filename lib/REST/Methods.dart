@@ -6,6 +6,7 @@ class Methods{
  static _OrderMethods     get order     => _OrderMethods();
  static _WalletMethods    get wallet    => _WalletMethods();
  static _AuthMethods      get auth      => _AuthMethods();
+ static _SearchMethods    get search    => _SearchMethods();
 
 }
 
@@ -50,6 +51,10 @@ class _AuthMethods{
   String get getCode => "getcode";
   String get checkToken => "checktoken";
   String get updateToken => "updatetoken";
+}
+
+class _SearchMethods{
+  String get search => "search";
 }
 
 class _PopularMethods{}

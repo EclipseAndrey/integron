@@ -12,7 +12,7 @@ Future<List<Order>> GetOrders (bool forBiz)async{
 
   String urlQuery = Server.relevant+"/"+Api.api+"/"+Methods.order.getOrders;
 
-  Map body = Map();
+  Map <String,dynamic> body = Map();
   body['token'] = token;
 
 
@@ -25,6 +25,6 @@ Future<List<Order>> GetOrders (bool forBiz)async{
   if(response is Put){
     return null;
   }else{
-    return response.map((i)=>Order.fromJson(i)).toList().cast<Order>();
+    return response['products'].map((i)=>Order.fromJson(i)).toList().cast<Order>();
   }
 }

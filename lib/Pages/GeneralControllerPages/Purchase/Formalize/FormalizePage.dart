@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
 import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:omega_qick/Providers/OrderProvider/OrderProvider.dart';
 import 'package:omega_qick/REST/Autorization/checkToken.dart';
@@ -14,9 +16,10 @@ import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/main.dart';
 
 class FormalizePage extends StatefulWidget {
+  BuildContext contextBloc;
   List<Product> list;
 
-  FormalizePage(this.list);
+  FormalizePage(this.list, this.contextBloc);
 
   @override
   _FormalizePageState createState() => _FormalizePageState();
@@ -122,7 +125,7 @@ class _FormalizePageState extends State<FormalizePage> {
             padding: const EdgeInsets.all(19.0),
             child: GestureDetector(
                 onTap: (){closeDialog(context);},
-                child: Container(child: getIconForId(id: 0, color: c6287A1))),
+                child: Container(child: getIconSvg(id: 0, color: c6287A1))),
           ),
           backgroundColor: cBG,
         ),
@@ -239,7 +242,7 @@ class _FormalizePageState extends State<FormalizePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(name??"Имя",style: TextStyle(color: name == null?cLinks:cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontSize: 16, fontWeight: FontWeight.w400,),),
-                              getIconForId(id: 39, color: cIcons, size: 24,)
+                              getIconSvg(id: 39, color: cIcons, size: 24,)
                             ],
                           ),
                         ),
@@ -433,9 +436,7 @@ class _FormalizePageState extends State<FormalizePage> {
                             for(int i = 0; i < widget.list.length; i++){
                               if(widget.list[i].route == item.route)widget.list.removeAt(i);
                             }
-                            for(int i = 0; i < cartList.length; i++){
-                              if(item.route == cartList[i].route){cartList.removeAt(i); updateCart();}
-                            }
+                            BlocProvider.of<CartCubit>(widget.contextBloc).remove(item.route);
                             load();
                           }
 
@@ -578,7 +579,7 @@ class _FormalizePageState extends State<FormalizePage> {
                                     fontFamily: fontFamily,
                                     fontWeight: FontWeight.w600),
                               ),
-                              getIconForId(id: 39, color: c6287A1, size: 24)
+                              getIconSvg(id: 39, color: c6287A1, size: 24)
                             ],
                           ),
                         ),
@@ -670,6 +671,8 @@ class _FormalizePageState extends State<FormalizePage> {
               }
               Put put = await OrderProvider.makeOrder(listIds, list[i].counter, params: paramsList, comment: controllerMess.text == ""?null:controllerMess.text);
               if(put.error == 200){
+                BlocProvider.of<CartCubit>(widget.contextBloc).remove(widget.list[i].route);
+                BlocProvider.of<CartCubit>(widget.contextBloc).load();
                 widget.list.removeAt(i);
               }else{
                 i = list.length;

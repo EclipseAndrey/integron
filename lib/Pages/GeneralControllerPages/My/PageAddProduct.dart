@@ -243,7 +243,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   dialogErr("Что - то пошло не так, попробуйте позже");
                 }
               }else{
-                Put res = await ProductProvider.forBiz.updateProduct(productFormForSend);
+                Put res = await ProductProvider.forBiz.updateProduct(productFormForSend, widget.id);
                 closeDialog(context);
                 if(res==null?0:res.error == 200){
                   closeDialog(context);
@@ -681,7 +681,7 @@ class _AddProductPageState extends State<AddProductPage> {
             },
             child: Padding(
               padding: const EdgeInsets.all(19.0),
-              child: getIconForId(id: 0, color: c5894bc,),
+              child: getIconSvg(id: 0, color: c5894bc,),
             )),
         backgroundColor: cBG,
         elevation: 0,
@@ -872,7 +872,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: getIconForId(id: 22, color: c6287A1, size: 24),
+                      child: getIconSvg(id: 22, color: c6287A1, size: 24),
                     ),
                   ),
                 ),
@@ -893,7 +893,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: getIconForId(id: 8, color: c6287A1, size: 24),
+                        child: getIconSvg(id: 8, color: c6287A1, size: 24),
                       ),
                     ),
                   ),
@@ -928,7 +928,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   children: [
                     Text("Выберите тип", style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
                     SizedBox(width: 4,),
-                    getIconForId(id: 38, size: 12, color: c6287A1),
+                    getIconSvg(id: 38, size: 12, color: c6287A1),
                   ],
                 ),
               ),
@@ -952,7 +952,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   children: [
                     Text(typeWord(_type), style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
                     SizedBox(width: 4,),
-                    getIconForId(id: 38, size: 12, color: c6287A1),
+                    getIconSvg(id: 38, size: 12, color: c6287A1),
                   ],
                 ),
               ),
@@ -972,7 +972,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   children: [
                     Text(_category == null?"Выберите категорию":_category.name, style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
                     SizedBox(width: 4,),
-                    getIconForId(id: 38, size: 12, color: c6287A1),
+                    getIconSvg(id: 38, size: 12, color: c6287A1),
                   ],
                 ),
               ),
@@ -1054,7 +1054,7 @@ class _AddProductPageState extends State<AddProductPage> {
                               onTap: (){
                                 deleteProperty(index);
                               },
-                              child: getIconForId(id: 8, color: c6287A1)),
+                              child: getIconSvg(id: 8, color: c6287A1)),
                         ):SizedBox(),
 
                       ],
@@ -1359,7 +1359,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 onTap: (){
                   deleteParams(index);
                 },
-                child: getIconForId(id: 8, color: cIcons)),
+                child: getIconSvg(id: 8, color: cIcons)),
           ],
         ),
       );
@@ -1379,7 +1379,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 onTap: (){
                   deleteParam(indexX, indexY);
                 },
-                child: getIconForId(id: 8, color: cIcons,size: 18)):SizedBox()
+                child: getIconSvg(id: 8, color: cIcons,size: 18)):SizedBox()
           ],
         ),
       );

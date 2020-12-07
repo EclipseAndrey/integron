@@ -7,6 +7,7 @@ import 'package:omega_qick/REST/Cart/updateCart.dart';
 import 'package:omega_qick/Style.dart';
 import 'package:omega_qick/Utils/DB/Products/Params/Params.dart';
 import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:omega_qick/Utils/fun/AddProductInCart.dart';
 import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:omega_qick/main.dart';
 
@@ -194,27 +195,10 @@ Future<void> ShowBottoomSheetSelectParams(
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      FormalizePage(list)));
+                                  builder: (BuildContext context1) =>
+                                      FormalizePage(list, context)));
                         } else {
-                          bool find = false;
-                          for (int i = 0; i < cartList.length; i++) {
-                            if (cartList[i].route == product.route) {
-                              cartList[i].counter++; updateCart();
-                              find = true;
-                            }
-                          }
-                          if (!find) {cartList.add(product);updateCart();}
-                          //AddProductInCart(context, product.route, product:product);
-                          closeDialog(context);
-                          Fluttertoast.showToast(
-                              msg: "Добавлено",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.SNACKBAR,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.white,
-                              textColor: Colors.black,
-                              fontSize: 16.0);
+                          AddProductInCart(context, product.route);
                         }
                       },
                       child: Container(

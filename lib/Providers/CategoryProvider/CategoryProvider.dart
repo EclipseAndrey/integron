@@ -20,7 +20,7 @@ class CategoryProvider{
     if(response is Put){
       return null;
     }else{
-      return response.map((i)=>Category.fromJson(i)).toList().cast<Category>();
+      return response['categories'].map((i)=>Category.fromJson(i)).toList().cast<Category>();
     }
   }
 

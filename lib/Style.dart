@@ -42,3 +42,11 @@ Color cPlaceHolder  = Color.fromRGBO(122, 139, 163, 1);
 Color c7A8BA3  = cPlaceHolder;
 
 List<Color> cBackgroundGradient = [Color(0xFFFFFFFF),cBG];
+
+
+List<BoxShadow> shadowContainer = [BoxShadow(
+  color: Color.fromRGBO(122, 139, 163, 0.3),
+  spreadRadius: 0,
+  blurRadius: 20,
+  offset: Offset(0, 0), // changes position of shadow
+)];
