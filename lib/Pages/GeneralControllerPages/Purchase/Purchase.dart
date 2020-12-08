@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/main.dart';
+import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/main.dart';
 
 class Cart extends StatefulWidget {
   BuildContext contextBloc;

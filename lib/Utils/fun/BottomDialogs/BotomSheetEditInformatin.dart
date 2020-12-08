@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Providers/UserProvider/UserProvider.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Providers/UserProvider/UserProvider.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 
 Future<void> ShowBottomSheetEditInformation({
   @required BuildContext context,

@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Style.dart';
+import 'package:integron/Style.dart';
 
 void showDialogLoading(BuildContext context){
   showDialog(

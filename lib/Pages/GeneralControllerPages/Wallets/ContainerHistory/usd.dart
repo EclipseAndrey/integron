@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 
 Widget usdWidget(String usd) {
   Color c7A8BA3 = Color.fromRGBO(122, 139, 163, 1);

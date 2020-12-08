@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
-import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
+import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
+import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
 
 
 void AddProductInCart (BuildContext context, int route, {Product product} )async{

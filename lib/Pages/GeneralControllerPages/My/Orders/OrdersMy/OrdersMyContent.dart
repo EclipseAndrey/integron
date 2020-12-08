@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Orders/Order.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Orders/Order.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
 
 class OrdersMyContent extends StatefulWidget {
 

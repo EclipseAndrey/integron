@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/AAPages/Blocs/History/HistoryCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
-import 'package:omega_qick/Utils/DB/Wallet/Tx.dart';
+import 'package:integron/AAPages/Blocs/History/HistoryCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
+import 'package:integron/Utils/DB/Wallet/Tx.dart';
 import 'historyItem.dart';
 
 Widget Content() {

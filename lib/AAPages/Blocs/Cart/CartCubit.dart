@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/Providers/CartProvider/CartProvider.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
+import 'package:integron/Providers/CartProvider/CartProvider.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
 
 part 'CartStates.dart';
 

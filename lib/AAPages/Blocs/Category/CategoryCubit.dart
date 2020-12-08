@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/Providers/CategoryProvider/CategoryProvider.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
+import 'package:integron/Providers/CategoryProvider/CategoryProvider.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
 part 'CategoryStates.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {

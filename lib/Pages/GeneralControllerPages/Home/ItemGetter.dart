@@ -2,17 +2,17 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
-import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/DB/Products/Set.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/AddProductInCart.dart';
-import 'package:omega_qick/Utils/fun/Callbcks.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/Utils/DB/Products/BlocSize.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/DB/Products/Set.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/Utils/fun/AddProductInCart.dart';
+import 'package:integron/Utils/fun/Callbcks.dart';
 
 
 Widget ItemGetter(

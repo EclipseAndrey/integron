@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
-import 'package:omega_qick/Utils/DB/Wallet/Tx.dart';
+import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
+import 'package:integron/Utils/DB/Wallet/Tx.dart';
 
 part 'HistoryStates.dart';
 

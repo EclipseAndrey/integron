@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Providers/BizProvider/BizProvider.dart';
-import 'package:omega_qick/REST/Autorization/checkToken.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Autorization/InfoToken/InfoToken.dart';
-import 'package:omega_qick/Utils/DB/Biz/Business.dart';
-import 'package:omega_qick/Utils/DB/tokenDB.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/BottomDialogs/BottomSheetEditHeadBuisness.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Providers/BizProvider/BizProvider.dart';
+import 'package:integron/REST/Autorization/checkToken.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Autorization/InfoToken/InfoToken.dart';
+import 'package:integron/Utils/DB/Biz/Business.dart';
+import 'package:integron/Utils/DB/tokenDB.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/Utils/fun/BottomDialogs/BottomSheetEditHeadBuisness.dart';
 
 import 'BodyBusiness.dart';
 

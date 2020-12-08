@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:convert' show utf8;
-import 'package:omega_qick/REST/SecureConnection/AUTH_1.dart';
-import 'package:omega_qick/REST/SecureConnection/DBSecure.dart';
-import 'package:omega_qick/REST/SecureConnection/DataSecure.dart';
-import 'package:omega_qick/REST/SecureConnection/dataAuth1.dart';
-import 'package:omega_qick/REST/SecureConnection/dataAuth2.dart';
+import 'package:integron/REST/SecureConnection/AUTH_1.dart';
+import 'package:integron/REST/SecureConnection/DBSecure.dart';
+import 'package:integron/REST/SecureConnection/DataSecure.dart';
+import 'package:integron/REST/SecureConnection/dataAuth1.dart';
+import 'package:integron/REST/SecureConnection/dataAuth2.dart';
 
 import 'AUTH_2.dart';
 

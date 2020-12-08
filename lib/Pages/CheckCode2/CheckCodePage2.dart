@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
-import 'package:omega_qick/AutoRoutes.dart';
-import 'package:omega_qick/Pages/Login2/Logo.dart';
-import 'package:omega_qick/Pages/Welcome/Welcome.dart';
-import 'package:omega_qick/REST/Autorization/checkCode.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Autorization/CheckCode.dart';
-import 'package:omega_qick/Utils/DB/auto.dart';
-import 'package:omega_qick/Utils/DB/tokenDB.dart';
-import 'package:omega_qick/Utils/fun/FadeAnimation.dart';
+import 'package:integron/AutoRoutes.dart';
+import 'package:integron/Pages/Login2/Logo.dart';
+import 'package:integron/Pages/Welcome/Welcome.dart';
+import 'package:integron/REST/Autorization/checkCode.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Autorization/CheckCode.dart';
+import 'package:integron/Utils/DB/auto.dart';
+import 'package:integron/Utils/DB/tokenDB.dart';
+import 'package:integron/Utils/fun/FadeAnimation.dart';
 import 'CheckText.dart';
 
 class CheckCodePage extends StatefulWidget {

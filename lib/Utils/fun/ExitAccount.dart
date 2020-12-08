@@ -1,7 +1,7 @@
 
-import 'package:omega_qick/Utils/DB/auto.dart';
-import 'package:omega_qick/Utils/DB/codeDB.dart';
-import 'package:omega_qick/Utils/DB/tokenDB.dart';
+import 'package:integron/Utils/DB/auto.dart';
+import 'package:integron/Utils/DB/codeDB.dart';
+import 'package:integron/Utils/DB/tokenDB.dart';
 
 
 Future<void> ExitAccount ()async {

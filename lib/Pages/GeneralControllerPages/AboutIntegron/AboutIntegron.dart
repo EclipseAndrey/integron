@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/AutoRoutes.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/Login2/Logo.dart';
-import 'package:omega_qick/Style.dart';
+import 'package:integron/AutoRoutes.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/Login2/Logo.dart';
+import 'package:integron/Style.dart';
 
 
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 
 
 class AboutIntegron extends StatefulWidget {

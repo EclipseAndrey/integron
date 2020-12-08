@@ -1,6 +1,6 @@
-import 'package:omega_qick/Utils/DB/Errors.dart';
-import 'package:omega_qick/Utils/DB/Put.dart';
-import 'package:omega_qick/Utils/fun/InitBalance.dart';
+import 'package:integron/Utils/DB/Errors.dart';
+import 'package:integron/Utils/DB/Put.dart';
+import 'package:integron/Utils/fun/InitBalance.dart';
 
 class Balance extends Errors{
   double balance;

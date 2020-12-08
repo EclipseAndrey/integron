@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
-import 'package:omega_qick/REST/Cart/updateCart.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/main.dart';
+import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
+import 'package:integron/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
+import 'package:integron/REST/Cart/updateCart.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/main.dart';
 
 class ListCartPage extends StatefulWidget {
   bool tovar = false;

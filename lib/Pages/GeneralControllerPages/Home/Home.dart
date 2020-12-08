@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/PageTovar/Tovars.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/PageUslig/Uslugi.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Search/PageSelectedCategory/PageSelectedCategory.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Search/Search.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/PageTovar/Tovars.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/PageUslig/Uslugi.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Search/PageSelectedCategory/PageSelectedCategory.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Search/Search.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
 
 class Home extends StatefulWidget {
 

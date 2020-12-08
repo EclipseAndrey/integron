@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/finger.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/finger.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 
 Future<bool>showDialogWantFinger(BuildContext context)async{
 

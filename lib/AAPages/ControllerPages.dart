@@ -2,22 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
-import 'package:omega_qick/AAPages/Blocs/Category/CategoryCubit.dart';
-import 'package:omega_qick/AAPages/Blocs/Feed/TovarsCubit.dart';
-import 'package:omega_qick/AAPages/Blocs/History/HistoryCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutReferal.dart';
-// import 'package:omega_qick/Pages/GeneralControllerPages/Home/Home.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/My/My.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/Wallets.dart';
-import 'package:omega_qick/REST/Cart/getCart.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
+import 'package:integron/AAPages/Blocs/Category/CategoryCubit.dart';
+import 'package:integron/AAPages/Blocs/Feed/TovarsCubit.dart';
+import 'package:integron/AAPages/Blocs/History/HistoryCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/AboutIntegron/AboutReferal.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/My.dart';
+import 'package:integron/Pages/GeneralControllerPages/Purchase/Purchase.dart';
+import 'package:integron/Pages/GeneralControllerPages/Wallets/Wallets.dart';
+import 'package:integron/REST/Cart/getCart.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
 import 'Blocs/Balance/BalanceCubit.dart';
 import 'Blocs/Feed/UslugiCubit.dart';
 import 'GeneralCubit.dart';
-import 'package:omega_qick/AAPages/Home/Home.dart';
+import 'package:integron/AAPages/Home/Home.dart';
 
 
 class GeneralControllerPages extends StatefulWidget {

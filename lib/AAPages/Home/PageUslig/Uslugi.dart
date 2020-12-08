@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/AAPages/Blocs/Feed/UslugiCubit.dart';
-import 'package:omega_qick/AAPages/Blocs/Feed/TovarsCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
-import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/Callbcks.dart';
+import 'package:integron/AAPages/Blocs/Feed/UslugiCubit.dart';
+import 'package:integron/AAPages/Blocs/Feed/TovarsCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/ItemGetter.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/Utils/DB/Products/BlocSize.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/Utils/fun/Callbcks.dart';
 
 import 'Panel/Panel.dart';
 

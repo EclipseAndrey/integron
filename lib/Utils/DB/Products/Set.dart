@@ -1,4 +1,4 @@
-import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
+import 'package:integron/Utils/DB/Products/BlocSize.dart';
 
 
 class SetBloc extends BlocSize{

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:omega_qick/Utils/DB/Errors.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/DB/Put.dart';
+import 'package:integron/Utils/DB/Errors.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/DB/Put.dart';
 
 class Business extends Errors{
 

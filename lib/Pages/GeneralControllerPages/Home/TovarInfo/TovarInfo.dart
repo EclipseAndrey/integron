@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/Purchase.dart';
-import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/DB/Products/Property.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/AddProductInCart.dart';
-import 'package:omega_qick/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
-import 'package:omega_qick/main.dart';
+import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
+import 'package:integron/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
+import 'package:integron/Pages/GeneralControllerPages/Purchase/Purchase.dart';
+import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/DB/Products/Property.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/Utils/fun/AddProductInCart.dart';
+import 'package:integron/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
+import 'package:integron/main.dart';
 
 class TovarInfo extends StatefulWidget {
   int id;

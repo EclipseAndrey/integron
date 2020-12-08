@@ -1,4 +1,4 @@
-name: omega_qick
+name: integron
 description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
@@ -55,9 +55,9 @@ dependencies:
 
   #  multi_image_picker: ^4.7.14
 flutter_icons:
-  image_path: "lib/assets/icons/IconApp/128x128.png"
+  image_path: "lib/assets/icons/IconApp/512x512C.png"
   android: true
-  ios: true
+  ios: false
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

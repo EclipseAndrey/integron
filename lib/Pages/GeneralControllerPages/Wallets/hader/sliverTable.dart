@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   int index = 0;

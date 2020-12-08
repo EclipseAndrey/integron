@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
 
 Widget logo() {
 

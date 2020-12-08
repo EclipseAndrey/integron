@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/data.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/name.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/status.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/summ.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/usd.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Wallets/ContainerHistory/uslug.dart';
-import 'package:omega_qick/Utils/DB/Wallet/Tx.dart';
+import 'package:integron/Pages/GeneralControllerPages/Wallets/ContainerHistory/data.dart';
+import 'package:integron/Pages/GeneralControllerPages/Wallets/ContainerHistory/name.dart';
+import 'package:integron/Pages/GeneralControllerPages/Wallets/ContainerHistory/status.dart';
+import 'package:integron/Pages/GeneralControllerPages/Wallets/ContainerHistory/summ.dart';
+import 'package:integron/Pages/GeneralControllerPages/Wallets/ContainerHistory/usd.dart';
+import 'package:integron/Pages/GeneralControllerPages/Wallets/ContainerHistory/uslug.dart';
+import 'package:integron/Utils/DB/Wallet/Tx.dart';
 import 'dart:math' as math;
-import 'package:omega_qick/Utils/fun/InitBalance.dart';
-import 'package:omega_qick/Utils/fun/InitWallet.dart';
-import 'package:omega_qick/Utils/fun/TimeParse.dart';
+import 'package:integron/Utils/fun/InitBalance.dart';
+import 'package:integron/Utils/fun/InitWallet.dart';
+import 'package:integron/Utils/fun/TimeParse.dart';
 
 Widget historiItem(BuildContext context, {Tx tx}) {
   Color c7A8BA3 = Color.fromRGBO(122, 139, 163, 1);

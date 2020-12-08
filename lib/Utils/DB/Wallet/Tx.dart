@@ -1,4 +1,4 @@
-import 'package:omega_qick/Pages/Login2/ButtonNext.dart';
+import 'package:integron/Pages/Login2/ButtonNext.dart';
 
 class Tx {
   String date;

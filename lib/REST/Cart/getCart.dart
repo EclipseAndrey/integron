@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
-import 'package:omega_qick/REST/Product/getProduct.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/fun/Cart/CartModelForLocalDb.dart';
-import 'package:omega_qick/main.dart';
+import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
+import 'package:integron/REST/Product/getProduct.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/fun/Cart/CartModelForLocalDb.dart';
+import 'package:integron/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<Product>> getCart ()async{

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
-import 'package:omega_qick/Utils/DB/Products/Counter.dart';
-import 'package:omega_qick/Utils/DB/Products/Params/Params.dart';
-import 'package:omega_qick/Utils/DB/Products/Params/ParamsPrice.dart';
-import 'package:omega_qick/Utils/DB/Products/Property.dart';
-import 'package:omega_qick/Utils/DB/Products/TokenAbstract.dart';
-import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Put.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/Utils/DB/Products/Counter.dart';
+import 'package:integron/Utils/DB/Products/Params/Params.dart';
+import 'package:integron/Utils/DB/Products/Params/ParamsPrice.dart';
+import 'package:integron/Utils/DB/Products/Property.dart';
+import 'package:integron/Utils/DB/Products/TokenAbstract.dart';
+import 'package:integron/Utils/DB/Products/BlocSize.dart';
+import 'package:integron/Utils/DB/Put.dart';
 
 class ProductShort extends BlocSize with Counter, TokenParam{
   String text;

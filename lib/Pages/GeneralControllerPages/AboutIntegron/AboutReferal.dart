@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/AutoRoutes.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
-import 'package:omega_qick/presentation/integron_icons.dart' as customIcons;
+import 'package:integron/AutoRoutes.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/presentation/integron_icons.dart' as customIcons;
 
 
 

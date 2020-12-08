@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:omega_qick/AAPages/Blocs/Balance/BalanceCubit.dart';
-import 'package:omega_qick/AAPages/Blocs/History/HistoryCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
-import 'package:omega_qick/REST/Wallet/getBalance.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Wallet/Balance.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
-import 'package:omega_qick/Utils/fun/QrLib/QrGenerate/QrGenerateController.dart';
-import 'package:omega_qick/main.dart';
+import 'package:integron/AAPages/Blocs/Balance/BalanceCubit.dart';
+import 'package:integron/AAPages/Blocs/History/HistoryCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
+import 'package:integron/REST/Wallet/getBalance.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Wallet/Balance.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/Utils/fun/DialogIntegron.dart';
+import 'package:integron/Utils/fun/QrLib/QrGenerate/QrGenerateController.dart';
+import 'package:integron/main.dart';
 
 import 'logo.dart';
 

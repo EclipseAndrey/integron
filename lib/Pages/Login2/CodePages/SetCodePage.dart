@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:omega_qick/AAPages/ControllerPages.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/codeDB.dart';
-import 'package:omega_qick/Utils/DB/auto.dart';
-import 'package:omega_qick/Utils/fun/DoYouWantSetFinger.dart';
+import 'package:integron/AAPages/ControllerPages.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/codeDB.dart';
+import 'package:integron/Utils/DB/auto.dart';
+import 'package:integron/Utils/fun/DoYouWantSetFinger.dart';
 
 class SetCode extends StatefulWidget {
   @override

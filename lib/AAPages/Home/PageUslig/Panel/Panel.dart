@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/AAPages/Blocs/Balance/BalanceCubit.dart';
-import 'package:omega_qick/AAPages/Blocs/Cart/CartCubit.dart';
-import 'package:omega_qick/AAPages/GeneralCubit.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/SwiperSets.dart';
-import 'package:omega_qick/Providers/WalletProvider/WalletProvider.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/DB/Products/Set.dart';
-import 'package:omega_qick/Utils/DB/Wallet/Balance.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/main.dart';
+import 'package:integron/AAPages/Blocs/Balance/BalanceCubit.dart';
+import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
+import 'package:integron/AAPages/GeneralCubit.dart';
+import 'package:integron/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/ItemGetter.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/SwiperSets.dart';
+import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/DB/Products/Set.dart';
+import 'package:integron/Utils/DB/Wallet/Balance.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/main.dart';
 
 class MainPanel extends StatefulWidget {
   BuildContext context1;

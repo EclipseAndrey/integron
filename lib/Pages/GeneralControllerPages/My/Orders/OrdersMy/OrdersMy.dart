@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/My/Orders/OrdersBiz/OrdersBizContent.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
-import 'package:omega_qick/Providers/OrderProvider/OrderProvider.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Orders/Order.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
-import 'package:omega_qick/main.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/Orders/OrdersBiz/OrdersBizContent.dart';
+import 'package:integron/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
+import 'package:integron/Providers/OrderProvider/OrderProvider.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Orders/Order.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/main.dart';
 
 import 'OrdersMyContent.dart';
 

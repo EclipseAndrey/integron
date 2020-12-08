@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:omega_qick/Utils/DB/Products/Params/Param.dart';
-import 'package:omega_qick/Utils/DB/Products/Params/Select.dart';
+import 'package:integron/Utils/DB/Products/Params/Param.dart';
+import 'package:integron/Utils/DB/Products/Params/Select.dart';
 
 class Params extends SelectIndex{
   List<Param> params = [];

@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:omega_qick/Utils/DB/Products/Params/ParamPrice.dart';
+import 'package:integron/Utils/DB/Products/Params/ParamPrice.dart';
 
 class ParamsPrice{
   List<ParamPrice> params = [];

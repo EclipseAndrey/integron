@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:integron/Style.dart';
 
 
-import '../../Style.dart';
 
 Widget TextFieldNum(BuildContext context, TextEditingController controller, MaskTextInputFormatter maskFormatter,  double minusFontsSize){
 

@@ -1,4 +1,4 @@
-import 'package:omega_qick/Utils/DB/tokenDB.dart';
+import 'package:integron/Utils/DB/tokenDB.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

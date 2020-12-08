@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:omega_qick/REST/SecureConnection/Connection.dart';
-import 'package:omega_qick/Utils/DB/Put.dart';
+import 'package:integron/REST/SecureConnection/Connection.dart';
+import 'package:integron/Utils/DB/Put.dart';
 
 
 bool secureDefault = true;

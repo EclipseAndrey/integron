@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Utils/IconDataForCategory.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/AAPages/Home/PageTovar/Tovars.dart';
-import 'package:omega_qick/AAPages/Home/PageUslig/Uslugi.dart';
-import 'package:omega_qick/Utils/fun/Callbcks.dart';
-import 'package:omega_qick/Utils/DB/Category/Category.dart';
-import 'package:omega_qick/AAPages/Home/Search/Search.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/AAPages/Home/PageTovar/Tovars.dart';
+import 'package:integron/AAPages/Home/PageUslig/Uslugi.dart';
+import 'package:integron/Utils/fun/Callbcks.dart';
+import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/AAPages/Home/Search/Search.dart';
 
 class Home extends StatefulWidget {
 

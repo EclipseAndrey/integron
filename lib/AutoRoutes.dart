@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/Login2/PageLogin.dart';
-import 'package:omega_qick/Utils/DB/Autorization/InfoToken/InfoToken.dart';
-import 'package:omega_qick/REST/Autorization/checkToken.dart';
-import 'package:omega_qick/Pages/Login2/CodePages/SetCodePage.dart';
-import 'package:omega_qick/Pages/Login2/CodePages/EnterCodePage.dart';
+import 'package:integron/Pages/Login2/PageLogin.dart';
+import 'package:integron/Utils/DB/Autorization/InfoToken/InfoToken.dart';
+import 'package:integron/REST/Autorization/checkToken.dart';
+import 'package:integron/Pages/Login2/CodePages/SetCodePage.dart';
+import 'package:integron/Pages/Login2/CodePages/EnterCodePage.dart';
 import 'Utils/DB/auto.dart';
 import 'Utils/DB/codeDB.dart';
 import 'Utils/DB/tokenDB.dart';

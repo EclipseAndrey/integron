@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:omega_qick/presentation/integron_icons.dart' as cutomIcons;
+import 'package:integron/presentation/integron_icons.dart' as cutomIcons;
+import 'package:integron/Style.dart';
 
-import '../../Style.dart';
 
 Widget HaveAccount(BuildContext context, double minusFontsSize) {
   return Row(

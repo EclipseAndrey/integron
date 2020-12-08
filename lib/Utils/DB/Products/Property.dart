@@ -1,6 +1,6 @@
 
 
-import 'package:omega_qick/Utils/DB/Errors.dart';
+import 'package:integron/Utils/DB/Errors.dart';
 
 class Property extends EditPropertyFlags{
   String value = "";

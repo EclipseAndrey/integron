@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/ItemGetter.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:omega_qick/Pages/GeneralControllerPages/My/PageAddProduct.dart';
-import 'package:omega_qick/Providers/BizProvider/BizProvider.dart';
-import 'package:omega_qick/Providers/ProductProvider/ProductProvider.dart';
-import 'package:omega_qick/REST/Autorization/checkToken.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/Autorization/InfoToken/InfoToken.dart';
-import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
-import 'package:omega_qick/Utils/DB/Products/Product.dart';
-import 'package:omega_qick/Utils/DB/tokenDB.dart';
-import 'package:omega_qick/Utils/fun/DialogIntegron.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/ItemGetter.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/PageAddProduct.dart';
+import 'package:integron/Providers/BizProvider/BizProvider.dart';
+import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
+import 'package:integron/REST/Autorization/checkToken.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/Autorization/InfoToken/InfoToken.dart';
+import 'package:integron/Utils/DB/Products/BlocSize.dart';
+import 'package:integron/Utils/DB/Products/Product.dart';
+import 'package:integron/Utils/DB/tokenDB.dart';
+import 'package:integron/Utils/fun/DialogIntegron.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 
 class BodyBusiness extends StatefulWidget {
 

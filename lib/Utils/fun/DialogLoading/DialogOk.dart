@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Style.dart';
+import 'package:integron/Style.dart';
 
 void showDialogOk(BuildContext context){
   showDialog(

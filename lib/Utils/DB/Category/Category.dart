@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Utils/DB/Products/BlocSize.dart';
+import 'package:integron/Utils/DB/Products/BlocSize.dart';
 class Category extends BlocSize{
   List<Color> colors;
   int icon;

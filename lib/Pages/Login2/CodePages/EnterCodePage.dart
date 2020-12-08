@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
-import 'package:omega_qick/AAPages/ControllerPages.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/DB/codeDB.dart';
-import 'package:omega_qick/Utils/DB/finger.dart';
+import 'package:integron/AAPages/ControllerPages.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/DB/codeDB.dart';
+import 'package:integron/Utils/DB/finger.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 
 

@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omega_qick/AAPages/Blocs/Feed/UslugiCubit.dart';
-import 'package:omega_qick/Style.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
-import 'package:omega_qick/AAPages/Blocs/Feed/TovarsCubit.dart';
+import 'package:integron/AAPages/Blocs/Feed/UslugiCubit.dart';
+import 'package:integron/Style.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/AAPages/Blocs/Feed/TovarsCubit.dart';
 
 class SearchContent extends StatefulWidget {
   BuildContext blocContext;

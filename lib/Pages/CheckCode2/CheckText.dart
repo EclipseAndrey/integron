@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:omega_qick/Style.dart';
+import 'package:integron/Style.dart';
 
 
 Widget CheckText (BuildContext context, minusFontsSize){

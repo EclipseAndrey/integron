@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:omega_qick/Style.dart';
+import 'package:integron/Style.dart';
 
 Widget Buttons(String title, IconData icon, BuildContext context) {
   Color c2f527f = Color.fromRGBO(47, 82, 127, 1);

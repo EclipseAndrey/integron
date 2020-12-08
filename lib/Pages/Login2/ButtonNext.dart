@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import 'package:omega_qick/Pages/CheckCode2/CheckCodePage2.dart';
+import 'package:integron/Pages/CheckCode2/CheckCodePage2.dart';
 
-import 'package:omega_qick/REST/Autorization/getCode.dart';
-import 'package:omega_qick/Utils/DB/Put.dart';
-import 'package:omega_qick/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/REST/Autorization/getCode.dart';
+import 'package:integron/Utils/DB/Put.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 
 import '../../Style.dart';
 
