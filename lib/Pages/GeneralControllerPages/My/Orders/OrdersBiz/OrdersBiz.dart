@@ -158,10 +158,10 @@ class _OrdersBizState extends State<OrdersBiz> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(6),
                             bottomLeft: Radius.circular(6)),
-                        color: 0 == getCurrentPageOfList() ? Colors.white : c8dcde0,
+                        color: 0 == getCurrentPageOfList() ? c8dcde0 : Colors.white,
                         border: Border.all(color: cDefault, width: 1)),
                     child: Center(
-                      child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? cMainText : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                      child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? Colors.white : cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
                     ),
                   ),
                 ),
@@ -178,11 +178,11 @@ class _OrdersBizState extends State<OrdersBiz> {
                             topRight: Radius.circular(6),
                             bottomRight: Radius.circular(6)),
                         color: getCurrentPageOfList() != 0
-                            ? Colors.white
-                            : c8dcde0,
+                            ? c8dcde0
+                            : Colors.white,
                         border: Border.all(color: cDefault, width: 1)),
                     child: Center(
-                      child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ? cMainText : Colors.white, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                      child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ? Colors.white : cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
                     ),
                   ),
                 ),
