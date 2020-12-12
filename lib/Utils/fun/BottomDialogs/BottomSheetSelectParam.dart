@@ -12,7 +12,8 @@ import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/main.dart';
 
 Future<void> ShowBottoomSheetSelectParams(
-    {@required BuildContext context,
+    {
+      @required BuildContext context,
     @required bool formalize,
     @required ValueChanged<int> indexSelect,
     @required Product product}) async {

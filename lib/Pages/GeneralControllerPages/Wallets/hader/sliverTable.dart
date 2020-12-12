@@ -1,3 +1,4 @@
+import 'package:dropdown/dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
@@ -59,25 +60,51 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
             color: cMainText,
             fontFamily: "Open Sans"));
   }
+
+
   Widget Filter(){
+    String dropdownValue = 'One';
+
     return Row(
       children: [
-        Text(
-          "Без фильтра",
-          style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              fontFamily: "Open Sans",
-              color: Color.fromRGBO(88, 148, 168, 1)),
+        DropdownButton<String>(
+          icon: Icon(Icons.arrow_circle_down, color: Colors.transparent,),
+          underline: Container(),
+          value: dropdownValue,
+          items: <String>['One', 'B', 'C', 'D'].map((String value) {
+            return new DropdownMenuItem<String>(
+              value: value,
+              child: new Text(value, style: TextStyle(color: Colors.black),),
+            );
+          }).toList(),
+          onChanged: (_) {
+            print('t');
+            Dropdown.show("Hello world!", Colors.green, Colors.black);},
         ),
+        // Text(
+        //   "Без фильтра",
+        //   style: TextStyle(
+        //       fontSize: 14,
+        //       fontWeight: FontWeight.w400,
+        //       fontFamily: "Open Sans",
+        //       color: Color.fromRGBO(88, 148, 168, 1)),
+        // ),
         SizedBox(width: 4,),
-        getIconSvg(id:19,
-          color: c6287A1,
-          size: 22,
+        InkWell(
+          onTap: (){
+            print('t');
+            Dropdown.show("Hello world!", Colors.green, Colors.black);
+          },
+          child: getIconSvg(id:19,
+            color: c6287A1,
+            size: 22,
+          ),
         ),
       ],
     );
   }
+
+
   Widget TypeTxText(){
     return Text("Дата Контрагент / Операция",
         style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w400));

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:integron/AutoRoutes.dart';
 import 'package:integron/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
+import 'package:integron/Utils/DB/Wallet/Filters.dart';
 import 'Utils/DB/Products/Product.dart';
 
 import 'REST/Category/getItemsCategory.dart';
