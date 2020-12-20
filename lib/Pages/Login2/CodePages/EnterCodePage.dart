@@ -39,7 +39,9 @@ class _EnterCodeState extends State<EnterCode> {
 
   }
 
-  void loginFinger()async{
+  void loginFinger({bool delay})async{
+    if(delay??false) await Future.delayed(Duration(seconds: 1));
+
     bool f = await fingerDB();
     if(f){
       var auth = LocalAuthentication();
@@ -67,7 +69,7 @@ class _EnterCodeState extends State<EnterCode> {
   @override
   void initState() {
     initFinger();
-    loginFinger();
+    loginFinger(delay: true);
   }
 
   void _onKeyboardTap(String value)async {

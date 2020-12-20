@@ -20,11 +20,13 @@ class CartCubit extends Cubit<CartState>{
     //Разделение по типам
     for(int i = 0; i < cartList.length; i++){
       int a = 0;
-      if(cartList[i].type ==a ){
-        listTovars.add(cartList[i]);
-      } else {
-        listUslug.add(cartList[i]);
-      }
+      listTovars.add(cartList[i]);
+
+      // if(cartList[i].type ==a ){
+      //   listTovars.add(cartList[i]);
+      // } else {
+      //   listUslug.add(cartList[i]);
+      // }
     }
 
     //Сортировка по Владельцам товаров
@@ -154,11 +156,12 @@ class CartCubit extends Cubit<CartState>{
       //Разделение по типам
       for (int i = 0; i < cartList.length; i++) {
         int a = 0;
-        if (cartList[i].type == a) {
-          listTovars.add(cartList[i]);
-        } else {
-          listUslug.add(cartList[i]);
-        }
+        listTovars.add(cartList[i]);///
+        // if (cartList[i].type == a) {
+        //   listTovars.add(cartList[i]);
+        // } else {
+        //   listUslug.add(cartList[i]);
+        // }
       }
 
       //Сортировка по Владельцам товаров
@@ -212,22 +215,23 @@ class CartCubit extends Cubit<CartState>{
     }
   }
 
-  add(Product product)async{
-
-    List<Product> list = await CartProvider.getCart();
+  add(Product product)async {
+    if (product.type != 3){
+      List<Product> list = await CartProvider.getCart();
     bool find = false;
-    for(int i = 0 ; i < list.length; i++){
-      if(list[i].route == product.route){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].route == product.route) {
         list[i].counter++;
         i = list.length;
         find = true;
       }
     }
-    if(!find){
-      list.add(product..counter=1);
+    if (!find) {
+      list.add(product..counter = 1);
     }
     CartProvider.updateCart(list);
     load();
+  }
 
   }
 

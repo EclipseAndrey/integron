@@ -276,7 +276,7 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        tabBar(),
+       // tabBar(),
         // Container(
         //   color: cBG,
         //   height: 6,
@@ -285,8 +285,9 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
         Container(
           color: cBG,
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width/2 ,
+          height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width/3 ,
           child:PageView(
+            physics: NeverScrollableScrollPhysics(),
             controller: widget.controller,
             children: pages,
           ),

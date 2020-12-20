@@ -61,17 +61,22 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
 
 
     for(int i =0; i < list.length; i++){
-        Product pSortStep = list[i] as Product;
-        // try {
-          print("type Body ${list[i]==null}  ${ widget.type}");
-
-          if ((list[i] == null ?0: (list[i].type == null?0:list[i].type)) == widget.type)
-            listStep.add(list[i]);
-        // }catch(e){print(e);}
+     // Product pSortStep = list[i] as Product;
+      listStep.add(list[i]);
     }
+    // for(int i =0; i < list.length; i++){
+    //     Product pSortStep = list[i] as Product;
+    //     // try {
+    //       print("type Body ${list[i]==null}  ${ widget.type}");
+    //
+    //       if ((list[i] == null ?0: (list[i].type == null?0:list[i].type)) == widget.type)
+    //         listStep.add(list[i]);
+    //     // }catch(e){print(e);}
+    // }
     print("body loading ${list.length} элементов after load в list");
     print("body loading ${listStep.length} элементов after load в listStep");
     list = listStep;
+
 
     leftColumn = [];
     rightColumn = [];
@@ -151,6 +156,23 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     getItemsfromServ();
   }
 
+  tapHidden(int route, int hidden)async{
+    print("tap hidden");
+    showDialogLoading(context);
+    var a =await ProductProvider.forBiz.hiddenItem(route, hidden == 0?1:0);
+    closeDialog(context);
+    if(a.error == 200){
+      // dialogErr("Успешно скрыто/показано");
+      getItemsfromServ();
+
+    }else{
+      dialogErr("Не удалось скрыть/показать \nКод ${a.error}\nСообщите разрабочикам, если ошибка повторяется");
+      getItemsfromServ();
+
+    }
+
+  }
+
 
   @override
   void dispose() {
@@ -175,10 +197,23 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
   }
 
 
+  double c = 12;
+  double edge = 18;
+  double h2= 0;
+  double h1= 0;
+  double h0= 0;
+  double w =0;
+  double p =0;
+
+
 
 
   @override
   Widget build(BuildContext context) {
+
+
+
+
     super.build(context);
 
     double shortestSide = MediaQuery.of(context).size.shortestSide;
@@ -207,71 +242,80 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
   }
 
   Widget gen (){
+
+    w =  MediaQuery.of(context).size.width/2 - c/2 - edge;
+    h2  = w*1.50;
+    h1  = w*0.72;
+    h0  = w*0.33;
+
+
     print("Body geenrate ${leftColumn.length} , ${rightColumn.length}");
     if(leftColumn.length > 0 || rightColumn.length  >0){
       return  Column(
         children: [
+          SizedBox(height: c,),
+
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(width: edge,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: List.generate(leftColumn.length,
-                        (index) => ItemGetter(
-                            leftColumn[index],
-                            context, minusFontsSize,
-                            minusIconsSize,
-                            edit: widget.edit,
-                            add: (index == 0&&widget.edit)? true:false,
-                            tapAdd: ()async{
+                        (index) => Column(
+                          children: [
+                            ItemGetter(
+                              leftColumn[index],
+                              context, minusFontsSize,
+                              minusIconsSize,
+                              edit: widget.edit,
+                              add: (index == 0&&widget.edit)? true:false,
+                              tapAdd: ()async{
+                                  await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
+                                  getItemsfromServ();
+                                  },
+                              tapDelete:(r){ tapDelete(r);},
+                              tapEdit: (route){tapEdit(route);},
+                              tapUpFull: (route){tapUpFull(route);},
+                              tapUpOnly: (route){tapUpOnly(route);},
+                              tapHidden: (route, hidden){tapHidden(route, hidden);},
+                            ),
+                            SizedBox(height: c,),
 
-
-                              await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
-                              print("Body 138 ADD");
-
-                              getItemsfromServ();
-                            },
-                            tapDelete:(r){ tapDelete(r);},
-                            tapEdit: (route){
-                              print("Body 145 ADD");
-                              tapEdit(route);
-                              //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
-                              //getItemsfromServ();
-                            },
-                            tapUpFull: (route){tapUpFull(route);},
-                          tapUpOnly: (route){tapUpOnly(route);},
+                          ],
                         ),) ,
               ),
+              SizedBox(width: c,),
               rightColumn.length == 0?SizedBox():Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-
                 children: List.generate(rightColumn.length,
-                        (index) => ItemGetter(
-                          rightColumn[index],
-                          context,
+                      (index) => Column(
+                        children: [
+                          ItemGetter(
+                            rightColumn[index],
+                            context,
+                            minusFontsSize,
+                            minusIconsSize,
+                            tapAdd: ()async{
+                                await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
+                                getItemsfromServ();
+                              },
+                            tapDelete:(r){ tapDelete(r);},
+                            tapEdit: (route){tapEdit(route);},
+                            tapUpFull: (route){tapUpFull(route);},
+                            tapUpOnly: (route){tapUpOnly(route);},
+                            tapHidden: (route, hidden){tapHidden(route, hidden);},
+                            edit: widget.edit,
+                          ),
+                          SizedBox(height: c,),
 
-                          minusFontsSize,
-                          minusIconsSize,
-                          tapAdd: ()async{
-                            print("Body 165 ADD");
-
-                            await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
-                            getItemsfromServ();
-                          },
-                          tapDelete:(r){ tapDelete(r);},
-                            tapEdit: (route){
-                              print("Body 172 ADD");
-                              tapEdit(route);
-
-                              //await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: true,id: route,)));
-                              //getItemsfromServ();
-                            },
-                          tapUpFull: (route){tapUpFull(route);},
-                          tapUpOnly: (route){tapUpOnly(route);},
-                          edit: widget.edit,
-                        ),) ,
+                        ],
+                      ),
+                ) ,
               ),
+              SizedBox(width: edge,),
+
             ],
           ),
           SizedBox(height: 50,),

@@ -7,7 +7,8 @@ import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 
 Future<void> ShowBottomSheetEditInformation({
   @required BuildContext context,
-  Future<void> Function(String number) whereSave,
+  Future<void> Function(String number, String email) whereSave,
+
   // @required bool name,
   String address,
   String num,
@@ -16,6 +17,7 @@ Future<void> ShowBottomSheetEditInformation({
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerAddress = TextEditingController();
   TextEditingController controllerNum = TextEditingController();
+  TextEditingController controllerMail = TextEditingController();
 
 
   controllerAddress.text = address ?? "";
@@ -36,7 +38,7 @@ Future<void> ShowBottomSheetEditInformation({
         }
         closeDialog(context);
 
-        whereSave(controllerNum.text);
+        whereSave(controllerNum.text, controllerMail.text);
         closeDialog(context);
       },
       child: Container(
@@ -159,7 +161,40 @@ Future<void> ShowBottomSheetEditInformation({
                             ),
                           ),
                           SizedBox(height: 12,),
+                          Container(
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: TextField(
+                                autofocus: false,
 
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+
+                                  //hint
+                                  hintStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: fontFamily,
+                                    fontStyle: FontStyle.normal,
+                                    color: cPlaceHolder,
+                                  ),
+                                  hintText: "e-mail",
+                                ),
+
+                                //text
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: fontFamily,
+                                  fontStyle: FontStyle.normal,
+                                  color: cMainText,
+                                ),
+                                controller: controllerMail,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 12,),
                           Container(
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
 
@@ -193,19 +228,20 @@ Future<void> ShowBottomSheetEditInformation({
                                 controller: controllerAddress,
                               ),
                             ),
-                          )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 18),
+                            child: buttonSave(),
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    child: buttonSave(),
-                  ),
-                )
+                // Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child:
+                // )
               ],
             ),
           ),

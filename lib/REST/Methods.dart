@@ -30,6 +30,8 @@ class _ProductMethods{
   String get deleteProduct => "deleteitem";
   String get upOnly => "up";
   String get upFull => "upfull";
+  String get hiddenOff => "hideitem";
+  String get hiddenOn => "showitem";
 }
 class _CategoryMethods{
   String get getItems => "getitemcategory";

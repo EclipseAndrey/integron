@@ -61,7 +61,7 @@ class IconsSvg{
   static int get checkOff => 57;
   static int get checkOffDefault => 58;
   static int get checkMinus => 59;
-  // static int get arrowLeft => 60;
+  static int get stroke => 60;
   // static int get arrowLeft => 61;
   // static int get arrowLeft => 62;
   // static int get arrowLeft => 63;

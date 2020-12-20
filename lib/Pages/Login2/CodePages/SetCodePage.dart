@@ -147,10 +147,10 @@ class _SetCodeState extends State<SetCode> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(set?"Уникальный ПИН-код":"Повторите ПИН-код", style: TextStyle(color: cMainText, fontSize: 24, fontFamily: "MPLUS",),),
+                      Text(set?"Уникальный ПИН-код":"Повторите ПИН-код", textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontSize: 24, fontFamily: "MPLUS",),),
                       SizedBox(height: 30,),
-                      Text(set?"Придумайте уникальный код,":"Запомните ПИН-код и никому его", style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
-                      Text(set?"с помощью которого вы будете входить":"не сообщайте", style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
+                      Text(set?"Придумайте уникальный код,":"Запомните ПИН-код и никому его", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
+                      Text(set?"с помощью которого вы будете входить":"не сообщайте", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600,  ),),
                       SizedBox(height: 30,),
 
                       Container(

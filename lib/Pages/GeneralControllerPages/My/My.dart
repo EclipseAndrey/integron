@@ -159,16 +159,16 @@ class _MyPageState extends State<MyPage> {
   @override
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark
-      //       (
-      //   //statusBarColor: cBackground,
-      //   systemNavigationBarColor: Color(0x00cccccc),
-      //   systemNavigationBarDividerColor: null,
-      //   statusBarColor: Color(0xFFffffff),
-      //   systemNavigationBarIconBrightness: Brightness.light,
-      //   statusBarIconBrightness: Brightness.dark,
-      //   statusBarBrightness: Brightness.light,
-      // ),
+      SystemUiOverlayStyle//.dark
+        (
+        //statusBarColor: cBackground,
+        systemNavigationBarColor: Color(0x00cccccc),
+        systemNavigationBarDividerColor: Color(0x00cccccc),
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Color(0xFFffffff),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
     );
     focusName.addListener(() {
       print("FOCUS NAME"+focusName.hasFocus.toString());
@@ -395,7 +395,7 @@ class _MyPageState extends State<MyPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          getIconSvg(id: 15, color: cIcons),
+                          getIconSvg(id: IconsSvg.stroke, color: cIcons),
                           SizedBox(
                             width: paddingH / 2,
                           ),
@@ -434,7 +434,7 @@ class _MyPageState extends State<MyPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          getIconSvg(id: 15, color: cIcons),
+                          getIconSvg(id: IconsSvg.cartActive, color: cIcons),
                           SizedBox(
                             width: paddingH / 2,
                           ),

@@ -156,7 +156,7 @@ class _ListCartPageState extends State<ListCartPage> {
         onTap: ()async{
           List<Product> list = [];
           for(int i = 0; i < state.cartList.length;i++){
-            if(state.cartList[i].check &&(state.cartList[i].type == (widget.tovar?0:1))){
+            if(state.cartList[i].check ){ //&&(state.cartList[i].type == (widget.tovar?0:1))
               list.add(state.cartList[i]);
             }
           }

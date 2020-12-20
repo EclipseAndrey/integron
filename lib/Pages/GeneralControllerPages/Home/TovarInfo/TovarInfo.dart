@@ -15,6 +15,7 @@ import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/AddProductInCart.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
 import 'package:integron/main.dart';
+import 'package:flutter/services.dart';
 
 class TovarInfo extends StatefulWidget {
   int id;
@@ -40,8 +41,9 @@ class _TovarInfoState extends State<TovarInfo> {
   void load() async {
     item = await ProductProvider.getProduct(widget.id);
 
-    if (item.error == null) {
-      print(item.toJson());
+    // print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++prodeuctInfo     "+(item.errors == null).toString()+(item.errors.mess));
+    if (item.errors == null) {
+      //print(item.toJson());
       imagePages = List.generate(
           item.images.length,
           (index) => Image.network(
@@ -56,6 +58,18 @@ class _TovarInfoState extends State<TovarInfo> {
 
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle//.dark
+        (
+        //statusBarColor: cBackground,
+        systemNavigationBarColor: Color(0x00cccccc),
+        systemNavigationBarDividerColor: Color(0x00cccccc),
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Color(0xFFffffff),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
     load();
     super.initState();
   }
@@ -69,56 +83,61 @@ class _TovarInfoState extends State<TovarInfo> {
       minusFontsSize = minusFontsSizeHome400 + 2;
     }
 
-    return Scaffold(
-      backgroundColor: cBG,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0.1,
-        title: Text(
-          title,
-          style: TextStyle(
-              color: cMainText.withOpacity(0.7),
-              fontSize: 24,
-              fontFamily: fontFamily),
-        ),
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(19.0),
-              child: getIconSvg(
-                id: 0,
-                color: c5894bc,
-              ),
-            )),
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: cBG,
-        actions: [
-          GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => Cart(context)));
-              },
-              child: getIconSvg(
-                id: 55,
-                color: c5894bc,
-              )),
-          SizedBox(
-            width: 12,
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0.1,
+          title: Text(
+            item.errors == null?title:"Ошибка",
+            style: TextStyle(
+                color: cMainText.withOpacity(0.7),
+                fontSize: 24,
+                fontFamily: fontFamily),
           ),
-          // getIconForId(id: 15, color: c5894bc,),
-          // SizedBox(width: 12,),
-          //
-          // getIconForId(id: 25, color: c5894bc,),
-          // SizedBox(width: 12,),
-        ],
-      ),
-      body: BlocProvider<CartCubit>(
-        create: (BuildContext) => CartCubit(),
-        child: BlocBuilder<CartCubit, CartState>(
-          builder: (context, state) => Content1(context),
+          leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(19.0),
+                child: getIconSvg(
+                  id: 0,
+                  color: c5894bc,
+                ),
+              )),
+          backgroundColor: cBG,
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => Cart(context)));
+                },
+                child: getIconSvg(
+                  id: 55,
+                  color: c5894bc,
+                )),
+            SizedBox(
+              width: 12,
+            ),
+            // getIconForId(id: 15, color: c5894bc,),
+            // SizedBox(width: 12,),
+            //
+            // getIconForId(id: 25, color: c5894bc,),
+            // SizedBox(width: 12,),
+          ],
+        ),
+        body: BlocProvider<CartCubit>(
+          create: (BuildContext) => CartCubit(),
+          child: BlocBuilder<CartCubit, CartState>(
+            builder: (context, state) => item.errors != null?Center(child:  Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Text(item.errors.mess),
+            ),):Content1(context),
+          ),
         ),
       ),
     );

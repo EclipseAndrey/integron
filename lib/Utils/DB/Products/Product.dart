@@ -64,6 +64,11 @@ class Product extends ProductShort {
   ParamsPrice paramsPrice;
   Category cat;
   int pozition = 0;
+  String accountName;
+  String accountSecretKey;
+  String offerCode;
+  int hidden;
+
 
   Product({
     @required String name,
@@ -93,14 +98,19 @@ class Product extends ProductShort {
     this.paramsPrice,
     this.cat,
     this.pozition,
-    this.check
+    this.check,
+    this.accountName,
+    this.accountSecretKey,
+    this.offerCode,
+    this.hidden,
+
 }) : super(name: name, image: image, route:route, text: text, price:price, sale:sale??"");
 
   Product.err(this.errors);
 
 
   factory Product.fromJson(Map<String, dynamic> jsonC){
-    // print("tope parse "+ int.parse(jsonC['type']).toString());
+     print("tope parse "+ jsonC['image'].toString());
     try {
       return Product(
         full: true,
@@ -131,6 +141,8 @@ class Product extends ProductShort {
         cat: Category.fromJson(jsonC['cat'][0]),
        // paramsPrice: jsonC['paramswithprice'] == null ? [] : ParamsPrice.fromJson(jsonC['paramswithprice']),
         check: true,
+        hidden: jsonC['view'] == null ?0:int.parse(jsonC['view']),
+
 
       );
     }catch(e){
@@ -163,6 +175,10 @@ class Product extends ProductShort {
     map["property"] = step;
     map['token'] = token??"";
     map['id'] = [route];
+    map['accountname'] = accountName;
+    map['accountkey'] = accountSecretKey;
+    map['producttitle'] = name;
+    map['offercode'] = offerCode;
     return map;
   }
 

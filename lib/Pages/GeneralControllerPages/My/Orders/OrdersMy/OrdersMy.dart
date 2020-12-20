@@ -8,6 +8,7 @@ import 'package:integron/Utils/DB/Orders/Order.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/main.dart';
+import 'package:flutter/services.dart';
 
 import 'OrdersMyContent.dart';
 
@@ -34,15 +35,16 @@ class _OrdersMyState extends State<OrdersMy> {
   load()async{
     loading = true;
     listOrders = await OrderProvider.getOrders();
-    for(int i =0;i<listOrders.length;i++){
-      try{
-     if(listOrders[i].products[0].type == 0){
-       listOrdersTovars.add(listOrders[i]);
-     }else{
-         listOrderssUslugi.add(listOrders[i]);
-     }
-      }catch(e){print(e);}
-    }
+    // for(int i =0;i<listOrders.length;i++){
+    //   try{
+    //  if(listOrders[i].products[0].type == 0){
+    //    listOrdersTovars.add(listOrders[i]);
+    //  }else{
+    //      listOrderssUslugi.add(listOrders[i]);
+    //  }
+    //   }catch(e){print(e);}
+    // }
+    listOrdersTovars = listOrders;
     loading = false;
     setState(() {
 
@@ -52,6 +54,18 @@ class _OrdersMyState extends State<OrdersMy> {
 
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle//.dark
+        (
+        //statusBarColor: cBackground,
+        systemNavigationBarColor: Color(0x00cccccc),
+        systemNavigationBarDividerColor: Color(0x00cccccc),
+        statusBarColor: Color(0xFFffffff),
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+    );
 
     load();
     controllerPage = PageController(initialPage: 0);
@@ -111,7 +125,7 @@ class _OrdersMyState extends State<OrdersMy> {
                   child: PageView(
                     children: [
                       OrdersMyContent(stateCallback: (){setState(() {});},orders: listOrdersTovars,),
-                      OrdersMyContent(stateCallback: (){setState(() {});}, orders: listOrderssUslugi,),
+                     // OrdersMyContent(stateCallback: (){setState(() {});}, orders: listOrderssUslugi,),
                     ],
                     controller: controllerPage,
 
@@ -142,53 +156,57 @@ class _OrdersMyState extends State<OrdersMy> {
       height: 56,
       child: Stack(
         children: [
+          // Align(
+          //   alignment: Alignment.center,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       GestureDetector(
+          //         onTap: (){
+          //           controllerPage.animateToPage(0, duration: Duration(milliseconds: 100), curve: Curves.ease);
+          //         },
+          //         child: Container(
+          //           width: MediaQuery.of(context).size.width * 0.20,
+          //           height: 34,
+          //           decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.only(
+          //                   topLeft: Radius.circular(6),
+          //                   bottomLeft: Radius.circular(6)),
+          //               color: 0 == getCurrentPageOfList() ? c8dcde0: Colors.white ,
+          //               border: Border.all(color: cDefault, width: 1)),
+          //           child: Center(
+          //             child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ?  Colors.white:cMainText , fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+          //           ),
+          //         ),
+          //       ),
+          //       GestureDetector(
+          //         onTap: (){
+          //           controllerPage.animateToPage(1, duration: Duration(milliseconds: 100), curve: Curves.ease);
+          //
+          //         },
+          //         child: Container(
+          //           width: MediaQuery.of(context).size.width * 0.20,
+          //           height: 34,
+          //           decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.only(
+          //                   topRight: Radius.circular(6),
+          //                   bottomRight: Radius.circular(6)),
+          //               color: getCurrentPageOfList() != 0
+          //                   ?
+          //               c8dcde0: Colors.white,
+          //               border: Border.all(color: cDefault, width: 1)),
+          //           child: Center(
+          //             child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ? Colors.white :cMainText , fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Align(
             alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    controllerPage.animateToPage(0, duration: Duration(milliseconds: 100), curve: Curves.ease);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    height: 34,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(6),
-                            bottomLeft: Radius.circular(6)),
-                        color: 0 == getCurrentPageOfList() ? c8dcde0: Colors.white ,
-                        border: Border.all(color: cDefault, width: 1)),
-                    child: Center(
-                      child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ?  Colors.white:cMainText , fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: (){
-                    controllerPage.animateToPage(1, duration: Duration(milliseconds: 100), curve: Curves.ease);
-
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    height: 34,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(6),
-                            bottomRight: Radius.circular(6)),
-                        color: getCurrentPageOfList() != 0
-                            ?
-                        c8dcde0: Colors.white,
-                        border: Border.all(color: cDefault, width: 1)),
-                    child: Center(
-                      child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ? Colors.white :cMainText , fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            child: Text("Мои покупки", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24)),
           ),
           Align(
             alignment: Alignment.centerLeft,

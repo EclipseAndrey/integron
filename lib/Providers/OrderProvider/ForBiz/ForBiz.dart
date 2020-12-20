@@ -24,7 +24,7 @@ class ForBiz{
 
 
     var response;
-    response = await Rest.post(urlQuery, body);
+    response = await Rest.post(urlQuery, body, secureDown: false);
     if(response is Put){
       return null;
     }else{

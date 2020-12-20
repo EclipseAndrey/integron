@@ -5,6 +5,7 @@ import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
 import 'package:integron/Utils/DB/Wallet/Tx.dart';
 import 'historyItem.dart';
+import 'package:flutter/services.dart';
 
 Widget Content() {
   return SliverList(
@@ -18,11 +19,31 @@ Widget Content() {
 }
 
 class ContentHistory extends StatefulWidget {
+
+
+
   @override
   _ContentHistoryState createState() => _ContentHistoryState();
 }
 
 class _ContentHistoryState extends State<ContentHistory> {
+  @override
+  void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle//.dark
+        (
+        //statusBarColor: cBackground,
+        systemNavigationBarColor: Color(0x00cccccc),
+        systemNavigationBarDividerColor: Color(0x00cccccc),
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Color(0xFFffffff),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

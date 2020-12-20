@@ -85,7 +85,7 @@ class _BusinessPageState extends State<BusinessPage> {
 
   double minusIconsSize = 0;
   double minusFontsSize = 0;
-  double heightAppBar = 0.42;
+  double heightAppBar = 0.26;
 
   bool searchFocus = false;
 
@@ -142,23 +142,23 @@ class _BusinessPageState extends State<BusinessPage> {
       });
     // }catch(e){}
     load();
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.light
-      //       (
-      //   //statusBarColor: cBackground,
-      //   systemNavigationBarColor: Color(0x00cccccc),
-      //   systemNavigationBarDividerColor: null,
-      //   statusBarColor: Color(0xFFffffff),
-      //   systemNavigationBarIconBrightness: Brightness.light,
-      //   statusBarIconBrightness: Brightness.dark,
-      //   statusBarBrightness: Brightness.light,
-      // ),
-    );
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle//.dark
+          (
+          //statusBarColor: cBackground,
+          systemNavigationBarColor: Color(0x00cccccc),
+          systemNavigationBarDividerColor: Color(0x00cccccc),
+          statusBarColor: Color(0xFFffffff),
+          systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+      );
 
 
     pages = [
       BodyBusiness(type:0, edit: widget.edit, id: widget.id,),
-      BodyBusiness(type:1, edit: widget.edit,id: widget.id,),
+    //  BodyBusiness(type:1, edit: widget.edit,id: widget.id,),
     ];
     setState(() {});
 
@@ -208,7 +208,7 @@ class _BusinessPageState extends State<BusinessPage> {
     double shortestSide = MediaQuery.of(context).size.shortestSide;
 
     if (shortestSide < 400) {
-      heightAppBar = 0.46;
+      heightAppBar = 0.32;
       minusIconsSize = minusIconsSizeHome400;
       minusFontsSize = minusFontsSizeHome400;
     }
@@ -273,7 +273,7 @@ class _BusinessPageState extends State<BusinessPage> {
       child: Stack(
         children: [
           Container(
-              height: MediaQuery.of(context).size.width *1.3,
+              height: MediaQuery.of(context).size.width *1,
               width: MediaQuery.of(context).size.width,
               child: Image.asset(
                 "lib/assets/images/bgb.png",
@@ -334,7 +334,7 @@ class _BusinessPageState extends State<BusinessPage> {
                       children: [
 
                         Align(
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.centerLeft,
                             child: GestureDetector(
                               onTapUp: (we){},
                               onTap: (){
@@ -368,63 +368,63 @@ class _BusinessPageState extends State<BusinessPage> {
                                   ),
 
                                   SizedBox(height: 15,),
-                                  Container(
-                                    color: Colors.transparent,
-                                    height: 50,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Stack(
-                                      children: [
-                                        AnimatedPadding(
-                                          duration: Duration(milliseconds: widget.durationAnimatePanel),
-                                          padding:  EdgeInsets.only(left:widget.paddingPanel),
-                                          child: Container(
-                                            color: Colors.transparent,
-                                            width: MediaQuery.of(context).size.width * 0.50,
-                                            child: GestureDetector(
-                                              onTapUp: (d){},
-                                              onTap: (){},
-                                              child: AnimatedContainer(
-                                                duration: Duration(milliseconds: widget.durationAnimatePanel),
-                                                decoration: BoxDecoration(
-                                                  color: cBG,
-                                                  borderRadius: BorderRadius.only(
-                                                      topLeft:
-                                                      Radius.circular(widget.radiusPanelLeft),
-                                                      topRight: Radius.circular(widget.radiusPanelRight)
-                                                  ),
-                                                ),
-                                                height: 50,
-                                                width:
-                                                MediaQuery.of(context).size.width * 0.30,
-
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Spacer(),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text("Товары", style: TextStyle(color: widget.colorPanelText1, fontSize: 16- minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                                              ],
-                                            ),
-                                            Spacer(),
-                                            Spacer(),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text("Услуги", style: TextStyle(color: widget.colorPanelText2, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                                              ],
-                                            ),
-                                            Spacer(),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  // Container(
+                                  //   color: Colors.transparent,
+                                  //   height: 50,
+                                  //   width: MediaQuery.of(context).size.width,
+                                  //   child: Stack(
+                                  //     children: [
+                                  //       AnimatedPadding(
+                                  //         duration: Duration(milliseconds: widget.durationAnimatePanel),
+                                  //         padding:  EdgeInsets.only(left:widget.paddingPanel),
+                                  //         child: Container(
+                                  //           color: Colors.transparent,
+                                  //           width: MediaQuery.of(context).size.width * 0.50,
+                                  //           child: GestureDetector(
+                                  //             onTapUp: (d){},
+                                  //             onTap: (){},
+                                  //             child: AnimatedContainer(
+                                  //               duration: Duration(milliseconds: widget.durationAnimatePanel),
+                                  //               decoration: BoxDecoration(
+                                  //                 color: cBG,
+                                  //                 borderRadius: BorderRadius.only(
+                                  //                     topLeft:
+                                  //                     Radius.circular(widget.radiusPanelLeft),
+                                  //                     topRight: Radius.circular(widget.radiusPanelRight)
+                                  //                 ),
+                                  //               ),
+                                  //               height: 50,
+                                  //               width:
+                                  //               MediaQuery.of(context).size.width * 0.30,
+                                  //
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //       Row(
+                                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                                  //         children: [
+                                  //           Spacer(),
+                                  //           Column(
+                                  //             mainAxisAlignment: MainAxisAlignment.center,
+                                  //             children: [
+                                  //               Text("Товары", style: TextStyle(color: widget.colorPanelText1, fontSize: 16- minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                                  //             ],
+                                  //           ),
+                                  //           Spacer(),
+                                  //           Spacer(),
+                                  //           Column(
+                                  //             mainAxisAlignment: MainAxisAlignment.center,
+                                  //             children: [
+                                  //               Text("Услуги", style: TextStyle(color: widget.colorPanelText2, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                                  //             ],
+                                  //           ),
+                                  //           Spacer(),
+                                  //         ],
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             )),

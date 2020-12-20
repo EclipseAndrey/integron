@@ -5,6 +5,7 @@ import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/DB/Put.dart';
 
 import 'ForBiz/ForBiz.dart';
+import 'package:integron/Utils/DB/tokenDB.dart';
 
 
 class ProductProvider{
@@ -44,7 +45,7 @@ class ProductProvider{
 
 
     print(url);
-    var response = await Rest.post(url, body,);
+    var response = await Rest.post(url, body, secureDown: false);
 
     if(response is Put){
       return null;
@@ -54,8 +55,16 @@ class ProductProvider{
   }
 
   static Future<Product> getProduct (int id)async{
+
+     String token = await tokenDB();
     String url =  postConstructor(Methods.product.getItem)+"?id=$id";
-    var response = await Rest.get(url);
+
+    Map<String,dynamic> body = Map();
+    body['token'] = token;
+    body['id'] = id;
+
+
+    var response = await Rest.post(url, body, secureDown: false);
 
     if(response is Put){
       print("ERR "+response.mess +" "+response.error.toString());

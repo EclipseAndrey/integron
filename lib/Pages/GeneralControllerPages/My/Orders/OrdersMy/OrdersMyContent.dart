@@ -44,13 +44,13 @@ class _OrdersMyContentState extends State<OrdersMyContent> {
             height: MediaQuery.of(context).size.height-30,
             child: Column(
               children: [
-                Padding(
-                  padding:  EdgeInsets.all(paddingAll),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [head()],
-                  ),
-                ),
+                // Padding(
+                //   padding:  EdgeInsets.all(paddingAll),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [head()],
+                //   ),
+                // ),
                 Container(
                   height: MediaQuery.of(context).size.height-140,
                   width: MediaQuery.of(context).size.width - paddingAll*2,
@@ -104,6 +104,8 @@ class _OrdersMyContentState extends State<OrdersMyContent> {
 
 
   Widget ItemCart(int indexAll, int index){
+    // try{
+print((widget.orders[indexAll].id).toString()+(widget.orders[indexAll].products[0].image).toString());
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TovarInfo(widget.orders[indexAll].products[0].route)));
@@ -216,6 +218,10 @@ class _OrdersMyContentState extends State<OrdersMyContent> {
         ),
       ),
     );
+    // }catch(e){
+    //   print("Trace " + (widget.orders[indexAll].id).toString() + (widget.orders[indexAll].bizName).toString());
+    //   return SizedBox();
+    // }
   }
 
   Widget price(int indexAll, int index){

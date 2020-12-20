@@ -11,8 +11,10 @@ class CartProvider{
     List<CartModel> ids = [];
     ids = prefs.getString("cart") == null?[]:jsonDecode(prefs.getString("cart")).map((i)=>CartModel.fromJson(i)).toList().cast<CartModel>();
 
+    print(prefs.getString("cart"));
     List<Product> products = [];
     for(int i = 0; i < ids.length; i++){
+      print("CART "+ids[i].id.toString());
       Product p = await ProductProvider.getProduct(ids[i].id);
       for(int j = 0; j < p.params.length;j++){
         p.params[j].select = ids[i].params[j];

@@ -13,7 +13,7 @@ import 'package:integron/Utils/DB/Products/Set.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/AddProductInCart.dart';
 import 'package:integron/Utils/fun/Callbcks.dart';
-
+import 'dart:ui' as ui show Image, ImageFilter, TextHeightBehavior;
 
 Widget ItemGetter(
     BlocSize bloc,
@@ -28,7 +28,8 @@ Widget ItemGetter(
       Function tapAdd,
       Function(int route) tapDelete,
       Function(int route) tapEdit,
-      Function(int route) tapUpFull
+      Function(int route) tapUpFull,
+      Function(int route, int hidden) tapHidden,
     }){
 
 
@@ -76,86 +77,100 @@ Widget ItemGetter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: w,
-                  height: h*0.54,
+                Stack(
+                  children: [
 
-                  child: imageF?Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          width: w,
-                          height: h*0.54,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
-                              child: Image.network(bloc.image, fit: BoxFit.cover,)),
-                        ),
-                      ),
-                      (edit??false)?Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: GestureDetector(
-                            onTap: (){
-                              print('tap Only Item getter');
-                              tapUpOnly(bloc.route);},
+                    Container(
+                      width: w,
+                      height: h*0.54,
+
+                      child: imageF?Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
                             child: Container(
-                              decoration: BoxDecoration(
-                                color: cDefault,
-                                borderRadius: BorderRadius.circular(6),
+                              width: w,
+                              height: h*0.54,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                                  child: Image.network(bloc.image, fit: BoxFit.cover,)),
+                            ),
+                          ),
+                          (edit??false)?Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.all(6.0),
+                              child: GestureDetector(
+                                onTap: (){
+                                  print('tap Only Item getter');
+                                  tapUpOnly(bloc.route);},
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: cDefault,
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    // todo padding?
+                                    child: Transform.rotate(
+                                        angle: 180 * 3.14 / 180,
+                                        child: getIconSvg(id: 38, color: cIcons)),
+                                  ),
+                                ),
                               ),
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                // todo padding?
-                                child: Transform.rotate(
-                                    angle: 180 * 3.14 / 180,
-                                    child: getIconSvg(id: 38, color: cIcons)),
+                            ),
+                          ):SizedBox(),
+                        ],
+                      ):Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              width: w,
+                              height: h*0.54,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: colors
+                                  )
                               ),
                             ),
                           ),
-                        ),
-                      ):SizedBox(),
-                    ],
-                  ):Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          width: w,
-                          height: h*0.54,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: colors
-                              )
-                          ),
-                        ),
-                      ),
-                      (edit??false)?Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: (){
-                              print('tap Only Item getter');
-                              tapUpOnly(bloc.route);},
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: cDefault,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Transform.rotate(
-                                    angle: 180 * 3.14 / 180,
-                                    child: getIconSvg(id: 38, color: cIcons)),
+                          (edit??false)?Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: (){
+                                  print('tap Only Item getter');
+                                  tapUpOnly(bloc.route);},
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: cDefault,
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Transform.rotate(
+                                        angle: 180 * 3.14 / 180,
+                                        child: getIconSvg(id: 38, color: cIcons)),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ):SizedBox(),
-                    ],
-                  ),
+                          ):SizedBox(),
+                        ],
+                      ),
+                    ),
+                    (bloc is Product)?bloc.hidden == 1?ClipRRect(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                      child: Container(
+                        color: Colors.black.withOpacity((bloc is Product)?bloc.hidden == 1? 0.6:0:0),
+                        width: w,
+                        height: h*0.54,
+                        child: (bloc is Product)?bloc.hidden == 1?Center( child:  getIconSvg(id: IconsSvg.eyeClosed, size: 30),):SizedBox():SizedBox(),
+                      ),
+                    ):SizedBox():SizedBox(),
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: c, top: c, right: c),
@@ -183,7 +198,12 @@ Widget ItemGetter(
             child: Container(
               width: w,
               decoration: BoxDecoration(
-                color: cWhite,
+                gradient: LinearGradient(
+                    colors: [cWhite.withOpacity(0),cWhite, cWhite,cWhite,cWhite],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter
+                ),
+
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(6),bottomRight: Radius.circular(6)),
 
               ),
@@ -211,8 +231,9 @@ Widget ItemGetter(
                       menuOffset: 10.0, // Offset value to show menuItem from the selected item
                       bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
                       menuItems: (edit??false)?<FocusedMenuItem>[
-                        FocusedMenuItem(title: Text("Редактировать",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: 44,color: c6287A1),onPressed: (){tapEdit(bloc.route);}),
-                        FocusedMenuItem(title: Text("В самый верх",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: 44,color: c6287A1),onPressed: (){tapUpFull(bloc.route);}),
+                        FocusedMenuItem(title: Text("Редактировать",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: IconsSvg.edit,color: c6287A1),onPressed: (){tapEdit(bloc.route);}),
+                        FocusedMenuItem(title: Text("В самый верх",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: IconsSvg.moveTop,color: c6287A1),onPressed: (){tapUpFull(bloc.route);}),
+                        FocusedMenuItem(title: Text((bloc is Product)?bloc.hidden == 0?"Скрыть":"Показать":"",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: (bloc is Product)?bloc.hidden == 0?IconsSvg.eyeClosed:IconsSvg.eye:40,color: c6287A1),onPressed: (){tapHidden(bloc.route,  (bloc is Product)?bloc.hidden:0);}),
                         FocusedMenuItem(title: Text("Удалить",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.share),iconCustom: getIconSvg(id: 44,color: c6287A1),onPressed: (){tapDelete(bloc.route);}),
 
                       ]:<FocusedMenuItem>[
@@ -369,32 +390,29 @@ Widget ItemGetter(
     // double h = MediaQuery.of(context).size.width * 0.60;
     // double w = MediaQuery.of(context).size.width*0.45;
 
-    return Padding(
-      padding:  EdgeInsets.all(6.0),
-      child: GestureDetector(
-        onTap: tapAdd,
-        child: Container(
-          child: DottedBorder(
-            borderType: BorderType.RRect,
-            radius: Radius.circular(6),
-            // padding: EdgeInsets.all(12),
-            dashPattern: [12],
-            color: cd1d3d7,
-            child: Container(
-              height: h,
-              width: w,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    getIconSvg(id: 13, color: cIcons),
-                    Text("Добавить товар", style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400),),
-                  ],
-                ),
+    return GestureDetector(
+      onTap: tapAdd,
+      child: Container(
+        child: DottedBorder(
+          borderType: BorderType.RRect,
+          radius: Radius.circular(6),
+          // padding: EdgeInsets.all(12),
+          dashPattern: [12],
+          color: cd1d3d7,
+          child: Container(
+            height: h-6,
+            width: w-6,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  getIconSvg(id: 13, color: cIcons),
+                  Text("Добавить товар", style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400),),
+                ],
               ),
             ),
           ),

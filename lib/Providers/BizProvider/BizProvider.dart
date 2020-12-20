@@ -13,14 +13,20 @@ class BizProvider{
 
     String url =  Server.relevant+"/"+Api.api+"/"+Methods.biz.getBusinesses+"?id=$id";
 
+    Map<String,dynamic> body = Map();
+
+    body['id'] = id;
+    body['token'] = await tokenDB();
+
     print(url);
 
     var response;
-    response = await Rest.get(url);
-    // print("biz" + response.error.toString());
+    response = await Rest.post(url, body, secureDown: false);
 
 
     if(response is Put){
+      print("biz" + response.mess);
+
       return Business.err(response);
     }else{
       return Business.fromJson(response);

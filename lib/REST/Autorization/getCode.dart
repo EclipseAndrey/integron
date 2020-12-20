@@ -16,6 +16,10 @@ Future<Put> getCode (String num)async{
 
   var response;
   response = await Rest.post(urlQuery, body,);
-  return response;
+  if(response is Put) {
+    return response;
+  }else{
+    Put.fromJson(response);
+  }
 
 }

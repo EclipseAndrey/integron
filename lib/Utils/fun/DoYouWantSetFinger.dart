@@ -48,7 +48,7 @@ Future<bool>showDialogWantFinger(BuildContext context)async{
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(text, style: TextStyle(color: Colors.white, fontSize: 18),),
+                Text(text, style: TextStyle(color: cMainText, fontSize: 18),),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -60,7 +60,7 @@ Future<bool>showDialogWantFinger(BuildContext context)async{
                         fingerDB(f: false);
 
                       },
-                      child: Text("Нет", style: TextStyle(color: Colors.white, fontSize: 18),),
+                      child: Text("Нет", style: TextStyle(color: cMainText, fontSize: 18),),
                     ),
                     FlatButton(
                       color: Colors.transparent,
@@ -91,7 +91,7 @@ Future<bool>showDialogWantFinger(BuildContext context)async{
                           closeDialog(context);
                         }
                       },
-                      child: Text("Да", style: TextStyle(color: Colors.white, fontSize: 18),),
+                      child: Text("Да", style: TextStyle(color: cMainBlack, fontSize: 18),),
                     ),
                   ],
                 )

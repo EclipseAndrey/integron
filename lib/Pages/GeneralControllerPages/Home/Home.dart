@@ -263,63 +263,63 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                                 ),
                               ),
                               SizedBox(height: 15,),
-                              Container(
-                                color: Colors.transparent,
-                                height: 50,
-                                width: MediaQuery.of(context).size.width,
-                                child: Stack(
-                                  children: [
-                                    AnimatedPadding(
-                                      duration: Duration(milliseconds: widget.durationAnimatePanel),
-                                      padding:  EdgeInsets.only(left:widget.paddingPanel),
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        width: MediaQuery.of(context).size.width * 0.50,
-                                        child: GestureDetector(
-                                          onTapUp: (d){},
-                                          onTap: (){},
-                                          child: AnimatedContainer(
-                                            duration: Duration(milliseconds: widget.durationAnimatePanel),
-                                            decoration: BoxDecoration(
-                                              color: cBG,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft:
-                                                  Radius.circular(widget.radiusPanelLeft),
-                                                topRight: Radius.circular(widget.radiusPanelRight)
-                                              ),
-                                            ),
-                                            height: 50,
-                                            width:
-                                                MediaQuery.of(context).size.width * 0.30,
-
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Spacer(),
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text("Товары", style: TextStyle(color: widget.colorPanelText1, fontSize: 16- minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                                          ],
-                                        ),
-                                        Spacer(),
-                                        Spacer(),
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text("Услуги", style: TextStyle(color: widget.colorPanelText2, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                                          ],
-                                        ),
-                                        Spacer(),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // Container(
+                              //   color: Colors.transparent,
+                              //   height: 50,
+                              //   width: MediaQuery.of(context).size.width,
+                              //   child: Stack(
+                              //     children: [
+                              //       AnimatedPadding(
+                              //         duration: Duration(milliseconds: widget.durationAnimatePanel),
+                              //         padding:  EdgeInsets.only(left:widget.paddingPanel),
+                              //         child: Container(
+                              //           color: Colors.transparent,
+                              //           width: MediaQuery.of(context).size.width * 0.50,
+                              //           child: GestureDetector(
+                              //             onTapUp: (d){},
+                              //             onTap: (){},
+                              //             child: AnimatedContainer(
+                              //               duration: Duration(milliseconds: widget.durationAnimatePanel),
+                              //               decoration: BoxDecoration(
+                              //                 color: cBG,
+                              //                 borderRadius: BorderRadius.only(
+                              //                   topLeft:
+                              //                     Radius.circular(widget.radiusPanelLeft),
+                              //                   topRight: Radius.circular(widget.radiusPanelRight)
+                              //                 ),
+                              //               ),
+                              //               height: 50,
+                              //               width:
+                              //                   MediaQuery.of(context).size.width * 0.30,
+                              //
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       Row(
+                              //         crossAxisAlignment: CrossAxisAlignment.center,
+                              //         children: [
+                              //           Spacer(),
+                              //           Column(
+                              //             mainAxisAlignment: MainAxisAlignment.center,
+                              //             children: [
+                              //               Text("Товары", style: TextStyle(color: widget.colorPanelText1, fontSize: 16- minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                              //             ],
+                              //           ),
+                              //           Spacer(),
+                              //           Spacer(),
+                              //           Column(
+                              //             mainAxisAlignment: MainAxisAlignment.center,
+                              //             children: [
+                              //               Text("Услуги", style: TextStyle(color: widget.colorPanelText2, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
+                              //             ],
+                              //           ),
+                              //           Spacer(),
+                              //         ],
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         )),

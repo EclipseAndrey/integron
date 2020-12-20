@@ -57,6 +57,28 @@ class ForBiz {
       return Put.fromJson(response);
     }
   }
+   Future<Put> hiddenItem (int id, int hidden)async{
+     String token = await tokenDB();
+     String urlQuery = Server.relevant+"/"+Api.api+"/"+ (hidden == 0?Methods.product.hiddenOn:Methods.product.hiddenOff);
+
+     List<int> ids = [id];
+     Map<String,dynamic> body = Map();
+     body['token'] = token;
+     body['id'] = ids.toString();
+
+
+     print(urlQuery);
+     print(body);
+     var response;
+
+     response = await Rest.post(urlQuery, body);
+
+     if(response is Put) {
+       return response;
+     }else{
+       return Put.fromJson(response);
+     }
+   }
 
    Future<Put> updateProduct (Product product, int id)async{
 

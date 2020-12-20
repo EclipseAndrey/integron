@@ -19,7 +19,7 @@ Widget getIconSvg( {@required int id, Color color, double size, bool nullColor})
 
   String iconName;
 
-  int count = 60;
+  int count = 61;
   if(id < 0||id >= count)id=0;
 
   switch(id){
@@ -83,6 +83,7 @@ Widget getIconSvg( {@required int id, Color color, double size, bool nullColor})
     case 57: iconName =icon("off",check: true); break;
     case 58: iconName =icon("off-default",check: true); break;
     case 59: iconName =icon("minus", check: true); break;
+    case 60: iconName =icon("Stroke"); break;
 
   }
 

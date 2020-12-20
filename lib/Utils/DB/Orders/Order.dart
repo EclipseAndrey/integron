@@ -29,6 +29,7 @@ class Order {
     this.bizName
 });
   factory Order.fromJson(Map<String, dynamic> json){
+    print("BIZ PARSE ${json['ownername']}");
     return Order(
       comment: json['comment']== null?"":json['comment'],
       count: json['count'] == null?0:int.parse(json['count']),

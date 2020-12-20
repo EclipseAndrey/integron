@@ -28,11 +28,13 @@ class FormalizePage extends StatefulWidget {
 class _FormalizePageState extends State<FormalizePage> {
   bool loadDelivery = true;
   bool information = false;
+  bool eMailCheck = false;
   double paddingAll = 18;
   String name;
   String address;
   String num;
   String image;
+  String eMail = "Укажите e-mail";
 
   TextStyle styleLeftColumn = TextStyle(
       color: cMainText,
@@ -51,7 +53,11 @@ class _FormalizePageState extends State<FormalizePage> {
     list = widget.list;
     countProduct = widget.list.length;
     sortList = [];
+
+
+
     for (int i = 0; i < countProduct; i++) {
+      if(widget.list[i].type == 2)eMailCheck = true;
       print("sort $i");
       bool find = false;
       for (int j = 0; j < sortList.length; j++) {
@@ -186,8 +192,9 @@ class _FormalizePageState extends State<FormalizePage> {
           GestureDetector(
             onTap: (){
               ShowBottomSheetEditInformation(context: context, whereSave:
-                  (res)async{
+                  (res, email)async{
                     await LoadDelivery();
+                    eMail = email;
 
                     if(num!=res){
                   await LoadDelivery();
@@ -275,6 +282,19 @@ class _FormalizePageState extends State<FormalizePage> {
 
                           ],
                         ),
+                        eMailCheck?Column(
+                          children: [
+                            SizedBox(height: paddingAll/3,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(eMail, style: TextStyle(color: cPlaceHolder, fontWeight: FontWeight.w400, fontSize: 14,fontStyle: FontStyle.normal,fontFamily: fontFamily),)
+                              ],
+                            ),
+                          ],
+                        ):SizedBox(),
+
                         SizedBox(height: paddingAll/3,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -408,7 +428,7 @@ class _FormalizePageState extends State<FormalizePage> {
                 ],
               ),
               SizedBox(height: paddingAll,),
-              Row(
+              item.type == 2? SizedBox():Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
@@ -652,7 +672,12 @@ class _FormalizePageState extends State<FormalizePage> {
     Widget buttonPay() {
       return GestureDetector(
         onTap: ()async{
-          if(information && (name == null|| address == null)){
+
+          bool checkMail(){
+            if(eMailCheck && eMail == "")return false; else return true;
+          }
+
+          if(information && (name == null|| address == null&& (eMailCheck && eMail == ""))){
             showDialogIntegron(context: context, title: Image.asset("lib/assets/images/dialog-no.png", fit: BoxFit.fill,), body: Text("Информация для доставки не заполнена", textAlign: TextAlign.center,style: TextStyle(color: cMainText, fontFamily: fontFamily,fontSize: 16,fontWeight: FontWeight.w400),));
           }else{
             bool err = false;
@@ -669,7 +694,7 @@ class _FormalizePageState extends State<FormalizePage> {
               for(int j =0;j<list[i].params.length; j++){
                 paramsList.add(list[i].params[j].params[list[i].params[j].select].name);
               }
-              Put put = await OrderProvider.makeOrder(listIds, list[i].counter, params: paramsList, comment: controllerMess.text == ""?null:controllerMess.text);
+              Put put = await OrderProvider.makeOrder(listIds, list[i].counter, params: paramsList, comment: controllerMess.text == ""?null:controllerMess.text, email: eMailCheck?eMail:null);
               if(put.error == 200){
                 BlocProvider.of<CartCubit>(widget.contextBloc).remove(widget.list[i].route);
                 BlocProvider.of<CartCubit>(widget.contextBloc).load();

@@ -27,7 +27,7 @@ class OrderProvider{
 
 
     var response;
-    response = await Rest.post(urlQuery, body);
+    response = await Rest.post(urlQuery, body, secureDown: false);
     if(response is Put){
       return null;
     }else{
@@ -35,7 +35,7 @@ class OrderProvider{
     }
   }
 
-  static Future<Put> makeOrder (List<int>ids, int count, {List<String> params, String comment} )async{
+  static Future<Put> makeOrder (List<int>ids, int count, {List<String> params, String comment,String email} )async{
     String token = await tokenDB();
     String urlQuery = Server.relevant+"/"+Api.api+"/"+Methods.order.makeOrder;
 
@@ -48,6 +48,7 @@ class OrderProvider{
     params != null?body['params'] = params:null;
     // ignore: unnecessary_statements
     comment != null?body['comment'] = comment:null;
+    email != null?body['email'] = email:null;
 
     print(urlQuery);
     print(body.toString());

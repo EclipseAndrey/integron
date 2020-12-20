@@ -12,12 +12,12 @@ class TovarsCubit extends Cubit<TovarsState> {
   TovarsCubit() : super(TovarsLoading()){load();}
 
   load()async{
-    List<BlocSize> tovars = await ProductProvider.getItems(type: 0);
+    List<BlocSize> tovars = await ProductProvider.getItems();
     emit(TovarsComplete(tovarsList: tovars));
   }
 
   search(String input)async {
-    List<BlocSize> tovars = await SearchProvider.search(input, type: 0);
+    List<BlocSize> tovars = await SearchProvider.search(input,);
     if(tovars == null){
       emit(TovarsLoading());
       load();
@@ -27,7 +27,7 @@ class TovarsCubit extends Cubit<TovarsState> {
   }
 
   selectCategory(Category category)async{
-    List<BlocSize> tovars = await CategoryProvider.getItemsCategory(category.route, type: 0);
+    List<BlocSize> tovars = await CategoryProvider.getItemsCategory(category.route, );
     if(tovars == null){
       emit(TovarsLoading());
       load();

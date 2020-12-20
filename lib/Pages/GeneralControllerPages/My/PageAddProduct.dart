@@ -62,12 +62,13 @@ class _AddProductPageState extends State<AddProductPage> {
   List<Category> categories;
 
   String nameProductDefault = "Редактировать название";
-  String nameProduct =  "Редактировать название";
+  String nameProduct =  "";
   String nameProductStep;
   bool editingHeaderState = false;
   TextEditingController controllerHeader = TextEditingController();
 
-  List<Property> properties =  [Property(name: "Краткое описание", value: "Нажмите для редактирования", editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value:"Нажмите для редактирования", editingValue: false)];
+  List<Property> properties =  [Property(name: "Краткое описание", value: "", editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value:"", editingValue: false)];
+  List<Property> propertiesCopy =  [];
   int idEditingProperties;
   Property editingProperty  = Property();
   TextEditingController controllerNameProperty = TextEditingController();
@@ -91,6 +92,21 @@ class _AddProductPageState extends State<AddProductPage> {
   String priceUnitTextStep;
   TextEditingController controllerPriceSumm = TextEditingController();
   TextEditingController controllerPriceUnit = TextEditingController();
+
+
+  String accountName = '';
+  String productName = '';
+  String secretKey = '';
+  String accountOfferCode = "";
+  TextEditingController controllerAccountName = TextEditingController();
+  TextEditingController controllerAccountProductName = TextEditingController();
+  TextEditingController controllerAccountSecretKey = TextEditingController();
+  TextEditingController controllerAccountOfferCode = TextEditingController();
+  bool accountNameEdit = false;
+  bool secretKeyEdit = false;
+  bool accountOfferCodeEdit = false;
+
+
 
 
   bool loading = true;
@@ -119,13 +135,57 @@ class _AddProductPageState extends State<AddProductPage> {
     });
 
   }
+  bool dotCheck (String s){
+    try{
+      double.parse(s);
+      return true;
+    }catch(e){
+      return false;
+    }
 
-  bool checkSumm(String s) {
-    print(s);
-    var stroka = RegExp("([0-9]+)\.([0-9]+)");
-    print(stroka.hasMatch(s));
-    return stroka.hasMatch(s);
   }
+  bool checkSumm(String s) {
+
+
+
+
+    print(s);
+    var stroka = RegExp("^((\d+)\.(\d+))\$");
+    // var stroka = RegExp("^([0-9]+).([0-9]+)\$");
+    var stroka1 = RegExp("^([0-9]+),([0-9]+)\$");
+    var stroka2 = RegExp("^([0-9]+)\$");
+
+    print("==+=="+(dotCheck(s)).toString());
+    print("==+==="+(stroka1.hasMatch(s)).toString());
+    print("==+===="+(stroka2.hasMatch(s)).toString());
+    print("+++++"+(dotCheck(s) || stroka1.hasMatch(s) || stroka2.hasMatch(s)).toString());
+
+    return (dotCheck(s) || stroka1.hasMatch(s) || stroka2.hasMatch(s));
+  }
+
+  double initSumReplace(String s){
+    var stroka = RegExp("^([0-9]+).([0-9]+)\\\$");
+    var stroka1 = RegExp("^([0-9]+),([0-9]+)\\\$");
+    var stroka2 = RegExp("^([0-9]+)\\\$");
+
+    print("==+=="+(dotCheck(s)).toString());
+    print("==+=="+(stroka1.hasMatch(s)).toString());
+    print("==+=="+(stroka2.hasMatch(s)).toString());
+
+    if(dotCheck(s)){
+      s = s.replaceFirst(RegExp(','), '.');
+      return double.parse(s);
+    }else if(stroka1.hasMatch(s)){
+      print("=="+s);
+       s = s.replaceFirst(RegExp(','), '.');
+      print("=="+s);
+      return double.parse(s);
+    }else if(stroka2.hasMatch(s) ) {
+      return int.parse(s).toDouble();
+    }
+
+  }
+
 
   void saveProduct()async{
     if(imagePages.length == 0){
@@ -192,75 +252,104 @@ class _AddProductPageState extends State<AddProductPage> {
           }else if(!checkSumm(priceSummText)){
           dialogErr("Сумма не указана или указана некорректно. Укажите в формате 123.00");
 
-        } else{
-            try{
-              double.parse(priceSummText);
+        } else if(checkStudyParams()) {
+          {
+            // try {
+              initSumReplace(priceSummText);
               print("OK");
               showDialogLoading(context);
               responsePhoto = [];
-              for(int i = 0; i < imagelocal.length; i++){
+              for (int i = 0; i < imagelocal.length; i++) {
                 await uploadPhoto(imagelocal[i]);
               }
-              if(widget.edit){
-                List<String> ststep = []..addAll(item.images)..addAll(responsePhoto);
+              if (widget.edit) {
+                List<String> ststep = []..addAll(item.images)..addAll(
+                    responsePhoto);
                 responsePhoto = ststep;
               }
 
+              propertiesCopy = [];
+              print('1property ${properties.length} copy ${propertiesCopy.length}');
               String steptx = properties[1].value;
               String steptxS = properties[0].value;
+              propertiesCopy.addAll(properties) ;
+              print('2property ${properties.length} copy ${propertiesCopy.length}');
+
               properties.removeAt(0);
               properties.removeAt(0);
+              print('3property ${properties.length} copy ${propertiesCopy.length}');
+
               Product productFormForSend = Product(
-
-                images: responsePhoto,
-                owner: null,
-                name: nameProduct,
-                ownerName: null,
-                catPath: [],
-                text: steptx,
-                fullText: steptxS,
-                route: widget.edit?item.route:null,
-                price: double.parse(priceSummText),
-                type: _type,
-                unit: priceUnitText,
-                detail: [],
-                delivery: "1",
-                image: null,
-                property: properties,
-                params: paramsList,
-                cat: _category
-
+                  images: responsePhoto,
+                  owner: null,
+                  name: nameProduct,
+                  ownerName: null,
+                  catPath: [],
+                  text: steptx,
+                  fullText: steptxS,
+                  route: widget.edit ? item.route : null,
+                  price: double.parse(priceSummText),
+                  type: _type,
+                  unit: priceUnitText,
+                  detail: [],
+                  delivery: "1",
+                  image: null,
+                  property: properties,
+                  params: paramsList,
+                  cat: _category,
+                  accountName: accountName,
+                accountSecretKey: secretKey,
+                offerCode:  accountOfferCode,
               );
+              print('4property ${properties.length} copy ${propertiesCopy.length}');
+
+              properties = [];
+              properties.addAll(propertiesCopy);
+
+              setState(() {});
+
+              print('5property ${properties.length} copy ${propertiesCopy.length}');
+
               //todo edit send
-              if(!widget.edit) {
-                Put res = await ProductProvider.forBiz.addProduct(productFormForSend);
+              if (!widget.edit) {
+                Put res = await ProductProvider.forBiz.addProduct(
+                    productFormForSend);
                 closeDialog(context);
-                if(res==null?0:res.error == 200){
+                if (res == null ? 0 : res.error == 200) {
                   closeDialog(context);
                   dialogErr("Товар успешно добавлен");
-                }else{
-                  closeDialog(context);
-                  dialogErr("Что - то пошло не так, попробуйте позже");
+                } else {
+                  dialogErr(res.mess);
                 }
-              }else{
-                Put res = await ProductProvider.forBiz.updateProduct(productFormForSend, widget.id);
+              } else {
+                Put res = await ProductProvider.forBiz.updateProduct(
+                    productFormForSend, widget.id);
                 closeDialog(context);
-                if(res==null?0:res.error == 200){
+                if (res == null ? 0 : res.error == 200) {
                   closeDialog(context);
                   dialogErr("Товар успешно изменен");
-                }else{
+                } else {
                   closeDialog(context);
-                  closeDialog(context);
-                  dialogErr("Что - то пошло не так, попробуйте позже");
+                  dialogErr(res.mess);
                 }
               }
-
-            }catch(e){
-              print(e);
-            }
+            // } catch (e) {
+            //   print(e);
+            //   print(e);
+            // }
           }
+        }else{
+          dialogErr("Похоже вы не указали параметры аккаунта GetCourse");
+        }
       }
     }
+  }
+
+  bool checkStudyParams(){
+    if(_type == 2){
+      if(accountName !="" && secretKey !=""&&accountOfferCode != ''){return true;}else{return false;}
+
+    }else{return true;}
   }
 
   dialogErr(String text)async{
@@ -361,7 +450,7 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   selectType()async{
-    List<String> list = ["Товары","Услуги"];
+    List<String> list = ["Товары","Услуги","Обучение"];
     await ShowBottoomSheetSelectForIndex(
       context: context,
       items:list,
@@ -513,7 +602,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
         properties[idEditingProperties] = editingProperty;
       }else {
-        if ((properties[idEditingProperties].name == "" && properties[idEditingProperties].value == "")||(properties[idEditingProperties].name == null && properties[idEditingProperties].value == null)) {
+        if (((properties[idEditingProperties].name == "" && properties[idEditingProperties].value == "")||(properties[idEditingProperties].name == null && properties[idEditingProperties].value == null))&&(idEditingProperties != 0 && idEditingProperties != 1)) {
           print("3333");
 
           deleteProperty(
@@ -598,11 +687,47 @@ class _AddProductPageState extends State<AddProductPage> {
 
   addImageDetails(){}
 
+  saveAccountSecretKey(){
+    secretKeyEdit = false;
+    setState(() {});
+  }
+
+  saveAccountName(){
+    accountNameEdit = false;
+    setState(() {});
+  }
+
+  editAccountSecretKey(){
+    saveStats();
+    secretKeyEdit = true;
+    setState(() {});
+  }
+
+  editAccountName(){
+    saveStats();
+    accountNameEdit = true;
+    setState(() {});
+  }
+
+  editAccountOfferCode(){
+    saveStats();
+    accountOfferCodeEdit = true;
+    setState((){});
+  }
+
+  saveAccountOfferCode(){
+    accountOfferCodeEdit = false;
+    setState((){});
+  }
+
   saveStats(){
     saveHeader();
     savePrice();
     saveProperty();
     saveParams();
+    saveAccountName();
+    saveAccountSecretKey();
+    saveAccountOfferCode();
   }
 
   void load()async{
@@ -643,6 +768,17 @@ class _AddProductPageState extends State<AddProductPage> {
     });
     controllerPriceSumm.addListener(() {
         priceSummText = controllerPriceSumm.text;
+    });
+
+    controllerAccountName.addListener(() {
+      accountName = controllerAccountName.text;
+    });
+
+    controllerAccountSecretKey.addListener(() {
+      secretKey = controllerAccountSecretKey.text;
+    });
+    controllerAccountOfferCode.addListener(() {
+      accountOfferCode = controllerAccountOfferCode.text;
     });
 
     if(!widget.edit) {
@@ -713,6 +849,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   Price(),
                   ConstructorParams(),
                   ConstructorProperty(),
+                  _type == 2?ParamsStudy():SizedBox(),
                 ],
               ),
             ),
@@ -910,7 +1047,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
 
     String typeWord(int type){
-      if(type == 0){return "Товары";}else if(type == 1){return "Услуги";}else{return "Выберите тип";}
+      if(type == 0){return "Товары";}else if(type == 1){return "Услуги";}else if(type == 2){return "Обучение";}else{return "Выберите тип";}
     }
 
     if(_type == null){
@@ -1041,7 +1178,7 @@ class _AddProductPageState extends State<AddProductPage> {
                               width: MediaQuery.of(context).size.width*0.90,
 
                               child: Text(
-                                properties[index].value,
+                                properties[index].value == ""?"Нажмите для редактирования":properties[index].value,
                                 style: TextStyle(
                                     color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
                               ),
@@ -1151,7 +1288,7 @@ class _AddProductPageState extends State<AddProductPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              child: Text(nameProduct, style: TextStyle(color: Color.fromRGBO(88,148,188,1), fontSize:  24, fontFamily:  fontFamily, fontWeight:  FontWeight.w400, fontStyle:  FontStyle.normal),)),
+              child: Text(nameProduct == ""?nameProductDefault:nameProduct, style: TextStyle(color: Color.fromRGBO(88,148,188,1), fontSize:  24, fontFamily:  fontFamily, fontWeight:  FontWeight.w400, fontStyle:  FontStyle.normal),)),
         ],
       ),
     );
@@ -1457,6 +1594,190 @@ class _AddProductPageState extends State<AddProductPage> {
 
 
 
+  }
+
+  Widget editStudy(TextEditingController controller,  String head, String hint){
+    return Column(
+      children: [
+        Divider(color: cDefault, ),
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(
+                  color:  Color.fromRGBO(141, 205, 224, 1),
+                  width: 2
+              )
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+
+                Row(
+                  mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      head,
+                      style: TextStyle(color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+                    ),
+                    GestureDetector(
+                        onTap: (){
+                          saveStats();
+                          },
+                        child: Container(child: Icon(Icons.check, color: c6287A1, size: 24,))),
+
+                  ],
+                ),
+                Container(
+                  //width: MediaQuery.of(context).size.width-24-10,
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromRGBO(153, 155, 158, 1),
+                      ),
+                      hintText: hint,
+                    ),
+                    style: TextStyle(
+                        color: cMainText,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: fontFamily
+                    ),
+                    controller: controller,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget ParamsStudy(){
+    return Column(
+      children: [
+        Divider(color: cDefault, ),
+
+        accountNameEdit? editStudy(controllerAccountName, "Имя аккаунта GetCourse", "Имя"):GestureDetector(
+          onTap:(){
+            editAccountName();
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+                    child: Text(
+                      "Имя аккаунта GetCourse",
+                      style: TextStyle(
+                          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+                    ),
+                  ),
+                  SizedBox(height:  4,),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+
+                    child: Text(
+                      accountName == ""?"Нажмите для редактирования":accountName,
+                      style: TextStyle(
+                          color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
+                    ),
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+        ),
+        Divider(color: cDefault, ),
+
+        secretKeyEdit? editStudy(controllerAccountSecretKey, "Ключ аккаунта", "Ключ"):GestureDetector(
+          onTap: (){
+            editAccountSecretKey();
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+                    child: Text(
+                      "Секретный ключ аккаунта",
+                      style: TextStyle(
+                          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+                    ),
+                  ),
+                  SizedBox(height:  4,),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+
+                    child: Text(
+                      secretKey == ""?"Нажмите для редактирования":secretKey,
+                      style: TextStyle(
+                          color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
+                    ),
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+        ),
+        Divider(color: cDefault, ),
+
+        accountOfferCodeEdit? editStudy(controllerAccountOfferCode, "Код предложения", "Код"):GestureDetector(
+          onTap: (){
+            editAccountOfferCode();
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+                    child: Text(
+                      "Код предложкния",
+                      style: TextStyle(
+                          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+                    ),
+                  ),
+                  SizedBox(height:  4,),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+
+                    child: Text(
+                      accountOfferCode == ""?"Нажмите для редактирования":secretKey,
+                      style: TextStyle(
+                          color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
+                    ),
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
 }

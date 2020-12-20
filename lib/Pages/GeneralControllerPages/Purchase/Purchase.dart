@@ -63,11 +63,12 @@ class _CartState extends State<Cart> {
           alignment: Alignment.bottomCenter,
           child: Column(
             children: [
-              HeaderCart(),
+              //HeaderCart(),
               Container(
                   height: MediaQuery.of(context).size.height - 80,
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
+                    physics: NeverScrollableScrollPhysics(),
                     children: [
                       // BlocBuilder<CartCubit,CartState>(
                       //     builder: (context, state){

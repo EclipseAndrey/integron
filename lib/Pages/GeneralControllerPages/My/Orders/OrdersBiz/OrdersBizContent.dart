@@ -44,13 +44,13 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
             height: MediaQuery.of(context).size.height-30,
             child: Column(
               children: [
-                Padding(
-                  padding:  EdgeInsets.all(paddingAll),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [head()],
-                  ),
-                ),
+                // Padding(
+                //   padding:  EdgeInsets.all(paddingAll),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [head()],
+                //   ),
+                // ),
                 Container(
                   height: MediaQuery.of(context).size.height-140,
                   width: MediaQuery.of(context).size.width - paddingAll*2,
@@ -61,7 +61,9 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
 
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: List.generate(widget.orders.length, (indexAll) => Column(
+                          children: List.generate(widget.orders.length, (indexAll) {
+                            print("${widget.orders[indexAll].bizName}");
+                            return Column(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(top: 18.0),
@@ -88,7 +90,7 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
                               ),
                               Column( children: List.generate(1, (index) => ItemCart(indexAll, index)),),
                             ],
-                          )),
+                          );}),
                         ),
                         SizedBox(height: 100,),
                       ],
