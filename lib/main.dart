@@ -8,11 +8,14 @@ import 'Utils/DB/Products/Product.dart';
 import 'REST/Category/getItemsCategory.dart';
 import 'REST/SecureConnection/DBSecure.dart';
 import 'REST/SecureConnection/DataSecure.dart';
+import 'package:integron/Utils/fun/Logs.dart';
+
 
 List<Product> cartList = [];
 // double BALANCE = 0;
 
 void main() {
+
 
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -52,13 +55,19 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
 
-  @override
-  void initState() {
-   // load();
+  start()async{
+    printL("Hello Logs");
+    await sendLogs();
+    // load();
     cartList = [];
     DataSecureDB(dataSecure: DataSecure(0 ,"null"));
-   // ExitAccount();
+    // ExitAccount();
     AutoRoutes(context);
+  }
+
+  @override
+  void initState() {
+    start();
   }
 
   @override

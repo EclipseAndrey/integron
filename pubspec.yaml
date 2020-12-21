@@ -48,7 +48,7 @@ dependencies:
 #  flutter_multiple_image_picker: ^0.0.1
   focused_menu: ^1.0.1
   dotted_border: ^1.0.6
-  image_picker: ^0.6.7+14
+  image_picker: ^0.6.7+17
   flutter_launcher_icons: ^0.8.1
   flutter_bloc: ^6.1.1
   equatable: ^1.2.5

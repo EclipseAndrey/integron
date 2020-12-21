@@ -18,7 +18,7 @@ import 'package:integron/Utils/fun/DialogIntegron.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/Utils/fun/ExitAccount.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:integron/Utils/fun/Logs.dart';
 import 'Buisness/Buisness.dart';
 import 'Orders/OrdersBiz/OrdersBiz.dart';
 import 'Orders/OrdersMy/OrdersMy.dart';
@@ -110,16 +110,31 @@ class _MyPageState extends State<MyPage> {
 
   setImage()async{
     final picker = ImagePicker();
-
     String path = "";
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    PickedFile pickedFile;
+    printL("Запуск галереи");
+    try {
+      pickedFile = await picker.getImage(
+
+        source: ImageSource.gallery,
+        maxWidth: 2000,
+        maxHeight: 2000,
+        imageQuality: 100,
+
+      );
+      printL("Успешно выбраны фото");
+    }catch(e){
+      //todo send logs
+      printL(e);
+      // Clipboard.setData(ClipboardData(text: copyText));
+    }
 
     setState(() {});
       if (pickedFile != null) {
         path = pickedFile.path;
 
         String url = "http://194.226.171.139:14880/apitest.php/uploadPhoto";
-
+        printL("Upload photo on Server");
         var request = http.MultipartRequest('POST', Uri.parse(url));
         request.files.add(
             http.MultipartFile(
@@ -135,20 +150,22 @@ class _MyPageState extends State<MyPage> {
         // });
         //print("req "+ res.request.toString());
 
+
         res.stream.transform(utf8.decoder).listen((value) async{
           print(value);
           await UserProvider.setPhoto(json.decode(value)['url']);
           Load();
           initHeader();
 
-          print("load start");
+
         });
+        printL("Upload photo on Server complete");
 
 
 
 
       } else {
-        print('No image selected.');
+        printL('No image selected.');
       }
 
   }
