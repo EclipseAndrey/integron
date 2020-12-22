@@ -15,6 +15,7 @@ import 'package:integron/Utils/fun/BottomDialogs/BotomSheetEditInformatin.dart';
 import 'package:integron/Utils/fun/DialogIntegron.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/main.dart';
+import 'package:integron/Utils/fun/Logs.dart';
 
 class FormalizePage extends StatefulWidget {
   BuildContext contextBloc;
@@ -711,9 +712,14 @@ class _FormalizePageState extends State<FormalizePage> {
               }
               Put put = await OrderProvider.makeOrder(listIds, list[i].counter, params: paramsList, comment: controllerMess.text == ""?null:controllerMess.text, email: eMailCheck?eMail:null);
               if(put.error == 200){
-                BlocProvider.of<CartCubit>(widget.contextBloc).remove(widget.list[i].route);
-                BlocProvider.of<CartCubit>(widget.contextBloc).load();
-                widget.list.removeAt(i);
+                try {
+                  BlocProvider.of<CartCubit>(widget.contextBloc).remove(
+                      widget.list[i].route);
+                  BlocProvider.of<CartCubit>(widget.contextBloc).load();
+                  widget.list.removeAt(i);
+                }catch(e){
+                  printL("Formalize add order"+e.toString());
+                }
               }else{
                 i = list.length;
                 err = true;
