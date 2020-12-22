@@ -8,6 +8,7 @@ import 'package:integron/Pages/Login2/CodePages/EnterCodePage.dart';
 import 'Utils/DB/auto.dart';
 import 'Utils/DB/codeDB.dart';
 import 'Utils/DB/tokenDB.dart';
+import 'package:integron/Utils/fun/Logs.dart';
 
 void AutoRoutes(BuildContext context)async {
   void tokenErr()async{
@@ -33,7 +34,7 @@ void AutoRoutes(BuildContext context)async {
       tokenErr();
     }
   }
-
+  await sendLogs();
   print("AutoRoutes");
   bool auto = await autoDB();
   if(auto){

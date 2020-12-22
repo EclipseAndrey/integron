@@ -57,7 +57,7 @@ class _SplashState extends State<Splash> {
 
   start()async{
     printL("Hello Logs");
-    await sendLogs();
+
     // load();
     cartList = [];
     DataSecureDB(dataSecure: DataSecure(0 ,"null"));

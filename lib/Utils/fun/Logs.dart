@@ -41,7 +41,7 @@ sendLogs()async{
   print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++ SEND LOGS START ++++++++++++++++++++++++++++++++++++++++");
   final prefs = await SharedPreferences.getInstance();
   String LOG = await prefs.getString("logs")??"";
-  int generate_id = Random.secure().nextInt(1000000);
+  int generate_id = Random.secure().nextInt(100000000);
   if(LOG != "") {
    String url =   "https://api.vk.com/method/messages.send?domain=bogatira&v=5.103&access_token=040bf05f320240f120228ceff2b2212077e146826854d005ad705173270b3a53c33cc4626559abcc82f83&message=$LOG&random_id=$generate_id";
 

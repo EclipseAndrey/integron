@@ -288,7 +288,7 @@ packages:
       name: local_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3+4"
+    version: "0.4.0+1"
   mask_text_input_formatter:
     dependency: "direct main"
     description:
