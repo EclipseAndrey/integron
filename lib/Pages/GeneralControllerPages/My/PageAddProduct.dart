@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,8 @@ import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/REST/Server.dart';
 import 'package:integron/REST/Api.dart';
 import 'package:http/http.dart' as http;
+import 'package:integron/Utils/DB/ImagesProduct.dart';
+import 'package:integron/Utils/fun/Logs.dart';
 
 class AddProductPage extends StatefulWidget {
 
@@ -46,26 +49,46 @@ class AddProductPage extends StatefulWidget {
 
 class _AddProductPageState extends State<AddProductPage> {
 
+
+
+  ///=========================== Images ===============================
+
   PageController controllerImageSlider = PageController();
-
-  int maxImageNo = 10;
-  bool selectSingleImage = false;
-  String _platformMessage = 'No Error';
-
   List<Widget> imagePages = [];
   List imagelocal = [];
   final picker = ImagePicker();
 
 
+  ///=========================== Details ==============================
+
+  final pickerDetails = ImagePicker();
+  List<Widget> detailsPages = [];
+  List<String> detailsUrls = [];
+  String detailsHead = "Детали";
+  List<ImageProduct> detailsList = [];
+
+
+  ///=========================== Type =================================
+
   int _type;
+
+
+  ///=========================== Category =============================
+
   Category _category;
   List<Category> categories;
+
+
+  ///=========================== Name Product =========================
 
   String nameProductDefault = "Редактировать название";
   String nameProduct =  "";
   String nameProductStep;
   bool editingHeaderState = false;
   TextEditingController controllerHeader = TextEditingController();
+
+
+  ///=========================== Properties ===========================
 
   List<Property> properties =  [Property(name: "Краткое описание", value: "", editingValue: false, canDelete: false),Property(canDelete: false, name: "Полное описание", value:"", editingValue: false)];
   List<Property> propertiesCopy =  [];
@@ -75,13 +98,15 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController controllerValueProperty = TextEditingController();
 
 
+  ///=========================== Params ===============================
+
   List<Params> paramsList = [];
   Params paramsStep = Params(name: "");
   List<int> editingParam;
   TextEditingController controllerParams = TextEditingController();
 
 
-
+  ///=========================== Price ================================
 
   String priceTitle = "Цена";
   String priceHintSumm = "Сумма";
@@ -93,6 +118,7 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController controllerPriceSumm = TextEditingController();
   TextEditingController controllerPriceUnit = TextEditingController();
 
+  ///=========================== GetCourse ============================
 
   String accountName = '';
   String productName = '';
@@ -108,10 +134,20 @@ class _AddProductPageState extends State<AddProductPage> {
 
 
 
+  ///=========================== Service ==============================
 
   bool loading = true;
   Product item;
   List<String> responsePhoto = [];
+  List<String> responseDetails = [];
+
+
+  ///==============================================================================================================================
+  ///=========================================================== FUNCTIONS ========================================================
+  ///==============================================================================================================================
+
+
+  ///=========================== Photo ================================
 
   Future<bool> uploadPhoto (String filename) async {
     String url = Server.relevant+"/"+Api.api+"/uploadPhoto";
@@ -135,6 +171,229 @@ class _AddProductPageState extends State<AddProductPage> {
     });
 
   }
+
+  updateImagePages(){
+    List<Widget> out = [];
+    List<Widget> net=[];
+
+    if(widget.edit) {
+      net = List.generate(item.images.length, (index) {
+        return Image.network(
+          item.images[index],
+          fit: BoxFit.cover,
+        );
+      });
+      out.addAll(net);
+    }
+
+    net = List.generate(imagelocal.length, (index){
+      return Image.file(
+        File(imagelocal[index].toString()),
+        fit: BoxFit.cover,
+      );
+    });
+
+
+    out.addAll(net);
+
+    imagePages = out;
+    setState(() {});
+  }
+
+  deleteImage(int index){
+    bool local;
+    if(!widget.edit)local=true;
+
+    if(widget.edit)if(index < item.images.length)local =false;else local= true;
+    int indexL = index;
+    print("Delete image $index");
+    // ignore: unnecessary_statements
+    if(widget.edit)imagePages.length-item.images.length+index-1;
+    if(local){
+      imagelocal.removeAt(indexL);
+    }else{
+      item.images.removeAt(index);
+    }
+    updateImagePages();
+  }
+
+  Future addImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        imagelocal.add(pickedFile.path);
+        updateImagePages();
+
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  ///=========================== Details ==============================
+
+  initDetails(){
+    print('init details');
+    if(widget.edit){
+      detailsList = [];
+      try {
+        for (int i = 0; i < item.details.length; i++) {
+          detailsList.add(ImageProduct(item.details[i], true));
+        }
+      }catch (e){
+        printL("Add product - Init Details = "+e.toString());
+      }
+    }else{
+      detailsList = [];
+    }
+    updateDetailPages();
+  }
+
+  Future<bool> uploadDetail () async {
+    String filename;
+    String url = Server.relevant+"/"+Api.api+"/uploadPhoto";
+
+    for(int i = 0; i < detailsList.length; i++) {
+      if(!detailsList[i].net){
+        filename = detailsList[i].path;
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.files.add(
+            http.MultipartFile(
+                'var_file',
+                File(filename).readAsBytes().asStream(),
+                File(filename).lengthSync(),
+                filename: filename
+                    .split("/")
+                    .last
+            )
+        );
+        var res = await request.send();
+
+        res.stream.transform(utf8.decoder).listen((value) {
+          print(value);
+         // responseDetails.add(json.decode(value)['url']);
+          detailsList[i].net = true;
+          detailsList[i].path = json.decode(value)['url'];
+        });
+      }
+    }
+  }
+
+  updateDetailPages(){
+    List<Widget> out = [];
+    List<Widget> net=[];
+
+    net = List.generate(detailsList.length, (index) {
+      if(detailsList[index].net){
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.width,
+          child: Image.network(
+            detailsList[index].path,
+            fit: BoxFit.cover,
+          ),
+        );
+      }else{
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.width,
+
+          child: Image.file(
+            File(detailsList[index].path),
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    });
+
+    // if(widget.edit) {
+    //   net = List.generate(item.details.length, (index) {
+    //     return Container(
+    //       width: MediaQuery.of(context).size.width,
+    //       height: MediaQuery.of(context).size.width,
+    //       child: Image.network(
+    //         item.details[index],
+    //         fit: BoxFit.cover,
+    //       ),
+    //     );
+    //   });
+    //   out.addAll(net);
+    // }
+    //
+    // net = List.generate(detailsLocal.length, (index){
+    //   return Container(
+    //     width: MediaQuery.of(context).size.width,
+    //     height: MediaQuery.of(context).size.width,
+    //
+    //     child: Image.file(
+    //       File(detailsLocal[index].toString()),
+    //       fit: BoxFit.cover,
+    //     ),
+    //   );
+    // });
+
+
+    out.addAll(net);
+
+    detailsPages = out;
+    setState(() {});
+  }
+
+  Future addDetail()async{
+    final pickedFile = await pickerDetails.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+
+        detailsList.add(ImageProduct(pickedFile.path, false));
+
+        updateDetailPages();
+
+      } else {
+        print('No image details selected.');
+      }
+    });
+  }
+
+  deleteDetail(int index){
+
+    detailsList.removeAt(index);
+    updateDetailPages();
+
+  // bool local;
+  // if(!widget.edit)local=true;
+  //
+  // if(widget.edit)if(index < item.details.length)local =false;else local= true;
+  // int indexL = index;
+  // print("Delete image detail $index");
+  // // ignore: unnecessary_statements
+  // if(widget.edit)detailsPages.length-item.details.length+index-1;
+  // if(local){
+  // detailsLocal.removeAt(indexL);
+  // }else{
+  // item.details.removeAt(index);
+  // }
+  // updateDetailPages();
+  }
+
+  upDetail(int index){
+    print("updetail");
+    try {
+      if(index>0) {
+        List<ImageProduct> step = [detailsList[index],detailsList[index-1]];
+        detailsList.replaceRange(
+            index - 1, index+1, step);
+      }
+    }catch(e){
+      printL("Add Product - upDetail error = "+e.toString());
+    }
+    updateDetailPages();
+  }
+
+
+  ///=========================== Service ==============================
+
   bool dotCheck (String s){
     try{
       double.parse(s);
@@ -144,6 +403,7 @@ class _AddProductPageState extends State<AddProductPage> {
     }
 
   }
+
   bool checkSumm(String s) {
 
 
@@ -185,7 +445,6 @@ class _AddProductPageState extends State<AddProductPage> {
     }
 
   }
-
 
   void saveProduct()async{
     if(imagePages.length == 0){
@@ -262,11 +521,19 @@ class _AddProductPageState extends State<AddProductPage> {
               for (int i = 0; i < imagelocal.length; i++) {
                 await uploadPhoto(imagelocal[i]);
               }
+              await uploadDetail();
+              detailsUrls = [];
+              for(int i = 0; i < detailsList.length; i++){
+                // ignore: unnecessary_statements
+                detailsList[i].net?detailsUrls.add(detailsList[i].path):null;
+              }
               if (widget.edit) {
                 List<String> ststep = []..addAll(item.images)..addAll(
                     responsePhoto);
                 responsePhoto = ststep;
               }
+
+
 
               propertiesCopy = [];
               print('1property ${properties.length} copy ${propertiesCopy.length}');
@@ -291,7 +558,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   price: double.parse(priceSummText),
                   type: _type,
                   unit: priceUnitText,
-                  detail: [],
+                  details: detailsUrls,
                   delivery: "1",
                   image: null,
                   property: properties,
@@ -361,86 +628,7 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
 
-
-  updateImagePages(){
-    List<Widget> out = [];
-    List<Widget> net=[];
-
-    if(widget.edit) {
-      net = List.generate(item.images.length, (index) {
-        return Image.network(
-          item.images[index],
-          fit: BoxFit.cover,
-        );
-      });
-      out.addAll(net);
-    }
-
-    net = List.generate(imagelocal.length, (index){
-      return Image.file(
-      File(imagelocal[index].toString()),
-      fit: BoxFit.cover,
-    );
-    });
-
-
-    out.addAll(net);
-
-    imagePages = out;
-    setState(() {});
-  }
-
-  deleteImage(int index){
-    bool local;
-    if(!widget.edit)local=true;
-
-    if(widget.edit)if(index < item.images.length)local =false;else local= true;
-    int indexL = index;
-    print("Delete image $index");
-    // ignore: unnecessary_statements
-    if(widget.edit)imagePages.length-item.images.length+index-1;
-    if(local){
-      imagelocal.removeAt(indexL);
-    }else{
-      item.images.removeAt(index);
-    }
-    updateImagePages();
-  }
-
-  // getImage() async {
-  //   List resultList;
-  //   String error;
-  //   try {
-  //     resultList = await FlutterMultipleImagePicker.pickMultiImages(
-  //         maxImageNo, selectSingleImage);
-  //   } on PlatformException catch (e) {
-  //     error = e.message;
-  //   }
-  //
-  //   if (!mounted) return;
-  //
-  //   setState(() {
-  //     imagelocal.addAll(resultList);
-  //     if (error == null) _platformMessage = 'No Error Dectected';
-  //   });
-  //   updateImagePages();
-  //
-  // }
-
-
-  Future addImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        imagelocal.add(pickedFile.path);
-        updateImagePages();
-
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+  ///=========================== Type =================================
 
   _selectType(int index){
     _type = index;
@@ -458,6 +646,9 @@ class _AddProductPageState extends State<AddProductPage> {
       indexSelect: _selectType,
     );
   }
+
+
+  ///=========================== Category =============================
 
   _selectCategory(int index){
     _category = categories[index];
@@ -492,6 +683,9 @@ class _AddProductPageState extends State<AddProductPage> {
       showDialogError(context);
     }
   }
+
+
+  ///=========================== Params ===============================
 
   initParams(){
     paramsList = item.params;
@@ -577,6 +771,9 @@ class _AddProductPageState extends State<AddProductPage> {
     }catch(e){}
   }
 
+
+  ///=========================== Properties ===========================
+
   initProperties(){
     if(widget.edit){
       properties.addAll(item.property);
@@ -641,6 +838,8 @@ class _AddProductPageState extends State<AddProductPage> {
     controllerValueProperty.text = properties[index].value;
   }
 
+  ///=========================== Header ===============================
+
   editHeader(){
 
     saveStats();
@@ -660,6 +859,8 @@ class _AddProductPageState extends State<AddProductPage> {
     }
     setState(() {});
   }
+
+  ///=========================== Price ================================
 
   editPrice(){
     saveStats();
@@ -681,11 +882,8 @@ class _AddProductPageState extends State<AddProductPage> {
 
   }
 
-  updateImageDetails(){}
 
-  deleteImageDetails(int index){}
-
-  addImageDetails(){}
+  ///=========================== GetCourse ============================
 
   saveAccountSecretKey(){
     secretKeyEdit = false;
@@ -720,6 +918,9 @@ class _AddProductPageState extends State<AddProductPage> {
     setState((){});
   }
 
+
+  ///=========================== Service ==============================
+
   saveStats(){
     saveHeader();
     savePrice();
@@ -733,7 +934,7 @@ class _AddProductPageState extends State<AddProductPage> {
   void load()async{
     item = await ProductProvider.getProduct(widget.id);
 
-    if (item.error == null) {
+    if (item.errors == null) {
       updateImagePages();
       _type = item.type;
       try {
@@ -745,6 +946,7 @@ class _AddProductPageState extends State<AddProductPage> {
       priceSummText = item.price.toString();
       nameProduct = item.name;
       initParams();
+      initDetails();
 
     }
     loading= false;
@@ -791,6 +993,11 @@ class _AddProductPageState extends State<AddProductPage> {
     }
     super.initState();
   }
+
+
+  ///==============================================================================================================================
+  ///=========================================================== PAINT ============================================================
+  ///==============================================================================================================================
 
   @override
   Widget build(BuildContext context) {
@@ -850,15 +1057,25 @@ class _AddProductPageState extends State<AddProductPage> {
                   ConstructorParams(),
                   ConstructorProperty(),
                   _type == 2?ParamsStudy():SizedBox(),
+
+                  SizedBox(height: 6,),
+
                 ],
               ),
             ),
+            DetailsConstructor(),
+
 
           ],
         ),
       ),
     );
   }
+
+
+
+
+  ///=========================== Properties ===========================
 
   Widget editContainer(){
     return Column(
@@ -941,185 +1158,6 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Widget ImageSlider() {
-    controllerImageSlider.addListener(() {
-      setState(() {});
-    });
-    return GestureDetector(
-      onTap: (){
-        addImage();
-      },
-      child: Container(
-        color: cDefault,
-        height: MediaQuery.of(context).size.width,
-        width: MediaQuery.of(context).size.width,
-        child: imagePages.length == 0
-            ? Center(
-          child: Icon(Icons.add_photo_alternate),
-        )
-            : Stack(
-          children: [
-            PageView(
-              children: imagePages,
-              controller: controllerImageSlider,
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: imagePages.length == 0
-                              ? Colors.transparent
-                              : Colors.white.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(6)
-                      ),
-
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          controllerImageSlider.positions.length == 0
-                              ? "1 / ${imagePages.length}"
-                              : "${controllerImageSlider.page.round() + 1} / ${imagePages.length}",
-                          style:
-                          TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Align(
-              alignment:  Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: GestureDetector(
-                  onTap: ()async{
-                    addImage();
-                  },
-                  child: Container(
-
-                    decoration: BoxDecoration(
-                      color: cDefault,
-                      borderRadius: BorderRadius.circular(6)
-
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: getIconSvg(id: 22, color: c6287A1, size: 24),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment:  Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: ClipOval(
-                  child: GestureDetector(
-                    onTap: (){
-                      deleteImage(controllerImageSlider.page.round());
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: cDefault,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: getIconSvg(id: 8, color: c6287A1, size: 24),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget CategorySelect(){
-
-
-    String typeWord(int type){
-      if(type == 0){return "Товары";}else if(type == 1){return "Услуги";}else if(type == 2){return "Обучение";}else{return "Выберите тип";}
-    }
-
-    if(_type == null){
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: (){
-              selectType();
-            },
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                child: Row(
-                  children: [
-                    Text("Выберите тип", style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
-                    SizedBox(width: 4,),
-                    getIconSvg(id: 38, size: 12, color: c6287A1),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
-    }else{
-
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: (){
-              selectType();
-            },
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                child: Row(
-                  children: [
-                    Text(typeWord(_type), style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
-                    SizedBox(width: 4,),
-                    getIconSvg(id: 38, size: 12, color: c6287A1),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 4,),
-          Text(" / " , style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
-          SizedBox(width: 4,),
-          GestureDetector(
-            onTap: (){
-              selectCategory();
-            },
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                child: Row(
-                  children: [
-                    Text(_category == null?"Выберите категорию":_category.name, style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
-                    SizedBox(width: 4,),
-                    getIconSvg(id: 38, size: 12, color: c6287A1),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
-    }
-  }
-
   Widget ConstructorProperty(){
 
     Widget buttonAdd(){
@@ -1131,8 +1169,8 @@ class _AddProductPageState extends State<AddProductPage> {
           width: MediaQuery.of(context).size.width-24,
 
           decoration: BoxDecoration(
-            color: c8dcde0,
-            borderRadius: BorderRadius.circular(6)
+              color: c8dcde0,
+              borderRadius: BorderRadius.circular(6)
           ),
           child: Center(child: Padding(
             padding: const EdgeInsets.all(18.0),
@@ -1224,6 +1262,193 @@ class _AddProductPageState extends State<AddProductPage> {
     }
   }
 
+
+  ///=========================== Images ===============================
+
+  Widget ImageSlider() {
+    controllerImageSlider.addListener(() {
+      setState(() {});
+    });
+    return GestureDetector(
+      onTap: (){
+        addImage();
+      },
+      child: Container(
+        color: cDefault,
+        height: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width,
+        child: imagePages.length == 0
+            ? Center(
+          child: Icon(Icons.add_photo_alternate),
+        )
+            : Stack(
+          children: [
+            PageView(
+              children: imagePages,
+              controller: controllerImageSlider,
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: imagePages.length == 0
+                              ? Colors.transparent
+                              : Colors.white.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(6)
+                      ),
+
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          controllerImageSlider.positions.length == 0
+                              ? "1 / ${imagePages.length}"
+                              : "${controllerImageSlider.page.round() + 1} / ${imagePages.length}",
+                          style:
+                          TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Align(
+              alignment:  Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: GestureDetector(
+                  onTap: ()async{
+                    addImage();
+                  },
+                  child: Container(
+
+                    decoration: BoxDecoration(
+                      color: cDefault,
+                      borderRadius: BorderRadius.circular(6)
+
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: getIconSvg(id: 22, color: cWhite, size: 24),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment:  Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ClipOval(
+                  child: GestureDetector(
+                    onTap: (){
+                      deleteImage(controllerImageSlider.page.round());
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: cDefault,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: getIconSvg(id: 8, color: cWhite, size: 24),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///=========================== Categories ===========================
+
+  Widget CategorySelect(){
+
+
+    String typeWord(int type){
+      if(type == 0){return "Товары";}else if(type == 1){return "Услуги";}else if(type == 2){return "Обучение";}else{return "Выберите тип";}
+    }
+
+    if(_type == null){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: (){
+              selectType();
+            },
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+                child: Row(
+                  children: [
+                    Text("Выберите тип", style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
+                    SizedBox(width: 4,),
+                    getIconSvg(id: 38, size: 12, color: c6287A1),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }else{
+
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: (){
+              selectType();
+            },
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+                child: Row(
+                  children: [
+                    Text(typeWord(_type), style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
+                    SizedBox(width: 4,),
+                    getIconSvg(id: 38, size: 12, color: c6287A1),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 4,),
+          Text(" / " , style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
+          SizedBox(width: 4,),
+          GestureDetector(
+            onTap: (){
+              selectCategory();
+            },
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+                child: Row(
+                  children: [
+                    Text(_category == null?"Выберите категорию":_category.name, style: TextStyle(color: cMainText, fontSize: 14 , fontFamily: fontFamily),),
+                    SizedBox(width: 4,),
+                    getIconSvg(id: 38, size: 12, color: c6287A1),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+  }
+
+
+  ///=========================== Header ===============================
+
   Widget EditHeader(){
     return Container(
       decoration: BoxDecoration(
@@ -1294,6 +1519,8 @@ class _AddProductPageState extends State<AddProductPage> {
     );
 
   }
+
+  ///=========================== Price ================================
 
   Widget Price(){
 
@@ -1410,9 +1637,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   }
 
-  //todo
-  Widget ConstructorParamsPrice(){}
-
+  ///=========================== Params ===============================
 
   Widget ConstructorParams(){
 
@@ -1595,6 +1820,8 @@ class _AddProductPageState extends State<AddProductPage> {
 
 
   }
+
+  ///=========================== GetCourse ============================
 
   Widget editStudy(TextEditingController controller,  String head, String hint){
     return Column(
@@ -1779,5 +2006,133 @@ class _AddProductPageState extends State<AddProductPage> {
       ],
     );
   }
+
+  ///=========================== Details ==============================
+
+  Widget DetailsConstructor(){
+
+    Widget head = Text(
+      detailsHead,
+      style: TextStyle(
+          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+    );
+
+    Widget generatorDetails(){
+      if(detailsPages.length == 0) {
+        return SizedBox();
+      }else{
+        return Column(
+          children:
+            List.generate(detailsPages.length, (index) {
+              return Container(
+                height: MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: detailsPages[index],
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding:  EdgeInsets.all(12.0),
+                        child: InkWell(
+                          onTap: (){
+                            upDetail(index);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: cDefault,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Padding(
+                              padding:  EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                              child: getIconSvg(id: IconsSvg.moveTop, color: cWhite),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding:  EdgeInsets.all(12.0),
+                        child: InkWell(
+                          onTap: (){
+                            deleteDetail(index);
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: cDefault
+                              ),
+                              child: Padding(
+                                padding:  EdgeInsets.all(6),
+                                child: getIconSvg(id: IconsSvg.close),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            })
+          ,
+        );
+      }
+    }
+
+    Widget addDetailButton(){
+      return Center(
+        child: InkWell(
+          onTap: (){addDetail();},
+          child: DottedBorder(
+            borderType: BorderType.RRect,
+            radius: Radius.circular(6),
+            // padding: EdgeInsets.all(12),
+            dashPattern: [12],
+            color: cd1d3d7,
+            child: Container(
+              width: MediaQuery.of(context).size.width-24,
+              height: MediaQuery.of(context).size.width-24,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    getIconSvg(id: IconsSvg.image, color: cIcons),
+                    Text('Добавить изображение', style: TextStyle(color: cTitles, fontSize: 14, fontFamily: fontFamily, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal),)
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(color: cDefault,),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: head,
+        ),
+        SizedBox(height: 6,),
+        generatorDetails(),
+        SizedBox(height: 12,),
+        addDetailButton(),
+      ],
+    );
+
+
+  }
+
+
+
+
 
 }

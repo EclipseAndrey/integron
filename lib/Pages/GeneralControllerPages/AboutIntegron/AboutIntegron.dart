@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:integron/AutoRoutes.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Pages/Login2/Logo.dart';
@@ -30,6 +31,22 @@ class _AboutIntegronState extends State<AboutIntegron> {
 
 
 
+  @override
+  void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle//.dark
+        (
+        //statusBarColor: cBackground,
+        systemNavigationBarColor: Color(0x00cccccc),
+        systemNavigationBarDividerColor: Color(0x00cccccc),
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Color(0xFFffffff),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
+    super.initState();
+  }
 
 
   @override

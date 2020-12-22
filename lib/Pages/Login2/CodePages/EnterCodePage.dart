@@ -16,6 +16,7 @@ class EnterCode extends StatefulWidget {
 
 class _EnterCodeState extends State<EnterCode> {
 
+
   String text = '';
   double padding = 0;
   bool fingerIcon = false;
@@ -68,6 +69,18 @@ class _EnterCodeState extends State<EnterCode> {
   }
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle//.dark
+        (
+        //statusBarColor: cBackground,
+        systemNavigationBarColor: Color(0x00cccccc),
+        systemNavigationBarDividerColor: Color(0x00cccccc),
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Color(0xFFffffff),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
     initFinger();
     loginFinger(delay: true);
   }

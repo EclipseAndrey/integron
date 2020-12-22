@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
@@ -13,11 +15,11 @@ import 'package:integron/main.dart';
 
 Future<void> ShowBottoomSheetSelectParams(
     {
-      @required BuildContext context,
+      @required BuildContext contextBloc,
     @required bool formalize,
     @required ValueChanged<int> indexSelect,
     @required Product product}) async {
-  double shortestSide = MediaQuery.of(context).size.shortestSide;
+  double shortestSide = MediaQuery.of(contextBloc).size.shortestSide;
 
   bool resize = false;
   if (shortestSide < 400) {
@@ -106,7 +108,7 @@ Future<void> ShowBottoomSheetSelectParams(
 
   showBarModalBottomSheet(
     backgroundColor: cBG,
-    context: context,
+    context: contextBloc,
     builder: (context, scrollController) {
       return ConstrainedBox(
         // color: cBG,
@@ -199,7 +201,18 @@ Future<void> ShowBottoomSheetSelectParams(
                                   builder: (BuildContext context1) =>
                                       FormalizePage(list, context)));
                         } else {
-                          AddProductInCart(context, product.route);
+                          // AddProductInCart(context, product.route);
+                          BlocProvider.of<CartCubit>(contextBloc).add(product);
+                          Fluttertoast.showToast(
+                              msg: "Добавлено",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.SNACKBAR,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.white,
+                              textColor: Colors.black,
+                              fontSize: 16.0
+                          );
+                          closeDialog(context);
                         }
                       },
                       child: Container(

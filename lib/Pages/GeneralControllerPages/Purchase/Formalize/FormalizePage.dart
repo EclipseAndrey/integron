@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
@@ -107,35 +108,49 @@ class _FormalizePageState extends State<FormalizePage> {
 
   @override
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle//.dark
+        (
+        //statusBarColor: cBackground,
+        systemNavigationBarColor: Color(0x00cccccc),
+        systemNavigationBarDividerColor: Color(0x00cccccc),
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Color(0xFFffffff),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
     load();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          shadowColor: Color.fromRGBO(42, 59, 83, 0.1),
-          elevation: 30,
-          centerTitle: true,
-          title: Text(
-            "Подтверждение заказа",
-            style: TextStyle(
-                color: cMainText,
-                fontSize: 16,
-                fontFamily: fontFamily,
-                fontWeight: FontWeight.w600,
-                fontStyle: FontStyle.normal),
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            shadowColor: Color.fromRGBO(42, 59, 83, 0.1),
+            elevation: 30,
+            centerTitle: true,
+            title: Text(
+              "Подтверждение заказа",
+              style: TextStyle(
+                  color: cMainText,
+                  fontSize: 16,
+                  fontFamily: fontFamily,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal),
+            ),
+            leading: Padding(
+              padding: const EdgeInsets.all(19.0),
+              child: GestureDetector(
+                  onTap: (){closeDialog(context);},
+                  child: Container(child: getIconSvg(id: 0, color: c6287A1))),
+            ),
+            backgroundColor: cBG,
           ),
-          leading: Padding(
-            padding: const EdgeInsets.all(19.0),
-            child: GestureDetector(
-                onTap: (){closeDialog(context);},
-                child: Container(child: getIconSvg(id: 0, color: c6287A1))),
-          ),
-          backgroundColor: cBG,
-        ),
-        body: Content());
+          body: Content()),
+    );
   }
 
   Widget Content() {

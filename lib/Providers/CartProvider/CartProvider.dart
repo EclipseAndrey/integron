@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
 import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/fun/Cart/CartModelForLocalDb.dart';
+import 'package:integron/Utils/fun/Logs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartProvider{
@@ -14,13 +15,17 @@ class CartProvider{
     print(prefs.getString("cart"));
     List<Product> products = [];
     for(int i = 0; i < ids.length; i++){
-      print("CART "+ids[i].id.toString());
-      Product p = await ProductProvider.getProduct(ids[i].id);
-      for(int j = 0; j < p.params.length;j++){
-        p.params[j].select = ids[i].params[j];
+      try {
+        print("CART " + ids[i].id.toString());
+        Product p = await ProductProvider.getProduct(ids[i].id);
+        for (int j = 0; j < p.params.length; j++) {
+          p.params[j].select = ids[i].params[j];
+        }
+        p.counter = ids[i].count;
+        if (p != null && p.errors == null) products.add(p);
+      }catch(e){
+        printL("CartProvider - getCart error = "+e.toString());
       }
-      p.counter = ids[i].count;
-      if(p!=null && p.errors == null)products.add(p);
     }
     return products;
   }

@@ -403,144 +403,152 @@ class _TovarInfoState extends State<TovarInfo> {
         children: [
           Container(
             color: cBG,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.price.toString(),
-                      style: TextStyle(
-                          color: c5894bc,
-                          fontSize: 27,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: fontFamily),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 3.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            " DEL ",
-                            style: TextStyle(
-                                color: c5894bc,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: fontFamily),
-                          ),
-                          Text(
-                            "(~${item.price * course}",
-                            style: TextStyle(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.price.toString(),
+                        style: TextStyle(
+                            color: c5894bc,
+                            fontSize: 27,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: fontFamily),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 3.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              " DEL ",
+                              style: TextStyle(
+                                  color: c5894bc,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: fontFamily),
+                            ),
+                            Text(
+                              "(~${item.price * course}",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: fontFamily),
+                            ),
+                            Text(
+                              " ₽",
+                              style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
-                                fontFamily: fontFamily),
+                              ),
+                            ),
+                            Text(
+                              ")/${item.unit}",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: fontFamily),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          AddProductInCart(context, item.route,
+                                      product: item);
+                          // item.params.length == 0
+                          //     ? AddProductInCart(context, item.route,
+                          //         product: item)
+                          //     : ShowBottoomSheetSelectParams(
+                          //         context: context,
+                          //         formalize: false,
+                          //         indexSelect: (index) {},
+                          //         product: item);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: Color.fromRGBO(203, 254, 254, 1),
                           ),
-                          Text(
-                            " ₽",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
+                          width: MediaQuery.of(context).size.width * 0.46,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "В корзину",
+                                  style: TextStyle(
+                                      color: c2f527f,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            ")/${item.unit}",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: fontFamily),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        item.params.length == 0
-                            ? AddProductInCart(context, item.route,
-                                product: item)
-                            : ShowBottoomSheetSelectParams(
-                                context: context,
-                                formalize: false,
-                                indexSelect: (index) {},
-                                product: item);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Color.fromRGBO(203, 254, 254, 1),
                         ),
-                        width: MediaQuery.of(context).size.width * 0.46,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "В корзину",
-                                style: TextStyle(
-                                    color: c2f527f,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ],
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<CartCubit>(context).load();
+                          // ignore: unnecessary_statements
+                          item.params.length == 0
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context1) =>
+                                          FormalizePage([item], context)))
+                              : ShowBottoomSheetSelectParams(
+                                  contextBloc: context,
+                                  formalize: true,
+                                  indexSelect: (index) {},
+                                  product: item);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: Color.fromRGBO(255, 0, 0, 1),
+                          ),
+                          width: MediaQuery.of(context).size.width * 0.46,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Купить сейчас",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<CartCubit>(context).load();
-                        // ignore: unnecessary_statements
-                        item.params.length == 0
-                            ? Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context1) =>
-                                        FormalizePage([item], context)))
-                            : ShowBottoomSheetSelectParams(
-                                context: context,
-                                formalize: true,
-                                indexSelect: (index) {},
-                                product: item);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Color.fromRGBO(255, 0, 0, 1),
-                        ),
-                        width: MediaQuery.of(context).size.width * 0.46,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Купить сейчас",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -587,18 +595,21 @@ class _TovarInfoState extends State<TovarInfo> {
                         textProduct("Описание", item.fullText),
                         // textProduct("Доставка",int.parse(item.delivery) == 1?"Есть":"Нет"),
                         constructorProperty(),
-                        SizedBox(
-                          height: 100,
-                        ),
+
+
                       ],
                     ),
+                  ),
+                  details(),
+                  SizedBox(
+                    height: 100,
                   ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: 12.0, vertical: 8),
+                  horizontal: 0.0, vertical: 0),
               child: price(),
             ),
           ],
@@ -608,5 +619,41 @@ class _TovarInfoState extends State<TovarInfo> {
 
 
     return Content(context);
+  }
+
+
+  Widget details(){
+    Widget head = Text(
+      "Детали",
+      style: TextStyle(
+          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+    );
+    return Column(
+      children: [
+        Divider(color: cDefault),
+        item.details.length == 0?SizedBox():Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              head,
+            ],
+          ),
+        ),
+        Column(
+          children: item.details.length == 0?[]:List.generate(item.details.length, (index){
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width,
+              child: Image.network(
+                item.details[index],
+                fit: BoxFit.cover,
+              ),
+            );
+          }),
+        )
+
+      ],
+    );
   }
 }

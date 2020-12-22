@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
@@ -43,8 +44,12 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
   }
 
 
+
   @override
   void initState() {
+
+
+
     pages = [
       Tovars(),
       Uslugi(),
@@ -56,6 +61,8 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+
 
     super.build(context);
 

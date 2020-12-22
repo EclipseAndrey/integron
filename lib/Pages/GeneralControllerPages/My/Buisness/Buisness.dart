@@ -148,10 +148,10 @@ class _BusinessPageState extends State<BusinessPage> {
           //statusBarColor: cBackground,
           systemNavigationBarColor: Color(0x00cccccc),
           systemNavigationBarDividerColor: Color(0x00cccccc),
-          statusBarColor: Color(0xFFffffff),
           systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarColor: Color(0xFFeef0f3),
           statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
         ),
       );
 

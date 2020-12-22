@@ -58,7 +58,7 @@ class Product extends ProductShort {
   int available;
   int itemCount;
   List<dynamic> catPath;
-  List<dynamic> detail;
+  List<String> details;
   String ownerName;
   List<Params> params = [];
   ParamsPrice paramsPrice;
@@ -92,7 +92,7 @@ class Product extends ProductShort {
     @required this.type,
     @required  this.unit,
     @required this.catPath,
-    @required this.detail,
+    @required this.details,
 
     this.params,
     this.paramsPrice,
@@ -114,21 +114,22 @@ class Product extends ProductShort {
     try {
       return Product(
         full: true,
+
         name: jsonC['name'] == null?"":jsonC['name'],
         ownerName: jsonC['ownername'] == null? "":jsonC['ownername'] ,
         image: jsonC['image'] == null? "":jsonC['image'],
         images: jsonC['images'] == null?[]:jsonC['images'].map((i)=>i).toList().cast<String>(),
-        detail: jsonC['detail'] == null?[]:[],
+        details: jsonC['detail'] == null?[]:jsonC['detail'].map((i) =>i).toList().cast<String>(),
         route: int.parse(jsonC['route'] == null?"0":jsonC['route']),
         pozition: int.parse(jsonC['pozition'] == null?"0":jsonC['pozition']),
-        text: jsonC['text'] == null? "":jsonC['text'],
+        text: jsonC['shortdesc'] == null? "":jsonC['shortdesc'],
         price: double.parse(jsonC['price'] == null?"0":jsonC['price']),
         sale: jsonC['sale'].toString() == "null"? "":jsonC['sale'].toString(),
         unit: jsonC['unit'] == null?"unit":jsonC['unit'],
         property: jsonC['property'] == null ? [] : jsonC['property'].map((i) {
           return Property.fromJson(i);
         }).toList().cast<Property>(),
-        fullText: jsonC['fulldesc'] == null?"":jsonC['fulldesc'],
+        fullText: jsonC['text'] == null?"":jsonC['text'],
         delivery: jsonC['delivery'] == null?"1":jsonC['delivery'],
         address: jsonC['address'] == null?"":jsonC['address'],
         owner: int.parse(jsonC['owner'] == null?"0":jsonC['owner'] ),
@@ -161,7 +162,6 @@ class Product extends ProductShort {
     final map = Map<String, dynamic>();
     map["name"] = name;
     map["images"] = images;
-    map["detail"] = "";
     map["shortdesc"] = text;
     map["price"] = price.toString();
     map["unit"] = unit;
@@ -179,6 +179,7 @@ class Product extends ProductShort {
     map['accountkey'] = accountSecretKey;
     map['producttitle'] = name;
     map['offercode'] = offerCode;
+    map['detail'] = details;
     return map;
   }
 

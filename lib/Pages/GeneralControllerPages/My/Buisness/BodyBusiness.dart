@@ -47,7 +47,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     loading = true;
     setState(() {});
 
-    List<BlocSize> listStep = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, detail: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
+    List<BlocSize> listStep = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, details: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
     var biz;
     if(widget.edit) {
       InfoToken infoToken = await checkToken();

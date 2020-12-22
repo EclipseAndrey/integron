@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
@@ -212,11 +213,73 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
                     if(index == 0){
                       controllerHome.animateToPage(0, duration: Duration(milliseconds: 300), curve: Curves.ease);
 
+                      SystemChrome.setSystemUIOverlayStyle(
+                        SystemUiOverlayStyle(
+                          //statusBarColor: cBackground,
+                          systemNavigationBarColor: Color(0x00cccccc),
+                          systemNavigationBarDividerColor: Color(0x00cccccc),
+                          systemNavigationBarIconBrightness: Brightness.dark,
+                          statusBarColor: Color(0xFFdae8ef),
+                          statusBarIconBrightness: Brightness.dark,
+                          statusBarBrightness: Brightness.dark,
+                        ),
+                      );
                       BlocProvider.of<TovarsCubit>(context1).load();
                       BlocProvider.of<UslugiCubit>(context1).load();
+                    }else if(index == 1){
+                      SystemChrome.setSystemUIOverlayStyle(
+                        SystemUiOverlayStyle(
+                          //statusBarColor: cBackground,
+                          systemNavigationBarColor: Color(0x00cccccc),
+                          systemNavigationBarDividerColor: Color(0x00cccccc),
+                          systemNavigationBarIconBrightness: Brightness.dark,
+                          statusBarColor: Color(0xFFdae8ef),
+                          statusBarIconBrightness: Brightness.dark,
+                          statusBarBrightness: Brightness.dark,
+                        ),
+                      );
+
                     }else if (index == 2){
+                      SystemChrome.setSystemUIOverlayStyle(
+                        SystemUiOverlayStyle//.dark
+                          (
+                          //statusBarColor: cBackground,
+                          systemNavigationBarColor: Color(0x00cccccc),
+                          systemNavigationBarDividerColor: Color(0x00cccccc),
+                          systemNavigationBarIconBrightness: Brightness.dark,
+                          statusBarColor: Color(0xFFffffff),
+                          statusBarIconBrightness: Brightness.dark,
+                          statusBarBrightness: Brightness.dark,
+                        ),
+                      );
                       BlocProvider.of<CartCubit>(context1).load();
 
+                    }else if(index == 3){
+                      SystemChrome.setSystemUIOverlayStyle(
+                        SystemUiOverlayStyle//.dark
+                          (
+                          //statusBarColor: cBackground,
+                          systemNavigationBarColor: Color(0x00cccccc),
+                          systemNavigationBarDividerColor: Color(0x00cccccc),
+                          systemNavigationBarIconBrightness: Brightness.dark,
+                          statusBarColor: Color(0xFFffffff),
+                          statusBarIconBrightness: Brightness.dark,
+                          statusBarBrightness: Brightness.dark,
+                        ),
+                      );
+                    }else if (index == 4){
+                      SystemChrome.setSystemUIOverlayStyle(
+                        SystemUiOverlayStyle//.dark
+                          (
+                          //statusBarColor: cBackground,
+                          systemNavigationBarColor: Color(0x00cccccc),
+                          systemNavigationBarDividerColor: Color(0x00cccccc),
+                          systemNavigationBarIconBrightness: Brightness.dark,
+                          statusBarColor: Color(0xFFffffff),
+                          statusBarIconBrightness: Brightness.dark,
+                          statusBarBrightness: Brightness.dark,
+                        ),
+                      );
                     }
                     BlocProvider.of<GeneralCubit>(context1).selectPage(index);
                   },

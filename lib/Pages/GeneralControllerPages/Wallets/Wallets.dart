@@ -17,18 +17,18 @@ class _WalletState extends State<Wallet> {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle//.dark
-        (
-        //statusBarColor: cBackground,
-        systemNavigationBarColor: Color(0x00cccccc),
-        systemNavigationBarDividerColor: Color(0x00cccccc),
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Color(0xFFffffff),
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.dark,
-      ),
-    );
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle//.dark
+    //     (
+    //     //statusBarColor: cBackground,
+    //     systemNavigationBarColor: Color(0x00cccccc),
+    //     systemNavigationBarDividerColor: Color(0x00cccccc),
+    //     systemNavigationBarIconBrightness: Brightness.dark,
+    //     statusBarColor: Color(0xFFffffff),
+    //     statusBarIconBrightness: Brightness.dark,
+    //     statusBarBrightness: Brightness.dark,
+    //   ),
+    // );
     // TODO: implement initState
     super.initState();
   }

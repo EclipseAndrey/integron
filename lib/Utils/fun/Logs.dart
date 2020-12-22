@@ -26,6 +26,7 @@ void writeLog(String log)async{
     LOG+= DateTime.now().toString();
     LOG +=" token ";
     LOG+= await tokenDB();
+    LOG+= "\n";
   }
   LOG+= DateTime.now().toString()+" ";
   LOG+=log;

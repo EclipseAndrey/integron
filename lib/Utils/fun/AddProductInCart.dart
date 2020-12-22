@@ -11,8 +11,8 @@ import 'package:integron/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
 void AddProductInCart (BuildContext context, int route, {Product product} )async{
 
     if(product == null)product = await ProductProvider.getProduct(route);
-    if(product.params.length>0){
-      ShowBottoomSheetSelectParams(context: context, formalize: false, indexSelect: (index){}, product: product);
+    if(product.params.length>0 ){
+      ShowBottoomSheetSelectParams(contextBloc: context, formalize: false, indexSelect: (index){}, product: product);
     }else{
       BlocProvider.of<CartCubit>(context).add(product);
 
