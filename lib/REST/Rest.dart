@@ -22,7 +22,7 @@ class Rest {
       bodyUp['body'] = await Connection.secure.crypto(json.encode(body));
       body = bodyUp;
       print("post body crypto "+body.toString());
-      Clipboard.setData(ClipboardData(text: json.encode(body)));
+      //Clipboard.setData(ClipboardData(text: json.encode(body)));
     }
 
     Map<String, String> headers =  HashMap();

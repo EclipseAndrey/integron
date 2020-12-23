@@ -165,9 +165,9 @@ class _AddProductPageState extends State<AddProductPage> {
     //     .then((value){
     //
     // });
-    res.stream.transform(utf8.decoder).listen((value) {
+    await res.stream.transform(utf8.decoder).listen(await(value)async {
       print(value);
-      responsePhoto.add(json.decode(value)['url']);
+      await responsePhoto.add(json.decode(value)['url']);
     });
 
   }
@@ -255,6 +255,7 @@ class _AddProductPageState extends State<AddProductPage> {
     String url = Server.relevant+"/"+Api.api+"/uploadPhoto";
 
     for(int i = 0; i < detailsList.length; i++) {
+      print("uploadDetails ${i} ${detailsList[i].net} ${detailsList[i].path}");
       if(!detailsList[i].net){
         filename = detailsList[i].path;
         var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -270,13 +271,20 @@ class _AddProductPageState extends State<AddProductPage> {
         );
         var res = await request.send();
 
-        res.stream.transform(utf8.decoder).listen((value) {
+
+
+        await res.stream.transform(utf8.decoder).listen(await (value) async {
           print(value);
          // responseDetails.add(json.decode(value)['url']);
-          detailsList[i].net = true;
-          detailsList[i].path = json.decode(value)['url'];
+         //  detailsList[i].net = true;
+         //  detailsList[i].path = json.decode(value)['url'];
+          await detailsList.replaceRange(i, i+1, [ImageProduct(json.decode(value)['url'], true)]);
+          print("uploadDetails ${i} ${detailsList[i].net} ${detailsList[i].path}");
         });
+
+
       }
+
     }
   }
 
@@ -515,7 +523,6 @@ class _AddProductPageState extends State<AddProductPage> {
           {
             // try {
               initSumReplace(priceSummText);
-              print("OK");
               showDialogLoading(context);
               responsePhoto = [];
               for (int i = 0; i < imagelocal.length; i++) {
@@ -526,11 +533,17 @@ class _AddProductPageState extends State<AddProductPage> {
               for(int i = 0; i < detailsList.length; i++){
                 // ignore: unnecessary_statements
                 detailsList[i].net?detailsUrls.add(detailsList[i].path):null;
+                print(detailsList[i].path);
               }
+
+
               if (widget.edit) {
+                print("ResponsePhoto "+responsePhoto.length.toString());
                 List<String> ststep = []..addAll(item.images)..addAll(
                     responsePhoto);
                 responsePhoto = ststep;
+                print("ResponsePhoto "+responsePhoto.length.toString());
+
               }
 
 
@@ -546,6 +559,7 @@ class _AddProductPageState extends State<AddProductPage> {
               properties.removeAt(0);
               print('3property ${properties.length} copy ${propertiesCopy.length}');
 
+              print("-=-=-=-=-=-=-=-=-"+steptx);
               Product productFormForSend = Product(
                   images: responsePhoto,
                   owner: null,
