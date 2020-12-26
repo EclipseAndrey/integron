@@ -68,6 +68,7 @@ class Product extends ProductShort {
   String accountSecretKey;
   String offerCode;
   int hidden;
+  bool isFavorite;
 
 
   Product({
@@ -103,6 +104,8 @@ class Product extends ProductShort {
     this.accountSecretKey,
     this.offerCode,
     this.hidden,
+    this.isFavorite,
+
 
 }) : super(name: name, image: image, route:route, text: text, price:price, sale:sale??"");
 
@@ -114,6 +117,7 @@ class Product extends ProductShort {
     try {
       return Product(
         full: true,
+
 
         name: jsonC['name'] == null?"":jsonC['name'],
         ownerName: jsonC['ownername'] == null? "":jsonC['ownername'] ,
@@ -143,6 +147,7 @@ class Product extends ProductShort {
        // paramsPrice: jsonC['paramswithprice'] == null ? [] : ParamsPrice.fromJson(jsonC['paramswithprice']),
         check: true,
         hidden: jsonC['view'] == null ?0:int.parse(jsonC['view']),
+        isFavorite: jsonC['isfavorite'] == null? false:jsonC['isfavorite'],
 
 
       );

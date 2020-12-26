@@ -11,9 +11,11 @@ import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Category/Category.dart';
 import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/DB/Products/Property.dart';
+import 'package:integron/Utils/DB/Put.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/AddProductInCart.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
+import 'package:integron/Utils/fun/DialogIntegron.dart';
 import 'package:integron/main.dart';
 import 'package:flutter/services.dart';
 
@@ -30,6 +32,9 @@ class _TovarInfoState extends State<TovarInfo> {
   double minusIconsSize = 0;
   double minusFontsSize = 0;
 
+
+  bool isFavorite = false;
+
   PageController controllerImageSlider = PageController();
 
   Product item;
@@ -43,6 +48,7 @@ class _TovarInfoState extends State<TovarInfo> {
 
     // print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++prodeuctInfo     "+(item.errors == null).toString()+(item.errors.mess));
     if (item.errors == null) {
+      isFavorite = item.isFavorite;
       //print(item.toJson());
       imagePages = List.generate(
           item.images.length,
@@ -291,32 +297,49 @@ class _TovarInfoState extends State<TovarInfo> {
             ),
           ),
           Opacity(
-            opacity: opacity,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(240, 245, 239, 1),
-                  borderRadius: BorderRadius.circular(6)),
-              width: MediaQuery.of(context).size.width * 0.30,
-              height: MediaQuery.of(context).size.width * 0.15,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      getIconSvg(
-                        id: 15,
-                        color: c6287A1,
-                        size: 24 - minusIconsSize,
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        "В избранное",
-                        style: TextStyle(color: c5894bc),
-                      )
-                    ],
+            opacity: 1,
+            child: GestureDetector(
+              onTap: ()async{
+                isFavorite = !isFavorite;
+                setState(() {});
+                Put response = await ProductProvider.setFavorite(item.route, isFavorite);
+                if(response.error == 200){
+                  if(isFavorite){
+                    showDialogIntegron(context: context, title: Image.asset('lib/assets/images/add-favorite.png',), body: Text('Товар добавлен в избранное!', textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 16,fontFamily: fontFamily),));
+                  }else{
+                    //delete favorite
+                  }
+                }else{
+                  //todo error add / delete
+                }
+                load();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(240, 245, 239, 1),
+                    borderRadius: BorderRadius.circular(6)),
+                width: MediaQuery.of(context).size.width * 0.30,
+                height: MediaQuery.of(context).size.width * 0.15,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        getIconSvg(
+                          id: !isFavorite?IconsSvg.favorites:IconsSvg.favoritesSmInactive,
+                          color: c6287A1,
+                          size: 24 - minusIconsSize,
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          "В избранное",
+                          style: TextStyle(color: c5894bc),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

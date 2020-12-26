@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:integron/AutoRoutes.dart';
 import 'package:integron/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/Favorite/Favorite.dart';
 import 'package:integron/Providers/UserProvider/UserProvider.dart';
 import 'package:integron/REST/Autorization/checkToken.dart';
 import 'package:integron/Style.dart';
@@ -52,7 +53,7 @@ class _MyPageState extends State<MyPage> {
         MediaQuery.of(context).size.height - paddingV - 100 - box.size.height;
     setState(() {});
   }
-  List<int> settingsMenu = [0,1,4];
+  List<int> settingsMenu = [0,1,5,4];
   Load() async {
     print("load");
     loading = true;
@@ -79,7 +80,7 @@ class _MyPageState extends State<MyPage> {
           fontSize: 16.0
       );
     }
-    user.role == 1?settingsMenu = [0,1,4]:settingsMenu=[0,4];
+    user.role == 1?settingsMenu = [0,1,5,4]:settingsMenu=[0,5,4];
     loading = false;
     setState(() {});
     if (buildCompleted) initHeader();
@@ -553,6 +554,42 @@ class _MyPageState extends State<MyPage> {
                         ),
                         Text(
                           "Об INTEGRON",
+                          style: TextStyle(
+                              color: cMainText,
+                              fontStyle: FontStyle.normal,
+                              fontFamily: fontFamily,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    getIconSvg(id: 39, color: cIcons)
+                  ],
+                ),
+              ),
+            );
+          }
+        case 5:
+          {
+            return InkWell(
+
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Favorite()));
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: paddingH),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        getIconSvg(id: 15, color: cIcons),
+                        SizedBox(
+                          width: paddingH / 2,
+                        ),
+                        Text(
+                          "Избранное",
                           style: TextStyle(
                               color: cMainText,
                               fontStyle: FontStyle.normal,

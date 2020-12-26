@@ -5,6 +5,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/TovarInfo/TovarInfo.dart';
 import 'package:integron/Pages/GeneralControllerPages/My/Buisness/Buisness.dart';
+import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Category/Category.dart';
 import 'package:integron/Utils/DB/Products/BlocSize.dart';
@@ -14,6 +15,8 @@ import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/AddProductInCart.dart';
 import 'package:integron/Utils/fun/Callbcks.dart';
 import 'dart:ui' as ui show Image, ImageFilter, TextHeightBehavior;
+
+import 'package:integron/Utils/fun/DialogIntegron.dart';
 
 Widget ItemGetter(
     BlocSize bloc,
@@ -30,6 +33,7 @@ Widget ItemGetter(
       Function(int route) tapEdit,
       Function(int route) tapUpFull,
       Function(int route, int hidden) tapHidden,
+      Function(int id, bool setValue) setFavorite,
     }){
 
 
@@ -69,7 +73,7 @@ Widget ItemGetter(
   Widget _content(int size){
 
     if(size == 2){
-      // Product bloc2 = bloc;
+      Product blocProduct = bloc;
       return Stack(
         children: [
           Align(
@@ -245,7 +249,12 @@ Widget ItemGetter(
 
                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.read(bloc is ProductShort?bloc.ownerIdS:bloc is Product? bloc.owner??"0":'0')));
                         }),
-                     //   FocusedMenuItem(title: Text("В избранное",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.favorite_border),iconCustom: getIconForId(id: 15,color: c6287A1) ,onPressed: (){}),
+                        FocusedMenuItem(title: Text("В избранное",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.favorite_border),iconCustom: getIconSvg(id: 15,color: c6287A1) ,onPressed: (){
+                          //setFavorite(blocProduct.route, true);
+                          ProductProvider.setFavorite(blocProduct.route, true);
+                          showDialogIntegron(context: context, title: Image.asset('lib/assets/images/add-favorite.png',), body: Text('Товар добавлен в избранное!', textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 16,fontFamily: fontFamily),));
+
+                        }),
                         //FocusedMenuItem(title: Text("Похожее",style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontSize: 14),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,),iconCustom: getIconForId(id: 40,color: c6287A1) ,onPressed: (){
                         //   showDialogIntegron(context: context, title: Text("Helo i'm text", style: TextStyle(color: cMainText, fontSize: 16),), body: Text("Hello, i'm body this custom dialog ebpta and i should be very big arere dic andrey", style: TextStyle(color: cMainText, fontSize: 16), ), buttons: <DialogIntegronButton>[DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){}),DialogIntegronButton(textButton: Text("Button", style: TextStyle(color: cMainText, fontSize: 16),), onPressed: (){})]);}),
                       ],

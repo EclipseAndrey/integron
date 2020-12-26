@@ -32,6 +32,10 @@ class _ProductMethods{
   String get upFull => "upfull";
   String get hiddenOff => "hideitem";
   String get hiddenOn => "showitem";
+  String get setFavorite => "setfavorite";
+  String get deleteFavorite => "deletefavorite";
+  String get getFavorites => "getfavorites";
+
 }
 class _CategoryMethods{
   String get getItems => "getitemcategory";

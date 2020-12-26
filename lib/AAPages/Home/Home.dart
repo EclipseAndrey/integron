@@ -62,10 +62,7 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
   @override
   Widget build(BuildContext context) {
 
-
-
     super.build(context);
-
 
     widget.controller.addListener(() {
       widget.paddingPanel = widget.controller.offset/2;
@@ -87,7 +84,6 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
 
       });
     });
-
 
     return Theme(
       data: ThemeData(primaryColor: Colors.transparent),

@@ -152,7 +152,11 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: List.generate(rightColumn.length, (index) => Column(
                   children: [
-                    ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: (category){/* todo callback */ }),
+                    ItemGetter(rightColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: (category){/* todo callback */ },
+                    setFavorite: (route, setValue){
+
+                    }
+                    ),
                     SizedBox(height: c,),
 
                   ],
