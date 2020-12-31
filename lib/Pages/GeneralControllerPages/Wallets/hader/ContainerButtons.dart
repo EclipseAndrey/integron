@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:integron/AAPages/Wallet/Pay/Pay.dart';
 import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
-import 'package:integron/REST/Wallet/getBalance.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Wallet/Balance.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
-import 'package:integron/Utils/fun/DialogIntegron.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/Utils/fun/QrLib/QrGenerate/QrGenerateController.dart';
 
@@ -142,39 +142,44 @@ Color c, double p  ) {
         ),
       ),
       SizedBox(height: p,width: p,),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          color: cForms,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 5.0,
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 3,
-            )
-          ],
-        ),
-        width: w,
-        height: w * 5 / 9,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 5),
-              getIconSvg(id:1,
-                color: c6287A1,
-                size: 22,
-              ),
-              SizedBox(height: 7),
-              Text("Перевести",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromRGBO(88, 148, 188, 1),
-                    fontWeight: FontWeight.w400,
-                  )),
+      InkWell(
+        onTap: (){
+          pyaDialog(context, "","");
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: cWhite,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 5.0,
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3,
+              )
             ],
+          ),
+          width: w,
+          height: w * 5 / 9,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 5),
+                getIconSvg(id:1,
+                  color: c6287A1,
+                  size: 22,
+                ),
+                SizedBox(height: 7),
+                Text("Перевести",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color.fromRGBO(88, 148, 188, 1),
+                      fontWeight: FontWeight.w400,
+                    )),
+              ],
+            ),
           ),
         ),
       ),

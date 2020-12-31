@@ -1,5 +1,7 @@
-import 'package:integron/REST/Server.dart';
-import 'package:integron/REST/Api.dart';
+
+part of 'Api.dart';
+
+
 
 String postConstructor(String method){
   return Server.relevant+"/"+Api.api+"/"+method;

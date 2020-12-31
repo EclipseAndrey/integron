@@ -16,7 +16,7 @@ import 'package:integron/Utils/fun/AddProductInCart.dart';
 import 'package:integron/Utils/fun/Callbcks.dart';
 import 'dart:ui' as ui show Image, ImageFilter, TextHeightBehavior;
 
-import 'package:integron/Utils/fun/DialogIntegron.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 
 Widget ItemGetter(
     BlocSize bloc,

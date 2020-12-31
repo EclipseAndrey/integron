@@ -12,7 +12,7 @@ import 'package:integron/Utils/DB/Put.dart';
 import 'package:integron/Utils/DB/tokenDB.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BotomSheetEditInformatin.dart';
-import 'package:integron/Utils/fun/DialogIntegron.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/main.dart';
 import 'package:integron/Utils/fun/Logs.dart';

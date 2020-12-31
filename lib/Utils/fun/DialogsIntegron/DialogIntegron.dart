@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Style.dart';
+part 'DialogIntegronError.dart';
+
+
 
 void showDialogIntegron({
       @required BuildContext context,

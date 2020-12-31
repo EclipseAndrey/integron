@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dataAuth1.dart';
-import 'package:integron/REST/Server.dart';
 import 'package:integron/REST/Api.dart';
 
 Future<DataAuth1> Auth_1(int pubKey, String text)async{

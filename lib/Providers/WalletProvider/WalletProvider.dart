@@ -1,5 +1,4 @@
-import 'package:integron/REST/Methods.dart';
-import 'package:integron/REST/PostConstructor.dart';
+import 'package:integron/REST/Api.dart';
 import 'package:integron/REST/Rest.dart';
 import 'package:integron/Utils/DB/Put.dart';
 import 'package:integron/Utils/DB/Wallet/Balance.dart';
@@ -56,6 +55,30 @@ class WalletProvider {
 
   }
 
+  static Future<Put> sendDel(String address, double amount)async{
+    String token = await tokenDB();
+    String urlQuery = Server.relevant+"/"+Api.api+"/"+Methods.wallet.sendDel;
 
+
+    Map<String,dynamic> body = Map();
+    body['token'] = token;
+    body['address'] = address;
+    body['amount'] = amount;
+
+
+
+    print(urlQuery);
+    print(body);
+    var response;
+
+    response = await Rest.post(urlQuery, body,);
+
+    if(response is Put) {
+      return response;
+    }else{
+      return Put.fromJson(response);
+    }
+
+  }
 
 }

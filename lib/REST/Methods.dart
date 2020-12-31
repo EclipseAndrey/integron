@@ -1,3 +1,6 @@
+part of 'Api.dart';
+
+
 class Methods{
  static _UserMethods      get user      => _UserMethods();
  static _BizMethods       get biz       => _BizMethods();
@@ -50,6 +53,7 @@ class _OrderMethods{
 class _WalletMethods{
   String get getBalance => "balance";
   String get getTxs => "history";
+  String get sendDel => "transfer";
 }
 
 class _AuthMethods{

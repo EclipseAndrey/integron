@@ -3,7 +3,6 @@ import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Pages/GeneralControllerPages/My/Orders/OrdersBiz/OrdersBizContent.dart';
 import 'package:integron/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
 import 'package:integron/Providers/OrderProvider/OrderProvider.dart';
-import 'package:integron/REST/Order/getOrders.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Orders/Order.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
@@ -205,7 +204,7 @@ class _OrdersBizState extends State<OrdersBiz> {
           // ),
           Align(
               alignment: Alignment.center,
-              child: Text("Мои заказы", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24),)),
+              child: Text("Заказы магазина", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24),)),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(

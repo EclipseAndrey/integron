@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
-import 'package:integron/REST/Product/getProduct.dart';
 import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/fun/Cart/CartModelForLocalDb.dart';
 import 'package:integron/main.dart';

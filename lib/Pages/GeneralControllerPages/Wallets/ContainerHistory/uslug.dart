@@ -9,6 +9,8 @@ Widget type(int uslug) {
     text = "Пополнение";
   }else if(uslug == 1){
     text = "Покупка";
+  }else if(uslug == 2){
+    text = "Продажа";
   }else{
     text = "Вывод средств";
   }

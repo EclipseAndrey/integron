@@ -1,9 +1,6 @@
-import 'package:integron/REST/Methods.dart';
-import 'package:integron/REST/PostConstructor.dart';
 import 'package:integron/REST/Rest.dart';
 import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/DB/Put.dart';
-import 'package:integron/REST/Server.dart';
 import 'package:integron/REST/Api.dart';
 
 
@@ -101,6 +98,7 @@ class ProductProvider{
   }
 
   static Future<List<Product>> getFavorites({int limit, int offset, int type})async{
+
 
     String url = Server.relevant+"/"+Api.api+"/"+Methods.product.getFavorites;
     String token = await tokenDB();

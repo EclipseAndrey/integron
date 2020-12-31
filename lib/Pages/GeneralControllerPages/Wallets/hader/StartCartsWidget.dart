@@ -6,11 +6,10 @@ import 'package:integron/AAPages/Blocs/Balance/BalanceCubit.dart';
 import 'package:integron/AAPages/Blocs/History/HistoryCubit.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
-import 'package:integron/REST/Wallet/getBalance.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Wallet/Balance.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
-import 'package:integron/Utils/fun/DialogIntegron.dart';
+import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/QrLib/QrGenerate/QrGenerateController.dart';
 import 'package:integron/main.dart';
 

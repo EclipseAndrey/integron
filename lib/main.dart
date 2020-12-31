@@ -5,7 +5,6 @@ import 'package:integron/Pages/GeneralControllerPages/Purchase/Formalize/Formali
 import 'package:integron/Utils/DB/Wallet/Filters.dart';
 import 'Utils/DB/Products/Product.dart';
 
-import 'REST/Category/getItemsCategory.dart';
 import 'REST/SecureConnection/DBSecure.dart';
 import 'REST/SecureConnection/DataSecure.dart';
 import 'package:integron/Utils/fun/Logs.dart';
