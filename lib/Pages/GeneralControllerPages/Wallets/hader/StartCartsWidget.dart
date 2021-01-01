@@ -155,7 +155,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                                   Clipboard.setData( ClipboardData(text: info.address));
 
                               },
-                              child: Text(info.address, style: TextStyle(color: cLinks),)));
+                              child: Text(info.address+ "\nНажмите чтобы скопировать", textAlign: TextAlign.center, style: TextStyle(color: cLinks),)));
                         },
                         child: Container(
 
@@ -195,7 +195,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                                   Clipboard.setData( ClipboardData(text: info.address));
 
                                 },
-                                child: Text(info.address , style: TextStyle(color: cLinks), )));
+                                child: Text(info.address + "\nНажмите чтобы скопировать", textAlign: TextAlign.center, style: TextStyle(color: cLinks), )));
                           },
                           child: getIconSvg(id:35, size: 38, color: Colors.white,))
                     ],

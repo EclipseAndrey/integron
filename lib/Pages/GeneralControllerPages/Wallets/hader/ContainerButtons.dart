@@ -102,7 +102,7 @@ Color c, double p  ) {
                 Clipboard.setData( ClipboardData(text: a.address));
 
               },
-              child: Text(a.address, style: TextStyle(color: cLinks),)));
+              child: Text(a.address  + "\nНажмите чтобы скопировать", textAlign: TextAlign.center, style: TextStyle(color: cLinks),)));
         },
         child: Container(
           decoration: BoxDecoration(
