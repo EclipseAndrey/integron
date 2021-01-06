@@ -17,12 +17,12 @@ import 'package:integron/Utils/DB/Products/Property.dart';
 import 'package:integron/Utils/DB/Put.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BotomSheetSelectForIndex.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogError.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/REST/Api.dart';
 import 'package:http/http.dart' as http;
 import 'package:integron/Utils/DB/ImagesProduct.dart';
+import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/Logs.dart';
 
 class AddProductPage extends StatefulWidget {
@@ -453,6 +453,15 @@ class _AddProductPageState extends State<AddProductPage> {
 
   }
 
+  String setDelivery(){
+    if(_type == 2){
+      return "0";
+    }else{
+      return "1";
+    }
+  }
+
+
   void saveProduct()async{
     if(imagePages.length == 0){
       dialogErr("Добавьте минимум одно фото");
@@ -572,7 +581,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   type: _type,
                   unit: priceUnitText,
                   details: detailsUrls,
-                  delivery: "1",
+                  delivery: setDelivery(),
                   image: null,
                   property: properties,
                   params: paramsList,
