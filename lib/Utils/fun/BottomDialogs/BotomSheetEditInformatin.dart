@@ -69,180 +69,186 @@ Future<void> ShowBottomSheetEditInformation({
     backgroundColor: cBG,
     context: context,
     builder: (context, scrollController) {
-      return Container(
-        color: cBG,
-        height: MediaQuery.of(context).size.height * 0.80,
-        child: Material(
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: (){
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Container(
           color: cBG,
-          child: Scaffold(
-            body: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 12,),
+          height: MediaQuery.of(context).size.height * 0.80,
+          child: Material(
+            color: cBG,
+            child: Scaffold(
+              body: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 12,),
 
-                          name != null
-                              ? SizedBox()
-                              : Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
+                            name != null
+                                ? SizedBox()
+                                : Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
 
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                                        child: TextField(
-                                          autofocus: false,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                                          child: TextField(
+                                            autofocus: false,
 
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
 
-                                            //hint
-                                            hintStyle: TextStyle(
+                                              //hint
+                                              hintStyle: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: fontFamily,
+                                                fontStyle: FontStyle.normal,
+                                                color: cPlaceHolder,
+                                              ),
+                                              hintText: "Имя",
+                                            ),
+
+                                            //text
+                                            style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
                                               fontFamily: fontFamily,
                                               fontStyle: FontStyle.normal,
-                                              color: cPlaceHolder,
+                                              color: cMainText,
                                             ),
-                                            hintText: "Имя",
+                                            controller: controllerName,
                                           ),
-
-                                          //text
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: fontFamily,
-                                            fontStyle: FontStyle.normal,
-                                            color: cMainText,
-                                          ),
-                                          controller: controllerName,
                                         ),
                                       ),
+                                      SizedBox(height: 12,),
+                                    ],
+                                  ),
+                            Container(
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: TextField(
+                                  autofocus: false,
+
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+
+                                    //hint
+                                    hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: fontFamily,
+                                      fontStyle: FontStyle.normal,
+                                      color: cPlaceHolder,
                                     ),
-                                    SizedBox(height: 12,),
-                                  ],
-                                ),
-                          Container(
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: TextField(
-                                autofocus: false,
+                                    hintText: "Номер",
+                                  ),
 
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-
-                                  //hint
-                                  hintStyle: TextStyle(
+                                  //text
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: fontFamily,
                                     fontStyle: FontStyle.normal,
-                                    color: cPlaceHolder,
+                                    color: cMainText,
                                   ),
-                                  hintText: "Номер",
+                                  controller: controllerNum,
                                 ),
-
-                                //text
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: fontFamily,
-                                  fontStyle: FontStyle.normal,
-                                  color: cMainText,
-                                ),
-                                controller: controllerNum,
                               ),
                             ),
-                          ),
-                          SizedBox(height: 12,),
-                          Container(
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: TextField(
-                                autofocus: false,
+                            SizedBox(height: 12,),
+                            Container(
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: TextField(
+                                  autofocus: false,
 
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
 
-                                  //hint
-                                  hintStyle: TextStyle(
+                                    //hint
+                                    hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: fontFamily,
+                                      fontStyle: FontStyle.normal,
+                                      color: cPlaceHolder,
+                                    ),
+                                    hintText: "e-mail",
+                                  ),
+
+                                  //text
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: fontFamily,
                                     fontStyle: FontStyle.normal,
-                                    color: cPlaceHolder,
+                                    color: cMainText,
                                   ),
-                                  hintText: "e-mail",
+                                  controller: controllerMail,
                                 ),
-
-                                //text
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: fontFamily,
-                                  fontStyle: FontStyle.normal,
-                                  color: cMainText,
-                                ),
-                                controller: controllerMail,
                               ),
                             ),
-                          ),
-                          SizedBox(height: 12,),
-                          Container(
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
+                            SizedBox(height: 12,),
+                            Container(
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
 
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: TextField(
-                                autofocus: false,
-                                maxLines: 5,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorMaxLines: 5,
-                                  //hint
-                                  hintStyle: TextStyle(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: TextField(
+                                  autofocus: false,
+                                  maxLines: 5,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    errorMaxLines: 5,
+                                    //hint
+                                    hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: fontFamily,
+                                      fontStyle: FontStyle.normal,
+                                      color: cPlaceHolder,
+                                    ),
+                                    hintText: "Адрес доставки",
+                                  ),
+
+                                  //text
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: fontFamily,
                                     fontStyle: FontStyle.normal,
-                                    color: cPlaceHolder,
+                                    color: cMainText,
                                   ),
-                                  hintText: "Адрес доставки",
+                                  controller: controllerAddress,
                                 ),
-
-                                //text
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: fontFamily,
-                                  fontStyle: FontStyle.normal,
-                                  color: cMainText,
-                                ),
-                                controller: controllerAddress,
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 18),
-                            child: buttonSave(),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 18),
+                              child: buttonSave(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child:
-                // )
-              ],
+                  // Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //   child:
+                  // )
+                ],
+              ),
             ),
           ),
         ),
