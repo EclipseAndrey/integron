@@ -96,7 +96,7 @@ class _TovarInfoState extends State<TovarInfo> {
           centerTitle: true,
           elevation: 0.1,
           title: Text(
-            item.errors == null?title:"Ошибка",
+            !(((item != null) && (item.errors != null))&&loading)?title:"Ошибка",
             style: TextStyle(
                 color: cMainText.withOpacity(0.7),
                 fontSize: 24,
@@ -120,7 +120,7 @@ class _TovarInfoState extends State<TovarInfo> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => Cart(context)));
+                          builder: (BuildContext context) => Cart(context, true)));
                 },
                 child: getIconSvg(
                   id: 55,
@@ -139,7 +139,7 @@ class _TovarInfoState extends State<TovarInfo> {
         body: BlocProvider<CartCubit>(
           create: (BuildContext) => CartCubit(),
           child: BlocBuilder<CartCubit, CartState>(
-            builder: (context, state) => item.errors != null?Center(child:  Padding(
+            builder: (context, state) => ((item != null) && (item.errors != null))?Center(child:  Padding(
               padding: const EdgeInsets.all(18.0),
               child: Text(item.errors.mess),
             ),):Content1(context),

@@ -146,7 +146,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
               children: [
                 Home(controllerHome),
                 Wallet(),
-                Cart(context1),
+                Cart(context1, false),
                 AboutReferal(),
                 MyPage()
               ],

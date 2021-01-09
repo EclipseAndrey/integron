@@ -18,7 +18,7 @@ class HistoryCubit extends Cubit<HistoryState> {
     emit(HistoryLoading());
     emit(HistoryComplete(historyList: [], filter: filter));
     emit(HistoryLoading());
-    List<Tx> txs =await  WalletProvider.getTxs(filter: filter);
+    List<Tx> txs = await  WalletProvider.getTxs(filter: filter);
 
     emit(HistoryComplete(historyList: txs, filter: filter));
   }

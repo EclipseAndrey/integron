@@ -1,5 +1,5 @@
 import 'package:integron/Utils/DB/Products/Product.dart';
-
+import 'package:integron/Utils/fun/TimeParse.dart';
 class Order {
   int clientId;
   int id;
@@ -11,7 +11,8 @@ class Order {
   double summ;
   List<String> paramsString;
   int count;
-  String time;
+  String dateTimeS;
+  DateTime dateTimeD;
   String bizName;
 
   Order({
@@ -25,11 +26,15 @@ class Order {
     this.ownerId,
     this.paramsString,
     this.products,
-    this.time,
+    this.dateTimeD,
+    this.dateTimeS,
     this.bizName
 });
   factory Order.fromJson(Map<String, dynamic> json){
-    print("BIZ PARSE ${json['ownername']}");
+
+    DateTime dateD = json['time'] == null?null:dateParse(json['time']);
+    String dateS = setDateMode(dateD);
+
     return Order(
       comment: json['comment']== null?"":json['comment'],
       count: json['count'] == null?0:int.parse(json['count']),
@@ -42,7 +47,8 @@ class Order {
       ownerId: json['owner']== null?0:int.parse(json['owner']),
       paramsString: json['params'] == null?[]:json['params'].map((i)=>i).toList().cast<String>(),
       products:  json['items'] == null?[]:json['items'].map((i)=>Product.fromJson(i)).toList().cast<Product>(),
-      time: json['time'] == null? "2020-11-18 15:58:50":json['time'],
+      dateTimeS: dateS,
+      dateTimeD: dateD,
     );
   }
 }

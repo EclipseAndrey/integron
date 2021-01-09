@@ -7,8 +7,10 @@ import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 
 Future<void> ShowBottomSheetEditInformation({
   @required BuildContext context,
-  Future<void> Function(String number, String email) whereSave,
+  Future<void> Function(String number, String email, ) whereSave,
 
+  bool eMailField,
+  bool addressField,
   // @required bool name,
   String address,
   String num,
@@ -166,7 +168,7 @@ Future<void> ShowBottomSheetEditInformation({
                               ),
                             ),
                             SizedBox(height: 12,),
-                            Container(
+                            !eMailField?SizedBox():Container(
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -200,7 +202,7 @@ Future<void> ShowBottomSheetEditInformation({
                               ),
                             ),
                             SizedBox(height: 12,),
-                            Container(
+                            !addressField?SizedBox():Container(
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), border: Border.all(width: 1,color: c8dcde0)),
 
                               child: Padding(

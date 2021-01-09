@@ -12,8 +12,8 @@ import 'package:integron/Utils/DB/Put.dart';
 import 'package:integron/Utils/DB/tokenDB.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BotomSheetEditInformatin.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/main.dart';
 import 'package:integron/Utils/fun/Logs.dart';
 
@@ -31,6 +31,7 @@ class _FormalizePageState extends State<FormalizePage> {
   bool loadDelivery = true;
   bool information = false;
   bool eMailCheck = false;
+  bool delivery = false;
   double paddingAll = 18;
   String name;
   String address;
@@ -59,7 +60,16 @@ class _FormalizePageState extends State<FormalizePage> {
 
 
     for (int i = 0; i < countProduct; i++) {
+
+      ///Проверка доставки
+      if(widget.list[i].delivery == '1'){
+        delivery = true;
+      }
+
+      ///Проверка обучения для e-mail
       if(widget.list[i].type == 2)eMailCheck = true;
+
+
       print("sort $i");
       bool find = false;
       for (int j = 0; j < sortList.length; j++) {
@@ -81,7 +91,7 @@ class _FormalizePageState extends State<FormalizePage> {
 
 
     // ignore: unnecessary_statements
-    information?LoadDelivery():null;
+    information||eMailCheck?LoadDelivery():null;
 
     setState(() {});
   }
@@ -196,7 +206,9 @@ class _FormalizePageState extends State<FormalizePage> {
   }
 
   Widget InformationForDelivery(){
-    return !information?SizedBox():Padding(
+    print(information.toString() + " "+ eMailCheck.toString());
+
+    return !(information||eMailCheck)?SizedBox():Padding(
       padding:  EdgeInsets.all(paddingAll),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,10 +219,11 @@ class _FormalizePageState extends State<FormalizePage> {
           ),
           GestureDetector(
             onTap: (){
-              ShowBottomSheetEditInformation(context: context, whereSave:
+              ShowBottomSheetEditInformation(
+                  context: context, whereSave:
                   (res, email)async{
                     await LoadDelivery();
-                    eMail = email;
+                    eMail = email == null || email == ""?eMail=eMail:eMail = email;
 
                     if(num!=res){
                   await LoadDelivery();
@@ -222,7 +235,7 @@ class _FormalizePageState extends State<FormalizePage> {
                 return null;
 
                 },
-                  name: name,address: address,num: num);
+                  name: name,address: address,num: num, eMailField: eMailCheck, addressField: information);
               setState(() {
 
               });
@@ -280,7 +293,7 @@ class _FormalizePageState extends State<FormalizePage> {
                           ],
                         ),
                         SizedBox(height: paddingAll/3,),
-                        Row(
+                        !delivery?SizedBox(): Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

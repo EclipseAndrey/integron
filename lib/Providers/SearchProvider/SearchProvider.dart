@@ -3,12 +3,15 @@ import 'package:integron/REST/Api.dart';
 import 'package:integron/REST/Rest.dart';
 import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/DB/Put.dart';
+import 'package:integron/Utils/DB/tokenDB.dart';
 
 class SearchProvider{
 
-  static Future<List<ProductShort>> search(String searchText, {int offset, int limit, int type})async{
+  static Future<List<Product>> search(String searchText, {int offset, int limit, int type})async{
     String url = postConstructor(Methods.search.search)+"?search=$searchText";
     Map<String,dynamic> body = Map();
+
+    String token = await tokenDB();
 
     if(offset != null || limit != null || type != null){
       // url += "?";
@@ -35,11 +38,15 @@ class SearchProvider{
       }
     }
 
-    var response = await Rest.get(url);
+    body['token'] = token;
+    body['search'] = searchText;
+
+
+    var response = await Rest.post(url, body, secureDown: false);
     if(response is Put){
       return null;
     }else{
-      return response['products'].map((i)=>ProductShort.fromJson(i)).toList().cast<ProductShort>();
+      return response['products'].map((i)=>Product.fromJson(i)).toList().cast<Product>();
     }
   }
 

@@ -1,6 +1,5 @@
 part of 'Api.dart';
 
-
 class Methods{
  static _UserMethods      get user      => _UserMethods();
  static _BizMethods       get biz       => _BizMethods();
@@ -10,7 +9,6 @@ class Methods{
  static _WalletMethods    get wallet    => _WalletMethods();
  static _AuthMethods      get auth      => _AuthMethods();
  static _SearchMethods    get search    => _SearchMethods();
-
 }
 
 class _UserMethods{

@@ -208,8 +208,9 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                dateOrder(indexAll),
                 total(indexAll),
               ],
             ),
@@ -278,7 +279,11 @@ class _OrdersBizContentState extends State<OrdersBizContent> {
   }
 
   Widget head(){
-    return Text("Мои заказы", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24),);
+    return Text("Заказы магазина", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24),);
+  }
+
+  dateOrder(int indexAll){
+    return Text(widget.orders[indexAll].dateTimeS, style: TextStyle(color:  cMainText, fontSize: 14, fontWeight: FontWeight.w400, fontFamily: fontFamily),);
   }
 
 }

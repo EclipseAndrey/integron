@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:integron/AutoRoutes.dart';
 import 'package:integron/Pages/GeneralControllerPages/Purchase/Formalize/FormalizePage.dart';
 import 'package:integron/Utils/DB/Wallet/Filters.dart';
+import 'Utils/DB/Draft/DraftDB.dart';
 import 'Utils/DB/Products/Product.dart';
 
 import 'REST/SecureConnection/DBSecure.dart';
@@ -55,13 +56,18 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
 
   start()async{
-    printL("Hello Logs");
+    printL("InitLogs");
 
     // load();
     cartList = [];
     DataSecureDB(dataSecure: DataSecure(0 ,"null"));
     // ExitAccount();
     AutoRoutes(context);
+  }
+
+
+  t()async{
+    DraftDB.testDraft();
   }
 
   @override

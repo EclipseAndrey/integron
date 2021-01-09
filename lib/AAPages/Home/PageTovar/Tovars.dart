@@ -214,7 +214,7 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: List.generate(leftColumn.length, (index) {
-                  print("GENERATE");
+                  print("GENERATE ${ tovarsSearch.tovarsList.length}");
                   return  Column(
                   children: [
                     ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: (category){}),

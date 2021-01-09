@@ -207,8 +207,9 @@ print((widget.orders[indexAll].id).toString()+(widget.orders[indexAll].products[
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                dateOrder(indexAll),
                 total(indexAll),
               ],
             ),
@@ -281,6 +282,10 @@ print((widget.orders[indexAll].id).toString()+(widget.orders[indexAll].products[
   }
   Widget head(){
     return Text("Мои покупки", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal,fontWeight: FontWeight.w400, fontSize: 24),);
+  }
+
+  dateOrder(int indexAll){
+    return Text(widget.orders[indexAll].dateTimeS, style: TextStyle(color:  cMainText, fontSize: 14, fontWeight: FontWeight.w400, fontFamily: fontFamily),);
   }
 
 }

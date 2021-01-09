@@ -29,7 +29,16 @@ String setDateMode(DateTime date) {
   da = date.day < 10 ? "0" + date.day.toString() : date.day.toString();
   ho = date.hour < 10 ? "0" + date.hour.toString() : date.hour.toString();
   mi = date.minute % 60 < 10 ? "0" + (date.minute % 60).toString() : (date.minute % 60).toString();
-  return ho + ":" + mi;
+  return da+ "."+mo+" "+ho + ":" + mi;
+}
+
+
+DateTime dateParse(String time){
+  DateTime date = DateFormat("yyyy-MM-ddTHH:mm:ss.vvvZ").parse(time);
+  date = date.add(Duration(hours: 3));
+  DateTime dateNow= DateTime.now();
+
+  return date;
 }
 
 

@@ -114,7 +114,7 @@ class Product extends ProductShort {
 
   factory Product.fromJson(Map<String, dynamic> jsonC){
      print("tope parse "+ jsonC['image'].toString());
-    try {
+    // try {
       return Product(
         full: true,
 
@@ -151,10 +151,10 @@ class Product extends ProductShort {
 
 
       );
-    }catch(e){
-      print(e);
-      return null;
-    }
+    // }catch(e){
+    //   print(e);
+    //   return null;
+    // }
 
   }
 
@@ -173,7 +173,7 @@ class Product extends ProductShort {
     map["fulldesc"] = fullText;
     map["delivery"] = "1";
     map["address"] = address;
-    map["available"] = "1";
+    map["available"] = delivery;
     map["type"] = type.toString();
     map["cat"] = cat.route.toString();
     map["params"] = params != null?params.map((i)=>i.toJson()).toList():"";

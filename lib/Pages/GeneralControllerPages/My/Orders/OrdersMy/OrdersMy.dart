@@ -122,7 +122,9 @@ class _OrdersMyState extends State<OrdersMy> {
               Container(
                   height: MediaQuery.of(context).size.height - 80,
                   width: MediaQuery.of(context).size.width,
-                  child: PageView(
+                  child: listOrdersTovars == null?Center(child:  Text(
+                    "Не удалось загрузить\nПопробуйте позже", textAlign: TextAlign.center, style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
+                  ),):PageView(
                     children: [
                       OrdersMyContent(stateCallback: (){setState(() {});},orders: listOrdersTovars,),
                      // OrdersMyContent(stateCallback: (){setState(() {});}, orders: listOrderssUslugi,),

@@ -10,6 +10,7 @@ import 'package:integron/Providers/CategoryProvider/CategoryProvider.dart';
 import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Category/Category.dart';
+import 'package:integron/Utils/DB/Draft/DraftDB.dart';
 import 'package:integron/Utils/DB/Products/Params/Param.dart';
 import 'package:integron/Utils/DB/Products/Params/Params.dart';
 import 'package:integron/Utils/DB/Products/Product.dart';
@@ -28,8 +29,9 @@ import 'package:integron/Utils/fun/Logs.dart';
 class AddProductPage extends StatefulWidget {
 
   bool edit = false;
+  bool draft = false;
   int id;
-  AddProductPage({this.id,this.edit});
+  AddProductPage({this.id,this.edit, this.draft}) : assert(!((edit!= null && draft !=null)&&(edit && draft))) ;
 
 
   int maxImageNo = 10;
@@ -55,6 +57,9 @@ class _AddProductPageState extends State<AddProductPage> {
   PageController controllerImageSlider = PageController();
   List<Widget> imagePages = [];
   List imagelocal = [];
+  List<ImageProduct> images = [];
+
+
   final picker = ImagePicker();
 
 
@@ -192,6 +197,14 @@ class _AddProductPageState extends State<AddProductPage> {
       );
     });
 
+    if(needToSave()){
+      List<String> outList = [];
+      for(int i = 0; i < imagelocal.length; i++){
+        outList.add(imagelocal[i].toString());
+      }
+      DraftDB.set(images: outList);
+    }
+
 
     out.addAll(net);
 
@@ -280,8 +293,6 @@ class _AddProductPageState extends State<AddProductPage> {
           await detailsList.replaceRange(i, i+1, [ImageProduct(json.decode(value)['url'], true)]);
           print("uploadDetails ${i} ${detailsList[i].net} ${detailsList[i].path}");
         });
-
-
       }
 
     }
@@ -313,6 +324,10 @@ class _AddProductPageState extends State<AddProductPage> {
         );
       }
     });
+
+    if(needToSave()){
+      DraftDB.set(details: detailsList);
+    }
 
     // if(widget.edit) {
     //   net = List.generate(item.details.length, (index) {
@@ -364,24 +379,8 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   deleteDetail(int index){
-
     detailsList.removeAt(index);
     updateDetailPages();
-
-  // bool local;
-  // if(!widget.edit)local=true;
-  //
-  // if(widget.edit)if(index < item.details.length)local =false;else local= true;
-  // int indexL = index;
-  // print("Delete image detail $index");
-  // // ignore: unnecessary_statements
-  // if(widget.edit)detailsPages.length-item.details.length+index-1;
-  // if(local){
-  // detailsLocal.removeAt(indexL);
-  // }else{
-  // item.details.removeAt(index);
-  // }
-  // updateDetailPages();
   }
 
   upDetail(int index){
@@ -400,6 +399,14 @@ class _AddProductPageState extends State<AddProductPage> {
 
 
   ///=========================== Service ==============================
+
+  bool needToSave (){
+    if(widget.edit == null || !widget.edit){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   bool dotCheck (String s){
     try{
@@ -607,6 +614,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 if (res == null ? 0 : res.error == 200) {
                   closeDialog(context);
                   dialogErr("Товар успешно добавлен");
+                  DraftDB.clean();
                 } else {
                   dialogErr(res.mess);
                 }
@@ -654,6 +662,9 @@ class _AddProductPageState extends State<AddProductPage> {
 
   _selectType(int index){
     _type = index;
+    if(needToSave()){
+      DraftDB.set(type: index);
+    }
     setState(() {
 
     });
@@ -674,10 +685,14 @@ class _AddProductPageState extends State<AddProductPage> {
 
   _selectCategory(int index){
     _category = categories[index];
+    if(needToSave()){
+      DraftDB.set(category: categories[index].route);
+    }
     setState(() {
 
     });
   }
+
 
   selectCategory()async{
     if(categories == null){
@@ -737,6 +752,15 @@ class _AddProductPageState extends State<AddProductPage> {
       }
 
       editingParam = null;
+
+      ///save to draft
+      if(needToSave()){
+        if(paramsList == null){
+          DraftDB.set(params: []);
+        }else{
+          DraftDB.set(params: paramsList);
+        }
+      }
 
     setState(() {});
   }
@@ -815,17 +839,28 @@ class _AddProductPageState extends State<AddProductPage> {
     print("save p $idEditingProperties");
 
     if(idEditingProperties != null) {
-      print("1111");
       if (editingProperty != null &&(editingProperty.name != "" && editingProperty.value != "")&&(editingProperty.name != null && editingProperty.value != null)) {
-        print("2222 ${editingProperty.name} ${editingProperty.value}");
-
         properties[idEditingProperties] = editingProperty;
       }else {
         if (((properties[idEditingProperties].name == "" && properties[idEditingProperties].value == "")||(properties[idEditingProperties].name == null && properties[idEditingProperties].value == null))&&(idEditingProperties != 0 && idEditingProperties != 1)) {
-          print("3333");
-
           deleteProperty(
               idEditingProperties);
+        }
+      }
+      if(needToSave()){
+        try {
+          DraftDB.set( fullText: properties[1].value, shortText: properties[0].value);
+          if(properties.length >1) {
+            List<Property> stepProp = [];// properties.getRange(2, properties.length);
+            for(int i = 2; i < properties.length; i++){
+              stepProp.add(properties[i]);
+            }
+           DraftDB.set(property: stepProp);
+          }else{
+            DraftDB.set(property: [] as List<Property>);
+          }
+        }catch(e){
+          printL("Draft set properties error $e");
         }
       }
       idEditingProperties = null;
@@ -840,8 +875,25 @@ class _AddProductPageState extends State<AddProductPage> {
     print("delete p");
     try {
       properties.removeAt(index);
+
     }catch(e){}
     setState(() {});
+    if(needToSave()){
+      try {
+        DraftDB.set( fullText: properties[1].value, shortText: properties[0].value);
+        if(properties.length >1) {
+          List<Property> stepProp = [];// properties.getRange(2, properties.length);
+          for(int i = 2; i < properties.length; i++){
+            stepProp.add(properties[i]);
+          }
+          DraftDB.set(property: stepProp);
+        }else{
+          DraftDB.set(property: [] as List<Property>);
+        }
+      }catch(e){
+        printL("Draft set properties error $e");
+      }
+    }
 
   }
 
@@ -875,6 +927,9 @@ class _AddProductPageState extends State<AddProductPage> {
   saveHeader(){
     if(nameProductStep != "" && nameProductStep != null){
       nameProduct = nameProductStep;
+      if(needToSave()){
+        DraftDB.set(name: nameProductStep);
+      }
       editingHeaderState = false;
     }else{
       editingHeaderState = false;
@@ -897,6 +952,9 @@ class _AddProductPageState extends State<AddProductPage> {
     if(controllerPriceSumm.text != "" && controllerPriceUnit.text != ""){
       priceUnitText = controllerPriceUnit.text;
       priceSummText = controllerPriceSumm.text;
+      if(needToSave()){
+        DraftDB.set(unit: priceUnitText, price: priceSummText);
+      }
     }
     priceSummTextStep = null;
     priceUnitTextStep = null;
@@ -975,6 +1033,85 @@ class _AddProductPageState extends State<AddProductPage> {
     setState(() {});
   }
 
+  loadFromDraft()async{
+    printL('load from draft');
+
+    if(await DraftDB.isEmpty()){
+      widget.draft = false;
+    }else{
+      Map<String,dynamic> draft = await DraftDB.get();
+
+      ///инициализация category
+      if(draft[DraftTable.category] != null){
+        List<Category> categoriesStep = await CategoryProvider.getCategories();
+        if(categoriesStep != null) {
+          for (int i = 0; i < categoriesStep.length; i++) {
+            if(categoriesStep[i].route == draft[DraftTable.category]){
+              _category = categoriesStep[i];
+            }
+          }
+        }
+      }
+      ///инициализация type
+      if(draft[DraftTable.type] != null){
+        _type = draft[DraftTable.type];
+      }
+      /// инициализация shortDesc
+      if(draft[DraftTable.shortText]!=null){
+        print("short text "+draft[DraftTable.shortText]);
+        print("full text "+draft[DraftTable.fullText]);
+
+        properties =  [Property(name: "Краткое описание", value: draft[DraftTable.shortText], editingValue: false, canDelete: false)];
+      }else{
+        properties = [Property(name: "Краткое описание", value: "", editingValue: false, canDelete: false)];
+      }
+      /// инициализация fullDesc
+      if(draft[DraftTable.fullText] != null){
+        properties.add(Property(canDelete: false, name: "Полное описание", value: draft[DraftTable.fullText], editingValue: false));
+      }else{
+        properties.add(Property(canDelete: false, name: "Полное описание", value: "", editingValue: false));
+      }
+      /// инициализация properties
+      if(draft[DraftTable.property] != null){
+        List<Property> stepProp = draft[DraftTable.property];
+        //         // properties.addAll(stepProp);
+        for(int i = 0; i < stepProp. length; i ++){
+          properties.add(stepProp[i]);
+        }
+      }
+      /// инициализация unit
+      if(draft[DraftTable.unit] != null){
+        priceUnitText = draft[DraftTable.unit];
+      }
+      /// инициализация price
+      if(draft[DraftTable.price] != null){
+        priceSummText = draft[DraftTable.price];
+      }
+      /// инициализация nameProduct
+      if(draft[DraftTable.name] != null){
+        nameProduct = draft[DraftTable.name];
+      }
+      /// инициализация params
+      if(draft[DraftTable.params] != null){
+        paramsList = draft[DraftTable.params];
+      }
+      /// инициализация details
+      if(draft[DraftTable.details] != null){
+        detailsList = draft[DraftTable.details];
+        updateDetailPages();
+      }
+      /// инициализация images
+      if(draft[DraftTable.images] != null){
+        imagelocal = draft[DraftTable.images];
+        updateImagePages();
+      }
+    }
+    loading= false;
+    setState(() {});
+
+
+  }
+
   @override
   void initState() {
 
@@ -996,20 +1133,31 @@ class _AddProductPageState extends State<AddProductPage> {
 
     controllerAccountName.addListener(() {
       accountName = controllerAccountName.text;
+      if(needToSave()){
+        DraftDB.set(accountName: accountName??"");
+      }
     });
 
     controllerAccountSecretKey.addListener(() {
       secretKey = controllerAccountSecretKey.text;
+      if(needToSave()){
+        DraftDB.set(accountSecretKey: secretKey??"");
+      }
     });
     controllerAccountOfferCode.addListener(() {
       accountOfferCode = controllerAccountOfferCode.text;
+      if(needToSave()){
+        DraftDB.set(offerCode: accountOfferCode??"");
+      }
     });
 
-    if(!widget.edit) {
+    if(widget.edit == null && !widget.edit) {
       loading = false;
       setState(() {
 
       });
+    }else if (widget.draft!= null && widget.draft){
+      loadFromDraft();
     }else{
       load();
     }
@@ -1026,7 +1174,10 @@ class _AddProductPageState extends State<AddProductPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: GestureDetector(
+        title: loading?Text("Загрузка", style: TextStyle(
+            color: cMainText.withOpacity(0.7),
+            fontSize: 24,
+            fontFamily: fontFamily)):GestureDetector(
           onTap: (){saveProduct();},
           child: Container(
             decoration: BoxDecoration(
@@ -1048,6 +1199,8 @@ class _AddProductPageState extends State<AddProductPage> {
               padding: const EdgeInsets.all(19.0),
               child: getIconSvg(id: 0, color: c5894bc,),
             )),
+
+
         backgroundColor: cBG,
         elevation: 0,
       ),

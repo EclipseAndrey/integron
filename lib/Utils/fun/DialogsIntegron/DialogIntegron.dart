@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Style.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/PageAddProduct.dart';
+import 'package:integron/Utils/DB/Draft/DraftDB.dart';
+import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
+
 part 'DialogIntegronError.dart';
+part 'DialogIntegronDraft.dart';
 
 
 

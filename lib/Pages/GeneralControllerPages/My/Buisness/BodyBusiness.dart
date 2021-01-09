@@ -7,11 +7,12 @@ import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
 import 'package:integron/REST/Autorization/checkToken.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Autorization/InfoToken/InfoToken.dart';
+import 'package:integron/Utils/DB/Draft/DraftDB.dart';
 import 'package:integron/Utils/DB/Products/BlocSize.dart';
 import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/DB/tokenDB.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 
 class BodyBusiness extends StatefulWidget {
 
@@ -272,7 +273,14 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
                               edit: widget.edit,
                               add: (index == 0&&widget.edit)? true:false,
                               tapAdd: ()async{
-                                  await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
+                                if(!(await DraftDB.isEmpty())){
+                                  await showDialogIntegronDraft(context);
+                                }else {
+                                  await Navigator.push(context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              AddProductPage(edit: false,)));
+                                }
                                   getItemsfromServ();
                                   },
                               tapDelete:(r){ tapDelete(r);},
@@ -298,9 +306,16 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
                             minusFontsSize,
                             minusIconsSize,
                             tapAdd: ()async{
-                                await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddProductPage(edit: false,)));
-                                getItemsfromServ();
-                              },
+                              if(!(await DraftDB.isEmpty())){
+                                await showDialogIntegronDraft(context);
+                              }else {
+                                await Navigator.push(context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            AddProductPage(edit: false,)));
+                              }
+                              getItemsfromServ();
+                            },
                             tapDelete:(r){ tapDelete(r);},
                             tapEdit: (route){tapEdit(route);},
                             tapUpFull: (route){tapUpFull(route);},

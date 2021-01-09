@@ -7,8 +7,10 @@ import 'package:integron/Style.dart';
 import 'package:integron/main.dart';
 
 class Cart extends StatefulWidget {
+
+  bool buildNewBloc;
   BuildContext contextBloc;
-  Cart(this.contextBloc);
+  Cart(this.contextBloc, this.buildNewBloc);
 
   @override
   _CartState createState() => _CartState();
@@ -32,11 +34,21 @@ class _CartState extends State<Cart> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height -50,
-          child: Content(),
+          child: widget.buildNewBloc != null?widget.buildNewBloc?buildNewBloc():Content():Content(),
         ),
       ),
     );
   }
+
+  Widget buildNewBloc (){
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CartCubit>(create: (BuildContext context) => CartCubit()),
+      ],
+      child: Content(),
+    );
+  }
+
 
   int getCurrentPageOfList(){
    try {
@@ -65,7 +77,7 @@ class _CartState extends State<Cart> {
             children: [
               //HeaderCart(),
               Container(
-                  height: MediaQuery.of(context).size.height - 80,
+                  height: MediaQuery.of(context).size.height - (widget.buildNewBloc?0:50),
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
                     physics: NeverScrollableScrollPhysics(),
