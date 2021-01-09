@@ -114,6 +114,8 @@ class Product extends ProductShort {
 
   factory Product.fromJson(Map<String, dynamic> jsonC){
      print("tope parse "+ jsonC['image'].toString());
+
+     print("ofer ${jsonC['accountname']}  ${jsonC['accountkey']}  ${ jsonC['offercode']}");
     // try {
       return Product(
         full: true,
@@ -148,6 +150,10 @@ class Product extends ProductShort {
         check: true,
         hidden: jsonC['view'] == null ?0:int.parse(jsonC['view']),
         isFavorite: jsonC['isfavorite'] == null? false:jsonC['isfavorite'],
+        accountName: jsonC['accountname'] == null?null:jsonC['accountname'],
+        accountSecretKey: jsonC['accountkey'] == null?null:jsonC['accountkey'],
+        offerCode: jsonC['offercode'] == null?null:jsonC['offercode'],
+
 
 
       );

@@ -154,7 +154,7 @@ class _AboutReferalState extends State<AboutReferal> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            child: Image.asset("lib/assets/images/about2.png", fit: BoxFit.fitWidth,),
+            child: Image.asset("lib/assets/images/about3.png", fit: BoxFit.fitWidth,),
           ),
           SizedBox(height: 50,),
         ],

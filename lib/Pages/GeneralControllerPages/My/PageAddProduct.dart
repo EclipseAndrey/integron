@@ -1027,6 +1027,13 @@ class _AddProductPageState extends State<AddProductPage> {
       nameProduct = item.name;
       initParams();
       initDetails();
+      if(_type == 2){
+
+        accountOfferCode = item.offerCode??"";
+        accountName = item.accountName??"";
+        print(item.accountName);
+        secretKey = item.accountSecretKey??"";
+      }
 
     }
     loading= false;
@@ -1178,7 +1185,10 @@ class _AddProductPageState extends State<AddProductPage> {
             color: cMainText.withOpacity(0.7),
             fontSize: 24,
             fontFamily: fontFamily)):GestureDetector(
-          onTap: (){saveProduct();},
+          onTap: (){
+            saveStats();
+            saveProduct();
+            },
           child: Container(
             decoration: BoxDecoration(
               color: cDefault,
