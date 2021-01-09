@@ -1030,9 +1030,11 @@ class _AddProductPageState extends State<AddProductPage> {
       if(_type == 2){
 
         accountOfferCode = item.offerCode??"";
+        controllerAccountOfferCode.text=accountOfferCode;
         accountName = item.accountName??"";
-        print(item.accountName);
+        controllerAccountName.text = accountName;
         secretKey = item.accountSecretKey??"";
+        controllerAccountSecretKey.text = secretKey;
       }
 
     }
@@ -2177,7 +2179,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     width: MediaQuery.of(context).size.width*0.90,
 
                     child: Text(
-                      accountOfferCode == ""?"Нажмите для редактирования":secretKey,
+                      accountOfferCode == ""?"Нажмите для редактирования":accountOfferCode,
                       style: TextStyle(
                           color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
                     ),
