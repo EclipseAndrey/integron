@@ -142,7 +142,6 @@ class _FavoriteListState extends State<FavoriteList> {
       secondaryActions: <Widget>[
 
         IconSlideAction(
-          captionStyle: TextStyle(color: cWhite, fontFamily: fontFamily, fontSize: 12, fontWeight: FontWeight.w400),
           caption: 'Поделиться',
           color: cDefault,
           iconWidget: getIconSvg(id: IconsSvg.share, color: cWhite),
@@ -150,7 +149,6 @@ class _FavoriteListState extends State<FavoriteList> {
           closeOnTap: true,
         ),
         IconSlideAction(
-          captionStyle: TextStyle(color: cWhite, fontFamily: fontFamily, fontSize: 12, fontWeight: FontWeight.w400),
           caption: 'Delete',
 
           color: cPay,

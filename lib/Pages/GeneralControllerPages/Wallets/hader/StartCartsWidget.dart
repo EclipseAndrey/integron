@@ -9,7 +9,8 @@ import 'package:integron/Providers/WalletProvider/WalletProvider.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Wallet/Balance.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
+import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
+
 import 'package:integron/Utils/fun/QrLib/QrGenerate/QrGenerateController.dart';
 import 'package:integron/main.dart';
 

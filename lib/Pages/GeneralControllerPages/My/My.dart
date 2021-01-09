@@ -15,8 +15,9 @@ import 'package:integron/Style.dart';
 import 'package:integron/Utils/DB/Autorization/InfoToken/InfoToken.dart';
 import 'package:integron/Utils/DB/tokenDB.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
+
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
+import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
 import 'package:integron/Utils/fun/ExitAccount.dart';
 import 'package:http/http.dart' as http;
 import 'package:integron/Utils/fun/Logs.dart';

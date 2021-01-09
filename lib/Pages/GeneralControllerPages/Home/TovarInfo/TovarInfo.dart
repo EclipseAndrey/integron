@@ -15,7 +15,8 @@ import 'package:integron/Utils/DB/Put.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/AddProductInCart.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
-import 'file:///C:/Users/koren/AndroidStudioProjects/integron/lib/Utils/fun/DialogsIntegron/DialogIntegron.dart';
+import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
+
 import 'package:integron/main.dart';
 import 'package:flutter/services.dart';
 
