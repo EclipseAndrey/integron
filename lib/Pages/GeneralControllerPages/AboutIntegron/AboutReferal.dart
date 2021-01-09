@@ -74,7 +74,7 @@ class _AboutReferalState extends State<AboutReferal> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: cBG,
-        child: Content(),
+        child: Content2(),
       ),
     );
   }
@@ -136,6 +136,29 @@ class _AboutReferalState extends State<AboutReferal> {
         SizedBox(height: 10,),
         Text("Вы сможете  развивать сервис вместе с нами, привлекая новые бизнесы на платформу. За каждый бизнес вы будете получать вознаграждение.", textAlign: TextAlign.center, style: TextStyle(color: cMainText, height: 2, fontWeight: FontWeight.w400, fontSize: 14 - minusFontsSize, fontStyle: FontStyle.normal),),
       ],
+    );
+  }
+
+
+  Content2(){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset("lib/assets/images/about1.png", fit: BoxFit.fitWidth,),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset("lib/assets/images/about2.png", fit: BoxFit.fitWidth,),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset("lib/assets/images/about2.png", fit: BoxFit.fitWidth,),
+          ),
+          SizedBox(height: 50,),
+        ],
+      ),
     );
   }
 
