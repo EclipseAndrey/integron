@@ -37,7 +37,7 @@ class _FormalizePageState extends State<FormalizePage> {
   String address;
   String num;
   String image;
-  String eMail = "Укажите e-mail";
+  String eMail = "";
 
   TextStyle styleLeftColumn = TextStyle(
       color: cMainText,
@@ -220,6 +220,7 @@ class _FormalizePageState extends State<FormalizePage> {
           GestureDetector(
             onTap: (){
               ShowBottomSheetEditInformation(
+                eMail: eMail,
                   context: context, whereSave:
                   (res, email)async{
                     await LoadDelivery();
@@ -318,7 +319,7 @@ class _FormalizePageState extends State<FormalizePage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(eMail, style: TextStyle(color: cPlaceHolder, fontWeight: FontWeight.w400, fontSize: 14,fontStyle: FontStyle.normal,fontFamily: fontFamily),)
+                                Text(eMail == null?"Укажите e-mail":eMail == ""?"Укажите e-mail":eMail, style: TextStyle(color: cPlaceHolder, fontWeight: FontWeight.w400, fontSize: 14,fontStyle: FontStyle.normal,fontFamily: fontFamily),)
                               ],
                             ),
                           ],

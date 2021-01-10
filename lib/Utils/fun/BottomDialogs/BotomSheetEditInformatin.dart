@@ -15,11 +15,12 @@ Future<void> ShowBottomSheetEditInformation({
   String address,
   String num,
   String name,
+  String eMail,
 }) async {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerAddress = TextEditingController();
   TextEditingController controllerNum = TextEditingController();
-  TextEditingController controllerMail = TextEditingController();
+  TextEditingController controllerMail = TextEditingController(text: eMail == null?"":eMail);
 
 
   controllerAddress.text = address ?? "";

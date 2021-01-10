@@ -1,5 +1,6 @@
 import 'package:integron/Utils/DB/Errors.dart';
 import 'package:integron/Utils/DB/Put.dart';
+import 'package:integron/main.dart';
 
 class InfoToken extends Errors{
   int id;
@@ -18,6 +19,7 @@ class InfoToken extends Errors{
   }
 
   factory InfoToken.fromJson(Map<String, dynamic> json){
+    if(json['root'] != null){FullVersion = json['root'];}
     InfoToken out = InfoToken(
       id: int.parse((json['id']??"0").toString()),
       code: json['code'],

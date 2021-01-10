@@ -116,7 +116,7 @@ class _TovarInfoState extends State<TovarInfo> {
               )),
           backgroundColor: cBG,
           actions: [
-            GestureDetector(
+            !FullVersion?SizedBox():GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -631,7 +631,7 @@ class _TovarInfoState extends State<TovarInfo> {
                 ],
               ),
             ),
-            Padding(
+            !FullVersion?SizedBox():Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: 0.0, vertical: 0),
               child: price(),

@@ -144,7 +144,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Product item;
   List<String> responsePhoto = [];
   List<String> responseDetails = [];
-
+  bool hasChange = false;
 
   ///==============================================================================================================================
   ///=========================================================== FUNCTIONS ========================================================
@@ -203,6 +203,8 @@ class _AddProductPageState extends State<AddProductPage> {
         outList.add(imagelocal[i].toString());
       }
       DraftDB.set(images: outList);
+    }else{
+      hasChange = true;
     }
 
 
@@ -241,6 +243,54 @@ class _AddProductPageState extends State<AddProductPage> {
         print('No image selected.');
       }
     });
+  }
+
+  pop(){
+    saveStats();
+    if(hasChange){
+      showDialogIntegron(
+          context: context,
+        title: Text(
+          "Изменения будут потеряны",
+          style:
+          TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w600),
+        ),
+        body: Text(
+          "У вас есть несохраненные поля. Хотите сохранить перед выходом?",
+          style:
+          TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
+          textAlign: TextAlign.center,
+        ),
+        buttons: [
+          DialogIntegronButton(
+            onPressed: () async{
+              closeDialog(context);
+              closeDialog(context);
+
+            },
+            textButton: Text(
+              "Выйти",
+              style: TextStyle(
+                  color: cLinks, fontSize: 16, fontFamily: fontFamily),
+            ),
+          ),
+          DialogIntegronButton(
+            onPressed: () async{
+              closeDialog(context);
+              saveProduct();
+            },
+            textButton: Text(
+              "Сохранить",
+              style: TextStyle(
+                  color: cLinks, fontSize: 16, fontFamily: fontFamily),
+            ),
+          ),
+        ],
+      );
+    }else{
+
+    }
+
   }
 
   ///=========================== Details ==============================
@@ -1040,6 +1090,7 @@ class _AddProductPageState extends State<AddProductPage> {
     }
     loading= false;
     setState(() {});
+    hasChange = false;
   }
 
   loadFromDraft()async{
@@ -1126,22 +1177,33 @@ class _AddProductPageState extends State<AddProductPage> {
 
     controllerValueProperty.addListener(() {
       editingProperty.value = controllerValueProperty.text;
+      hasChange = true;
     });
     controllerNameProperty.addListener(() {
       editingProperty.name = controllerNameProperty.text;
+      hasChange = true;
+
     });
     controllerHeader.addListener(() {
       nameProductStep = controllerHeader.text;
+      hasChange = true;
+
     });
     controllerPriceUnit.addListener(() {
       priceUnitTextStep = controllerPriceUnit.text;
+      hasChange = true;
+
     });
     controllerPriceSumm.addListener(() {
         priceSummText = controllerPriceSumm.text;
+        hasChange = true;
+
     });
 
     controllerAccountName.addListener(() {
       accountName = controllerAccountName.text;
+      hasChange = true;
+
       if(needToSave()){
         DraftDB.set(accountName: accountName??"");
       }
@@ -1149,12 +1211,16 @@ class _AddProductPageState extends State<AddProductPage> {
 
     controllerAccountSecretKey.addListener(() {
       secretKey = controllerAccountSecretKey.text;
+      hasChange = true;
+
       if(needToSave()){
         DraftDB.set(accountSecretKey: secretKey??"");
       }
     });
     controllerAccountOfferCode.addListener(() {
       accountOfferCode = controllerAccountOfferCode.text;
+      hasChange = true;
+
       if(needToSave()){
         DraftDB.set(offerCode: accountOfferCode??"");
       }
@@ -1180,43 +1246,58 @@ class _AddProductPageState extends State<AddProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: loading?Text("Загрузка", style: TextStyle(
-            color: cMainText.withOpacity(0.7),
-            fontSize: 24,
-            fontFamily: fontFamily)):GestureDetector(
-          onTap: (){
-            saveStats();
-            saveProduct();
-            },
-          child: Container(
-            decoration: BoxDecoration(
-              color: cDefault,
-              borderRadius: BorderRadius.circular(6),
+    return WillPopScope(
+      // ignore: missing_return
+      onWillPop: () {
+        print('on will ok');
+        if(hasChange)saveStats();
+        if(hasChange && widget.edit !=null && widget.edit){pop();}else{
+          closeDialog(context);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: loading?Text("Загрузка", style: TextStyle(
+              color: cMainText.withOpacity(0.7),
+              fontSize: 24,
+              fontFamily: fontFamily)):GestureDetector(
+            onTap: (){
+              saveStats();
+              saveProduct();
+              },
+            child: Container(
+              decoration: BoxDecoration(
+                color: cDefault,
+                borderRadius: BorderRadius.circular(6),
 
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              child: Text(widget.edit?"Сохранить изменения":"Добавить", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, fontStyle: FontStyle.normal, color: cWhite),),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                child: Text(widget.edit?"Сохранить изменения":"Добавить", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, fontStyle: FontStyle.normal, color: cWhite),),
+              ),
             ),
           ),
+          leading: GestureDetector(
+              onTap: (){
+                if(hasChange)saveStats();
+                if(hasChange && widget.edit !=null && widget.edit){
+                  pop();
+                }else {
+                  Navigator.pop(context);
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(19.0),
+                child: getIconSvg(id: 0, color: c5894bc,),
+              )),
+
+
+          backgroundColor: cBG,
+          elevation: 0,
         ),
-        leading: GestureDetector(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(19.0),
-              child: getIconSvg(id: 0, color: c5894bc,),
-            )),
-
-
-        backgroundColor: cBG,
-        elevation: 0,
+        body: Content(),
       ),
-      body: Content(),
     );
   }
 

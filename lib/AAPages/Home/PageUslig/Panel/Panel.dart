@@ -79,7 +79,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
         padding:  EdgeInsets.symmetric(vertical: c),
         child: Column(
           children: [
-            Row(
+            !FullVersion?SizedBox():Row(
                mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -100,7 +100,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
             //   padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 8),
             //   child: panelIcons(),
             // )
-            SizedBox(height: p,),
+            !FullVersion?SizedBox():SizedBox(height: p,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

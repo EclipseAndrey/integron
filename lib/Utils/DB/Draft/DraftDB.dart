@@ -8,6 +8,7 @@ part 'DraftTable.dart';
 
 class DraftDB {
   static Future<void> clean() async {
+    print('DRAFT CLEAN');
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(DraftTable.images, null);
     await prefs.setString(DraftTable.unit, null);
@@ -46,6 +47,7 @@ class DraftDB {
     String name,
     String price,
   }) async {
+    print('DRAFT SET');
     if(
     images == null && unit == null && type == null && property == null &&
         delivery == null && address == null && fullText == null && shortText == null &&
@@ -125,6 +127,7 @@ class DraftDB {
   }
 
   static Future<Map<String, dynamic>> get ()async{
+    print('DRAFT GET');
     final prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> out = Map();
     out[DraftTable.table] = prefs.getBool(DraftTable.table)??false;

@@ -11,9 +11,9 @@ import 'package:integron/Pages/GeneralControllerPages/AboutIntegron/AboutReferal
 import 'package:integron/Pages/GeneralControllerPages/My/My.dart';
 import 'package:integron/Pages/GeneralControllerPages/Purchase/Purchase.dart';
 import 'package:integron/Pages/GeneralControllerPages/Wallets/Wallets.dart';
-import 'package:integron/REST/Cart/getCart.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
+import 'package:integron/main.dart';
 import 'Blocs/Balance/BalanceCubit.dart';
 import 'Blocs/Feed/UslugiCubit.dart';
 import 'GeneralCubit.dart';
@@ -28,7 +28,7 @@ class GeneralControllerPages extends StatefulWidget {
 
 class _GeneralControllerPagesState extends State<GeneralControllerPages> {
 
-  List<Widget> pageList = List<Widget>();
+  List<Widget> pageList;
 
   PageController controllerPage = PageController(initialPage: 0);
   static final controllerHome = PageController(
@@ -100,6 +100,75 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
     return true;
   }
 
+  List<BottomNavigationBarItem> listButtons;
+
+  @override
+  void initState() {
+
+    listButtons = FullVersion?[
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 52, color: c6287A1),
+        icon: getIconSvg(id: 21, color: c6287A1),
+        title: Text(
+          'Главная',
+        ),
+      ),
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 54, color: c6287A1),
+        icon: getIconSvg(id: 49, color: c6287A1),
+        title: Text(
+          'Кошельки',
+        ),
+      ),
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 51, color: c6287A1),
+        icon: getIconSvg(id: 55, color: c6287A1),
+        title: Text(
+          'Покупки',
+        ),
+      ),
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 50, color: c6287A1),
+        icon: getIconSvg(id: 5, color: c6287A1),
+        title: Text(
+          'Бизнесы',
+        ),
+      ),
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 53, color: c6287A1),
+        icon: getIconSvg(id: 48, color: c6287A1),
+        title: Text(
+          'Мое',
+        ),
+      ),
+    ]:[
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 52, color: c6287A1),
+        icon: getIconSvg(id: 21, color: c6287A1),
+        title: Text(
+          'Главная',
+        ),
+      ),
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 50, color: c6287A1),
+        icon: getIconSvg(id: 5, color: c6287A1),
+        title: Text(
+          'Бизнесы',
+        ),
+      ),
+      BottomNavigationBarItem(
+        activeIcon: getIconSvg(id: 53, color: c6287A1),
+        icon: getIconSvg(id: 48, color: c6287A1),
+        title: Text(
+          'Мое',
+        ),
+      ),
+    ];
+
+
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,8 +198,23 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
   }
 
 
-  Widget Content(BuildContext context1,var state ){
 
+
+
+
+
+  Widget Content(BuildContext context1,var state ){
+    pageList = FullVersion?[
+      Home(controllerHome),
+      Wallet(),
+      Cart(context1, false),
+      AboutReferal(),
+      MyPage()
+    ]:[
+      Home(controllerHome),
+      AboutReferal(),
+      MyPage()
+    ];
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: WillPopScope(
@@ -143,13 +227,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
             // ),
             PageView(
               physics: NeverScrollableScrollPhysics(),
-              children: [
-                Home(controllerHome),
-                Wallet(),
-                Cart(context1, false),
-                AboutReferal(),
-                MyPage()
-              ],
+              children: pageList,
               controller: controllerPage,
               onPageChanged: (index){
                 _onItemTapped(index);
@@ -165,43 +243,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
 
                   // backgroundColor: Color.fromRGBO(22, 26, 31, 1),
 
-                  items:  <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      activeIcon: getIconSvg(id: 52, color: c6287A1),
-                      icon: getIconSvg(id: 21, color: c6287A1),
-                      title: Text(
-                        'Главная',
-                      ),
-                    ),
-                    BottomNavigationBarItem(
-                      activeIcon: getIconSvg(id: 54, color: c6287A1),
-                      icon: getIconSvg(id: 49, color: c6287A1),
-                      title: Text(
-                        'Кошельки',
-                      ),
-                    ),
-                    BottomNavigationBarItem(
-                      activeIcon: getIconSvg(id: 51, color: c6287A1),
-                      icon: getIconSvg(id: 55, color: c6287A1),
-                      title: Text(
-                        'Покупки',
-                      ),
-                    ),
-                    BottomNavigationBarItem(
-                      activeIcon: getIconSvg(id: 50, color: c6287A1),
-                      icon: getIconSvg(id: 5, color: c6287A1),
-                      title: Text(
-                        'Бизнесы',
-                      ),
-                    ),
-                    BottomNavigationBarItem(
-                      activeIcon: getIconSvg(id: 53, color: c6287A1),
-                      icon: getIconSvg(id: 48, color: c6287A1),
-                      title: Text(
-                        'Мое',
-                      ),
-                    ),
-                  ],
+                  items:  listButtons,
                   unselectedItemColor: c6287A1,
                   // selectedFontSize: 12,
                   // unselectedFontSize: 12,

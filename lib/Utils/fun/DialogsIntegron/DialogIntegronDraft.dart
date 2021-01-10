@@ -38,5 +38,6 @@ showDialogIntegronDraft(BuildContext context) async {
                 color: cLinks, fontSize: 16, fontFamily: fontFamily),
           ),
         ),
-      ]);
+      ],
+  );
 }

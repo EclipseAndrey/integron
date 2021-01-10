@@ -13,7 +13,7 @@ Widget Logo(BuildContext context, double divBefore, double minusFontsSize, doubl
           width: MediaQuery.of(context).size.width,
           child: Icon(customIcons.Integron.integron, color: cMainText, size: 20 - minusIconSize,)),
       SizedBox(height: 20,),
-      Text("магазин товаров и услуг за токены", style: TextStyle(
+      Text("каталог товаров и услуг за токены", style: TextStyle(
         color: c7A8BA3,
         fontSize: 16 - minusFontsSize,
         fontWeight: FontWeight.w400,

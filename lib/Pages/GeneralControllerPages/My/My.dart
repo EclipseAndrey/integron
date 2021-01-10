@@ -24,6 +24,7 @@ import 'package:integron/Utils/fun/Logs.dart';
 import 'Buisness/Buisness.dart';
 import 'Orders/OrdersBiz/OrdersBiz.dart';
 import 'Orders/OrdersMy/OrdersMy.dart';
+import 'package:integron/main.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -81,7 +82,10 @@ class _MyPageState extends State<MyPage> {
           fontSize: 16.0
       );
     }
-    user.role == 1?settingsMenu = [0,1,5,4]:settingsMenu=[0,5,4];
+    if(FullVersion){
+      user.role == 1?settingsMenu = [0,1,5,4]:settingsMenu=[0,5,4];}else{
+      user.role == 1?settingsMenu = [5,4]:settingsMenu=[5,4];
+    }
     loading = false;
     setState(() {});
     if (buildCompleted) initHeader();
