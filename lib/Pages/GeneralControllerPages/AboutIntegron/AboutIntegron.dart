@@ -92,7 +92,7 @@ class _AboutIntegronState extends State<AboutIntegron> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: cBG,
-        child: Content(),
+        child: Content2(),
       ),
     );
   }
@@ -121,6 +121,9 @@ class _AboutIntegronState extends State<AboutIntegron> {
 
   }
 
+
+
+
   Widget TextWelcome(){
     return Column(
       children: [
@@ -133,6 +136,8 @@ class _AboutIntegronState extends State<AboutIntegron> {
       ],
     );
   }
+
+
 
   Widget TextButtonNext(){
     return GestureDetector(
@@ -152,6 +157,25 @@ class _AboutIntegronState extends State<AboutIntegron> {
   }
 
 
+  Widget Content2(){
+    return SafeArea(child: Padding(
+      padding: const EdgeInsets.all(26.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextButtonNext(),
+          SizedBox(height: 24,),
+
+          Text("Что такое Integron?", style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 27, fontWeight: FontWeight.w400, ),),
+          SizedBox(height: 33,),
+          Text("Integron - это площадка объединяющая виртуальный и реальный мир. Integron это сообщество, которое хочет идти в ногу со временем. Мы интегрируем на нашей платформе реальные сектора бизнеса для оплаты товаров за токены. Почему Inegron? Мы внедряем современные технологии blockchain в нашу повседневную жизнь. С помощью Integron мы сделаем этот мир лучше.",
+          style: TextStyle(color: cMainText, fontWeight: FontWeight.w400, fontSize: 16, fontFamily: fontFamily, fontStyle: FontStyle.normal,),),
+
+
+        ],
+      ),
+    ));
+  }
 
 
 }

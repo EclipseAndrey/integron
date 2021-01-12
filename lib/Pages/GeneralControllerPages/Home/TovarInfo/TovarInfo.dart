@@ -16,7 +16,10 @@ import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/AddProductInCart.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BottomSheetSelectParam.dart';
 import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
-
+import 'dart:io' show Platform;
+import 'package:flutter/services.dart';
+import 'package:integron/Utils/fun/Logs.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:integron/main.dart';
 import 'package:flutter/services.dart';
 
@@ -619,6 +622,7 @@ class _TovarInfoState extends State<TovarInfo> {
                         textProduct("Описание", item.fullText),
                         // textProduct("Доставка",int.parse(item.delivery) == 1?"Есть":"Нет"),
                         constructorProperty(),
+                        linkWidget(),
 
 
                       ],
@@ -644,6 +648,35 @@ class _TovarInfoState extends State<TovarInfo> {
 
     return Content(context);
   }
+  Widget linkWidget(){
+    Widget head = Text(
+      "Ссылка на тренинг",
+      style: TextStyle(
+          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+    );
+    return item.link == null || item.link == ""?SizedBox():Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(color: cDefault),
+        head,
+        SizedBox(
+          height:6,
+        ),
+        InkWell(
+          onTap: ()async{
+            //todo
+            if (await canLaunch(item.link)) {
+            await launch(item.link);
+            } else {
+            printL("Could not launch ${item.link}");
+            }
+          },
+          child: Text("Перейти", style: TextStyle(
+              color: c2f527f, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
+        )
+      ],
+    );
+  }
 
 
   Widget details(){
@@ -656,7 +689,7 @@ class _TovarInfoState extends State<TovarInfo> {
       children: [
         Divider(color: cDefault),
         item.details.length == 0?SizedBox():Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

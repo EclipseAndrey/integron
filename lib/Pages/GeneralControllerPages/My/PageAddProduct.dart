@@ -137,6 +137,7 @@ class _AddProductPageState extends State<AddProductPage> {
   String productName = '';
   String secretKey = '';
   String accountOfferCode = "";
+  String accountLink ="";
   TextEditingController controllerAccountName = TextEditingController();
   FocusNode focusAccountName = FocusNode();
   TextEditingController controllerAccountProductName = TextEditingController();
@@ -145,9 +146,12 @@ class _AddProductPageState extends State<AddProductPage> {
   FocusNode focusAccountSecretKey = FocusNode();
   TextEditingController controllerAccountOfferCode = TextEditingController();
   FocusNode focusAccountOfferCode = FocusNode();
+  TextEditingController controllerAccountLink = TextEditingController();
+  FocusNode focusAccountLink = FocusNode();
   bool accountNameEdit = false;
   bool secretKeyEdit = false;
   bool accountOfferCodeEdit = false;
+  bool accountLinkEdit = false;
 
 
 
@@ -681,6 +685,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 accountName: accountName,
                 accountSecretKey: secretKey,
                 offerCode: accountOfferCode,
+                link: accountLink,
               );
               print('4property ${properties.length} copy ${propertiesCopy
                   .length}');
@@ -1094,6 +1099,11 @@ class _AddProductPageState extends State<AddProductPage> {
     setState((){});
   }
 
+  saveAccountLink(){
+    accountLinkEdit = false;
+    setState(() {});
+  }
+
   editAccountSecretKey(){
     saveStats();
     secretKeyEdit = true;
@@ -1112,8 +1122,12 @@ class _AddProductPageState extends State<AddProductPage> {
     saveStats();
     accountOfferCodeEdit = true;
     setState((){});
+  }
 
-
+  editAccountLink(){
+    saveStats();
+    accountLinkEdit = true;
+    setState(() {});
   }
 
 
@@ -1129,6 +1143,7 @@ class _AddProductPageState extends State<AddProductPage> {
     saveAccountName();
     saveAccountSecretKey();
     saveAccountOfferCode();
+    saveAccountLink();
   }
 
   void load()async{
@@ -1155,6 +1170,8 @@ class _AddProductPageState extends State<AddProductPage> {
         controllerAccountName.text = accountName;
         secretKey = item.accountSecretKey??"";
         controllerAccountSecretKey.text = secretKey;
+        accountLink = item.link??"";
+        controllerAccountLink.text = accountLink;
       }
 
     }
@@ -1199,6 +1216,10 @@ class _AddProductPageState extends State<AddProductPage> {
           if(draft[DraftTable.offerCode] != null){
             accountOfferCode = draft[DraftTable.offerCode];
             controllerAccountOfferCode.text = accountOfferCode;
+          }
+          if(draft[DraftTable.link] != null){
+            accountLink = draft[DraftTable.link];
+            controllerAccountLink.text = accountLink;
           }
         }
 
@@ -1313,6 +1334,16 @@ class _AddProductPageState extends State<AddProductPage> {
       if(needToSave()){
         DraftDB.set(offerCode: accountOfferCode??"");
       }
+    });
+
+    controllerAccountLink.addListener(() {
+      accountLink = controllerAccountLink.text;
+      hasChange =  true;
+
+      if(needToSave()){
+        DraftDB.set(link: accountLink??"");
+      }
+
     });
 
     if(widget.edit == null && !widget.edit) {
@@ -2244,7 +2275,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   Widget editStudy(TextEditingController controller,  String head, String hint, int focusNode){
 
-    FocusScope.of(context).requestFocus(focusNode == 0?focusAccountName:focusNode == 1?focusAccountSecretKey:focusAccountOfferCode);
+    FocusScope.of(context).requestFocus(focusNode == 0?focusAccountName:focusNode == 1?focusAccountSecretKey:focusNode == 3?focusAccountLink:focusAccountOfferCode);
 
 
     return Column(
@@ -2281,7 +2312,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 Container(
                   //width: MediaQuery.of(context).size.width-24-10,
                   child: TextField(
-                    focusNode: (focusNode == 0?focusAccountName:focusNode == 1?focusAccountSecretKey:focusAccountOfferCode),
+                    focusNode: (focusNode == 0?focusAccountName:focusNode == 1?focusAccountSecretKey:focusNode == 3?focusAccountLink:focusAccountOfferCode),
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -2422,6 +2453,47 @@ class _AddProductPageState extends State<AddProductPage> {
 
                     child: Text(
                       accountOfferCode == ""?"Нажмите для редактирования":accountOfferCode,
+                      style: TextStyle(
+                          color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
+                    ),
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+        ),
+        Divider(color: cDefault, ),
+
+        accountLinkEdit? editStudy(controllerAccountLink, "Ссылка на тренинг", "ссылка (необязательно)", 3):GestureDetector(
+          onTap: (){
+            editAccountLink();
+            // FocusScope.of(context).requestFocus(focusAccountSecretKey);
+
+            //todo LINK
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+                    child: Text(
+                      "Ссылка на тенинг",
+                      style: TextStyle(
+                          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+                    ),
+                  ),
+                  SizedBox(height:  4,),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+
+                    child: Text(
+                      accountLink == ""?"Нажмите для редактирования":accountLink,
                       style: TextStyle(
                           color: cMainText, fontSize: 18, fontWeight: FontWeight.w400, fontFamily: fontFamily),
                     ),

@@ -102,11 +102,13 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
             // )
             !FullVersion?SizedBox():SizedBox(height: p,),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(width: edge,),
+
                 info(),
                 SizedBox(width: c,),
-                referal(),
+                FullVersion?referal():SizedBox(),
               ],
             ),
 

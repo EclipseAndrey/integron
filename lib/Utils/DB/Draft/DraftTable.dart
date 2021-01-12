@@ -18,6 +18,7 @@ class DraftTable {
   static String get offerCode => table + "accountOfferCode";
   static String get name => table + "name";
   static String get price => table + "price";
+  static String get link => table + "link";
 }
 //
 // List<String> images,

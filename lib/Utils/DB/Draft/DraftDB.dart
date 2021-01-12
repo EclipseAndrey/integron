@@ -26,6 +26,7 @@ class DraftDB {
     await prefs.setString(DraftTable.offerCode, null);
     await prefs.setString(DraftTable.name, null);
     await prefs.setString(DraftTable.price, null);
+    await prefs.setString(DraftTable.link, null);
     await prefs.setBool(DraftTable.table, false);
   }
 
@@ -46,13 +47,14 @@ class DraftDB {
     String offerCode,
     String name,
     String price,
+    String link,
   }) async {
     print('DRAFT SET');
     if(
     images == null && unit == null && type == null && property == null &&
         delivery == null && address == null && fullText == null && shortText == null &&
         category == null && details == null && params == null && accountName == null &&
-        accountSecretKey == null && offerCode == null && name == null && price == null
+        accountSecretKey == null && offerCode == null && name == null && price == null && link == null
     ){
       print('set is empty');
       return;}
@@ -123,6 +125,10 @@ class DraftDB {
       await prefs.setString(DraftTable.price, price.toString());
       await prefs.setBool(DraftTable.table, true);
     }
+    if(link != null){
+      await prefs.setString(DraftTable.link, link);
+      await prefs.setBool(DraftTable.table, true);
+    }
     return;
   }
 
@@ -149,6 +155,7 @@ class DraftDB {
     out[DraftTable.offerCode] = prefs.getString(DraftTable.offerCode);//
     out[DraftTable.name] = prefs.getString(DraftTable.name);//
     out[DraftTable.price] = prefs.getString(DraftTable.price);//
+    out[DraftTable.link] = prefs.getString(DraftTable.link);//
     return out;
   }
 

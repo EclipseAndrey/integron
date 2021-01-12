@@ -69,6 +69,7 @@ class Product extends ProductShort {
   String offerCode;
   int hidden;
   bool isFavorite;
+  String link;
 
 
   Product({
@@ -105,6 +106,7 @@ class Product extends ProductShort {
     this.offerCode,
     this.hidden,
     this.isFavorite,
+    this.link
 
 
 }) : super(name: name, image: image, route:route, text: text, price:price, sale:sale??"");
@@ -153,6 +155,7 @@ class Product extends ProductShort {
         accountName: jsonC['accountname'] == null?null:jsonC['accountname'],
         accountSecretKey: jsonC['accountkey'] == null?null:jsonC['accountkey'],
         offerCode: jsonC['offercode'] == null?null:jsonC['offercode'],
+        link: jsonC['link'] == null?null:jsonC['link']
 
 
 
@@ -191,6 +194,7 @@ class Product extends ProductShort {
     map['producttitle'] = name;
     map['offercode'] = offerCode;
     map['detail'] = details;
+    map['link'] = link;
     return map;
   }
 

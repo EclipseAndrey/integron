@@ -604,6 +604,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
                         textProduct("Описание", widget.product.fullText),
                         // textProduct("Доставка",int.parse(item.delivery) == 1?"Есть":"Нет"),
                         constructorProperty(),
+                        linkWidget(),
 
 
                       ],
@@ -631,6 +632,27 @@ class _ViewProductPageState extends State<ViewProductPage> {
   }
 
 
+  Widget linkWidget(){
+    Widget head = Text(
+      "Ссылка на тренинг",
+      style: TextStyle(
+          color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),
+    );
+    return widget.product.link == null || widget.product.link == ""?SizedBox():Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(color: cDefault),
+        head,
+        SizedBox(
+          height:6,
+        ),
+        Text("Перейти", style: TextStyle(
+            color: c2f527f, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: fontFamily),)
+      ],
+    );
+  }
+
+
   Widget details(){
     Widget head = Text(
       "Детали",
@@ -641,7 +663,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
       children: [
         Divider(color: cDefault),
         widget.imagesD.length == 0?SizedBox():Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
