@@ -15,7 +15,7 @@ class DraftTable {
   static String get params => table + "params";
   static String get accountName => table + "accountName";
   static String get accountSecretKey => table + "accountSecretKey";
-  static String get offerCode => table + "accountSecretKey";
+  static String get offerCode => table + "accountOfferCode";
   static String get name => table + "name";
   static String get price => table + "price";
 }

@@ -99,7 +99,7 @@ class _FormalizePageState extends State<FormalizePage> {
 
   // ignore: non_constant_identifier_names
   LoadDelivery()async{
-    var a = await checkToken();
+    var a = await checkToken(context);
     try {
       if (a.name.length == 0) {
         a.name = null;

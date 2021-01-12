@@ -150,13 +150,6 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
         ),
       ),
       BottomNavigationBarItem(
-        activeIcon: getIconSvg(id: 50, color: c6287A1),
-        icon: getIconSvg(id: 5, color: c6287A1),
-        title: Text(
-          'Бизнесы',
-        ),
-      ),
-      BottomNavigationBarItem(
         activeIcon: getIconSvg(id: 53, color: c6287A1),
         icon: getIconSvg(id: 48, color: c6287A1),
         title: Text(
@@ -212,7 +205,6 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
       MyPage()
     ]:[
       Home(controllerHome),
-      AboutReferal(),
       MyPage()
     ];
     return Scaffold(

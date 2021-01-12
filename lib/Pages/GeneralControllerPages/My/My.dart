@@ -60,7 +60,7 @@ class _MyPageState extends State<MyPage> {
     print("load");
     loading = true;
     setState(() {});
-    user = await checkToken();
+    user = await checkToken(context);
     user??Fluttertoast.showToast(
         msg: "Не удалось загрузить",
         toastLength: Toast.LENGTH_SHORT,
@@ -71,7 +71,7 @@ class _MyPageState extends State<MyPage> {
         fontSize: 16.0
     );
     while(user == null){
-      user = await checkToken();
+      user = await checkToken(context);
       user??Fluttertoast.showToast(
           msg: "Не удалось загрузить",
           toastLength: Toast.LENGTH_SHORT,
@@ -265,7 +265,7 @@ class _MyPageState extends State<MyPage> {
                   color: cd1d3d7,
                 ),
                 _body(),
-                loading ? SizedBox() : _openStore(),
+                loading || !FullVersion ? SizedBox() : _openStore(),
                 SizedBox(
                   height: 120,
                 ),
@@ -638,7 +638,7 @@ class _MyPageState extends State<MyPage> {
         GestureDetector(
           onTap: () async{
             showDialogLoading(context);
-            InfoToken info = await checkToken();
+            InfoToken info = await checkToken(context);
             closeDialog(context);
               if(info.role == 1){
                 await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
@@ -646,43 +646,20 @@ class _MyPageState extends State<MyPage> {
                 showDialogLoading(context);
                 await UserProvider.setRole("1");
                 closeDialog(context);
-                showDialogIntegron(
-                    context: context,
-                    title: Text(
-                      "Сообщение",
-                      style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),
-                    ),
-                    body: Text(
-                      "Поздравляем, теперь у вас Аккаунт бизнеса, не забудьте указать название вашего бизнеса, иначе пользователи не смогут увидеть его",
-                      style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
-                      textAlign: TextAlign.center,
-                    ),
-                    buttons: <DialogIntegronButton>[
-                      DialogIntegronButton(
-                          textButton: Text(
-                            "Хорошо",
-                            style: TextStyle(color: cMainText, fontSize: 16),
-                          ),
-                          onPressed: () async{
-                            closeDialog(context);
-                            showDialogLoading(context);
-                            await UserProvider.setRole("1");
-
-                            InfoToken info = await checkToken();
-                            closeDialog(context);
-                            if(info.role == 1){
-                              await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
-                              Load();
-                            }else{
-                              showDialogIntegron(context: context,
-                                  title: Text("Сообщение",  style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),),
-                                  body: Text("Бизнес аккаунт еще не активирован :(\nПопробуйте позже",
-                                    style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
-                                    textAlign: TextAlign.center, ));
-                            }
-
-                          })
-                    ]);
+                showDialogLoading(context);
+                await UserProvider.setRole("1");
+                InfoToken info = await checkToken(context);
+                closeDialog(context);
+                if(info.role == 1){
+                  await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => BusinessPage.edit()));
+                  Load();
+                }else{
+                  showDialogIntegron(context: context,
+                      title: Text("Сообщение",  style: TextStyle(color: cMainText, fontSize: 16,fontFamily: fontFamily),),
+                      body: Text("Бизнес аккаунт еще не активирован :(\nПопробуйте позже",
+                        style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily),
+                        textAlign: TextAlign.center, ));
+                }
 
 
 
@@ -719,7 +696,7 @@ class _MyPageState extends State<MyPage> {
         SizedBox(
           height: paddingH / 2,
         ),
-        user.role == 1?SizedBox():Padding(
+        (user.role == 1) ?SizedBox():Padding(
           padding: const EdgeInsets.only(left: 30, right: 42),
           child: Text(
             "В INTEGRON вы можете открыть свой собственный магазин и начать зарабатывать прямо сейчас.",

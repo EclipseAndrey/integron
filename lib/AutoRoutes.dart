@@ -42,12 +42,12 @@ void AutoRoutes(BuildContext context)async {
     String token = await tokenDB();
     if(token != "null"){
       print("AUTOROUTES  token $token");
-      InfoToken infoToken = await checkToken();
+      InfoToken infoToken = await checkToken(context);
       if(infoToken != null){
         print("AUTOROUTES  token response ${infoToken.code}");
         await tokenOk(infoToken);
       }else{
-        infoToken = await checkToken();
+        infoToken = await checkToken(context);
         if(infoToken != null){
           await tokenOk(infoToken);
         }else{

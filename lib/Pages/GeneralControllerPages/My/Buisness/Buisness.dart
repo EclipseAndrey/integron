@@ -48,7 +48,7 @@ class _BusinessPageState extends State<BusinessPage> {
 
     print("BIZ ${widget.edit}");
     if(widget.edit) {
-      InfoToken infoUser = await checkToken();
+      InfoToken infoUser = await checkToken(context);
       if (infoUser != null && infoUser.role == 1&&widget.edit) {
         business = await BizProvider.getBusiness(infoUser.id);
         nameBiz = business.nameBusiness == null ? widget.edit

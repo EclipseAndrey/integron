@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
+import 'package:integron/Pages/GeneralControllerPages/My/ViewProduct.dart';
 import 'package:integron/Providers/CategoryProvider/CategoryProvider.dart';
 import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
 import 'package:integron/Style.dart';
@@ -90,6 +91,7 @@ class _AddProductPageState extends State<AddProductPage> {
   String nameProductStep;
   bool editingHeaderState = false;
   TextEditingController controllerHeader = TextEditingController();
+  FocusNode focusHeader = FocusNode();
 
 
   ///=========================== Properties ===========================
@@ -99,7 +101,10 @@ class _AddProductPageState extends State<AddProductPage> {
   int idEditingProperties;
   Property editingProperty  = Property();
   TextEditingController controllerNameProperty = TextEditingController();
+  FocusNode focusNameProperty = FocusNode();
   TextEditingController controllerValueProperty = TextEditingController();
+  FocusNode focusValueProperty = FocusNode();
+  bool focusPropertiesOne = true;
 
 
   ///=========================== Params ===============================
@@ -108,6 +113,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Params paramsStep = Params(name: "");
   List<int> editingParam;
   TextEditingController controllerParams = TextEditingController();
+  FocusNode focusParams = FocusNode();
 
 
   ///=========================== Price ================================
@@ -120,7 +126,10 @@ class _AddProductPageState extends State<AddProductPage> {
   String priceSummTextStep;
   String priceUnitTextStep;
   TextEditingController controllerPriceSumm = TextEditingController();
+  FocusNode focusPriceSum = FocusNode();
   TextEditingController controllerPriceUnit = TextEditingController();
+  FocusNode focusPriceUnit = FocusNode();
+  bool focusOnePrice = true;
 
   ///=========================== GetCourse ============================
 
@@ -129,9 +138,13 @@ class _AddProductPageState extends State<AddProductPage> {
   String secretKey = '';
   String accountOfferCode = "";
   TextEditingController controllerAccountName = TextEditingController();
+  FocusNode focusAccountName = FocusNode();
   TextEditingController controllerAccountProductName = TextEditingController();
+  FocusNode focusProductName = FocusNode();
   TextEditingController controllerAccountSecretKey = TextEditingController();
+  FocusNode focusAccountSecretKey = FocusNode();
   TextEditingController controllerAccountOfferCode = TextEditingController();
+  FocusNode focusAccountOfferCode = FocusNode();
   bool accountNameEdit = false;
   bool secretKeyEdit = false;
   bool accountOfferCodeEdit = false;
@@ -277,7 +290,7 @@ class _AddProductPageState extends State<AddProductPage> {
           DialogIntegronButton(
             onPressed: () async{
               closeDialog(context);
-              saveProduct();
+              checkAndFormProduct();
             },
             textButton: Text(
               "Сохранить",
@@ -519,7 +532,7 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
 
-  void saveProduct()async{
+  void checkAndFormProduct({bool view})async{
     if(imagePages.length == 0){
       dialogErr("Добавьте минимум одно фото");
     }else if(_type == null){
@@ -590,99 +603,108 @@ class _AddProductPageState extends State<AddProductPage> {
               initSumReplace(priceSummText);
               showDialogLoading(context);
               responsePhoto = [];
-              for (int i = 0; i < imagelocal.length; i++) {
-                await uploadPhoto(imagelocal[i]);
+
+              List<ImageProduct> imagesP = [] ;
+              List<ImageProduct> imagesD = [] ;
+
+              if(view == null || !view) {
+                for (int i = 0; i < imagelocal.length; i++) {
+                  await uploadPhoto(imagelocal[i]);
+                }
+                await uploadDetail();
+                detailsUrls = [];
+                for (int i = 0; i < detailsList.length; i++) {
+                  // ignore: unnecessary_statements
+                  detailsList[i].net
+                      ? detailsUrls.add(detailsList[i].path)
+                      : null;
+                  print(detailsList[i].path);
+                }
+              }else{
+                imagesD = detailsList;
+                print("details lenght ${imagesD.length}");
+                if(widget.edit != null && widget.edit){
+                  for(int i = 0; i < item.images.length; i++){
+                    imagesP.add(ImageProduct(item.images[i], true));
+                  }
+
+                }
+                for(int i = 0 ; i < imagelocal.length; i++){
+                  imagesP.add(ImageProduct(imagelocal[i].toString(), false));
+                }
               }
-              await uploadDetail();
-              detailsUrls = [];
-              for(int i = 0; i < detailsList.length; i++){
-                // ignore: unnecessary_statements
-                detailsList[i].net?detailsUrls.add(detailsList[i].path):null;
-                print(detailsList[i].path);
-              }
+
 
 
               if (widget.edit) {
-                print("ResponsePhoto "+responsePhoto.length.toString());
+                print("ResponsePhoto " + responsePhoto.length.toString());
                 List<String> ststep = []..addAll(item.images)..addAll(
                     responsePhoto);
                 responsePhoto = ststep;
-                print("ResponsePhoto "+responsePhoto.length.toString());
-
+                print("ResponsePhoto " + responsePhoto.length.toString());
               }
 
 
-
               propertiesCopy = [];
-              print('1property ${properties.length} copy ${propertiesCopy.length}');
+              print('1property ${properties.length} copy ${propertiesCopy
+                  .length}');
               String steptx = properties[1].value;
               String steptxS = properties[0].value;
-              propertiesCopy.addAll(properties) ;
-              print('2property ${properties.length} copy ${propertiesCopy.length}');
+              propertiesCopy.addAll(properties);
+              print('2property ${properties.length} copy ${propertiesCopy
+                  .length}');
 
               properties.removeAt(0);
               properties.removeAt(0);
-              print('3property ${properties.length} copy ${propertiesCopy.length}');
+              print('3property ${properties.length} copy ${propertiesCopy
+                  .length}');
 
-              print("-=-=-=-=-=-=-=-=-"+steptx);
+              print("-=-=-=-=-=-=-=-=-" + steptx);
               Product productFormForSend = Product(
-                  images: responsePhoto,
-                  owner: null,
-                  name: nameProduct,
-                  ownerName: null,
-                  catPath: [],
-                  text: steptxS,
-                  fullText: steptx,
-                  route: widget.edit ? item.route : null,
-                  price: double.parse(priceSummText),
-                  type: _type,
-                  unit: priceUnitText,
-                  details: detailsUrls,
-                  delivery: setDelivery(),
-                  image: null,
-                  property: properties,
-                  params: paramsList,
-                  cat: _category,
-                  accountName: accountName,
+                images: responsePhoto,
+                owner: null,
+                name: nameProduct,
+                ownerName: null,
+                catPath: [],
+                text: steptxS,
+                fullText: steptx,
+                route: widget.edit ? item.route : null,
+                price: double.parse(priceSummText),
+                type: _type,
+                unit: priceUnitText,
+                details: detailsUrls,
+                delivery: setDelivery(),
+                image: null,
+                property: properties,
+                params: paramsList,
+                cat: _category,
+                accountName: accountName,
                 accountSecretKey: secretKey,
-                offerCode:  accountOfferCode,
+                offerCode: accountOfferCode,
               );
-              print('4property ${properties.length} copy ${propertiesCopy.length}');
+              print('4property ${properties.length} copy ${propertiesCopy
+                  .length}');
 
               properties = [];
               properties.addAll(propertiesCopy);
 
               setState(() {});
 
-              print('5property ${properties.length} copy ${propertiesCopy.length}');
+              print('5property ${properties.length} copy ${propertiesCopy
+                  .length}');
 
-              //todo edit send
-              if (!widget.edit) {
-                Put res = await ProductProvider.forBiz.addProduct(
-                    productFormForSend);
-                closeDialog(context);
-                if (res == null ? 0 : res.error == 200) {
-                  closeDialog(context);
-                  dialogErr("Товар успешно добавлен");
-                  DraftDB.clean();
+              if(view == null || !view){
+                if (!widget.edit) {
+                  addProductR(productFormForSend);
                 } else {
-                  dialogErr(res.mess);
+                  updateProduct(productFormForSend);
                 }
-              } else {
-                Put res = await ProductProvider.forBiz.updateProduct(
-                    productFormForSend, widget.id);
-                closeDialog(context);
-                if (res == null ? 0 : res.error == 200) {
-                  closeDialog(context);
-                  dialogErr("Товар успешно изменен");
-                } else {
-                  closeDialog(context);
-                  dialogErr(res.mess);
-                }
+              }else{
+                viewProduct(productFormForSend, imagesP, imagesD);
               }
+
             // } catch (e) {
-            //   print(e);
-            //   print(e);
+            //   printL(e);
             // }
           }
         }else{
@@ -691,6 +713,41 @@ class _AddProductPageState extends State<AddProductPage> {
       }
     }
   }
+
+  void viewProduct(Product product, List<ImageProduct> listImages, List<ImageProduct> listDetails)async{
+    print(product.images.length);
+    //todo view
+    closeDialog(context);
+    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ViewProductPage(product, listImages, listDetails)));
+    print('view product');
+  }
+
+  void addProductR(Product product)async{
+    Put res = await ProductProvider.forBiz.addProduct(
+        product);
+    closeDialog(context);
+    if (res == null ? 0 : res.error == 200) {
+      closeDialog(context);
+      dialogErr("Товар успешно добавлен");
+      DraftDB.clean();
+    } else {
+      dialogErr(res.mess);
+    }
+  }
+
+  void updateProduct(Product product)async{
+    Put res = await ProductProvider.forBiz.updateProduct(
+        product, widget.id);
+    closeDialog(context);
+    if (res == null ? 0 : res.error == 200) {
+      closeDialog(context);
+      dialogErr("Товар успешно изменен");
+    } else {
+      closeDialog(context);
+      dialogErr(res.mess);
+    }
+  }
+
 
   bool checkStudyParams(){
     if(_type == 2){
@@ -818,6 +875,7 @@ class _AddProductPageState extends State<AddProductPage> {
   editParams({ @required int indexX, int indexY}){
     saveStats();
 
+    FocusScope.of(context).unfocus();
     editingParam = [indexX,indexY];
 
     if(indexY == null){
@@ -853,6 +911,7 @@ class _AddProductPageState extends State<AddProductPage> {
       setState(() {
 
       });
+      editParams(indexX: index, indexY: paramsList[index].params.length-1);
     }catch(e){
 
     }
@@ -952,14 +1011,16 @@ class _AddProductPageState extends State<AddProductPage> {
 
     saveStats();
 
-    idEditingProperties = index;
-    setState(() {
 
-    });
+    idEditingProperties = index;
+
 
     editingProperty = Property(name:properties[index].name, value: properties[index].value, editingName:properties[index].editingName, editingValue: properties[index].editingValue,canDelete: properties[index].canDelete );
     controllerNameProperty.text = properties[index].name;
     controllerValueProperty.text = properties[index].value;
+    setState(() {
+
+    });
   }
 
   ///=========================== Header ===============================
@@ -971,6 +1032,7 @@ class _AddProductPageState extends State<AddProductPage> {
     controllerHeader.text = nameProduct;
     editingHeaderState = true;
     setState(() {});
+
 
   }
 
@@ -995,7 +1057,9 @@ class _AddProductPageState extends State<AddProductPage> {
     priceUnitTextStep = priceUnitText;
     controllerPriceSumm.text = priceSummTextStep;
     controllerPriceUnit.text = priceUnitTextStep;
+
     setState(() {});
+
   }
 
   savePrice(){
@@ -1025,28 +1089,34 @@ class _AddProductPageState extends State<AddProductPage> {
     setState(() {});
   }
 
+  saveAccountOfferCode(){
+    accountOfferCodeEdit = false;
+    setState((){});
+  }
+
   editAccountSecretKey(){
     saveStats();
     secretKeyEdit = true;
     setState(() {});
+
   }
 
   editAccountName(){
     saveStats();
     accountNameEdit = true;
     setState(() {});
+
   }
 
   editAccountOfferCode(){
     saveStats();
     accountOfferCodeEdit = true;
     setState((){});
+
+
   }
 
-  saveAccountOfferCode(){
-    accountOfferCodeEdit = false;
-    setState((){});
-  }
+
 
 
   ///=========================== Service ==============================
@@ -1115,6 +1185,25 @@ class _AddProductPageState extends State<AddProductPage> {
       ///инициализация type
       if(draft[DraftTable.type] != null){
         _type = draft[DraftTable.type];
+
+
+        if(_type == 2){
+          if(draft[DraftTable.accountName] != null){
+            accountName = draft[DraftTable.accountName];
+            controllerAccountName.text  = accountName;
+          }
+          if(draft[DraftTable.accountSecretKey] != null){
+            secretKey = draft[DraftTable.accountSecretKey];
+            controllerAccountSecretKey.text = secretKey;
+          }
+          if(draft[DraftTable.offerCode] != null){
+            accountOfferCode = draft[DraftTable.offerCode];
+            controllerAccountOfferCode.text = accountOfferCode;
+          }
+        }
+
+
+
       }
       /// инициализация shortDesc
       if(draft[DraftTable.shortText]!=null){
@@ -1264,7 +1353,7 @@ class _AddProductPageState extends State<AddProductPage> {
               fontFamily: fontFamily)):GestureDetector(
             onTap: (){
               saveStats();
-              saveProduct();
+              checkAndFormProduct();
               },
             child: Container(
               decoration: BoxDecoration(
@@ -1291,6 +1380,16 @@ class _AddProductPageState extends State<AddProductPage> {
                 padding: const EdgeInsets.all(19.0),
                 child: getIconSvg(id: 0, color: c5894bc,),
               )),
+          actions: [
+            GestureDetector(
+                onTap: (){
+                  checkAndFormProduct(view: true);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(19.0),
+                  child: getIconSvg(id: IconsSvg.eye, color: c5894bc,),
+                )),
+          ],
 
 
           backgroundColor: cBG,
@@ -1346,6 +1445,23 @@ class _AddProductPageState extends State<AddProductPage> {
   ///=========================== Properties ===========================
 
   Widget editContainer(){
+
+    if(focusPropertiesOne) {
+      focusPropertiesOne = false;
+
+
+      if (!(properties[idEditingProperties].editingValue == null) && (properties[idEditingProperties].editingValue )) {
+        print("Фокус на имя параметра");
+
+        FocusScope.of(context).requestFocus(focusNameProperty);
+      } else {
+        print("Фокус на значение параметра");
+
+
+        FocusScope.of(context).requestFocus(focusValueProperty);
+      }
+    }
+
     return Column(
       children: [
         Divider(color: cDefault, ),
@@ -1368,6 +1484,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     properties[idEditingProperties].editingValue?Container(
                       width: MediaQuery.of(context).size.width*0.80,
                       child: TextField(
+                        focusNode: focusNameProperty,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintStyle: TextStyle(
@@ -1399,6 +1516,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 Container(
                   //width: MediaQuery.of(context).size.width-24-10,
                   child: TextField(
+                    focusNode: focusValueProperty,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -1431,6 +1549,8 @@ class _AddProductPageState extends State<AddProductPage> {
     Widget buttonAdd(){
       return GestureDetector(
         onTap: (){
+          FocusScope.of(context).unfocus();
+          focusPropertiesOne = true;
           addProperty();
         },
         child: Container(
@@ -1457,6 +1577,9 @@ class _AddProductPageState extends State<AddProductPage> {
           }else{
             return GestureDetector(
               onTap: (){
+                //todo focus
+                 FocusScope.of(context).unfocus();
+                focusPropertiesOne = true;
                 editProperty(index);
               },
               child: Container(
@@ -1718,6 +1841,8 @@ class _AddProductPageState extends State<AddProductPage> {
   ///=========================== Header ===============================
 
   Widget EditHeader(){
+    FocusScope.of(context).requestFocus(focusHeader);
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
@@ -1736,6 +1861,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 Container(
                   width: MediaQuery.of(context).size.width*0.80,
                   child: TextField(
+                    focusNode: focusHeader,
                     maxLines: null,
                     maxLength: 50,
                     maxLengthEnforced: true,
@@ -1795,7 +1921,9 @@ class _AddProductPageState extends State<AddProductPage> {
     Widget priceStateSave(){
       return GestureDetector(
         onTap: (){
+          focusOnePrice = true;
           editPrice();
+
         },
         child: Container(
           child: Column(
@@ -1820,87 +1948,104 @@ class _AddProductPageState extends State<AddProductPage> {
         ),
       );
     }
+    Widget priceEditSate(){
 
-    return priceUnitTextStep==null?priceStateSave():Container(
+      if(focusOnePrice) {
+        focusOnePrice = false;
+        if (!(controllerPriceSumm.text != null &&
+            controllerPriceSumm.text.isNotEmpty)|| ((controllerPriceUnit.text != null) && controllerPriceUnit.text.isNotEmpty)) {
+          FocusScope.of(context).requestFocus(focusPriceSum);
+        } else {
+          FocusScope.of(context).requestFocus(focusPriceUnit);
 
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        color: Colors.grey.withOpacity(0.15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 Text(priceTitle, style: TextStyle(color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),),
-                 GestureDetector(
-                     onTap: (){
-                       savePrice();
-                     },
-                     child: Container(child: Icon(Icons.check, color: c6287A1, size: 24,))),
-               ],
-             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: (MediaQuery.of(context).size.width/2)-24-10-10,
-                  child: TextField(
-                    textAlign: TextAlign.end,
+        }
+      }
 
-                    keyboardType: TextInputType.number,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontSize: 20,
-                        color: Color.fromRGBO(153, 155, 158, 1),
-                      ),
-                      hintText: priceHintSumm,
-                    ),
-                    style: TextStyle(
-                        color: cMainText,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: fontFamily
-                    ),
-                    controller: controllerPriceSumm,
-                  ),
-                ),
-                Text(" DEL /"),
-                Container(
-                  width: (MediaQuery.of(context).size.width/2)-24-10-10,
-                  child: TextField(
-                    keyboardType: TextInputType.multiline,
+      return Container(
 
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromRGBO(153, 155, 158, 1),
-                      ),
-                      hintText: priceHintUnit,
-                    ),
-                    style: TextStyle(
-                        color: cMainText,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: fontFamily
-                    ),
-                    controller: controllerPriceUnit,
-                  ),
-                ),
-
-              ],
-            ),
-          ],
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          color: Colors.grey.withOpacity(0.15),
         ),
-      ),
-    );
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(priceTitle, style: TextStyle(color: c2f527f, fontSize: 14, fontWeight: FontWeight.w700, fontFamily: fontFamily),),
+                  GestureDetector(
+                      onTap: (){
+                        savePrice();
+                      },
+                      child: Container(child: Icon(Icons.check, color: c6287A1, size: 24,))),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: (MediaQuery.of(context).size.width/2)-24-10-10,
+                    child: TextField(
+                      focusNode: focusPriceSum,
+                      textAlign: TextAlign.end,
+
+                      keyboardType: TextInputType.number,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                          fontSize: 20,
+                          color: Color.fromRGBO(153, 155, 158, 1),
+                        ),
+                        hintText: priceHintSumm,
+                      ),
+                      style: TextStyle(
+                          color: cMainText,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: fontFamily
+                      ),
+                      controller: controllerPriceSumm,
+                    ),
+                  ),
+                  Text(" DEL /"),
+                  Container(
+                    width: (MediaQuery.of(context).size.width/2)-24-10-10,
+                    child: TextField(
+                      focusNode: focusPriceUnit,
+                      keyboardType: TextInputType.multiline,
+
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromRGBO(153, 155, 158, 1),
+                        ),
+                        hintText: priceHintUnit,
+                      ),
+                      style: TextStyle(
+                          color: cMainText,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: fontFamily
+                      ),
+                      controller: controllerPriceUnit,
+                    ),
+                  ),
+
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return priceUnitTextStep==null?priceStateSave():priceEditSate();
 
 
   }
@@ -1910,6 +2055,9 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget ConstructorParams(){
 
     Widget editingParams(String hint){
+
+      FocusScope.of(context).requestFocus(focusParams);
+
       return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
@@ -1931,6 +2079,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       // maxLength: 50,
                       // maxLengthEnforced: true,
 
+                      focusNode: focusParams,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintStyle: TextStyle(
@@ -1974,6 +2123,7 @@ class _AddProductPageState extends State<AddProductPage> {
               children: [
                 GestureDetector(
                     onTap: (){
+                      FocusScope.of(context).unfocus();
                       editParams(indexX: index);
                     },
                     child: Text(paramsList[index].name == ""?"Название":paramsList[index].name, style: TextStyle(color: paramsList[index].name == ""?cPay.withOpacity(0.7):cTitles, fontWeight: FontWeight.w700, fontSize: 14, fontFamily: fontFamily,fontStyle: FontStyle.normal),)),
@@ -2000,6 +2150,7 @@ class _AddProductPageState extends State<AddProductPage> {
           children: [
             GestureDetector(
                 onTap: (){
+                  FocusScope.of(context).unfocus();
                   editParams(indexX: indexX, indexY: indexY);
 
                 },
@@ -2091,7 +2242,11 @@ class _AddProductPageState extends State<AddProductPage> {
 
   ///=========================== GetCourse ============================
 
-  Widget editStudy(TextEditingController controller,  String head, String hint){
+  Widget editStudy(TextEditingController controller,  String head, String hint, int focusNode){
+
+    FocusScope.of(context).requestFocus(focusNode == 0?focusAccountName:focusNode == 1?focusAccountSecretKey:focusAccountOfferCode);
+
+
     return Column(
       children: [
         Divider(color: cDefault, ),
@@ -2126,6 +2281,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 Container(
                   //width: MediaQuery.of(context).size.width-24-10,
                   child: TextField(
+                    focusNode: (focusNode == 0?focusAccountName:focusNode == 1?focusAccountSecretKey:focusAccountOfferCode),
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -2159,9 +2315,10 @@ class _AddProductPageState extends State<AddProductPage> {
       children: [
         Divider(color: cDefault, ),
 
-        accountNameEdit? editStudy(controllerAccountName, "Имя аккаунта GetCourse", "Имя"):GestureDetector(
+        accountNameEdit? editStudy(controllerAccountName, "Имя аккаунта GetCourse", "Имя", 0):GestureDetector(
           onTap:(){
             editAccountName();
+            // FocusScope.of(context).requestFocus(focusAccountName);
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -2197,9 +2354,11 @@ class _AddProductPageState extends State<AddProductPage> {
         ),
         Divider(color: cDefault, ),
 
-        secretKeyEdit? editStudy(controllerAccountSecretKey, "Ключ аккаунта", "Ключ"):GestureDetector(
+        secretKeyEdit? editStudy(controllerAccountSecretKey, "Ключ аккаунта", "Ключ", 1):GestureDetector(
           onTap: (){
             editAccountSecretKey();
+            // FocusScope.of(context).requestFocus(focusAccountSecretKey);
+
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -2235,9 +2394,11 @@ class _AddProductPageState extends State<AddProductPage> {
         ),
         Divider(color: cDefault, ),
 
-        accountOfferCodeEdit? editStudy(controllerAccountOfferCode, "Код предложения", "Код"):GestureDetector(
+        accountOfferCodeEdit? editStudy(controllerAccountOfferCode, "Код предложения", "Код", 2):GestureDetector(
           onTap: (){
             editAccountOfferCode();
+            // FocusScope.of(context).requestFocus(focusAccountOfferCode);
+
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

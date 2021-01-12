@@ -51,7 +51,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     List<BlocSize> listStep = widget.edit?[Product(ownerName: null, delivery: null, fullText: null, unit: null, details: [], text: null, type: null, catPath: [], property: [], name: null, image: null, owner: null, price: null, images: [    ], route: null)]:[];
     var biz;
     if(widget.edit) {
-      InfoToken infoToken = await checkToken();
+      InfoToken infoToken = await checkToken(context);
       biz= await BizProvider.getBusiness(infoToken.id);
     }else{
       biz= await BizProvider.getBusiness(widget.id);

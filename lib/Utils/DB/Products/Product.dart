@@ -177,9 +177,9 @@ class Product extends ProductShort {
     map["price"] = price.toString();
     map["unit"] = unit;
     map["fulldesc"] = fullText;
-    map["delivery"] = "1";
+    map["delivery"] = delivery;
     map["address"] = address;
-    map["available"] = delivery;
+    map["available"] = "1";
     map["type"] = type.toString();
     map["cat"] = cat.route.toString();
     map["params"] = params != null?params.map((i)=>i.toJson()).toList():"";

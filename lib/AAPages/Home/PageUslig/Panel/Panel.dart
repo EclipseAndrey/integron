@@ -166,7 +166,7 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
     return GestureDetector(
       onTap: (){
         // widget.controller.animateToPage(3, duration: Duration(milliseconds: 200), curve: Curves.ease);
-        BlocProvider.of<GeneralCubit>(context).selectPage(3);
+        if(FullVersion)BlocProvider.of<GeneralCubit>(context).selectPage(3);
 
       },
       child: Container(
