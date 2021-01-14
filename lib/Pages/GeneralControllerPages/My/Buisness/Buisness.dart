@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Providers/BizProvider/BizProvider.dart';
 import 'package:integron/REST/Autorization/checkToken.dart';
@@ -9,6 +14,7 @@ import 'package:integron/Utils/DB/Biz/Business.dart';
 import 'package:integron/Utils/DB/tokenDB.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BottomSheetEditHeadBuisness.dart';
+import 'package:integron/Utils/fun/Logs.dart';
 
 import 'BodyBusiness.dart';
 
@@ -189,6 +195,7 @@ class _BusinessPageState extends State<BusinessPage> {
       }
       case 2:{
         //todo Клик по иконке редактировать фоон
+        setImage();
         break;
       }
       case 3:{
@@ -236,12 +243,12 @@ class _BusinessPageState extends State<BusinessPage> {
           //   //   ),
           //   //   child: Icon(Icons.attach_money, size: 24),
           //   // ),
-          //   // actions: [
-          //   //   Padding(
-          //   //     padding: EdgeInsets.only(bottom: 20, right: 10),
-          //   //     child: Icon(Icons.attach_money, size: 24),
-          //   //   )
-          //   // ],
+          //   actions: [
+          //     Padding(
+          //       padding: EdgeInsets.only(bottom: 20, right: 10),
+          //       child: Icon(Icons.attach_money, size: 24),
+          //     )
+          //   ],
           //   title: Padding(
           //     padding: const EdgeInsets.only(bottom: 0),
           //     child: Container(
@@ -273,12 +280,12 @@ class _BusinessPageState extends State<BusinessPage> {
       child: Stack(
         children: [
           Container(
-              height: MediaQuery.of(context).size.width *1,
+              height: MediaQuery.of(context).size.width *0.3,
               width: MediaQuery.of(context).size.width,
-              child: Image.asset(
+              child: (business.photo == null)|| business.photo == ""?Image.asset(
                 "lib/assets/images/bgb.png",
                 fit: BoxFit.fill,
-              )),
+              ):Image.network(business.photo, fit: BoxFit.cover,)),
           Align(
             alignment: Alignment.topCenter,
             child: AspectRatio(
@@ -314,15 +321,16 @@ class _BusinessPageState extends State<BusinessPage> {
                       //     )),
                       //   ),
                       // ),
-                      Padding(
+                      widget.edit?Padding(
                         padding: const EdgeInsets.all(12.0),
                         //todo icon right
                         child: GestureDetector(
                             onTap: (){
                               tapEdit(2);
                             },
-                            child: getIconSvg(id: 0, size: 24, color: Colors.transparent)),
-                      ),
+                            child: getIconSvg(id: IconsSvg.image, size: 24, color: cIcons)),
+                      ):SizedBox(),
+
 
 
                     ],
@@ -467,4 +475,69 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 
 
+  setImage()async{
+    final picker = ImagePicker();
+    String path = "";
+    PickedFile pickedFile;
+    printL("Запуск галереи");
+    try {
+      pickedFile = await picker.getImage(
+
+        source: ImageSource.gallery,
+        maxWidth: 2000,
+        maxHeight: 2000,
+        imageQuality: 100,
+
+      );
+      printL("Успешно выбраны фото");
+    }catch(e){
+      //todo send logs
+      printL(e);
+      // Clipboard.setData(ClipboardData(text: copyText));
+    }
+
+    setState(() {});
+    if (pickedFile != null) {
+      path = pickedFile.path;
+
+      String url = "http://194.226.171.139:14880/apitest.php/uploadPhoto";
+      printL("Upload photo on Server");
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.files.add(
+          http.MultipartFile(
+              'var_file',
+              File(path).readAsBytes().asStream(),
+              File(path).lengthSync(),
+              filename: path.split("/").last
+          )
+      );
+      var res = await request.send();
+      //     .then((value){
+      //
+      // });
+      //print("req "+ res.request.toString());
+
+
+      res.stream.transform(utf8.decoder).listen((value) async{
+        print(value);
+        await BizProvider.setBizPhoto(json.decode(value)['url']);
+        load();
+      });
+      printL("Upload photo on Server complete");
+
+
+
+
+    } else {
+      printL('No image selected.');
+    }
+
+  }
+
+
+
+
+
 }
+
+

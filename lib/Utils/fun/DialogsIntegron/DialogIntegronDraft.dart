@@ -23,6 +23,8 @@ showDialogIntegronDraft(BuildContext context) async {
           },
           textButton: Text(
             "Новый",
+            textAlign: TextAlign.center,
+
             style: TextStyle(
                 color: cLinks, fontSize: 16, fontFamily: fontFamily),
           ),
@@ -34,6 +36,8 @@ showDialogIntegronDraft(BuildContext context) async {
           },
           textButton: Text(
             "Продолжить",
+            textAlign: TextAlign.center,
+
             style: TextStyle(
                 color: cLinks, fontSize: 16, fontFamily: fontFamily),
           ),

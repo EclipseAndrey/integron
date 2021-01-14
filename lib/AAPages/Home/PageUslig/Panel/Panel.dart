@@ -148,12 +148,9 @@ class _MainPanelState extends State<MainPanel> with TickerProviderStateMixin {
                 ),
                 Spacer(),
                 Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("Что такое Integron", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, fontSize: 16),),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Что такое Integron", textAlign: TextAlign.center,style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, fontSize: 16),),
                   ),
                 ),
                 Spacer()

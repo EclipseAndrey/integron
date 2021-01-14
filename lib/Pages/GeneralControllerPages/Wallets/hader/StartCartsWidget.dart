@@ -88,6 +88,9 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
 
   Widget WalletIntegron(BuildContext context, double cardSize){
     var size = MediaQuery.of(context).size;
+    print(size.width);
+    double xx = 0;
+    if(size.width < 360){ xx = 30;}
 
     return BlocBuilder<BalanceCubit,BalanceState>(
       builder: (context, state) => ClipRRect(
@@ -95,7 +98,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
         child: Container(
           color: c2f527f,
           width: size.width*cardSize,
-          height: size.width*0.75*0.70*cardSize,
+          height: size.width*0.75*0.70*cardSize+xx,
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(

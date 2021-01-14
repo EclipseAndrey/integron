@@ -107,7 +107,8 @@ class _AboutIntegronState extends State<AboutIntegron> {
             Text("Добро пожаловать\nв", textAlign: TextAlign.center, style: TextStyle(color: Color.fromRGBO(0, 0, 0, 1), fontSize: 27, fontWeight: FontWeight.w400,fontStyle: FontStyle.normal, fontFamily: fontFamily),),
             SizedBox(height: 6,),
             Logo(context, divBefore, minusFontsSize, minusIconSize),
-            Image.asset("lib/assets/images/welcome.png"),
+            Image.asset("lib/assets/images/welcome.png",
+            ),
           ],
         ),
 

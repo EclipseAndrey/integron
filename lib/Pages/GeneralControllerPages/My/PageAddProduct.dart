@@ -287,6 +287,7 @@ class _AddProductPageState extends State<AddProductPage> {
             },
             textButton: Text(
               "Выйти",
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: cLinks, fontSize: 16, fontFamily: fontFamily),
             ),
@@ -298,6 +299,8 @@ class _AddProductPageState extends State<AddProductPage> {
             },
             textButton: Text(
               "Сохранить",
+              textAlign: TextAlign.center,
+
               style: TextStyle(
                   color: cLinks, fontSize: 16, fontFamily: fontFamily),
             ),

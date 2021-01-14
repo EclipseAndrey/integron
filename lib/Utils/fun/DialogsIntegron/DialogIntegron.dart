@@ -36,9 +36,9 @@ void showDialogIntegron({
 
   Widget _buttons(double height){
 
-
     return counter == 0?SizedBox(height: MediaQuery.of(context).size.width*0.08,):
     Container(
+
       height: height+1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,15 +46,17 @@ void showDialogIntegron({
         children: [
           Divider(color: cDefault,height: 1,),
           counter ==2?Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: buttons[0].onPressed,
-                child: Container(
-                  width: MediaQuery.of(context).size.width*0.88/2-1,
-                  height: height,
-                  child: Center(child: buttons[0].textButton),
-                ),
+              Builder(
+                builder:(context){return GestureDetector(
+                  onTap: (){print(MediaQuery.of(context).size.width*0.88);},//buttons[0].onPressed,
+                  child: Container(
+                    width: (MediaQuery.of(context).size.width*0.88)/2-1,
+                    height: height,
+                    child: Center(child: buttons[0].textButton),
+                  ),
+                );}
               ),
               Container(
                 height: height,
@@ -115,17 +117,25 @@ void showDialogIntegron({
     barrierDismissible: true,
     builder: (BuildContext context) {
       return Dialog(
+        insetPadding: EdgeInsets.all(0),
         backgroundColor: Colors.transparent,
-        child: Container(
+        child: Builder(
+          builder:(con)=> GestureDetector(
+            onTap: (){
+              print(MediaQuery.of(context).size.width*0.88);
+            },
+            child: Container(
 
-          decoration: BoxDecoration(
-            color: backGroundColor,
-            borderRadius: BorderRadius.circular(12),
+              decoration: BoxDecoration(
+                color:backGroundColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              width: MediaQuery.of(context).size.width*0.88,
+              height: MediaQuery.of(context).size.width*0.88*0.72,
+
+              child: _content(),
+            ),
           ),
-          width: MediaQuery.of(context).size.width*0.88,
-          height: MediaQuery.of(context).size.width*0.88*0.72,
-
-          child: _content(),
         ),
       );
     },

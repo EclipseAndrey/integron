@@ -109,7 +109,7 @@ class Product extends ProductShort {
     this.link
 
 
-}) : super(name: name, image: image, route:route, text: text, price:price, sale:sale??"");
+}) : super(name: name, image: image, route:route, text: text, price:price, sale:sale??"", ownerIdS: owner);
 
   Product.err(this.errors);
 

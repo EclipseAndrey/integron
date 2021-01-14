@@ -275,26 +275,30 @@ class _TovarInfoState extends State<TovarInfo> {
                   color: Color.fromRGBO(240, 245, 239, 1),
                   borderRadius: BorderRadius.circular(6)),
               width: MediaQuery.of(context).size.width * 0.30,
-              height: MediaQuery.of(context).size.width * 0.15,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      getIconSvg(
-                        id: 44,
-                        color: c6287A1,
-                        size: 24 - minusIconsSize,
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        "В магазин",
-                        style: TextStyle(color: c5894bc),
-                      )
-                    ],
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.width * 0.15
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        getIconSvg(
+                          id: 44,
+                          color: c6287A1,
+                          size: 24 - minusIconsSize,
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          "В магазин",
+                          style: TextStyle(color: c5894bc),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -323,26 +327,31 @@ class _TovarInfoState extends State<TovarInfo> {
                     color: Color.fromRGBO(240, 245, 239, 1),
                     borderRadius: BorderRadius.circular(6)),
                 width: MediaQuery.of(context).size.width * 0.30,
-                height: MediaQuery.of(context).size.width * 0.15,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        getIconSvg(
-                          id: !isFavorite?IconsSvg.favorites:IconsSvg.favoritesSmInactive,
-                          color: c6287A1,
-                          size: 24 - minusIconsSize,
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          "В избранное",
-                          style: TextStyle(color: c5894bc),
-                        )
-                      ],
+                // height: MediaQuery.of(context).size.width * 0.15,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.width * 0.15
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          getIconSvg(
+                            id: !isFavorite?IconsSvg.favorites:IconsSvg.favoritesSmInactive,
+                            color: c6287A1,
+                            size: 24 - minusIconsSize,
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            "В избранное",
+                            style: TextStyle(color: c5894bc),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -356,26 +365,30 @@ class _TovarInfoState extends State<TovarInfo> {
                   color: Color.fromRGBO(240, 245, 239, 1),
                   borderRadius: BorderRadius.circular(6)),
               width: MediaQuery.of(context).size.width * 0.30,
-              height: MediaQuery.of(context).size.width * 0.15,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      getIconSvg(
-                        id: 43,
-                        color: c6287A1,
-                        size: 24 - minusIconsSize,
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        "Поделиться",
-                        style: TextStyle(color: c5894bc),
-                      )
-                    ],
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.width * 0.15
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        getIconSvg(
+                          id: 43,
+                          color: c6287A1,
+                          size: 24 - minusIconsSize,
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          "Поделиться",
+                          style: TextStyle(color: c5894bc),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
