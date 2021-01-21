@@ -31,7 +31,7 @@ class TabBarProducts extends StatefulWidget {
 
 class _TabBarProductsState extends State<TabBarProducts> {
 
-  bool hide = true;
+  bool hide = false;
   int currentPage;
 
   @override

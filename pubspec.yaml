@@ -38,7 +38,7 @@ dependencies:
   shared_preferences: ^0.5.7
   numeric_keyboard: ^1.0.0
   #Понижать версию для андроида ^0.4.0+1 для ios ^0.6.3+4
-  local_auth:^0.6.3+4
+  local_auth: ^0.6.3+4
   flutter_sticky_header: ^0.5.0
   share: ^0.6.5+2
   mask_text_input_formatter: ^1.0.6
