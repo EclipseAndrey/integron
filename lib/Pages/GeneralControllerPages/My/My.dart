@@ -55,6 +55,7 @@ class _MyPageState extends State<MyPage> {
         MediaQuery.of(context).size.height - paddingV - 100 - box.size.height;
     setState(() {});
   }
+
   List<int> settingsMenu = [0,1,5,4];
   Load() async {
     print("load");
@@ -71,7 +72,7 @@ class _MyPageState extends State<MyPage> {
         fontSize: 16.0
     );
     while(user == null){
-      user = await checkToken(context);
+      // user = await checkToken(context);
       user??Fluttertoast.showToast(
           msg: "Не удалось загрузить",
           toastLength: Toast.LENGTH_SHORT,

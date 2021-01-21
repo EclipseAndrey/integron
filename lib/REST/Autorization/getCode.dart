@@ -17,7 +17,8 @@ Future<Put> getCode (String num)async{
   if(response is Put) {
     return response;
   }else{
-    Put.fromJson(response);
+    print(response);
+    return Put.fromJson(response);
   }
 
 }

@@ -2,10 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:integron/AAPages/Blocs/Feed/UslugiCubit.dart';
+import 'package:integron/AAPages/Blocs/Feed/ProductsBloc.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
-import 'package:integron/AAPages/Blocs/Feed/TovarsCubit.dart';
 
 class SearchContent extends StatefulWidget {
   BuildContext blocContext;
@@ -119,6 +118,7 @@ class SearchContentState extends State<SearchContent> {
                   }else{
                     BlocProvider.of<TovarsCubit>(widget.blocContext).search(controllerInput.text);
                     BlocProvider.of<UslugiCubit>(widget.blocContext).search(controllerInput.text);
+                    BlocProvider.of<TrainingCubit>(widget.blocContext).search(controllerInput.text);
                     closeDialog(context);
                   }
                 },

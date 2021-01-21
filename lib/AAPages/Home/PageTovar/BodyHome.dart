@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:integron/AAPages/Blocs/Feed/TovarsCubit.dart';
-import 'package:integron/AAPages/Blocs/Feed/UslugiCubit.dart';
+import 'package:integron/AAPages/Blocs/Feed/ProductsBloc.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Style.dart';
@@ -21,12 +20,16 @@ import 'package:integron/AAPages/Home/PageUslig/Panel/Panel.dart';
 // }
 
 
-class Tovars extends StatefulWidget {
+class HomeBody extends StatefulWidget {
+
+  int type;
+  HomeBody({@required this.type}) : assert (type!= null && type >= 0 && type < 3);
+
   @override
-  _TovarsState createState() => _TovarsState();
+  _HomeBodyState createState() => _HomeBodyState();
 }
 
-class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tovars>{
+class _HomeBodyState extends State<HomeBody> with AutomaticKeepAliveClientMixin<HomeBody>{
 
 
   double minusIconsSize = 0;
@@ -60,21 +63,20 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
 
   @override
   void initState() {
+    super.initState();
 
-
-    controllerScroll.addListener(() {
-      // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());
-      if(controllerScroll.position.pixels == controllerScroll.position.maxScrollExtent){
-        print(controllerScroll.position.pixels);
-        //todo AutoLoad
-      }
-    });
+    // controllerScroll.addListener(() {
+    //   // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());
+    //   if(controllerScroll.position.pixels == controllerScroll.position.maxScrollExtent){
+    //     print(controllerScroll.position.pixels);
+    //     //todo AutoLoad
+    //   }
+    // });
 
   }
 
   @override
   Widget build(BuildContext context) {
-
 
     w =  MediaQuery.of(context).size.width/2 - c/2 - edge;
     h2  = w*1.50;
@@ -91,13 +93,19 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
     super.build(context);
     return SingleChildScrollView(
       controller: controllerScroll,
-      child: BlocBuilder<TovarsCubit,TovarsState>(
+      child: initBloc(widget.type),
+    );
+  }
+
+  Widget initBloc(int type){
+    if(type == 0){
+      return BlocBuilder<TovarsCubit,ProductsState>(
         builder: (context, state){
-          if(state is TovarsLoading){
+          if(state is ProductsLoading){
             return Center(child: CircularProgressIndicator(),);
-          }else if(state is TovarsComplete){
+          }else if(state is ProductsComplete){
             return Loaded(state);
-          }else if(state is TovarsSearch){
+          }else if(state is ProductsFromSearch){
             return SearchResult(state);
           } else{
             return Center(
@@ -105,17 +113,58 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
             );
           }
         },
-      ),
-    );
+      );
+    }else if(type == 1){
+      return SingleChildScrollView(
+        controller: controllerScroll,
+        child: BlocBuilder<UslugiCubit,ProductsState>(
+          builder: (context, state){
+            if(state is ProductsLoading){
+              return Center(child: CircularProgressIndicator(),);
+            }else if(state is ProductsComplete){
+              return Loaded(state);
+            }else if(state is ProductsFromSearch){
+              return SearchResult(state);
+            } else{
+              return Center(
+                //todo err
+              );
+            }
+          },
+        ),
+      );
+    }else{
+      return SingleChildScrollView(
+        controller: controllerScroll,
+        child: BlocBuilder<TrainingCubit,ProductsState>(
+          builder: (context, state){
+            if(state is ProductsLoading){
+              return Center(child: CircularProgressIndicator(),);
+            }else if(state is ProductsComplete){
+              return Loaded(state);
+            }else if(state is ProductsFromSearch){
+              return SearchResult(state);
+            } else{
+              return Center(
+                //todo err
+              );
+            }
+          },
+        ),
+      );
+    }
   }
 
-  Widget Loaded(TovarsComplete tovarsComplete){
+
+
+
+  Widget Loaded(ProductsComplete productsComplete){
 
     List<BlocSize> leftColumn = [];
     List<BlocSize> rightColumn = [];
 
 
-    List<BlocSize> list = tovarsComplete.tovarsList;
+    List<BlocSize> list = productsComplete.listProducts;
     for(int i = 0; i < list.length; i+=2){
       try{
         leftColumn.add(list[i]);
@@ -172,13 +221,13 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
     );
   }
 
-  Widget SearchResult(TovarsSearch tovarsSearch){
+  Widget SearchResult(ProductsFromSearch tovarsSearch){
 
     List<BlocSize> leftColumn = [];
     List<BlocSize> rightColumn = [];
 
 
-    List<BlocSize> list = tovarsSearch.tovarsList;
+    List<BlocSize> list = tovarsSearch.listProducts;
     for(int i = 0; i < list.length; i+=2){
 
 
@@ -202,10 +251,11 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
             child: box(IconsSvg.search, tovarsSearch.input, (){
               BlocProvider.of<TovarsCubit>(context).closeWindow();
               BlocProvider.of<UslugiCubit>(context).closeWindow();
+              BlocProvider.of<TrainingCubit>(context).closeWindow();
             }),
           ),
 
-          tovarsSearch.tovarsList.length == 0? Center(child: Text("Хм, мы ничего не нашли", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24)),):Row(
+          tovarsSearch.listProducts.length == 0? Center(child: Text("Хм, мы ничего не нашли", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24)),):Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
 
@@ -214,7 +264,7 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: List.generate(leftColumn.length, (index) {
-                  print("GENERATE ${ tovarsSearch.tovarsList.length}");
+                  print("GENERATE ${ tovarsSearch.listProducts.length}");
                   return  Column(
                   children: [
                     ItemGetter(leftColumn[index], context, minusFontsSize, minusIconsSize, voidCallbackCategory: (category){}),

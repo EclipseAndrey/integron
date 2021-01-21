@@ -78,11 +78,11 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
     super.build(context);
     return SingleChildScrollView(
       controller: controllerScroll,
-      child: BlocBuilder<TovarsCubit,TovarsState>(
+      child: BlocBuilder<TovarsCubit,ProductsState>(
         builder: (context, state){
-          if(state is TovarsLoading){
+          if(state is ProductsLoading){
             return Center(child: CircularProgressIndicator(),);
-          }else if(state is TovarsComplete){
+          }else if(state is ProductsComplete){
             return Loaded(state);
           }else{
             return Center(
@@ -94,13 +94,13 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
     );
   }
 
-  Widget Loaded(TovarsComplete tovarsComplete){
+  Widget Loaded(ProductsComplete tovarsComplete){
 
     List<BlocSize> leftColumn = [];
     List<BlocSize> rightColumn = [];
 
 
-    List<BlocSize> list = tovarsComplete.tovarsList;
+    List<BlocSize> list = tovarsComplete.listProducts;
     for(int i = 0; i < list.length; i+=2){
       try{
         leftColumn.add(list[i]);

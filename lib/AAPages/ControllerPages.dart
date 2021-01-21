@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:integron/AAPages/Blocs/Cart/CartCubit.dart';
 import 'package:integron/AAPages/Blocs/Category/CategoryCubit.dart';
-import 'package:integron/AAPages/Blocs/Feed/TovarsCubit.dart';
+import 'package:integron/AAPages/Blocs/Feed/ProductsBloc.dart';
 import 'package:integron/AAPages/Blocs/History/HistoryCubit.dart';
 import 'package:integron/Pages/GeneralControllerPages/AboutIntegron/AboutReferal.dart';
 import 'package:integron/Pages/GeneralControllerPages/My/My.dart';
@@ -15,7 +15,6 @@ import 'package:integron/Style.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/main.dart';
 import 'Blocs/Balance/BalanceCubit.dart';
-import 'Blocs/Feed/UslugiCubit.dart';
 import 'GeneralCubit.dart';
 import 'package:integron/AAPages/Home/Home.dart';
 
@@ -172,6 +171,7 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
         BlocProvider<CategoryCubit>(create: (BuildContext context) => CategoryCubit()),
         BlocProvider<TovarsCubit>(create: (BuildContext context) => TovarsCubit()),
         BlocProvider<UslugiCubit>(create: (BuildContext context) => UslugiCubit()),
+        BlocProvider<TrainingCubit>(create: (BuildContext context) => TrainingCubit()),
         BlocProvider<HistoryCubit>(create: (BuildContext context) => HistoryCubit()),
         BlocProvider<CartCubit>(create: (BuildContext context) => CartCubit()),
     ],
@@ -189,9 +189,6 @@ class _GeneralControllerPagesState extends State<GeneralControllerPages> {
       ),
     );
   }
-
-
-
 
 
 

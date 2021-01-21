@@ -5,6 +5,7 @@ import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Pages/GeneralControllerPages/Purchase/ListCartPage/ListCartPage.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/main.dart';
+import 'package:integron/Utils/IconDataForCategory.dart';
 
 class Cart extends StatefulWidget {
 
@@ -41,11 +42,15 @@ class _CartState extends State<Cart> {
   }
 
   Widget buildNewBloc (){
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CartCubit>(create: (BuildContext context) => CartCubit()),
-      ],
-      child: Content(),
+    return Scaffold(
+
+
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<CartCubit>(create: (BuildContext context) => CartCubit()),
+        ],
+        child: Content(),
+      ),
     );
   }
 
@@ -72,15 +77,15 @@ class _CartState extends State<Cart> {
     return Stack(
       children: [
         Align(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.bottomLeft,
           child: Column(
             children: [
-              //HeaderCart(),
+              HeaderCart(),
               Container(
-                  height: MediaQuery.of(context).size.height - (widget.buildNewBloc?0:50),
+                  height: MediaQuery.of(context).size.height - (widget.buildNewBloc?80:80),
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
-                    physics: NeverScrollableScrollPhysics(),
+                    //physics: NeverScrollableScrollPhysics(),
                     children: [
                       // BlocBuilder<CartCubit,CartState>(
                       //     builder: (context, state){
@@ -102,8 +107,9 @@ class _CartState extends State<Cart> {
                       //         return Center();//todo err
                       //       }
                       //     }),
-                      ListCartPage(tovar: true),
-                      ListCartPage(tovar: false),
+                      ListCartPage(type: 0,),
+                      ListCartPage(type: 1,),
+                      ListCartPage(type: 2,),
                     ],
                     controller: controllerPage,
                   ),
@@ -132,45 +138,86 @@ class _CartState extends State<Cart> {
       ),
       width: MediaQuery.of(context).size.width,
       height: 56,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
         children: [
-          GestureDetector(
-            onTap: (){
-              controllerPage.animateToPage(0, duration: Duration(milliseconds: 100), curve: Curves.ease);
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.20,
-              height: 34,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(6),
-                      bottomLeft: Radius.circular(6)),
-                  color: 0 == getCurrentPageOfList() ? c8dcde0: Colors.white  ,
-                  border: Border.all(color: cDefault, width: 1)),
-              child: Center(
-                child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? Colors.white:cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+          widget.buildNewBloc?Align(
+            alignment: Alignment.topLeft,
+            child: GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(19.0),
+                child: getIconSvg(
+                  id: 0,
+                  color: c5894bc,
+                ),
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: (){
-              controllerPage.animateToPage(1, duration: Duration(milliseconds: 100), curve: Curves.ease);
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.20,
-              height: 34,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(6),
-                      bottomRight: Radius.circular(6)),
-                  color: getCurrentPageOfList() != 0
-                      ? c8dcde0: Colors.white,
-                  border: Border.all(color: cDefault, width: 1)),
-              child: Center(
-                child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()!=0 ?  Colors.white: cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
-              ),
+          ):SizedBox(),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    controllerPage.animateToPage(0, duration: Duration(milliseconds: 100), curve: Curves.ease);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.20,
+                    height: 34,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(6),
+                            bottomLeft: Radius.circular(6)),
+                        color: 0 == getCurrentPageOfList() ? c8dcde0: Colors.white  ,
+                        border: Border.all(color: cDefault, width: 1)),
+                    child: Center(
+                      child: Text("Товары", style:  TextStyle(color: getCurrentPageOfList()==0 ? Colors.white:cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: (){
+                    controllerPage.animateToPage(1, duration: Duration(milliseconds: 100), curve: Curves.ease);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.20,
+                    height: 34,
+                    decoration: BoxDecoration(
+
+                        color: getCurrentPageOfList() == 1
+                            ? c8dcde0: Colors.white,
+                        border: Border.all(color: cDefault, width: 1)),
+                    child: Center(
+                      child: Text("Услуги", style:  TextStyle(color: getCurrentPageOfList()==1 ?  Colors.white: cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: (){
+                    controllerPage.animateToPage(2, duration: Duration(milliseconds: 100), curve: Curves.ease);
+                  },
+                  child: Container(
+                    // width: MediaQuery.of(context).size.width * 0.20,
+                    height: 34,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(6),
+                            bottomRight: Radius.circular(6)),
+                        color: getCurrentPageOfList() == 2
+                            ? c8dcde0: Colors.white,
+                        border: Border.all(color: cDefault, width: 1)),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:8.0),
+                        child: Text("Обучение", style:  TextStyle(color: getCurrentPageOfList()==2 ?  Colors.white: cMainText, fontWeight: FontWeight.w600, fontSize: 16, fontFamily: fontFamily ),),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -144,7 +144,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                       GestureDetector(
                         onTap: ()async{
                           Balance info = await WalletProvider.getBalance();
-                          showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
+                          showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.3), body: GestureDetector(
                               onTap: (){
 
                                   Fluttertoast.showToast(
@@ -184,7 +184,7 @@ class _StartCartsState extends State<StartCarts> with SingleTickerProviderStateM
                           onTap: ()async{
                             Balance info = await WalletProvider.getBalance();
 
-                            showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
+                            showDialogIntegron(context: context, title: getQr(info.address, size: MediaQuery.of(context).size.width*0.3), body: GestureDetector(
                                 onTap: (){
 
                                   Fluttertoast.showToast(

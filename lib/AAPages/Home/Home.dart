@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Style.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
-import 'package:integron/AAPages/Home/PageTovar/Tovars.dart';
-import 'package:integron/AAPages/Home/PageUslig/Uslugi.dart';
-import 'package:integron/Utils/fun/Callbcks.dart';
+import 'package:integron/AAPages/Home/PageTovar/BodyHome.dart';
 import 'package:integron/Utils/DB/Category/Category.dart';
 import 'package:integron/AAPages/Home/Search/Search.dart';
+import 'package:integron/Utils/fun/TabPanel/TabPanel.dart';
 
 class Home extends StatefulWidget {
 
@@ -30,60 +28,38 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
   List<Category> selectedCategory = [];
   bool searchFocus = false;
 
-
-
-  void clickEmpty(){
-
-    if(widget.controller.page.round() == 0){
-      widget.controller.animateToPage(1, duration: Duration(milliseconds: 200), curve: Curves.ease);
-    }
-    else if(widget.controller.page.round() == 1){
-      widget.controller.animateToPage(0, duration: Duration(milliseconds: 200), curve: Curves.ease);
-
-    }
-  }
-
+  TabBarProductController tabBarProductController;
 
 
   @override
   void initState() {
-
-
-
-    pages = [
-      Tovars(),
-      Uslugi(),
-    ];
-    setState(() {
-
+    tabBarProductController = TabBarProductController();
+    tabBarProductController.addListener((index) {
+      widget.controller.animateToPage(index, duration: Duration(milliseconds: 200), curve: Curves.ease);
     });
+    pages = [
+      HomeBody(type: 0,),
+      HomeBody(type: 1,),
+      HomeBody(type: 2,),
+    ];
+    widget.controller.addListener(() {
+      if(widget.controller.page.round() != tabBarProductController.currentPage){
+         tabBarProductController.jumpToPage(widget.controller.page.round());
+      }
+      setState(() {
+      });
+    });
+  }
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
 
     super.build(context);
-
-    widget.controller.addListener(() {
-      widget.paddingPanel = widget.controller.offset/2;
-      // widget.pagePanel = widget.controller.page.round();
-      if(widget.controller.page.round() == 1){
-        widget.colorPanelText1 = Colors.white;
-        widget.colorPanelText2 = c5894bc;
-        widget.radiusPanelLeft = 6;
-        widget.radiusPanelRight = 0;
-
-      }else{
-        widget.colorPanelText1 = c5894bc;
-        widget.colorPanelText2 = Colors.white;
-        widget.radiusPanelLeft = 0;
-        widget.radiusPanelRight = 6;
-      }
-
-      setState(() {
-
-      });
-    });
 
     return Theme(
       data: ThemeData(primaryColor: Colors.transparent),
@@ -118,6 +94,7 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
                 Head(),
                 SizedBox(height: 6,),
                 SearchWidget(),
+
                 SizedBox(height: 12,),
                 Body(),
               ],
@@ -200,97 +177,27 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
       ),
     );
   }
+
   Widget Body(){
-
-    Widget tabBar(){
-      return InkWell(
-        onTap: (){
-          clickEmpty();
-        },
-        /// стеку вкладок
-        child: Stack(
-          children: [
-            AnimatedPadding(
-              duration: Duration(milliseconds: widget.durationAnimatePanel),
-              padding:  EdgeInsets.only(left:widget.paddingPanel),
-              child: InkWell(
-                onTap: (){
-                  /// исключает нажатие на белую хуйню
-                },
-                /// белая хуйня
-                child: Container(
-                  color: Colors.transparent,
-                  width: MediaQuery.of(context).size.width * 0.50,
-                  child: GestureDetector(
-                    onTapUp: (d){},
-                    onTap: (){},
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: widget.durationAnimatePanel),
-                      decoration: BoxDecoration(
-                        color: cBG,
-                        borderRadius: BorderRadius.only(
-                            topLeft:
-                            Radius.circular(widget.radiusPanelLeft),
-                            topRight: Radius.circular(widget.radiusPanelRight)
-                        ),
-                      ),
-                      height: 50,
-                      width:
-                      MediaQuery.of(context).size.width * 0.30,
-
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            /// разметка текста ыкладок
-            Container(
-              height: 50,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Spacer(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Товары", style: TextStyle(color: widget.colorPanelText1, fontSize: 16/*- minusFontSize*/, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                    ],
-                  ),
-                  Spacer(),
-                  Spacer(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Услуги", style: TextStyle(color: widget.colorPanelText2, fontSize: 16/* - minusFontSize*/, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                    ],
-                  ),
-                  Spacer(),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-
-
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-       // tabBar(),
-        // Container(
-        //   color: cBG,
-        //   height: 6,
-        //   width: MediaQuery.of(context).size.width,
-        // ),
+       TabBarProducts(
+         names: ['Товары','Услуги', 'Обучение'],
+         controller: tabBarProductController,
+       ),
+        Container(
+          color: cBG,
+          height: 6,
+          width: MediaQuery.of(context).size.width,
+        ),
         Container(
           color: cBG,
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width/3 ,
+          height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width/3-60 ,
           child:PageView(
-            physics: NeverScrollableScrollPhysics(),
+            // physics: NeverScrollableScrollPhysics(),
             controller: widget.controller,
             children: pages,
           ),
@@ -300,7 +207,11 @@ class _HomeState extends State<Home>with AutomaticKeepAliveClientMixin<Home> {
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
 }
+
+
+
+
+// ignore: must_be_immutable

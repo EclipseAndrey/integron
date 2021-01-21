@@ -347,7 +347,7 @@ class _TovarInfoState extends State<TovarInfo> {
                             height: 6,
                           ),
                           Text(
-                            "В избранное",
+                            "Избранное",
                             style: TextStyle(color: c5894bc),
                           )
                         ],

@@ -13,13 +13,15 @@ import 'package:integron/Utils/DB/Products/Product.dart';
 import 'package:integron/Utils/DB/tokenDB.dart';
 import 'package:integron/Utils/fun/DialogLoading/DialogLoading.dart';
 import 'package:integron/Utils/fun/DialogsIntegron/DialogIntegron.dart';
+import 'package:integron/Utils/fun/Logs.dart';
 
 class BodyBusiness extends StatefulWidget {
 
-  bool edit;
-  int type;
-  int id;
-  BodyBusiness({this.type, this.edit,this.id});
+  Function (bool up) onDrag;
+  final bool edit;
+  final int type;
+  final int id;
+  BodyBusiness({this.type, this.edit,this.id, this.onDrag});
 
   @override
   _BodyBusinessState createState() => _BodyBusinessState();
@@ -40,6 +42,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
   bool loading = true;
 
 
+  double offset = 0;
 
   ScrollController controllerScroll = ScrollController();
   List list;
@@ -61,33 +64,34 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
     print("body loading ${listStep.length} элементов при инициализации в listStep");
 
 
-    for(int i =0; i < list.length; i++){
-     // Product pSortStep = list[i] as Product;
-      listStep.add(list[i]);
-    }
     // for(int i =0; i < list.length; i++){
-    //     Product pSortStep = list[i] as Product;
-    //     // try {
-    //       print("type Body ${list[i]==null}  ${ widget.type}");
-    //
-    //       if ((list[i] == null ?0: (list[i].type == null?0:list[i].type)) == widget.type)
-    //         listStep.add(list[i]);
-    //     // }catch(e){print(e);}
+    //   Product pSortStep = list[i] as Product;
+    //   listStep.add(list[i]);
     // }
+    for(int i =0; i < list.length; i++){
+        Product pSortStep = list[i] as Product;
+        try {
+          print("type Body ${list[i]==null}  ${ widget.type}");
+
+          if ((list[i] == null ?0: (list[i].type == null?0:list[i].type)) == widget.type)
+            listStep.add(list[i]);
+        }catch(e){printL(e);}
+    }
+
     print("body loading ${list.length} элементов after load в list");
     print("body loading ${listStep.length} элементов after load в listStep");
-    list = listStep;
+    // list = listStep;
 
 
     leftColumn = [];
     rightColumn = [];
-    for(int i = 0; i < list.length; i+=2){
+    for(int i = 0; i < listStep.length; i+=2){
 
       try {
-        leftColumn.add(list[i]);
+        leftColumn.add(listStep[i]);
       }catch(e){}
       try {
-        rightColumn.add(list[i + 1]);
+        rightColumn.add(listStep[i + 1]);
       }catch(e){}
     }
     print("body loading ${list.length} элементов after sort в list");
@@ -186,6 +190,7 @@ class _BodyBusinessState extends State<BodyBusiness> with AutomaticKeepAliveClie
   void initState() {
     getItemsfromServ();
     controllerScroll.addListener(() {
+      if(controllerScroll.offset > offset){widget.onDrag(false); offset = controllerScroll.offset;}else{widget.onDrag(true); offset = controllerScroll.offset;}
 
       //print("listen scroll ${controllerScroll.position.pixels} // ${controllerScroll.position.maxScrollExtent}");
       // print(controllerScroll.position.pixels.toString()+ " "  + controllerScroll.position.maxScrollExtent. toString());

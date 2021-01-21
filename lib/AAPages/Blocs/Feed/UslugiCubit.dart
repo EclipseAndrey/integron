@@ -1,46 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:integron/Providers/CategoryProvider/CategoryProvider.dart';
-import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
-import 'package:integron/Providers/SearchProvider/SearchProvider.dart';
-import 'package:integron/Utils/DB/Category/Category.dart';
-import 'package:integron/Utils/DB/Products/BlocSize.dart';
+part of 'ProductsBloc.dart';
 
-
-part 'UslugiStates.dart';
-
-class UslugiCubit extends Cubit<UslugiState> {
-  UslugiCubit() : super(UslugiLoading()){load();}
+class UslugiCubit extends Cubit<ProductsState> {
+  UslugiCubit() : super(ProductsLoading()){load();}
 
   load()async{
     print("Loading uslugi");
     List<BlocSize> uslugi = await ProductProvider.getItems(type: 1);
-    emit(UslugiComplete(uslugiList: uslugi));
+    emit(ProductsComplete(listProducts: uslugi));
   }
 
   search(String input)async{
     List<BlocSize> uslugi = await SearchProvider.search(input, type:1);
     if(uslugi == null){
-      emit(UslugiLoading());
+      emit(ProductsLoading());
       load();
     }else{
-      emit(UslugiSearch(uslugiList: uslugi, input: input));
+      emit(ProductsFromSearch(listProducts: uslugi, input: input));
     }
   }
 
   selectCategory(Category category)async{
     List<BlocSize> uslugi = await CategoryProvider.getItemsCategory(category.route, type: 1);
     if(uslugi == null){
-      emit(UslugiLoading());
+      emit(ProductsLoading());
       load();
     }else{
-      emit(UslugiCatigory(uslugiList: uslugi, category: category));
+      emit(ProductsFromCategory(listProducts: uslugi, category: category));
     }
   }
 
   closeWindow(){
-    emit(UslugiLoading());
+    emit(ProductsLoading());
     load();
   }
-
 }

@@ -61,48 +61,54 @@ class _PayContentState extends State<PayContent> {
       child: Material(
         child: Padding(
           padding: EdgeInsets.only(bottom: bottom),
-          child: Container(
-            height: 400,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomCenter,
-                    colors: cBackgroundGradient)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Text(
-                        "Перевод",
-                        style: TextStyle(
-                            fontFamily: "MPLUS",
-                            color: cMainText,
-                            fontSize: 18),
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: (){
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            child: Container(
+              height: 400,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomCenter,
+                      colors: cBackgroundGradient)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          "Перевод",
+                          style: TextStyle(
+                              fontFamily: "MPLUS",
+                              color: cMainText,
+                              fontSize: 18),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                InputWallet(controllerAdress),
-                InputSumm(controllerSumm, max),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Text(
-                        "Комиссия: 0.342 DEL",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                    ],
+                  ),
+                  InputWallet(controllerAdress),
+                  InputSumm(controllerSumm, max),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          "Комиссия: 0.342 DEL",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                ButtonSend(seed, controllerSumm, controllerAdress, context),
-              ],
+                    ],
+                  ),
+                  ButtonSend(seed, controllerSumm, controllerAdress, context),
+                ],
+              ),
             ),
           ),
         ),

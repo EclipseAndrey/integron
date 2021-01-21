@@ -35,6 +35,7 @@ class Put {
     @required this.localError
   });
   factory Put.fromJson(Map<String,dynamic> json){
+    print("put decode ${json['code']}");
     return Put(error: json['code'], localError: false, mess: json['mess']);
   }
 }

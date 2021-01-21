@@ -88,7 +88,7 @@ Color c, double p  ) {
           showDialogLoading(context);
           Balance a = await WalletProvider.getBalance();
           closeDialog(context);
-          showDialogIntegron(context: context, title: getQr(a.address, size: MediaQuery.of(context).size.width*0.4), body: GestureDetector(
+          showDialogIntegron(context: context, title: getQr(a.address, size: MediaQuery.of(context).size.width*0.3), body: GestureDetector(
               onTap: (){
 
                 Fluttertoast.showToast(

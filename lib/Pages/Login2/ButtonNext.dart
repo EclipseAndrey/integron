@@ -26,8 +26,9 @@ Widget ButtonNext(BuildContext context, TextEditingController controller, MaskTe
 
         showDialogLoading(context);
         Put response = await getCode("7"+maskFormatter.getUnmaskedText());
+        print(response);
         closeDialog(context);
-        if (response == null && (response.error != 200 && response.error != 201)) {
+        if (response == null || (response.error != 200 && response.error != 201)) {
           Fluttertoast.showToast(
               msg: "Соединение не установлено",
               toastLength: Toast.LENGTH_SHORT,

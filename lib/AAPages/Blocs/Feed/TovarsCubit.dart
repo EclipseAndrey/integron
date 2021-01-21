@@ -1,43 +1,37 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:integron/Providers/CategoryProvider/CategoryProvider.dart';
-import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
-import 'package:integron/Providers/SearchProvider/SearchProvider.dart';
-import 'package:integron/Utils/DB/Category/Category.dart';
-import 'package:integron/Utils/DB/Products/BlocSize.dart';
 
-part 'TovarsStates.dart';
 
-class TovarsCubit extends Cubit<TovarsState> {
-  TovarsCubit() : super(TovarsLoading()){load();}
+part of 'ProductsBloc.dart';
+
+class TovarsCubit extends Cubit<ProductsState> {
+  TovarsCubit() : super(ProductsLoading()){load();}
 
   load()async{
-    List<BlocSize> tovars = await ProductProvider.getItems();
-    emit(TovarsComplete(tovarsList: tovars));
+    List<BlocSize> tovars = await ProductProvider.getItems(type: 0);
+    emit(ProductsComplete(listProducts: tovars));
   }
 
   search(String input)async {
-    List<BlocSize> tovars = await SearchProvider.search(input,);
+    List<BlocSize> tovars = await SearchProvider.search(input, type: 0);
     if(tovars == null){
-      emit(TovarsLoading());
+      emit(ProductsLoading());
       load();
     }else{
-      emit(TovarsSearch(tovarsList: tovars, input: input));
+      emit(ProductsFromSearch(listProducts: tovars, input: input));
     }
   }
 
   selectCategory(Category category)async{
-    List<BlocSize> tovars = await CategoryProvider.getItemsCategory(category.route, );
+    List<BlocSize> tovars = await CategoryProvider.getItemsCategory(category.route, type: 0 );
     if(tovars == null){
-      emit(TovarsLoading());
+      emit(ProductsLoading());
       load();
     }else {
-      emit(TovarsCatigory(tovarsList: tovars, category: category));
+      emit(ProductsFromCategory(listProducts: tovars, category: category));
     }
   }
 
   closeWindow(){
-    emit(TovarsLoading());
+    emit(ProductsLoading());
     load();
   }
 

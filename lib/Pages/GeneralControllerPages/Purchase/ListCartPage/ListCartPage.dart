@@ -12,8 +12,8 @@ import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/main.dart';
 
 class ListCartPage extends StatefulWidget {
-  bool tovar = false;
-  ListCartPage({@required this.tovar});
+  final int type;
+  ListCartPage({@required this.type}): assert(type != null && type >= 0);
 
 
   @override
@@ -43,12 +43,15 @@ class _ListCartPageState extends State<ListCartPage> {
 
   Content(CartComplete state){
 
+
+
+
     bool checkOwnrFull(index){
 
       try{
         bool find = true;
-        for(int i = 0; i < (widget.tovar?state.sortListTovars[index].length:state.sortListUslugi[index].length); i++){
-          if(!(widget.tovar?state.sortListTovars[index][i].check:state.sortListUslugi[index][i].check)) find = false;
+        for(int i = 0; i < getSortListForType(state)[index].length; i++){
+          if(!(getSortListForType(state)[index][i].check)) find = false;
         }
         print(find);
         return find;
@@ -65,7 +68,7 @@ class _ListCartPageState extends State<ListCartPage> {
             child: Column(
               children: [
                 Container(
-                  height: (widget.tovar?state.sortListTovars.length:state.sortListUslugi.length) == 0?0:!widget.tovar?0:50,
+                  height: (getSortListForType(state).length) == 0?0:!(widget.type==0)?0:50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -76,13 +79,13 @@ class _ListCartPageState extends State<ListCartPage> {
                 Container(
                   height: MediaQuery.of(context).size.height-130,
                   width: MediaQuery.of(context).size.width - paddingAll*2,
-                  child: (widget.tovar?state.sortListTovars.length:state.sortListUslugi.length)==0?Center(child: Text("Тут пусто :)", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24),),):
+                  child: (getSortListForType(state).length)==0?Center(child: Text("Тут пусто :)", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontSize: 24),),):
                   SingleChildScrollView(
                     child: Column(
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: List.generate(widget.tovar?state.sortListTovars.length:state.sortListUslugi.length, (indexAll) =>
+                          children: List.generate(getSortListForType(state).length, (indexAll) =>
                               Column(
                             children: [
                               Padding(
@@ -96,7 +99,14 @@ class _ListCartPageState extends State<ListCartPage> {
                                             onTap:(){
                                               // BlocProvider.of<TovarsCubit>(context1).load();
 
-                                              widget.tovar?BlocProvider.of<CartCubit>(context).checkT(state, indexAll):BlocProvider.of<CartCubit>(context).checkU(state, indexAll);
+                                              if(widget.type == 0){
+                                                BlocProvider.of<CartCubit>(context).checkT(state, indexAll);
+                                              }else if(widget.type == 1){
+                                                BlocProvider.of<CartCubit>(context).checkU(state, indexAll);
+                                              }else if(widget.type == 2){
+                                                BlocProvider.of<CartCubit>(context).checkR(state, indexAll);
+                                              }
+                                              // widget.tovar?BlocProvider.of<CartCubit>(context).checkT(state, indexAll):BlocProvider.of<CartCubit>(context).checkU(state, indexAll);
 
                                             },
                                             child: getIconSvg(id: checkOwnrFull(indexAll)?IconsSvg.checkOn:IconsSvg.checkOff, color: c6287A1, size: 24)),
@@ -104,7 +114,7 @@ class _ListCartPageState extends State<ListCartPage> {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(  widget.tovar?state.sortListTovars[indexAll][0].ownerName:state.sortListUslugi[indexAll][0].ownerName, style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w600),),
+                                            Text(  getSortListForType(state)[indexAll][0].ownerName, style: TextStyle(color: cMainText, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w600),),
                                             getIconSvg(id: 39, color: c6287A1, size: 24),
                                           ],
                                         ),
@@ -115,7 +125,7 @@ class _ListCartPageState extends State<ListCartPage> {
                                   ],
                                 ),
                               ),
-                              Column( children: List.generate(widget.tovar?state.sortListTovars[indexAll].length:state.sortListUslugi[indexAll].length, (index) => ItemCart(indexAll, index, state)),),
+                              Column( children: List.generate(getSortListForType(state)[indexAll].length, (index) => ItemCart(indexAll, index, state)),),
                             ],
                           )),
                         ),
@@ -130,7 +140,7 @@ class _ListCartPageState extends State<ListCartPage> {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: (widget.tovar?state.sortListTovars.length:state.sortListUslugi.length) ==0?SizedBox():EndPrice(widget.tovar?state.summT:state.summU, state),
+          child: (getSortListForType(state).length) ==0?SizedBox():EndPrice(getSumForType(state), state),
         )
       ],
     );
@@ -209,7 +219,7 @@ class _ListCartPageState extends State<ListCartPage> {
   Widget ItemCart(int indexAll, int index, CartComplete state){
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TovarInfo(widget.tovar?state.sortListTovars[indexAll][index].route:state.sortListUslugi[indexAll][index].route)));
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => TovarInfo(getSortListForType(state)[indexAll][index].route)));
       },
       child: Container(
         width: MediaQuery.of(context).size.width-paddingAll*2,
@@ -234,16 +244,25 @@ class _ListCartPageState extends State<ListCartPage> {
                             onTap:(){
                               // BlocProvider.of<TovarsCubit>(context1).load();
 
-                              widget.tovar?BlocProvider.of<CartCubit>(context).checkT(state, indexAll, index: index ):BlocProvider.of<CartCubit>(context).checkU(state, indexAll, index: index);
+                              if(widget.type == 0){
+                                BlocProvider.of<CartCubit>(context).checkT(state, indexAll, index: index);
+                              }else if(widget.type == 1){
+                                BlocProvider.of<CartCubit>(context).checkU(state, indexAll, index: index);
+                              }else if(widget.type == 2){
+                                BlocProvider.of<CartCubit>(context).checkR(state, indexAll, index: index);
+                              }
+
+
+                              // widget.tovar?BlocProvider.of<CartCubit>(context).checkT(state, indexAll, index: index ):BlocProvider.of<CartCubit>(context).checkU(state, indexAll, index: index);
 
                             },
-                            child: getIconSvg(id: (widget.tovar?state.sortListTovars[indexAll][index].check:state.sortListUslugi[indexAll][index].check)?IconsSvg.checkOn:IconsSvg.checkOff, color: c6287A1, size: 24)),
+                            child: getIconSvg(id: (getSortListForType(state)[indexAll][index].check)?IconsSvg.checkOn:IconsSvg.checkOff, color: c6287A1, size: 24)),
                         SizedBox(width: paddingAll,),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(6),
                           child: Container(
                               height: 84 ,
-                              child: Image.network(widget.tovar?state.sortListTovars[indexAll][index].image:state.sortListUslugi[indexAll][index].image, height: 84, width: 84, fit: BoxFit.cover,),),
+                              child: Image.network(getSortListForType(state)[indexAll][index].image, height: 84, width: 84, fit: BoxFit.cover,),),
                         ),
                       ],
                     ),
@@ -258,17 +277,17 @@ class _ListCartPageState extends State<ListCartPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.tovar?state.sortListTovars[indexAll][index].name:state.sortListUslugi[indexAll][index].name, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: cMainText, fontFamily: fontFamily),),
+                          Text(getSortListForType(state)[indexAll][index].name, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: cMainText, fontFamily: fontFamily),),
                           Container(
                             // width: MediaQuery.of(context).size.width-paddingAll*2- 108,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                (widget.tovar?state.sortListTovars[indexAll][index].params.length:state.sortListUslugi[indexAll][index].params.length)==0?SizedBox(height: paddingAll,):Padding(
+                                (getSortListForType(state)[indexAll][index].params.length)==0?SizedBox(height: paddingAll,):Padding(
                                   padding:  EdgeInsets.symmetric(vertical: paddingAll),
                                   child: Wrap(
                                     children:
-                                    List.generate(widget.tovar?state.sortListTovars[indexAll][index].params.length:state.sortListUslugi[indexAll][index].params.length, (indexC) => Padding(
+                                    List.generate(getSortListForType(state)[indexAll][index].params.length, (indexC) => Padding(
                                       padding:  EdgeInsets.only(right: paddingAll),
                                       child: Container(
                                         decoration: BoxDecoration(
@@ -278,7 +297,7 @@ class _ListCartPageState extends State<ListCartPage> {
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                                          child: Text(widget.tovar?state.sortListTovars[indexAll][index].params[indexC].params[state.sortListTovars[indexAll][index].params[indexC].select].name : state.sortListUslugi[indexAll][index].params[indexC].params[state.sortListUslugi[indexAll][index].params[indexC].select].name, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
+                                          child: Text(getSortListForType(state)[indexAll][index].params[indexC].params[getSortListForType(state)[indexAll][index].params[indexC].select].name, style: TextStyle(color: cMainText, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
                                         ),
                                       ),
                                     ),
@@ -316,7 +335,7 @@ class _ListCartPageState extends State<ListCartPage> {
               children: [
                 GestureDetector(
                     onTap:(){
-                      BlocProvider.of<CartCubit>(context).remove( widget.tovar?state.sortListTovars[indexAll][index].route:state.sortListUslugi[indexAll][index].route , state: state);
+                      BlocProvider.of<CartCubit>(context).remove( getSortListForType(state)[indexAll][index].route , state: state);
                     },
                     child: Container(child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -335,7 +354,7 @@ class _ListCartPageState extends State<ListCartPage> {
   Widget price(int indexAll, int index, CartComplete state){
     return Row(
       children: [
-        Text( widget.tovar?state.sortListTovars[indexAll][index].price.toString():state.sortListUslugi[indexAll][index].price.toString(), style: TextStyle(color:  c6287A1, fontSize: 16, fontWeight: FontWeight.w600, fontFamily: fontFamily),),
+        Text( getSortListForType(state)[indexAll][index].price.toString(), style: TextStyle(color:  c6287A1, fontSize: 16, fontWeight: FontWeight.w600, fontFamily: fontFamily),),
         Text(" DEL" , style: TextStyle(color:  cMainText, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: fontFamily), ),
       ],
     );
@@ -343,7 +362,7 @@ class _ListCartPageState extends State<ListCartPage> {
 
   Widget unit(int indexAll,int index, CartComplete state){
     String getRub(){
-      return (widget.tovar?state.sortListTovars[indexAll][index].price*course:state.sortListUslugi[indexAll][index].price*course).toString();
+      return (getSortListForType(state)[indexAll][index].price*course).toString();
     }
     return Row(
       children: [
@@ -351,7 +370,7 @@ class _ListCartPageState extends State<ListCartPage> {
         Text(getRub(),  style: TextStyle(color:  Colors.grey , fontSize: 14, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
         Text("₽",  style: TextStyle(color:  Colors.grey , fontSize: 14, fontWeight: FontWeight.w400),),
         Text(") / ",  style: TextStyle(color:  Colors.grey , fontSize: 14, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
-        Text(widget.tovar?state.sortListTovars[indexAll][index].unit:state.sortListUslugi[indexAll][index].unit,  style: TextStyle(color:  Colors.grey , fontSize: 14, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
+        Text(getSortListForType(state)[indexAll][index].unit,  style: TextStyle(color:  Colors.grey , fontSize: 14, fontWeight: FontWeight.w400, fontFamily: fontFamily),),
       ],
     );
   }
@@ -364,7 +383,7 @@ class _ListCartPageState extends State<ListCartPage> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-        child: Text(widget.tovar?state.sortListTovars[indexAll][index].counter.toString():state.sortListUslugi[indexAll][index].counter.toString(), style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontWeight: FontWeight.w600, fontSize: 14),),
+        child: Text(getSortListForType(state)[indexAll][index].counter.toString(), style: TextStyle(color: c5894bc, fontFamily: fontFamily, fontWeight: FontWeight.w600, fontSize: 14),),
       ),
     );
   }
@@ -373,35 +392,53 @@ class _ListCartPageState extends State<ListCartPage> {
 
   Widget counterProducts(CartComplete state){
     String cont(){
-      if(widget.tovar){
         int c = 0;
-        for(int i =0; i < state.sortListTovars.length; i++){
-          for(int j = 0; j < state.sortListTovars[i].length; j++){
+        for(int i =0; i < getSortListForType(state).length; i++){
+          for(int j = 0; j < getSortListForType(state)[i].length; j++){
             c++;
           }
         }
         return c.toString();
-      }else{
-        int c = 0;
-        for(int i =0; i < state.sortListUslugi.length; i++){
-          for(int j = 0; j < state.sortListUslugi[i].length; j++){
-            c++;
-          }
-        }
-        return c.toString();
-      }
+
     }
 
 
-    if((widget.tovar?state.sortListTovars.length:state.sortListUslugi.length) == 0 || !widget.tovar){
+    if((getSortListForType(state).length) == 0 || !(widget.type == 0)){
       return SizedBox();
     }else{
-      return Text("Итого ${cont()} ${widget.tovar?"товаров":"услуг"} в корзине", style: TextStyle(fontSize: 14, fontFamily: fontFamily, fontWeight: FontWeight.w400, color: Color.fromRGBO(122,139,163,1)),);
+      return Text("Итого ${cont()} ${getNameType()} в корзине", style: TextStyle(fontSize: 14, fontFamily: fontFamily, fontWeight: FontWeight.w400, color: Color.fromRGBO(122,139,163,1)),);
     }
   }
 
 
 
+
+  List<List<Product>> getSortListForType(CartComplete state){
+    switch(widget.type){
+      case 0: return state.sortListTovars;
+      case 1: return state.sortListUslugi;
+      case 2: return state.sortListTrainings;
+      default: return [];
+    }
+  }
+
+  double getSumForType(CartComplete state){
+    switch(widget.type){
+      case 0: return state.summT;
+      case 1: return state.summU;
+      case 2: return state.summR;
+      default: return 0;
+    }
+  }
+
+  String getNameType(){
+    switch(widget.type){
+      case 0: return "Товаров";
+      case 1: return "Услуг";
+      case 2: return "Тренингов";
+      default: return "";
+    }
+  }
 }
 
 

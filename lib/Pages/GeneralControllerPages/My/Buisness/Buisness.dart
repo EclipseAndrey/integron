@@ -15,6 +15,7 @@ import 'package:integron/Utils/DB/tokenDB.dart';
 import 'package:integron/Utils/IconDataForCategory.dart';
 import 'package:integron/Utils/fun/BottomDialogs/BottomSheetEditHeadBuisness.dart';
 import 'package:integron/Utils/fun/Logs.dart';
+import 'package:integron/Utils/fun/TabPanel/TabPanel.dart';
 
 import 'BodyBusiness.dart';
 
@@ -22,6 +23,7 @@ class BusinessPage extends StatefulWidget {
 
   bool edit = false;
   int id;
+
 
   BusinessPage(this.edit, this.id);
   factory BusinessPage.read(int id) => BusinessPage(false, id);
@@ -42,12 +44,18 @@ class BusinessPage extends StatefulWidget {
 }
 
 class _BusinessPageState extends State<BusinessPage> {
+
+  TabBarProductController tabBarProductController;
+  GlobalKey key = GlobalKey();
+
+  bool hide = false;
+  double height;
+
   Business business;
 
   String nameBiz = "";
   String textBiz = "";
   bool loading = true;
-  //todo loading
   load()async{
     loading = true;
     setState(() {});
@@ -85,6 +93,9 @@ class _BusinessPageState extends State<BusinessPage> {
 
     loading = false;
     setState(() {});
+    WidgetsBinding.instance.addPostFrameCallback((_) => initHeader());
+    // if(height == null)height = key.currentContext.size.height;
+
   }
 
 
@@ -128,24 +139,20 @@ class _BusinessPageState extends State<BusinessPage> {
 
   @override
   void initState() {
+
+
+    tabBarProductController = TabBarProductController();
+    tabBarProductController.addListener((index) {
+      controller.animateToPage(index, duration: Duration(milliseconds: 200), curve: Curves.ease);
+    });
+
     // try {
       controller.addListener(() {
-        widget.paddingPanel = controller.offset / 2;
-        //print(controller.page);
-        widget.pagePanel = controller.page.round();
-        if (widget.pagePanel == 1) {
-          widget.colorPanelText1 = Colors.white;
-          widget.colorPanelText2 = c5894bc;
-          widget.radiusPanelLeft = 6;
-          widget.radiusPanelRight = 0;
-        } else {
-          widget.colorPanelText1 = c5894bc;
-          widget.colorPanelText2 = Colors.white;
-          widget.radiusPanelLeft = 0;
-          widget.radiusPanelRight = 6;
+        if(controller.page.round() != tabBarProductController.currentPage){
+          tabBarProductController.jumpToPage(controller.page.round());
         }
-        setState(() {});
       });
+
     // }catch(e){}
     load();
       SystemChrome.setSystemUIOverlayStyle(
@@ -161,25 +168,31 @@ class _BusinessPageState extends State<BusinessPage> {
         ),
       );
 
+      void onDrag(bool up){
+        if(hide == up) {
+          print('tap header');
+          //todo
+          height == null ? height = key.currentContext.size.height : null;
+          hide = !up;
+          tabBarProductController.hide(hide);
+          setState(() {});
+        }
+      }
 
     pages = [
-      BodyBusiness(type:0, edit: widget.edit, id: widget.id,),
-    //  BodyBusiness(type:1, edit: widget.edit,id: widget.id,),
+      BodyBusiness(type:0, edit: widget.edit, id: widget.id, onDrag: onDrag,),
+      BodyBusiness(type:1, edit: widget.edit,id: widget.id,onDrag: onDrag),
+      BodyBusiness(type:2, edit: widget.edit,id: widget.id,onDrag:onDrag),
     ];
     setState(() {});
 
   }
 
-
-
-
-
-  /*
-    1 Заголовок
-    2 описание
-    3 фон картинка
-
-    */
+  initHeader(){
+    print('ini');
+    if(height == null)height = key.currentContext.size.height;
+    setState(() {});
+  }
 
   tapEdit(int indexElement)async{
     switch(indexElement){
@@ -194,7 +207,6 @@ class _BusinessPageState extends State<BusinessPage> {
         break;
       }
       case 2:{
-        //todo Клик по иконке редактировать фоон
         setImage();
         break;
       }
@@ -222,48 +234,11 @@ class _BusinessPageState extends State<BusinessPage> {
 
 
 
-
-
-
     return Theme(
       data: ThemeData(primaryColor: Colors.transparent),
       child: SafeArea(
         child: Scaffold(
           extendBodyBehindAppBar: true,
-          // appBar: AppBar(
-          //   centerTitle: true,
-          //   leading: Padding(
-          //     padding: const EdgeInsets.all(16.0),
-          //     child: getIconForId(id: 0, color: cIcons, size: 24),
-          //   ),
-          //   // leading: Padding(
-          //   //   padding: EdgeInsets.only(
-          //   //     bottom: 20,
-          //   //     right: 13,
-          //   //   ),
-          //   //   child: Icon(Icons.attach_money, size: 24),
-          //   // ),
-          //   actions: [
-          //     Padding(
-          //       padding: EdgeInsets.only(bottom: 20, right: 10),
-          //       child: Icon(Icons.attach_money, size: 24),
-          //     )
-          //   ],
-          //   title: Padding(
-          //     padding: const EdgeInsets.only(bottom: 0),
-          //     child: Container(
-          //       color: cDefault,
-          //       child: Center(child: Padding(
-          //         padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 8),
-          //         child: Text(
-          //           "Сохранить изменения"
-          //         ),
-          //       )),
-          //     ),
-          //   ),
-          //   backgroundColor: Colors.transparent,
-          //   elevation: 0.0,
-          // ),
           body:
               loading?Center(child: CircularProgressIndicator(),):Content(heightAppBar, minusFontsSize),
         ),
@@ -279,174 +254,147 @@ class _BusinessPageState extends State<BusinessPage> {
       color: cBG,
       child: Stack(
         children: [
-          Container(
-              height: MediaQuery.of(context).size.width *0.3,
-              width: MediaQuery.of(context).size.width,
-              child: (business.photo == null)|| business.photo == ""?Image.asset(
-                "lib/assets/images/bgb.png",
-                fit: BoxFit.fill,
-              ):Image.network(business.photo, fit: BoxFit.cover,)),
+          Positioned(
+            top: 0,
+            child: GestureDetector(
+                onTap: (){
+                  print('tap header');
+                  //todo
+                  height == null ? height = key.currentContext.size.height : null;
+                  hide = false;
+                  tabBarProductController.hide(hide);
+                  setState(() {});
+                },
+                child: background()),
+          ),
           Align(
             alignment: Alignment.topCenter,
-            child: AspectRatio(
-              aspectRatio: (MediaQuery.of(context).size.width) /
-                  (MediaQuery.of(context).size.width * heightAppBar ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: GestureDetector(
-                            onTap: (){
-                              tapEdit(4);
-                            },
-                            child: getIconSvg(id: 0, size: 24, color: cIcons)),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(bottom: 0),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       color: cDefault,
-                      //       borderRadius: BorderRadius.circular(6)
-                      //     ),
-                      //     child: Center(child: Padding(
-                      //       padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-                      //       child: Text(
-                      //           "Сохранить изменения",
-                      //         style: TextStyle(color: cWhite, fontSize: 14, fontWeight: FontWeight.w400,fontStyle: FontStyle.normal, fontFamily: fontFamily),
-                      //       ),
-                      //     )),
-                      //   ),
-                      // ),
-                      widget.edit?Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        //todo icon right
-                        child: GestureDetector(
-                            onTap: (){
-                              tapEdit(2);
-                            },
-                            child: getIconSvg(id: IconsSvg.image, size: 24, color: cIcons)),
-                      ):SizedBox(),
-
-
-
-                    ],
-                  ),
-
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                    child: Column(
                       children: [
-
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: GestureDetector(
-                              onTapUp: (we){},
-                              onTap: (){
-                                clickEmpty();
-                                print("click");
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                                    child: Container(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                              onTap:(){
-                                                tapEdit(0);
-                                              },
-                                              child: Text(nameBiz,overflow: TextOverflow.ellipsis,style: TextStyle(color: cLinks, fontSize: 24, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontWeight: FontWeight.w400),)),
-                                          GestureDetector(
-                                              onTap: (){
-                                                tapEdit(0);
-                                              },
-                                              child: Text(textBiz,overflow: TextOverflow.ellipsis, style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 12),)),
-
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-
-                                  SizedBox(height: 15,),
-                                  // Container(
-                                  //   color: Colors.transparent,
-                                  //   height: 50,
-                                  //   width: MediaQuery.of(context).size.width,
-                                  //   child: Stack(
-                                  //     children: [
-                                  //       AnimatedPadding(
-                                  //         duration: Duration(milliseconds: widget.durationAnimatePanel),
-                                  //         padding:  EdgeInsets.only(left:widget.paddingPanel),
-                                  //         child: Container(
-                                  //           color: Colors.transparent,
-                                  //           width: MediaQuery.of(context).size.width * 0.50,
-                                  //           child: GestureDetector(
-                                  //             onTapUp: (d){},
-                                  //             onTap: (){},
-                                  //             child: AnimatedContainer(
-                                  //               duration: Duration(milliseconds: widget.durationAnimatePanel),
-                                  //               decoration: BoxDecoration(
-                                  //                 color: cBG,
-                                  //                 borderRadius: BorderRadius.only(
-                                  //                     topLeft:
-                                  //                     Radius.circular(widget.radiusPanelLeft),
-                                  //                     topRight: Radius.circular(widget.radiusPanelRight)
-                                  //                 ),
-                                  //               ),
-                                  //               height: 50,
-                                  //               width:
-                                  //               MediaQuery.of(context).size.width * 0.30,
-                                  //
-                                  //             ),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //       Row(
-                                  //         crossAxisAlignment: CrossAxisAlignment.center,
-                                  //         children: [
-                                  //           Spacer(),
-                                  //           Column(
-                                  //             mainAxisAlignment: MainAxisAlignment.center,
-                                  //             children: [
-                                  //               Text("Товары", style: TextStyle(color: widget.colorPanelText1, fontSize: 16- minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                                  //             ],
-                                  //           ),
-                                  //           Spacer(),
-                                  //           Spacer(),
-                                  //           Column(
-                                  //             mainAxisAlignment: MainAxisAlignment.center,
-                                  //             children: [
-                                  //               Text("Услуги", style: TextStyle(color: widget.colorPanelText2, fontSize: 16 - minusFontSize, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal, fontFamily: fontFamily),),
-                                  //             ],
-                                  //           ),
-                                  //           Spacer(),
-                                  //         ],
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                            )),
-
+                        buttons(),
+                        AnimatedContainer(
+                          key: key,
+                            duration: Duration(milliseconds: 200),
+                            height: hide?0:height,
+                            // height: hide?0:,
+                            constraints: BoxConstraints(
+                            ),
+                            child: AnimatedOpacity(
+                                opacity: hide?0:1,
+                                duration: Duration(milliseconds: 200),
+                                child: descShop())),
+                        // hide?SizedBox():descShop(),
                       ],
                     ),
-                  ),
-                ],
-              ),
+                ),
+
+                TabBarProducts(
+                  controller: tabBarProductController,
+                  names: ['Товары','Услуги', 'Обучение'],
+                ),
+                Catalog(heightAppBar, minusFontSize)
+              ],
             ),
           ),
           Align(
               alignment: Alignment.bottomCenter,
-              child: Catalog(heightAppBar, minusFontSize)),
+              //child: Catalog(heightAppBar, minusFontSize),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget background(){
+    return Container(
+        height: MediaQuery.of(context).size.width *0.5,
+        width: MediaQuery.of(context).size.width,
+        child: (business.photo == null)|| business.photo == ""?Image.asset(
+          "lib/assets/images/bgb.png",
+          fit: BoxFit.fill,
+        ):Image.network(business.photo, fit: BoxFit.cover,));
+  }
+
+  Widget buttons (){
+    return  Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: GestureDetector(
+              onTap: (){
+                tapEdit(4);
+              },
+              child: getIconSvg(id: 0, size: 24, color: cIcons)),
+        ),
+        AnimatedOpacity(
+          duration: Duration(milliseconds: 200),
+          opacity: hide?1:0,
+          child: Text(nameBiz,overflow: TextOverflow.ellipsis,style: TextStyle(color: cLinks, fontSize: 24, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontWeight: FontWeight.w400),),
+        ),
+        widget.edit?Padding(
+          padding: const EdgeInsets.all(12.0),
+          //todo icon right
+          child: GestureDetector(
+              onTap: (){
+                tapEdit(2);
+              },
+              child: getIconSvg(id: IconsSvg.image, size: 24, color: cIcons)),
+        ):SizedBox(),
+      ],
+    );
+  }
+
+  Widget descShop(){
+    return  Container(
+      width: MediaQuery.of(context).size.width,
+      child: Stack(
+        children: [
+          Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTapUp: (we){},
+                onTap: (){
+                  clickEmpty();
+                  print("click");
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                                onTap:(){
+                                  tapEdit(0);
+                                },
+                                child: Text(nameBiz,overflow: TextOverflow.ellipsis,style: TextStyle(color: cLinks, fontSize: 24, fontStyle: FontStyle.normal, fontFamily: fontFamily, fontWeight: FontWeight.w400),)),
+                            GestureDetector(
+                                onTap: (){
+                                  tapEdit(0);
+                                },
+                                child: Text(textBiz,overflow: TextOverflow.ellipsis, style: TextStyle(color: cLinks, fontStyle: FontStyle.normal, fontWeight: FontWeight.w400, fontSize: 12),)),
+
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 15,),
+
+                  ],
+                ),
+              )),
+
         ],
       ),
     );
@@ -455,14 +403,17 @@ class _BusinessPageState extends State<BusinessPage> {
   Widget Catalog(double heightAppBar, double minusFontSize){
     return Container(
       width: (MediaQuery.of(context).size.width),
-      height: (MediaQuery.of(context).size.height),
+      //height: (MediaQuery.of(context).size.height),
       child: Column(
         children: [
-          AspectRatio(
-            aspectRatio: (MediaQuery.of(context).size.width) /
-                (MediaQuery.of(context).size.width * heightAppBar),),
-          Container(
-            height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width * heightAppBar - 24,
+
+          // AspectRatio(
+          //   aspectRatio: (MediaQuery.of(context).size.width) /
+          //       (MediaQuery.of(context).size.width * heightAppBar),),
+
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.width * heightAppBar - (hide?-40:74) ,
             child: PageView(
               controller: controller,
               children: pages,
