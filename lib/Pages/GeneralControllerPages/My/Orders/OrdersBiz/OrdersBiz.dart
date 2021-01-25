@@ -41,8 +41,9 @@ class _OrdersBizState extends State<OrdersBiz> {
        listOrdersTovars.add(listOrders[i]);
      }else if(listOrders[i].products[0].type == 1){
          listOrderssUslugi.add(listOrders[i]);
-     } else if(listOrders[i].products[0].type == 0){
-       listOrdersTrainings.add(listOrdersTrainings[i]);
+     } else if(listOrders[i].products[0].type == 2){
+       listOrdersTrainings.add(listOrders[i]);
+       print('type 2 orders Find');
      }
       }catch(e){printL(e);}
     }

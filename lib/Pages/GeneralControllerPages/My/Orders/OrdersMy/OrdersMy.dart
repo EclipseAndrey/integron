@@ -44,8 +44,8 @@ class _OrdersMyState extends State<OrdersMy> {
           listOrdersTovars.add(listOrders[i]);
         }else if(listOrders[i].products[0].type == 1){
           listOrderssUslugi.add(listOrders[i]);
-        } else if(listOrders[i].products[0].type == 0){
-          listOrdersTrainings.add(listOrdersTrainings[i]);
+        } else if(listOrders[i].products[0].type == 2){
+          listOrdersTrainings.add(listOrders[i]);
         }
       }catch(e){printL(e);}
     }

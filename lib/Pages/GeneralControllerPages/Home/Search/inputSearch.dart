@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:integron/Pages/GeneralControllerPages/AboutIntegron/AboutIntegron.dart';
+import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Style.dart';
 
 
@@ -16,6 +18,8 @@ class InputLogState extends State<InputLog> {
   FocusNode _focus = FocusNode();
   bool check = false;
   double left = 0;
+
+  get h2 => null;
 
   @override
   void initState() {
@@ -140,6 +144,61 @@ class InputLogState extends State<InputLog> {
     ];
 
 
+    Widget info(){
+      var w;
+      return GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AboutIntegron()));
+
+        },
+        child: Container(
+          height: h2,
+          width: w,
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              borderRadius: BorderRadius.circular(6),
+              color:Colors.white ,
+            ),
+
+            child: Column(
+              children: [
+                Container(
+
+                  width: MediaQuery.of(context).size.width*0.45,
+                  height: MediaQuery.of(context).size.width*0.30,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+                        child: Image.asset("lib/assets/icons/IconApp/128x128.png", fit: BoxFit.contain,)),
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Что такое Integron", style: TextStyle(color: cMainText, fontFamily: fontFamily, fontStyle: FontStyle.normal, fontWeight: FontWeight.w700, fontSize: 16),),
+                    ],
+                  ),
+                ),
+                Spacer()
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
 
     Widget item(ItemContentSearch i){
       return Padding(
@@ -150,7 +209,6 @@ class InputLogState extends State<InputLog> {
             SizedBox(width: 6,),
             Container(
                 width: MediaQuery.of(context).size.width*0.40- 30,
-
                 child: Text(i.text, style: TextStyle(color: cMainText, fontSize: 14, fontWeight: FontWeight.w600),))
           ],
         ),

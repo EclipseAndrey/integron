@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:integron/AAPages/Blocs/Feed/UslugiCubit.dart';
+import 'package:integron/AAPages/Blocs/Feed/ProductsBloc.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/Settings.dart';
 import 'package:integron/Providers/ProductProvider/ProductProvider.dart';
@@ -75,11 +75,11 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
     super.build(context);
     return SingleChildScrollView(
       controller: controllerScroll,
-      child: BlocBuilder<UslugiCubit,UslugiState>(
+      child: BlocBuilder<UslugiCubit,ProductsState>(
         builder: (context,state){
-          if(state is UslugiLoading){
+          if(state is ProductsLoading){
             return Center(child:  CircularProgressIndicator(),);
-          }else if(state is UslugiComplete){
+          }else if(state is ProductsComplete){
             return Loaded(state);
           }else{
             return Center(
@@ -91,12 +91,12 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
     );
   }
 
-  Widget Loaded(UslugiComplete uslugiComplete){
+  Widget Loaded(ProductsComplete productsComplete){
 
     List<BlocSize> leftColumn = [];
     List<BlocSize> rightColumn = [];
 
-    List<BlocSize> list = uslugiComplete.uslugiList;
+    List<BlocSize> list = productsComplete.listProducts;
     for(int i = 0; i < list.length; i+=2){
 
       try{
@@ -114,7 +114,7 @@ class _UslugiState extends State<Uslugi> with AutomaticKeepAliveClientMixin<Uslu
       color: cBG,
       child: Column(
         children: [
-          MainPanel(context, product, category,widget.controllerPages ),
+          MainPanel(context, product, category ),
           Padding(
             padding: const EdgeInsets.all(6.0),
             child: Row(

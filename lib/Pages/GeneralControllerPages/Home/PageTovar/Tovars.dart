@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:integron/AAPages/Blocs/Feed/ProductsBloc.dart';
 import 'package:integron/AAPages/Blocs/Feed/TovarsCubit.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/ItemGetter.dart';
 import 'package:integron/Pages/GeneralControllerPages/Home/PageUslig/Panel/Panel.dart';
@@ -116,7 +117,7 @@ class _TovarsState extends State<Tovars> with AutomaticKeepAliveClientMixin<Tova
       color: cBG,
       child: Column(
         children: [
-          MainPanel(context, product,category,widget.controllerPages),
+          MainPanel(context, product,category,),
           Padding(
             padding: const EdgeInsets.all(6.0),
             child: Row(
